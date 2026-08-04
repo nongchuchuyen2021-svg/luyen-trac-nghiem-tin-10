@@ -1,0 +1,117 @@
+import type { Question } from "@/lib/types";
+
+// Bài 32. Ôn tập lập trình Python (tổng hợp bài 16-31)
+const questions: Question[] = [
+  {
+    id: "b32-01",
+    q: "Đoạn chương trình sau in ra gì?",
+    code: "a = 7\nb = 2\nprint(a // b, a % b)",
+    options: ["3 1", "3.5 1", "1 3", "3.5 0.5"],
+    answer: 0,
+    explain: "7 // 2 = 3 (chia nguyên), 7 % 2 = 1 (số dư).",
+  },
+  {
+    id: "b32-02",
+    q: "Đoạn chương trình sau in ra gì?",
+    code: "s = 0\nfor i in range(1, 6):\n    if i % 2 == 1:\n        s = s + i\nprint(s)",
+    options: ["9", "15", "6", "5"],
+    answer: 0,
+    explain: "Cộng các số lẻ trong 1..5: 1 + 3 + 5 = 9.",
+  },
+  {
+    id: "b32-03",
+    q: "Đoạn chương trình sau in ra gì?",
+    code: 'a = [2, 4, 6, 8]\nprint(a[1] + a[3])',
+    options: ["12", "10", "6", "14"],
+    answer: 0,
+    explain: "a[1] = 4, a[3] = 8 → 4 + 8 = 12 (nhớ chỉ số từ 0).",
+  },
+  {
+    id: "b32-04",
+    q: "Hàm sau trả về gì khi gọi f(5)?",
+    code: "def f(n):\n    if n % 2 == 0:\n        return \"chẵn\"\n    return \"lẻ\"",
+    options: ['"lẻ"', '"chẵn"', "5", "None"],
+    answer: 0,
+    explain: "5 % 2 = 1 ≠ 0 nên bỏ qua if, chạy đến return \"lẻ\".",
+  },
+  {
+    id: "b32-05",
+    q: "Vòng lặp sau in ra bao nhiêu dấu *?",
+    code: 'for i in range(3):\n    for j in range(4):\n        print("*", end="")',
+    options: ["12", "7", "3", "4"],
+    answer: 0,
+    explain: "Lặp lồng nhau: 3 × 4 = 12 lần in.",
+  },
+  {
+    id: "b32-06",
+    q: "Đoạn chương trình sau in ra gì?",
+    code: 's = "Tin học"\nprint(s[0] + s[len(s) - 1])',
+    options: ['"Tc"', '"Th"', '"Tn"', "Báo lỗi"],
+    answer: 0,
+    explain: 's[0] = "T", kí tự cuối s[len(s)−1] = "c" → ghép thành "Tc".',
+  },
+  {
+    id: "b32-07",
+    q: "Chọn phát biểu ĐÚNG:",
+    options: [
+      "input() luôn trả về xâu; muốn tính toán số phải chuyển kiểu",
+      "for chỉ dùng được với số chẵn",
+      "Biến trong hàm dùng được ở mọi nơi",
+      "return và print là một",
+    ],
+    answer: 0,
+    explain: "Tổng hợp kiến thức Bài 18 (input trả xâu), Bài 28 (phạm vi biến), Bài 26 (return vs print).",
+  },
+  {
+    id: "b32-08",
+    q: "Đoạn chương trình sau in ra gì?",
+    code: "a = [5, 1, 4]\na.sort()\na.append(2)\nprint(a)",
+    options: ["[1, 4, 5, 2]", "[1, 2, 4, 5]", "[5, 1, 4, 2]", "[2, 1, 4, 5]"],
+    answer: 0,
+    explain: "sort xếp thành [1, 4, 5] rồi append thêm 2 vào CUỐI — không tự xếp lại.",
+  },
+  {
+    id: "b32-09",
+    q: "Đoạn chương trình sau in ra gì?",
+    code: "x = 10\nwhile x > 3:\n    x = x - 4\nprint(x)",
+    options: ["2", "3", "-2", "6"],
+    answer: 0,
+    explain: "x: 10 → 6 → 2; tại 2 điều kiện x > 3 sai, thoát và in 2.",
+  },
+  {
+    id: "b32-10",
+    q: "Chương trình sau có lỗi thuộc loại nào?",
+    code: 'diem = float(input("Điểm: "))\nif diem >= 5:\n    print("Đạt")\nelse:\n    print("Chưa đạt")\n# Người dùng gõ: tám',
+    options: [
+      "Lỗi ngoại lệ khi chạy (ValueError do nhập chữ)",
+      "Lỗi cú pháp",
+      "Lỗi lôgic",
+      "Không có lỗi trong mọi trường hợp",
+    ],
+    answer: 0,
+    explain: "Code đúng ngữ pháp và lôgic, nhưng dữ liệu nhập không hợp lệ gây ngoại lệ lúc chạy.",
+  },
+  {
+    id: "b32-11",
+    q: "Hàm sau tính gì?",
+    code: "def g(a):\n    s = 0\n    for x in a:\n        if x > 0:\n            s = s + x\n    return s",
+    options: [
+      "Tổng các phần tử dương của danh sách",
+      "Tổng tất cả phần tử",
+      "Đếm số phần tử dương",
+      "Phần tử lớn nhất",
+    ],
+    answer: 0,
+    explain: "Chỉ cộng dồn khi x > 0 — tổng các số dương.",
+  },
+  {
+    id: "b32-12",
+    q: "Đoạn chương trình sau in ra gì?",
+    code: 'def doi(s):\n    return s.upper()\n\nke = "na rì"\nprint(doi(ke))',
+    options: ['"NA RÌ"', '"na rì"', '"Na Rì"', "Báo lỗi"],
+    answer: 0,
+    explain: "Hàm nhận xâu, trả về bản chữ hoa: upper() biến \"na rì\" thành \"NA RÌ\".",
+  },
+];
+
+export default questions;
