@@ -72,8 +72,12 @@ Mục tiêu: **0 câu** ở mọi bài.
 - [x] bài 09 — xong (trước: 12/12 câu lỗi)
 - [x] bài 14 — xong (trước: 9/10)
 - [x] bài 34 — xong (trước: 10/10)
-- [x] bài 30, 15, 02 — xong
-- [ ] 28 bài còn lại — chạy script trên để biết bài nào còn lỗi và nặng bao nhiêu
+- [x] bài 30, 15, 02, 06, 08, 29 — xong
+- [ ] 25 bài còn lại — chạy script trên để biết bài nào còn lỗi và nặng bao nhiêu
+
+Tính đến lần cập nhật này: toàn ngân hàng còn **117/388 câu (30%)** mắc lỗi,
+giảm từ 180 câu (46%) ban đầu. Các bài nặng nhất còn lại: 13, 33, 03, 07, 11,
+12, 28, 18, 21, 26.
 
 Sửa xong bài nào thì đánh dấu vào đây, chạy `npx tsc --noEmit` kiểm tra rồi
 commit đẩy lên (Vercel tự build lại).

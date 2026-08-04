@@ -6,10 +6,10 @@ const questions: Question[] = [
     id: "b8-01",
     q: "Mạng máy tính là gì?",
     options: [
-      "Tập hợp các máy tính và thiết bị được kết nối để truyền dữ liệu và chia sẻ tài nguyên",
-      "Một máy tính có cấu hình mạnh",
-      "Tập hợp các phần mềm trên một máy tính",
-      "Hệ thống dây điện trong phòng máy",
+      "Tập hợp máy tính và thiết bị được kết nối để truyền dữ liệu, dùng chung tài nguyên",
+      "Một máy tính cấu hình mạnh cho phép nhiều người cùng đăng nhập sử dụng",
+      "Tập hợp các phần mềm được cài đặt và chạy đồng thời trên cùng một máy tính",
+      "Hệ thống dây cáp và ổ điện được lắp đặt sẵn trong một phòng máy tính",
     ],
     answer: 0,
     explain:
@@ -19,10 +19,10 @@ const questions: Question[] = [
     id: "b8-02",
     q: "LAN là viết tắt của loại mạng nào?",
     options: [
-      "Mạng cục bộ — phạm vi nhỏ như phòng, toà nhà, trường học",
-      "Mạng diện rộng — phạm vi quốc gia, toàn cầu",
-      "Mạng di động 4G",
-      "Mạng riêng ảo",
+      "Mạng cục bộ — phạm vi hẹp trong một phòng, toà nhà hay khuôn viên trường",
+      "Mạng diện rộng — phạm vi lớn nối nhiều tỉnh thành hoặc nhiều quốc gia",
+      "Mạng riêng ảo — tạo đường truyền được mã hoá đi xuyên qua mạng công cộng",
+      "Mạng đô thị — phạm vi trung bình phủ khắp một thành phố hoặc quận huyện",
     ],
     answer: 0,
     explain: "LAN (Local Area Network) là mạng cục bộ, phạm vi hẹp; WAN (Wide Area Network) là mạng diện rộng.",
@@ -31,10 +31,10 @@ const questions: Question[] = [
     id: "b8-03",
     q: "Internet là gì?",
     options: [
-      "Mạng của các mạng, kết nối hàng tỉ thiết bị trên toàn cầu bằng bộ giao thức TCP/IP",
-      "Một phần mềm duyệt web",
-      "Mạng LAN của các công ty lớn",
-      "Tên một công ty cung cấp dịch vụ mạng",
+      "Mạng của các mạng, nối hàng tỉ thiết bị toàn cầu bằng bộ giao thức TCP/IP",
+      "Hệ thống các trang web được liên kết với nhau bằng siêu liên kết dạng HTML",
+      "Phần mềm cho phép người dùng truy cập và xem nội dung các trang web",
+      "Hệ thống mạng nội bộ của các tập đoàn lớn được nối với nhau qua cáp quang",
     ],
     answer: 0,
     explain:
@@ -43,7 +43,12 @@ const questions: Question[] = [
   {
     id: "b8-04",
     q: "Thiết bị nào thường dùng để kết nối các thiết bị trong gia đình với Internet?",
-    options: ["Bộ định tuyến (router)", "Máy in", "Ổ cứng di động", "Webcam"],
+    options: [
+      "Bộ định tuyến — nối mạng nhà với nhà cung cấp dịch vụ và phát sóng Wi-Fi",
+      "Bộ chuyển mạch — nối các máy trong cùng một mạng nội bộ bằng cáp mạng",
+      "Bộ khuếch đại sóng — mở rộng vùng phủ Wi-Fi sang các phòng ở xa hơn",
+      "Cạc mạng — bộ phận gắn trong máy tính giúp máy nhận và gửi gói tin",
+    ],
     answer: 0,
     explain:
       "Router (bộ định tuyến) kết nối mạng gia đình với nhà cung cấp dịch vụ Internet và phát Wi-Fi cho các thiết bị.",
@@ -52,10 +57,10 @@ const questions: Question[] = [
     id: "b8-05",
     q: "Điện toán đám mây (cloud computing) cho phép người dùng làm gì?",
     options: [
-      "Sử dụng dịch vụ lưu trữ, phần mềm, máy chủ... qua Internet mà không cần sở hữu hạ tầng",
-      "Chỉ lưu ảnh trên máy tính cá nhân",
-      "Kết nối hai máy tính bằng cáp trực tiếp",
-      "Tăng tốc độ CPU của máy tính",
+      "Dùng dịch vụ lưu trữ, phần mềm, máy chủ qua Internet mà không cần sở hữu hạ tầng",
+      "Tăng tốc độ xử lí của máy tính cá nhân bằng cách mượn thêm CPU từ máy khác",
+      "Lưu dữ liệu vào một vùng ẩn trên ổ cứng để tránh bị mã độc xâm nhập",
+      "Kết nối trực tiếp hai máy tính bằng cáp để chép dữ liệu qua lại nhanh hơn",
     ],
     answer: 0,
     explain:
@@ -64,7 +69,12 @@ const questions: Question[] = [
   {
     id: "b8-06",
     q: "Google Drive, OneDrive là ví dụ về dịch vụ đám mây loại nào?",
-    options: ["Lưu trữ dữ liệu trực tuyến", "Thiết kế đồ hoạ", "Diệt virus", "Quản lí mạng LAN"],
+    options: [
+      "Lưu trữ dữ liệu trực tuyến — gửi tệp lên máy chủ và truy cập từ mọi thiết bị",
+      "Phần mềm dịch vụ trực tuyến — soạn thảo văn bản, bảng tính ngay trên trình duyệt",
+      "Nền tảng dịch vụ trực tuyến — cung cấp môi trường để lập trình viên chạy ứng dụng",
+      "Hạ tầng dịch vụ trực tuyến — cho thuê máy chủ ảo để tự cài hệ điều hành lên đó",
+    ],
     answer: 0,
     explain: "Đây là các dịch vụ lưu trữ đám mây: dữ liệu để trên máy chủ của nhà cung cấp, truy cập từ mọi thiết bị.",
   },
@@ -72,10 +82,10 @@ const questions: Question[] = [
     id: "b8-07",
     q: "Ưu điểm nổi bật của việc lưu tệp trên đám mây so với lưu trên một máy tính là:",
     options: [
-      "Truy cập được từ nhiều thiết bị, dễ chia sẻ, ít lo mất dữ liệu khi hỏng máy",
-      "Không bao giờ cần Internet",
-      "Luôn nhanh hơn ổ cứng máy tính",
-      "Hoàn toàn miễn phí với dung lượng vô hạn",
+      "Truy cập được từ nhiều thiết bị, dễ chia sẻ, ít lo mất khi hỏng máy",
+      "Tốc độ đọc ghi luôn nhanh hơn ổ cứng gắn trong máy tính cá nhân",
+      "Dùng được cả khi không có kết nối Internet vì tệp đã lưu sẵn trên máy",
+      "Được cấp dung lượng không giới hạn và hoàn toàn miễn phí trọn đời",
     ],
     answer: 0,
     explain:
@@ -84,7 +94,12 @@ const questions: Question[] = [
   {
     id: "b8-08",
     q: "Mạng không dây Wi-Fi truyền dữ liệu bằng gì?",
-    options: ["Sóng vô tuyến", "Cáp quang", "Cáp xoắn đôi", "Tia laser"],
+    options: [
+      "Sóng vô tuyến ở dải tần 2,4 GHz hoặc 5 GHz trong phạm vi ngắn",
+      "Sóng hồng ngoại truyền thẳng giữa hai thiết bị đặt gần nhau",
+      "Xung ánh sáng dẫn trong sợi cáp quang nối tới từng thiết bị",
+      "Tín hiệu điện truyền qua đôi dây đồng xoắn trong cáp mạng",
+    ],
     answer: 0,
     explain: "Wi-Fi dùng sóng vô tuyến để kết nối thiết bị với điểm truy cập trong phạm vi ngắn.",
   },
@@ -92,10 +107,10 @@ const questions: Question[] = [
     id: "b8-09",
     q: "IoT trong nông nghiệp thông minh có thể làm gì?",
     options: [
-      "Cảm biến tự đo độ ẩm đất và tự động tưới khi cần",
-      "Thay đất trồng bằng nhựa",
-      "Làm cây lớn nhanh gấp 100 lần",
-      "Loại bỏ hoàn toàn nhu cầu chăm sóc",
+      "Cảm biến tự đo độ ẩm đất, gửi số liệu về hệ thống và tự bật tưới khi cần",
+      "Thay thế hoàn toàn công việc của người nông dân trên đồng ruộng",
+      "Giúp cây trồng sinh trưởng nhanh hơn nhiều lần so với cách trồng thường",
+      "Tự động lai tạo ra các giống cây mới có năng suất cao và chịu hạn tốt",
     ],
     answer: 0,
     explain:
@@ -105,10 +120,10 @@ const questions: Question[] = [
     id: "b8-10",
     q: "Phát biểu nào về WAN là ĐÚNG?",
     options: [
-      "WAN kết nối các mạng LAN ở khoảng cách xa, phạm vi có thể là quốc gia hoặc toàn cầu",
-      "WAN chỉ hoạt động trong một toà nhà",
-      "WAN không cần thiết bị định tuyến",
-      "WAN là tên khác của Wi-Fi",
+      "WAN nối các mạng LAN ở xa nhau, phạm vi có thể là quốc gia hay toàn cầu",
+      "WAN chỉ hoạt động trong phạm vi một toà nhà hoặc một khuôn viên nhất định",
+      "WAN là cách gọi khác của mạng không dây Wi-Fi có vùng phủ sóng rộng",
+      "WAN kết nối trực tiếp từng máy tính với nhau mà không cần bộ định tuyến",
     ],
     answer: 0,
     explain: "WAN (mạng diện rộng) liên kết nhiều LAN qua khoảng cách lớn; Internet là WAN lớn nhất.",
@@ -117,10 +132,10 @@ const questions: Question[] = [
     id: "b8-11",
     q: "Học trực tuyến qua Zoom/Google Meet trong đại dịch là minh chứng cho vai trò nào của mạng?",
     options: [
-      "Duy trì hoạt động học tập, làm việc từ xa của xã hội",
-      "Thay thế hoàn toàn trường học truyền thống",
-      "Giảm nhu cầu sử dụng Internet",
-      "Chứng minh mạng chỉ dành cho giải trí",
+      "Giúp xã hội duy trì việc học tập và làm việc ngay cả khi phải giãn cách",
+      "Chứng tỏ lớp học trực tuyến có thể thay thế hoàn toàn trường học truyền thống",
+      "Cho thấy nhu cầu dùng Internet sẽ giảm dần khi mọi việc đã lên mạng hết",
+      "Chứng tỏ mạng máy tính chủ yếu phục vụ nhu cầu giải trí và liên lạc",
     ],
     answer: 0,
     explain:
@@ -129,7 +144,12 @@ const questions: Question[] = [
   {
     id: "b8-12",
     q: "Khi chọn gói cước Internet gia đình, thông số nào cho biết tốc độ đường truyền?",
-    options: ["Mbps (megabit trên giây)", "GB (gigabyte dung lượng ổ cứng)", "GHz (tần số CPU)", "MP (megapixel)"],
+    options: [
+      "Mbps — số mêgabit dữ liệu truyền được trong mỗi giây trên đường truyền",
+      "GB — số gigabyte dữ liệu tối đa được phép tải về trong mỗi tháng",
+      "GHz — tần số hoạt động của bộ định tuyến do nhà mạng lắp đặt tại nhà",
+      "ms — độ trễ tính bằng mili giây khi gói tin đi tới máy chủ và quay về",
+    ],
     answer: 0,
     explain: "Tốc độ truyền dữ liệu đo bằng bit/giây: Mbps, Gbps. Lưu ý phân biệt Mb (megabit) và MB (megabyte).",
   },
