@@ -72,7 +72,8 @@ Mục tiêu: **0 câu** ở mọi bài.
 - [x] bài 09 — xong (trước: 12/12 câu lỗi)
 - [x] bài 14 — xong (trước: 9/10)
 - [x] bài 34 — xong (trước: 10/10)
-- [ ] 31 bài còn lại — chạy script trên để biết bài nào còn lỗi và nặng bao nhiêu
+- [x] bài 30, 15, 02 — xong
+- [ ] 28 bài còn lại — chạy script trên để biết bài nào còn lỗi và nặng bao nhiêu
 
 Sửa xong bài nào thì đánh dấu vào đây, chạy `npx tsc --noEmit` kiểm tra rồi
 commit đẩy lên (Vercel tự build lại).

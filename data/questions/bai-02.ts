@@ -6,10 +6,10 @@ const questions: Question[] = [
     id: "b2-01",
     q: "Thiết bị thông minh là gì?",
     options: [
-      "Thiết bị điện tử có thể hoạt động tự chủ ở mức độ nhất định nhờ phần mềm điều khiển",
-      "Mọi thiết bị chạy bằng điện",
-      "Thiết bị có màn hình cảm ứng",
-      "Thiết bị có giá thành cao",
+      "Thiết bị điện tử hoạt động tự chủ ở mức nhất định nhờ phần mềm điều khiển",
+      "Thiết bị điện tử có màn hình cảm ứng và giao diện đồ hoạ cho người dùng",
+      "Thiết bị điện tử chạy bằng điện lưới hoặc pin sạc và có tuổi thọ cao",
+      "Thiết bị điện tử đời mới có giá thành cao và nhiều tính năng tiện ích",
     ],
     answer: 0,
     explain:
@@ -18,7 +18,12 @@ const questions: Question[] = [
   {
     id: "b2-02",
     q: "Thiết bị nào sau đây là thiết bị thông minh?",
-    options: ["Đồng hồ thông minh (smartwatch)", "Quạt bàn cơ", "Bóng đèn sợi đốt", "Máy tính bỏ túi đơn giản"],
+    options: [
+      "Đồng hồ thông minh tự đo nhịp tim và đồng bộ số liệu sang điện thoại",
+      "Máy tính bỏ túi thực hiện được các phép tính lượng giác và luỹ thừa",
+      "Quạt bàn có hẹn giờ tắt bằng núm vặn cơ và ba mức tốc độ gió",
+      "Bóng đèn sợi đốt gắn công tắc cảm ứng bật tắt bằng cách chạm tay",
+    ],
     answer: 0,
     explain:
       "Smartwatch có bộ xử lí, phần mềm, cảm biến và kết nối không dây — đủ đặc điểm của thiết bị thông minh.",
@@ -28,9 +33,9 @@ const questions: Question[] = [
     q: "Cuộc cách mạng công nghiệp lần thứ tư (4.0) gắn với đặc trưng nào?",
     options: [
       "Kết nối vạn vật, trí tuệ nhân tạo, dữ liệu lớn và tự động hoá thông minh",
-      "Cơ giới hoá bằng máy hơi nước",
-      "Điện khí hoá sản xuất",
-      "Tự động hoá bằng máy tính cá nhân",
+      "Cơ giới hoá sản xuất nhờ động cơ hơi nước thay cho sức người và gia súc",
+      "Điện khí hoá và sản xuất hàng loạt theo dây chuyền lắp ráp quy mô lớn",
+      "Tự động hoá nhờ máy tính điện tử và các thiết bị điều khiển lập trình",
     ],
     answer: 0,
     explain:
@@ -40,10 +45,10 @@ const questions: Question[] = [
     id: "b2-04",
     q: "IoT (Internet of Things) nghĩa là gì?",
     options: [
-      "Mạng lưới các thiết bị được kết nối Internet để thu thập và trao đổi dữ liệu tự động",
-      "Một loại máy tính cỡ lớn",
-      "Phần mềm diệt virus trên Internet",
-      "Dịch vụ mua bán trực tuyến",
+      "Mạng lưới thiết bị kết nối Internet để tự thu thập và trao đổi dữ liệu",
+      "Mạng lưới máy chủ cỡ lớn cho phép thuê tài nguyên tính toán qua Internet",
+      "Hệ thống phần mềm bảo vệ các thiết bị khỏi mã độc lây lan qua Internet",
+      "Hệ thống các sàn giao dịch cho phép mua bán hàng hoá qua Internet",
     ],
     answer: 0,
     explain:
@@ -53,10 +58,10 @@ const questions: Question[] = [
     id: "b2-05",
     q: "Đóng góp nào của tin học KHÔNG đúng?",
     options: [
-      "Tin học thay thế hoàn toàn con người trong mọi hoạt động",
-      "Tin học giúp quản lí, điều hành xã hội hiệu quả hơn",
-      "Tin học thúc đẩy phát triển kinh tế số, thương mại điện tử",
-      "Tin học hỗ trợ nghiên cứu khoa học và giáo dục",
+      "Tin học thay thế hoàn toàn con người trong mọi hoạt động của xã hội",
+      "Tin học giúp quản lí và điều hành xã hội nhanh chóng, hiệu quả hơn",
+      "Tin học thúc đẩy kinh tế số, thương mại điện tử và ngân hàng số",
+      "Tin học hỗ trợ nghiên cứu khoa học, giáo dục và chăm sóc sức khoẻ",
     ],
     answer: 0,
     explain:
@@ -66,10 +71,10 @@ const questions: Question[] = [
     id: "b2-06",
     q: "Ứng dụng nào sau đây là thành tựu của trí tuệ nhân tạo (AI)?",
     options: [
-      "Trợ lí ảo nhận dạng giọng nói như Siri, Google Assistant",
-      "Bảng tính Excel cộng các số",
-      "Máy in in tài liệu",
-      "USB lưu trữ dữ liệu",
+      "Trợ lí ảo nhận dạng giọng nói và trả lời câu hỏi của người dùng",
+      "Bảng tính tự cộng dãy số và vẽ biểu đồ theo công thức đã nhập sẵn",
+      "Máy in tự nhận diện khổ giấy trong khay rồi in tài liệu cho vừa trang",
+      "Thẻ nhớ tự nén dữ liệu lại để lưu được nhiều tệp hơn dung lượng thật",
     ],
     answer: 0,
     explain:
@@ -78,7 +83,12 @@ const questions: Question[] = [
   {
     id: "b2-07",
     q: "Học tập trực tuyến (e-learning) là ví dụ về đóng góp của tin học trong lĩnh vực nào?",
-    options: ["Giáo dục", "Y tế", "Giao thông", "Nông nghiệp"],
+    options: [
+      "Giáo dục — dạy học từ xa, kho học liệu số và lớp học ảo trên mạng",
+      "Y tế — bệnh án điện tử, hội chẩn từ xa và theo dõi sức khoẻ qua thiết bị",
+      "Giao thông — dẫn đường vệ tinh, đèn tín hiệu và thu phí không dừng",
+      "Nông nghiệp — cảm biến đo độ ẩm đất và hệ thống tưới tiêu tự động",
+    ],
     answer: 0,
     explain:
       "E-learning ứng dụng tin học vào giáo dục: học từ xa, kho học liệu số, lớp học ảo...",
@@ -87,10 +97,10 @@ const questions: Question[] = [
     id: "b2-08",
     q: "Đặc điểm nào giúp thiết bị thông minh ngày càng phổ biến?",
     options: [
-      "Nhỏ gọn, giá hợp lí, kết nối không dây và nhiều tiện ích",
-      "Chỉ dành cho chuyên gia sử dụng",
-      "Không cần nguồn điện",
-      "Không cần phần mềm",
+      "Nhỏ gọn, giá ngày càng hợp lí, kết nối không dây và nhiều tiện ích",
+      "Cấu tạo đơn giản nên bền và hầu như không cần bảo trì hay sửa chữa",
+      "Tiêu thụ rất ít điện nên có thể dùng liên tục nhiều tháng không sạc",
+      "Được cài sẵn mọi phần mềm nên người dùng không phải cập nhật gì thêm",
     ],
     answer: 0,
     explain:
@@ -100,10 +110,10 @@ const questions: Question[] = [
     id: "b2-09",
     q: 'Thành tựu nào sau đây thuộc về "xã hội tri thức"?',
     options: [
-      "Tri thức và thông tin trở thành nguồn lực chính tạo ra của cải",
-      "Sản xuất chủ yếu dựa vào lao động cơ bắp",
-      "Kinh tế chỉ dựa vào tài nguyên thiên nhiên",
-      "Mọi giao dịch đều dùng tiền mặt",
+      "Tri thức và thông tin trở thành nguồn lực chính tạo ra của cải xã hội",
+      "Sản xuất chủ yếu dựa vào sức lao động cơ bắp của đông đảo công nhân",
+      "Nền kinh tế phát triển chủ yếu nhờ khai thác tài nguyên thiên nhiên sẵn có",
+      "Mọi giao dịch mua bán đều thực hiện trực tiếp bằng tiền mặt cho an toàn",
     ],
     answer: 0,
     explain:
@@ -113,10 +123,10 @@ const questions: Question[] = [
     id: "b2-10",
     q: "Camera giám sát giao thông tự động phát hiện xe vượt đèn đỏ là ứng dụng kết hợp của những công nghệ nào?",
     options: [
-      "Thiết bị thông minh + xử lí ảnh (AI) + kết nối mạng",
-      "Máy in + bàn phím",
-      "USB + loa",
-      "Màn hình + chuột máy tính",
+      "Thiết bị thông minh, nhận dạng hình ảnh bằng AI và kết nối truyền dữ liệu",
+      "Máy quét mã vạch, bộ nhớ ngoài dung lượng lớn và máy in tốc độ cao",
+      "Cảm biến hồng ngoại, loa phát cảnh báo và bảng điện tử hiển thị nội dung",
+      "Màn hình cảm ứng, thiết bị nhập liệu và phần mềm bảng tính thống kê",
     ],
     answer: 0,
     explain:
@@ -126,10 +136,10 @@ const questions: Question[] = [
     id: "b2-11",
     q: "Khi sử dụng thiết bị thông minh, điều nào sau đây NÊN làm?",
     options: [
-      "Cập nhật phần mềm và cài mật khẩu bảo vệ thiết bị",
-      "Dùng liên tục nhiều giờ không nghỉ",
-      "Chia sẻ vị trí công khai mọi lúc",
-      "Cài đặt phần mềm từ nguồn không rõ ràng",
+      "Cập nhật phần mềm thường xuyên và đặt mật khẩu khoá màn hình thiết bị",
+      "Bật chia sẻ vị trí công khai mọi lúc để bạn bè dễ tìm và liên lạc",
+      "Cài thêm nhiều ứng dụng tăng tốc từ các trang tải phần mềm miễn phí",
+      "Giữ máy luôn bật và không khởi động lại để ứng dụng phản hồi nhanh hơn",
     ],
     answer: 0,
     explain:
@@ -139,10 +149,10 @@ const questions: Question[] = [
     id: "b2-12",
     q: "Robot lau nhà tự tránh vật cản và tự về trạm sạc thể hiện đặc điểm nào của thiết bị thông minh?",
     options: [
-      "Khả năng hoạt động tự chủ",
-      "Giá thành rẻ",
-      "Kích thước nhỏ",
-      "Tiết kiệm điện",
+      "Khả năng tự cảm nhận môi trường và tự ra quyết định, không cần điều khiển",
+      "Khả năng kết nối Internet để người dùng theo dõi từ xa qua ứng dụng",
+      "Khả năng tiết kiệm điện năng nhờ tự tắt khi đã lau xong toàn bộ căn phòng",
+      "Khả năng thu nhỏ kích thước để chui vừa gầm giường và các khe hẹp",
     ],
     answer: 0,
     explain:
