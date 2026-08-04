@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { TFQuestion } from "@/lib/types";
 import { saveAttempt, getLessonProgress } from "@/lib/progress";
+import { scrollIntoViewIfNeeded } from "@/components/QuizClient";
 
 // Điểm mỗi câu theo quy chế thi tốt nghiệp: đúng 1 ý 0,1đ; 2 ý 0,25đ; 3 ý 0,5đ; 4 ý 1đ
 const POINTS = [0, 0.1, 0.25, 0.5, 1];
@@ -24,6 +25,11 @@ export default function TrueFalseQuiz({
   const [submitted, setSubmitted] = useState(false);
   const [earned, setEarned] = useState<number[]>([]); // điểm từng câu đã nộp
   const [finished, setFinished] = useState(false);
+  const resultRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (submitted) scrollIntoViewIfNeeded(resultRef.current);
+  }, [submitted]);
 
   const q = questions[current];
   const maxScore = questions.length; // mỗi câu tối đa 1 điểm
@@ -211,7 +217,10 @@ export default function TrueFalseQuiz({
             {allAnswered ? "Chấm câu này" : "Hãy chọn Đúng/Sai cho đủ 4 ý"}
           </button>
         ) : (
-          <div className="mt-4 animate-pop-in rounded-xl border border-ink/5 bg-white p-4 shadow-card">
+          <div
+            ref={resultRef}
+            className="mt-4 animate-pop-in rounded-xl border border-ink/5 bg-white p-4 shadow-card"
+          >
             <p className="font-display text-sm font-semibold text-ink">
               🎯 Em đúng {q.statements.filter((st, i) => answers[i] === st.answer).length}/4 ý —
               được {POINTS[q.statements.filter((st, i) => answers[i] === st.answer).length]

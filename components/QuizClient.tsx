@@ -1,9 +1,20 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import type { Question } from "@/lib/types";
 import { getLessonProgress, saveAttempt } from "@/lib/progress";
+
+// Cuộn phần vừa hiện ra vào tầm nhìn. Trên điện thoại, ô giải thích nằm dưới
+// đáy màn hình nên không tự thấy được; gọi hàm này để học sinh khỏi vuốt tay
+// sau mỗi câu. Máy tính màn hình rộng đã thấy sẵn thì "nearest" không cuộn gì.
+export function scrollIntoViewIfNeeded(el: HTMLElement | null) {
+  if (!el) return;
+  const reduceMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  el.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "nearest" });
+}
 
 // Một câu hỏi sau khi trộn thứ tự phương án
 type ShuffledQuestion = Question & {
@@ -53,12 +64,17 @@ export default function QuizClient({
   const [wrongIds, setWrongIds] = useState<string[]>([]);
   const [finished, setFinished] = useState(false);
   const [best, setBest] = useState<number | null>(null);
+  const feedbackRef = useRef<HTMLDivElement>(null);
 
   // Trộn câu hỏi ở client để tránh lệch giữa server render và client
   useEffect(() => {
     setQuiz(prepare(questions));
     setBest(getLessonProgress(lessonId)?.best ?? null);
   }, [questions, lessonId]);
+
+  useEffect(() => {
+    if (picked !== null) scrollIntoViewIfNeeded(feedbackRef.current);
+  }, [picked]);
 
   const q = quiz[current];
   const scorePercent = quiz.length ? Math.round((correctCount / quiz.length) * 100) : 0;
@@ -284,7 +300,10 @@ export default function QuizClient({
           </div>
 
           {picked !== null && (
-            <div className="mt-4 animate-pop-in rounded-xl border border-ink/5 bg-white p-4 shadow-card">
+            <div
+              ref={feedbackRef}
+              className="mt-4 animate-pop-in rounded-xl border border-ink/5 bg-white p-4 shadow-card"
+            >
               <p
                 className={`font-display text-sm font-semibold ${
                   picked === q.correctIndex ? "text-mint" : "text-tomato"
