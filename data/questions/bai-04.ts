@@ -34,10 +34,10 @@ const questions: Question[] = [
     id: "b4-05",
     q: "Vì sao máy tính dùng hệ nhị phân để biểu diễn dữ liệu?",
     options: [
-      "Vì linh kiện điện tử dễ chế tạo với hai trạng thái (có điện/không có điện)",
-      "Vì hệ nhị phân tính toán ra kết quả nhỏ hơn",
-      "Vì con người quen dùng hệ nhị phân",
-      "Vì hệ thập phân không biểu diễn được số lớn",
+      "Vì linh kiện điện tử dễ chế tạo với hai trạng thái có điện, không điện",
+      "Vì phép tính trong hệ nhị phân luôn cho kết quả nhỏ hơn hệ thập phân",
+      "Vì hệ thập phân không biểu diễn được các số nguyên quá lớn",
+      "Vì hệ nhị phân tiết kiệm bộ nhớ hơn hệ thập phân khi lưu cùng một số",
     ],
     answer: 0,
     explain:
@@ -89,10 +89,10 @@ const questions: Question[] = [
     id: "b4-12",
     q: "Phát biểu nào ĐÚNG về biểu diễn số nguyên trong máy tính?",
     options: [
-      "Số nguyên được lưu bằng một số bit cố định (ví dụ 8, 16, 32 bit) nên có phạm vi giới hạn",
-      "Máy tính lưu được số nguyên lớn tuỳ ý mà không có giới hạn nào",
-      "Mỗi số nguyên luôn chiếm đúng 1 bit",
-      "Số nguyên âm không thể biểu diễn trong máy tính",
+      "Số nguyên lưu bằng số bit cố định nên phạm vi biểu diễn bị giới hạn",
+      "Máy tính lưu được số nguyên lớn tuỳ ý mà không có giới hạn nào cả",
+      "Mỗi số nguyên luôn chiếm đúng một bit trong bộ nhớ của máy tính",
+      "Số nguyên âm không biểu diễn được nên phải lưu riêng dấu ra chỗ khác",
     ],
     answer: 0,
     explain:

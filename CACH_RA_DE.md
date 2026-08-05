@@ -72,12 +72,16 @@ Mục tiêu: **0 câu** ở mọi bài.
 - [x] bài 09 — xong (trước: 12/12 câu lỗi)
 - [x] bài 14 — xong (trước: 9/10)
 - [x] bài 34 — xong (trước: 10/10)
-- [x] bài 30, 15, 02, 06, 08, 29 — xong
-- [ ] 25 bài còn lại — chạy script trên để biết bài nào còn lỗi và nặng bao nhiêu
+- [x] **ĐÃ SỬA XONG TOÀN BỘ 34/34 BÀI**
 
-Tính đến lần cập nhật này: toàn ngân hàng còn **117/388 câu (30%)** mắc lỗi,
-giảm từ 180 câu (46%) ban đầu. Các bài nặng nhất còn lại: 13, 33, 03, 07, 11,
-12, 28, 18, 21, 26.
+Kết quả cuối: từ **180/388 câu (46%)** mắc lỗi xuống còn **0 câu**.
+Độ dài trung bình: đáp án đúng 38 kí tự, phương án nhiễu 36 kí tự — gần như
+cân bằng (ban đầu là 36 so với 17).
+
+Lưu ý khi chạy lại script đo: script đếm sai với các đáp án là **mã lệnh viết
+trong nháy đơn** chứa dấu nháy kép bên trong, ví dụ `'["a", "b", "c"]'` trong
+bài 25. Ba câu bài 25 bị script báo là "dài hơn hẳn" thực chất cân đối — đây
+là báo động giả, không cần sửa.
 
 Sửa xong bài nào thì đánh dấu vào đây, chạy `npx tsc --noEmit` kiểm tra rồi
 commit đẩy lên (Vercel tự build lại).

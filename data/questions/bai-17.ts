@@ -6,10 +6,10 @@ const questions: Question[] = [
     id: "b17-01",
     q: "Biến trong chương trình là gì?",
     options: [
-      "Tên một vùng nhớ dùng để lưu trữ giá trị, giá trị có thể thay đổi khi chạy chương trình",
-      "Một con số không bao giờ đổi",
-      "Tên của chương trình",
-      "Một loại lỗi cú pháp",
+      "Tên của một vùng nhớ lưu giá trị, giá trị này thay đổi được",
+      "Một giá trị cố định, không bao giờ thay đổi khi chạy",
+      "Tên của chương trình do người lập trình tự đặt ra",
+      "Một ô nhớ chỉ lưu được duy nhất các số nguyên",
     ],
     answer: 0,
     explain:

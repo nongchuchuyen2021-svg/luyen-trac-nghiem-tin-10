@@ -6,10 +6,10 @@ const questions: Question[] = [
     id: "b22-01",
     q: "Danh sách (list) trong Python là gì?",
     options: [
-      "Dãy các giá trị được sắp thứ tự, truy cập qua chỉ số",
-      "Một số nguyên lớn",
-      "Tên khác của xâu kí tự",
-      "Kiểu dữ liệu chỉ chứa số",
+      "Dãy giá trị có thứ tự, truy cập được qua chỉ số",
+      "Dãy kí tự có thứ tự nhưng không sửa được từng phần",
+      "Tập hợp các giá trị không trùng nhau và không thứ tự",
+      "Kiểu dữ liệu chỉ chứa được các giá trị cùng một kiểu",
     ],
     answer: 0,
     explain:
@@ -84,10 +84,10 @@ const questions: Question[] = [
     id: "b22-11",
     q: "Danh sách khác xâu kí tự ở điểm nào?",
     options: [
-      "Có thể thay đổi từng phần tử của danh sách, còn xâu thì không thay đổi được",
-      "Danh sách không có chỉ số",
-      "Xâu chứa được nhiều kiểu dữ liệu hơn",
-      "Không thể duyệt danh sách bằng for",
+      "Sửa được từng phần tử của danh sách, còn xâu thì không sửa được",
+      "Sửa được từng kí tự của xâu, còn danh sách thì không sửa được",
+      "Danh sách truy cập qua chỉ số, còn xâu thì không có chỉ số",
+      "Xâu duyệt được bằng vòng lặp for, còn danh sách thì không",
     ],
     answer: 0,
     explain:
