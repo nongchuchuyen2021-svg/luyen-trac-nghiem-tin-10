@@ -6,10 +6,10 @@ const questions: Question[] = [
     id: "b1-01",
     q: "Thông tin là gì?",
     options: [
-      "Những gì đem lại hiểu biết cho con người về thế giới xung quanh và về chính bản thân mình",
-      "Các con số và chữ viết được lưu trong máy tính",
-      "Tất cả những gì con người nhìn thấy được",
-      "Các tín hiệu điện truyền trong máy tính",
+      "Những gì đem lại hiểu biết cho con người về thế giới và về chính mình",
+      "Những con số và chữ viết đã được ghi lại và lưu trữ trong máy tính",
+      "Tất cả những gì con người nhìn thấy và nghe được ở xung quanh",
+      "Các tín hiệu điện được truyền đi giữa những bộ phận của máy tính",
     ],
     answer: 0,
     explain:
@@ -19,10 +19,10 @@ const questions: Question[] = [
     id: "b1-02",
     q: "Dữ liệu là gì?",
     options: [
-      "Thông tin đã được đưa vào máy tính để máy tính có thể xử lí",
-      "Mọi hiểu biết của con người",
-      "Các chương trình máy tính",
-      "Kết quả in ra màn hình",
+      "Thông tin đã được ghi lại, số hoá để máy tính có thể xử lí được",
+      "Mọi hiểu biết mà con người thu nhận được về thế giới xung quanh",
+      "Tập hợp các chương trình được cài đặt sẵn trong máy tính",
+      "Kết quả mà máy tính đưa ra màn hình sau khi tính toán xong",
     ],
     answer: 0,
     explain:
@@ -33,9 +33,9 @@ const questions: Question[] = [
     q: "Quá trình xử lí thông tin gồm các bước cơ bản theo thứ tự nào?",
     options: [
       "Tiếp nhận → xử lí → lưu trữ, truyền → đưa ra kết quả",
-      "Xử lí → tiếp nhận → đưa ra kết quả",
-      "Lưu trữ → tiếp nhận → xử lí",
-      "Đưa ra kết quả → xử lí → tiếp nhận",
+      "Xử lí → tiếp nhận → đưa ra kết quả → lưu trữ, truyền",
+      "Lưu trữ, truyền → tiếp nhận → xử lí → đưa ra kết quả",
+      "Tiếp nhận → lưu trữ, truyền → đưa ra kết quả → xử lí",
     ],
     answer: 0,
     explain:
@@ -80,10 +80,10 @@ const questions: Question[] = [
     id: "b1-08",
     q: "Phát biểu nào ĐÚNG khi phân biệt thông tin và dữ liệu?",
     options: [
-      "Thông tin là ý nghĩa của dữ liệu; dữ liệu là hình thức thể hiện của thông tin trong máy tính",
-      "Thông tin và dữ liệu là hai tên gọi của cùng một khái niệm",
-      "Dữ liệu là ý nghĩa; thông tin là các con số cụ thể",
-      "Thông tin chỉ tồn tại trong máy tính, dữ liệu tồn tại ngoài đời",
+      "Thông tin là ý nghĩa, còn dữ liệu là hình thức ghi lại thông tin đó",
+      "Dữ liệu là ý nghĩa, còn thông tin là các con số cụ thể ghi trong máy",
+      "Thông tin và dữ liệu là hai tên gọi khác nhau của cùng một khái niệm",
+      "Thông tin chỉ có trong máy tính, còn dữ liệu chỉ có ở ngoài đời thực",
     ],
     answer: 0,
     explain:

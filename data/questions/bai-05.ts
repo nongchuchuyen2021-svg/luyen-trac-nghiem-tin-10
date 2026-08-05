@@ -52,10 +52,10 @@ const questions: Question[] = [
     id: "b5-06",
     q: 'Mệnh đề "Hôm nay trời mưa VÀ em mang ô" đúng khi nào?',
     options: [
-      "Trời mưa đúng và em mang ô cũng đúng",
-      "Chỉ cần trời mưa",
-      "Chỉ cần em mang ô",
-      "Một trong hai điều đúng",
+      "Cả hai vế đều đúng: trời mưa và em có mang ô",
+      "Chỉ cần vế thứ nhất đúng: hôm nay trời có mưa",
+      "Chỉ cần vế thứ hai đúng: em có mang ô theo",
+      "Chỉ cần một trong hai vế đúng là mệnh đề đúng",
     ],
     answer: 0,
     explain: "Liên từ VÀ tương ứng phép AND: cả hai vế phải cùng đúng.",
@@ -63,7 +63,12 @@ const questions: Question[] = [
   {
     id: "b5-07",
     q: "Giá trị lôgic thường được biểu diễn trong máy tính bằng:",
-    options: ["1 bit (1 = đúng, 0 = sai)", "1 KB", "8 byte", "Một kí tự chữ cái"],
+    options: [
+      "1 bit, quy ước 1 là đúng và 0 là sai",
+      "1 byte, tức 8 bit cho mỗi giá trị lôgic",
+      "2 byte, giống như cách lưu số nguyên nhỏ",
+      "1 kí tự chữ cái, là chữ Đ hoặc chữ S",
+    ],
     answer: 0,
     explain:
       "Về lí thuyết chỉ cần 1 bit cho một giá trị lôgic (thực tế máy có thể cấp cả byte cho tiện xử lí).",
@@ -78,7 +83,7 @@ const questions: Question[] = [
   {
     id: "b5-09",
     q: "Biểu thức 5 > 3 AND 2 > 4 có giá trị:",
-    options: ["False", "True", "5", "2"],
+    options: ["False", "True", "None", "Báo lỗi"],
     answer: 0,
     explain: "5 > 3 đúng nhưng 2 > 4 sai; đúng AND sai = sai (False).",
   },
@@ -86,10 +91,10 @@ const questions: Question[] = [
     id: "b5-10",
     q: "Ứng dụng của đại số lôgic trong máy tính là gì?",
     options: [
-      "Thiết kế các mạch điện tử số và xử lí biểu thức điều kiện trong chương trình",
-      "Chỉ dùng để học toán",
-      "Nén ảnh và video",
-      "Tăng dung lượng ổ cứng",
+      "Thiết kế mạch điện tử số và xử lí biểu thức điều kiện trong chương trình",
+      "Nén ảnh và video để giảm dung lượng tệp khi lưu trữ và truyền đi",
+      "Mã hoá kí tự thành dãy bit theo bảng mã Unicode và UTF-8",
+      "Sắp xếp và tìm kiếm dữ liệu trong các cơ sở dữ liệu lớn",
     ],
     answer: 0,
     explain:
@@ -105,7 +110,12 @@ const questions: Question[] = [
   {
     id: "b5-12",
     q: "Bảng liệt kê giá trị của biểu thức lôgic theo mọi tổ hợp toán hạng gọi là:",
-    options: ["Bảng chân trị (bảng giá trị chân lí)", "Bảng cửu chương", "Bảng mã ASCII", "Bảng tính Excel"],
+    options: [
+      "Bảng chân trị, còn gọi là bảng giá trị chân lí",
+      "Bảng mã ASCII dùng để mã hoá các kí tự",
+      "Bảng chuyển đổi giữa hệ nhị phân và thập phân",
+      "Bảng cửu chương của phép nhân trong hệ nhị phân",
+    ],
     answer: 0,
     explain: "Bảng chân trị cho biết kết quả của phép lôgic với từng tổ hợp giá trị đầu vào.",
   },

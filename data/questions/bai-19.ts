@@ -6,10 +6,10 @@ const questions: Question[] = [
     id: "b19-01",
     q: "Câu lệnh if dùng để làm gì?",
     options: [
-      "Rẽ nhánh: thực hiện khối lệnh khi điều kiện đúng",
-      "Lặp lại một khối lệnh nhiều lần",
-      "Khai báo biến",
-      "In dữ liệu ra màn hình",
+      "Rẽ nhánh, chỉ thực hiện khối lệnh khi điều kiện đúng",
+      "Lặp lại một khối lệnh cho tới khi điều kiện sai",
+      "Khai báo biến và gán giá trị ban đầu cho biến đó",
+      "Đưa dữ liệu ra màn hình theo định dạng cho trước",
     ],
     answer: 0,
     explain:
@@ -46,10 +46,10 @@ const questions: Question[] = [
     id: "b19-05",
     q: "Biểu thức lôgic a > 5 and a < 10 đúng khi nào?",
     options: [
-      "Khi a lớn hơn 5 VÀ nhỏ hơn 10 (ví dụ a = 7)",
-      "Khi a bằng 5 hoặc 10",
-      "Khi a nhỏ hơn 5",
-      "Với mọi giá trị của a",
+      "Khi a vừa lớn hơn 5 vừa nhỏ hơn 10, ví dụ a = 7",
+      "Khi a lớn hơn 5 hoặc a nhỏ hơn 10, ví dụ a = 3",
+      "Khi a nhận đúng một trong hai giá trị 5 hoặc 10",
+      "Với mọi giá trị của a vì hai vế luôn cùng đúng",
     ],
     answer: 0,
     explain: "and yêu cầu cả hai điều kiện cùng đúng: 5 < a < 10.",
@@ -73,7 +73,12 @@ const questions: Question[] = [
   {
     id: "b19-08",
     q: "Trong Python, khối lệnh bên trong if được xác định bằng gì?",
-    options: ["Thụt lề (indentation)", "Cặp ngoặc nhọn { }", "Từ khoá begin...end", "Dấu chấm phẩy"],
+    options: [
+      "Thụt lề các dòng lệnh vào trong",
+      "Đặt trong cặp ngoặc nhọn { và }",
+      "Đặt giữa từ khoá begin và end",
+      "Kết thúc mỗi lệnh bằng dấu chấm phẩy",
+    ],
     answer: 0,
     explain:
       "Python dùng thụt lề (thường 4 dấu cách) để xác định khối lệnh — thụt lề sai sẽ gây lỗi hoặc chạy sai logic.",
@@ -112,10 +117,10 @@ const questions: Question[] = [
     q: "Đoạn chương trình sau có lỗi gì?",
     code: "if x > 0\n    print(\"Dương\")",
     options: [
-      "Thiếu dấu hai chấm sau điều kiện",
-      "Thiếu dấu chấm phẩy",
-      "print viết sai",
-      "Không có lỗi",
+      "Thiếu dấu hai chấm ở cuối dòng điều kiện",
+      "Thiếu dấu chấm phẩy ở cuối mỗi câu lệnh",
+      "Lệnh print bên trong bị thụt lề quá sâu",
+      "Điều kiện phải đặt trong cặp ngoặc tròn",
     ],
     answer: 0,
     explain: "Cú pháp đúng phải là if x > 0: — thiếu dấu : Python sẽ báo SyntaxError.",
