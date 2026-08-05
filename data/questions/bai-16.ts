@@ -6,10 +6,10 @@ const questions: Question[] = [
     id: "b16-01",
     q: "Ngôn ngữ lập trình bậc cao có đặc điểm gì?",
     options: [
-      "Câu lệnh gần với ngôn ngữ tự nhiên, không phụ thuộc loại máy tính cụ thể",
-      "Chỉ gồm các dãy số 0 và 1",
-      "Chỉ chạy được trên một loại máy tính duy nhất",
-      "Không cần dịch sang ngôn ngữ máy",
+      "Câu lệnh gần ngôn ngữ tự nhiên, không phụ thuộc loại máy tính cụ thể",
+      "Câu lệnh gồm các dãy bit 0 và 1 mà bộ xử lí thực hiện được ngay",
+      "Câu lệnh viết bằng kí hiệu gợi nhớ, gắn chặt với một loại vi xử lí",
+      "Câu lệnh dùng các thẻ đánh dấu để mô tả bố cục và nội dung trang",
     ],
     answer: 0,
     explain:
@@ -19,10 +19,10 @@ const questions: Question[] = [
     id: "b16-02",
     q: "Vì sao chương trình viết bằng ngôn ngữ bậc cao cần được dịch trước khi máy thực hiện?",
     options: [
-      "Vì máy tính chỉ hiểu và thực hiện được ngôn ngữ máy (dãy bit)",
-      "Vì ngôn ngữ bậc cao chạy chậm",
-      "Vì để chương trình ngắn hơn",
-      "Vì để bảo mật mã nguồn",
+      "Vì bộ xử lí chỉ thực hiện được lệnh viết bằng ngôn ngữ máy dạng dãy bit",
+      "Vì bản dịch luôn chạy nhanh hơn nhiều so với mã nguồn ban đầu",
+      "Vì quá trình dịch giúp rút gọn chương trình còn ít dòng lệnh hơn",
+      "Vì mã nguồn cần được mã hoá để người khác không đọc trộm được",
     ],
     answer: 0,
     explain:
@@ -32,10 +32,10 @@ const questions: Question[] = [
     id: "b16-03",
     q: "Python là ngôn ngữ thuộc loại nào?",
     options: [
-      "Ngôn ngữ bậc cao, được thông dịch",
-      "Ngôn ngữ máy",
-      "Hợp ngữ (assembly)",
-      "Ngôn ngữ đánh dấu như HTML",
+      "Ngôn ngữ bậc cao, thực hiện theo cơ chế thông dịch từng câu lệnh",
+      "Ngôn ngữ bậc cao, phải biên dịch trọn bộ thành tệp chạy trước khi dùng",
+      "Hợp ngữ, dùng kí hiệu gợi nhớ thay cho các mã lệnh nhị phân",
+      "Ngôn ngữ đánh dấu, dùng các thẻ để mô tả cấu trúc của trang web",
     ],
     answer: 0,
     explain:
@@ -45,10 +45,10 @@ const questions: Question[] = [
     id: "b16-04",
     q: "Ưu điểm nào khiến Python phù hợp cho người mới học lập trình?",
     options: [
-      "Cú pháp đơn giản, gần ngôn ngữ tự nhiên, thư viện phong phú",
-      "Bắt buộc khai báo kiểu cho mọi biến",
-      "Chỉ chạy trên siêu máy tính",
-      "Không cho phép viết sai",
+      "Cú pháp đơn giản, gần ngôn ngữ tự nhiên và có thư viện rất phong phú",
+      "Bắt buộc khai báo kiểu cho mọi biến nên người học ít nhầm lẫn kiểu",
+      "Tự động phát hiện và sửa các lỗi lôgic trong chương trình người học viết",
+      "Chỉ cần học đúng mười câu lệnh là viết được mọi chương trình cần thiết",
     ],
     answer: 0,
     explain:
@@ -87,10 +87,10 @@ const questions: Question[] = [
     id: "b16-08",
     q: "Môi trường nào dùng để soạn thảo và chạy chương trình Python?",
     options: [
-      "IDLE, Thonny hoặc các IDE như PyCharm, VS Code",
-      "Microsoft Word",
-      "PowerPoint",
-      "Trình xem ảnh",
+      "IDLE, Thonny hoặc các môi trường như PyCharm, Visual Studio Code",
+      "Microsoft Word, WordPad hoặc các trình soạn thảo văn bản có định dạng",
+      "Trình duyệt web như Chrome, Firefox mà không cần cài thêm phần mềm",
+      "Bảng tính Excel kết hợp với công cụ tạo biểu đồ và hàm tính toán",
     ],
     answer: 0,
     explain:
@@ -123,10 +123,10 @@ const questions: Question[] = [
     id: "b16-12",
     q: "Ngôn ngữ máy là gì?",
     options: [
-      "Các lệnh ở dạng dãy bit mà CPU thực hiện được trực tiếp",
-      "Ngôn ngữ của robot",
-      "Tiếng Anh chuyên ngành máy tính",
-      "Ngôn ngữ Python phiên bản đầu tiên",
+      "Các lệnh dạng dãy bit mà bộ xử lí thực hiện được trực tiếp",
+      "Các lệnh viết bằng kí hiệu gợi nhớ tương ứng từng lệnh máy",
+      "Các lệnh dùng từ tiếng Anh gần với ngôn ngữ tự nhiên của người",
+      "Các lệnh điều khiển dành riêng cho robot và máy công nghiệp",
     ],
     answer: 0,
     explain:
