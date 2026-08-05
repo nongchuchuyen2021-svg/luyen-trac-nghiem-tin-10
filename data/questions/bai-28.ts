@@ -6,10 +6,10 @@ const questions: Question[] = [
     id: "b28-01",
     q: "Biến cục bộ là gì?",
     options: [
-      "Biến khai báo bên trong hàm, chỉ dùng được trong hàm đó",
+      "Biến khai báo trong hàm, chỉ dùng trong hàm đó",
       "Biến dùng được ở mọi nơi trong chương trình",
-      "Biến không bao giờ đổi giá trị",
-      "Biến của hệ điều hành",
+      "Biến giữ nguyên giá trị suốt chương trình",
+      "Biến do hệ điều hành cấp cho chương trình",
     ],
     answer: 0,
     explain:
@@ -19,10 +19,10 @@ const questions: Question[] = [
     id: "b28-02",
     q: "Biến toàn cục là gì?",
     options: [
-      "Biến khai báo ngoài mọi hàm, các hàm có thể đọc giá trị của nó",
-      "Biến chỉ dùng trong một hàm",
-      "Biến của Python có sẵn",
-      "Tham số của hàm",
+      "Biến khai báo ngoài hàm, các hàm đều đọc được",
+      "Biến khai báo trong hàm nhưng có lệnh return",
+      "Biến có sẵn của Python, không cần khai báo",
+      "Tham số truyền vào khi chương trình gọi hàm",
     ],
     answer: 0,
     explain: "Biến gán ở cấp chương trình chính là toàn cục — nhìn thấy được từ bên trong các hàm (để đọc).",
@@ -32,10 +32,10 @@ const questions: Question[] = [
     q: "Đoạn chương trình sau bị lỗi gì?",
     code: "def f():\n    x = 10\n\nf()\nprint(x)",
     options: [
-      "NameError: x là biến cục bộ của f, ngoài hàm không tồn tại",
-      "Không lỗi, in ra 10",
-      "SyntaxError ở def",
-      "In ra None",
+      "NameError: x là cục bộ của f, ngoài hàm không có",
+      "Không có lỗi, chương trình in ra số 10",
+      "SyntaxError vì thiếu tham số trong def f()",
+      "Không có lỗi, chương trình in ra None",
     ],
     answer: 0,
     explain:
@@ -47,9 +47,9 @@ const questions: Question[] = [
     code: 'x = "toàn cục"\ndef f():\n    print(x)\n\nf()',
     options: [
       "toàn cục — hàm đọc được biến toàn cục",
-      "Báo lỗi NameError",
-      "None",
-      "x",
+      "Báo lỗi NameError vì x chưa khai báo",
+      "Báo lỗi vì thiếu từ khoá global x",
+      "In ra None vì hàm không trả về gì",
     ],
     answer: 0,
     explain: "Trong hàm không gán x nên Python tìm ra ngoài, thấy biến toàn cục và đọc giá trị của nó.",
@@ -71,9 +71,15 @@ const questions: Question[] = [
   {
     id: "b28-06",
     q: "Muốn GÁN LẠI biến toàn cục x từ bên trong hàm, phải khai báo:",
-    options: ["global x ở đầu thân hàm", "local x", "public x", "Không có cách nào"],
+    options: [
+      "global x ở đầu thân hàm",
+      "local x ở đầu thân hàm",
+      "public x ở đầu thân hàm",
+      "static x ở đầu thân hàm",
+    ],
     answer: 0,
-    explain: "Từ khoá global báo cho Python biết x trong hàm chính là biến toàn cục, không tạo biến mới.",
+    explain:
+      "Từ khoá global báo cho Python biết x trong hàm chính là biến toàn cục, không tạo biến mới. Python không có các từ khoá local, public hay static như một số ngôn ngữ khác.",
   },
   {
     id: "b28-07",
@@ -91,10 +97,10 @@ const questions: Question[] = [
     id: "b28-08",
     q: "Hai hàm khác nhau cùng đặt tên biến cục bộ là i thì:",
     options: [
-      "Không sao — mỗi hàm có biến i riêng, độc lập nhau",
-      "Gây xung đột, chương trình lỗi",
-      "Biến i dùng chung giá trị",
-      "Python tự đổi tên một biến",
+      "Không sao, mỗi hàm có biến i riêng độc lập",
+      "Gây xung đột tên khiến chương trình báo lỗi",
+      "Hai hàm sẽ dùng chung một giá trị của biến i",
+      "Python tự đổi tên biến i ở hàm thứ hai",
     ],
     answer: 0,
     explain:
@@ -104,10 +110,10 @@ const questions: Question[] = [
     id: "b28-09",
     q: "Lợi ích của biến cục bộ so với lạm dụng biến toàn cục là:",
     options: [
-      "Hàm độc lập, dễ kiểm soát, tránh hàm này vô tình phá giá trị của hàm kia",
-      "Tiết kiệm điện cho máy tính",
-      "Bắt buộc của Python",
-      "Không có lợi ích gì",
+      "Hàm độc lập, tránh vô tình phá giá trị của nhau",
+      "Chương trình chạy nhanh hơn do tốn ít bộ nhớ",
+      "Python bắt buộc mọi biến phải là biến cục bộ",
+      "Giúp các hàm chia sẻ dữ liệu với nhau dễ hơn",
     ],
     answer: 0,
     explain:
@@ -118,10 +124,10 @@ const questions: Question[] = [
     q: "Đoạn chương trình sau in ra gì?",
     code: "def tang(n):\n    n = n + 1\n    return n\n\na = 7\ntang(a)\nprint(a)",
     options: [
-      "7 — vì n là bản sao cục bộ, a không đổi (kết quả trả về không được gán lại)",
-      "8",
-      "Báo lỗi",
-      "None",
+      "7 — n là bản sao cục bộ, a bên ngoài không đổi",
+      "8 — hàm đã cộng thêm 1 vào biến a truyền vào",
+      "Báo lỗi vì hàm trả về mà không gán cho biến",
+      "None — vì lệnh gọi tang(a) không được gán lại",
     ],
     answer: 0,
     explain:

@@ -6,10 +6,10 @@ const questions: Question[] = [
     id: "b26-01",
     q: "Hàm trong lập trình là gì?",
     options: [
-      "Khối lệnh có tên, thực hiện một công việc xác định, gọi lại được nhiều lần",
-      "Một biến đặc biệt",
-      "Một loại vòng lặp",
-      "Tên khác của chương trình",
+      "Khối lệnh có tên, gọi lại được nhiều lần khi cần",
+      "Một biến đặc biệt lưu được nhiều giá trị",
+      "Một dạng vòng lặp viết gọn của lệnh for",
+      "Tên gọi khác của cả chương trình chính",
     ],
     answer: 0,
     explain:
@@ -25,9 +25,15 @@ const questions: Question[] = [
   {
     id: "b26-03",
     q: "Hàm nào sau đây là hàm CÓ SẴN của Python?",
-    options: ["print(), len(), int()", "tinh_tong()", "xu_ly()", "chao_hoi()"],
+    options: [
+      "print(), len(), int()",
+      "tinh_tong(), dem_so()",
+      "xu_ly(), kiem_tra()",
+      "chao_hoi(), ve_hinh()",
+    ],
     answer: 0,
-    explain: "Python có sẵn nhiều hàm chuẩn (built-in); các hàm tên tiếng Việt kia phải tự định nghĩa.",
+    explain:
+      "Python có sẵn nhiều hàm chuẩn (built-in) như print, len, int, float, str. Các hàm đặt tên tiếng Việt kia đều phải tự định nghĩa bằng def trước khi gọi.",
   },
   {
     id: "b26-04",
@@ -59,9 +65,9 @@ const questions: Question[] = [
     q: "Từ khoá return trong hàm có tác dụng gì?",
     options: [
       "Kết thúc hàm và trả giá trị về nơi gọi",
-      "In giá trị ra màn hình",
-      "Lặp lại thân hàm",
-      "Xoá hàm khỏi bộ nhớ",
+      "In giá trị kết quả ra màn hình cho người dùng",
+      "Quay lại chạy thân hàm thêm một lần nữa",
+      "Xoá hàm khỏi bộ nhớ sau khi chạy xong",
     ],
     answer: 0,
     explain: "return đưa kết quả về cho biểu thức gọi hàm; các lệnh sau return không được chạy.",
@@ -78,10 +84,10 @@ const questions: Question[] = [
     id: "b26-08",
     q: "Khác nhau giữa return và print trong hàm là:",
     options: [
-      "return trả giá trị cho nơi gọi để dùng tiếp; print chỉ hiển thị ra màn hình",
-      "Giống hệt nhau",
-      "print trả giá trị, return hiển thị",
-      "return chỉ dùng ngoài hàm",
+      "return trả giá trị để dùng tiếp, print chỉ hiển thị",
+      "print trả giá trị để dùng tiếp, return chỉ hiển thị",
+      "Hai lệnh cho kết quả giống hệt nhau khi ở trong hàm",
+      "return chỉ dùng được ở ngoài hàm, print thì ở trong hàm",
     ],
     answer: 0,
     explain:
@@ -98,10 +104,10 @@ const questions: Question[] = [
     id: "b26-10",
     q: "Lợi ích của việc chia chương trình thành các hàm là:",
     options: [
-      "Dễ đọc, tránh lặp code, dễ tìm lỗi và phân công làm việc nhóm",
-      "Chương trình chạy chậm đi",
-      "Bắt buộc phải có mới chạy được",
-      "Chỉ để đẹp code",
+      "Dễ đọc, tránh lặp mã, dễ tìm lỗi và chia việc nhóm",
+      "Giúp chương trình luôn chạy nhanh hơn hẳn",
+      "Là quy định bắt buộc, thiếu hàm thì không chạy được",
+      "Giúp mã nguồn trông đẹp mắt và chuyên nghiệp hơn",
     ],
     answer: 0,
     explain:
@@ -124,10 +130,10 @@ const questions: Question[] = [
     q: "Đoạn chương trình sau in ra gì?",
     code: "def f(x):\n    return x + 1\n    print(\"xong\")\n\nprint(f(9))",
     options: [
-      "10 (chữ 'xong' không in vì nằm sau return)",
-      "10 rồi xong",
-      "xong rồi 10",
-      "Báo lỗi",
+      "10 — chữ 'xong' không in vì nằm sau return",
+      "10 rồi mới đến chữ 'xong' ở dòng dưới",
+      "Chữ 'xong' in trước rồi mới đến số 10",
+      "Báo lỗi vì có lệnh đứng sau lệnh return",
     ],
     answer: 0,
     explain: "return kết thúc hàm ngay lập tức — mọi lệnh phía sau trong hàm bị bỏ qua.",

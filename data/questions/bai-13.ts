@@ -7,12 +7,13 @@ const questions: Question[] = [
     q: "Trong Inkscape, để vẽ hình chữ nhật ta dùng công cụ nào?",
     options: [
       "Công cụ Rectangle (phím tắt R)",
-      "Công cụ Text",
-      "Công cụ Zoom",
-      "Công cụ Eraser",
+      "Công cụ Ellipse (phím tắt E)",
+      "Công cụ Bezier (phím tắt B)",
+      "Công cụ Selector (phím tắt S)",
     ],
     answer: 0,
-    explain: "Hộp công cụ có sẵn Rectangle (chữ nhật), Ellipse (elip), Star (sao), Bezier (đường)...",
+    explain:
+      "Rectangle vẽ chữ nhật; Ellipse vẽ elip/hình tròn; Bezier vẽ đường gấp khúc và đường cong; Selector chỉ để chọn và biến đổi đối tượng đã có, không vẽ được hình mới.",
   },
   {
     id: "b13-02",
@@ -25,50 +26,53 @@ const questions: Question[] = [
     id: "b13-03",
     q: "Khi các hình chồng lên nhau, hình nào hiển thị trên cùng?",
     options: [
-      "Hình được vẽ (hoặc đưa lên) sau cùng trong thứ tự xếp lớp",
-      "Hình lớn nhất",
-      "Hình có màu đậm nhất",
-      "Hình vẽ đầu tiên",
+      "Hình được đưa lên sau cùng trong thứ tự xếp lớp",
+      "Hình được vẽ đầu tiên trên trang thiết kế",
+      "Hình có diện tích lớn nhất trong các hình",
+      "Hình có màu tô đậm và nổi bật nhất",
     ],
     answer: 0,
     explain:
-      "Đối tượng có thứ tự xếp lớp (z-order); lệnh Raise/Lower thay đổi vị trí trên dưới của chúng.",
+      "Thứ tự hiển thị do thứ tự xếp lớp (z-order) quyết định, không phụ thuộc kích thước hay màu sắc. Hình vẽ đầu tiên nằm dưới cùng; lệnh Raise/Lower đổi lại vị trí trên dưới.",
   },
   {
     id: "b13-04",
     q: "Phím tắt Ctrl+D trong Inkscape có tác dụng gì?",
     options: [
-      "Nhân đôi (duplicate) đối tượng đang chọn",
-      "Xoá đối tượng",
-      "Đổi màu đối tượng",
-      "Mở tệp mới",
+      "Nhân đôi đối tượng đang chọn ngay tại chỗ",
+      "Xoá hẳn đối tượng đang chọn khỏi trang",
+      "Nhóm các đối tượng đang chọn lại với nhau",
+      "Bỏ chọn tất cả đối tượng trên trang vẽ",
     ],
     answer: 0,
-    explain: "Ctrl+D tạo bản sao chồng lên đối tượng gốc — rất hay dùng khi thiết kế.",
+    explain:
+      "Ctrl+D tạo bản sao chồng khít lên đối tượng gốc. Xoá là phím Delete, nhóm là Ctrl+G, bỏ chọn là Esc hoặc Edit > Deselect.",
   },
   {
     id: "b13-05",
     q: "Nhóm nhiều đối tượng thành một (group) có lợi ích gì?",
     options: [
-      "Di chuyển, co giãn cả cụm như một đối tượng duy nhất",
-      "Làm nhẹ tệp đi một nửa",
-      "Đổi tất cả thành màu đen",
-      "Khoá vĩnh viễn không sửa được nữa",
+      "Di chuyển, co giãn cả cụm như một đối tượng",
+      "Hợp các hình thành một hình khép kín mới",
+      "Tự động căn đều khoảng cách giữa các hình",
+      "Khoá cụm lại để không chỉnh sửa được nữa",
     ],
     answer: 0,
-    explain: "Group (Ctrl+G) gộp tạm thời để thao tác đồng bộ; Ungroup (Ctrl+Shift+G) tách lại.",
+    explain:
+      "Group (Ctrl+G) chỉ gộp tạm để thao tác đồng bộ, các hình bên trong vẫn nguyên vẹn và sửa được; Ungroup (Ctrl+Shift+G) tách lại. Hợp hình là Path > Union, căn đều là Align & Distribute.",
   },
   {
     id: "b13-06",
     q: "Để căn nhiều đối tượng thẳng hàng chính giữa, ta dùng chức năng nào?",
     options: [
       "Align & Distribute (Căn chỉnh và phân bố)",
-      "Trace Bitmap",
-      "Spell Check",
-      "Print Preview",
+      "Transform (Xoay, co giãn, dịch chuyển)",
+      "Fill & Stroke (Màu tô và nét viền)",
+      "Object Properties (Thuộc tính đối tượng)",
     ],
     answer: 0,
-    explain: "Align & Distribute căn trái/phải/giữa và chia đều khoảng cách các đối tượng.",
+    explain:
+      "Align & Distribute căn trái/phải/giữa và chia đều khoảng cách. Transform chỉ biến đổi từng đối tượng theo số liệu nhập vào, Fill & Stroke lo màu sắc, Object Properties đặt tên và nhãn cho đối tượng.",
   },
   {
     id: "b13-07",
@@ -81,25 +85,27 @@ const questions: Question[] = [
     id: "b13-08",
     q: "Công cụ Star/Polygon trong Inkscape cho phép vẽ:",
     options: [
-      "Hình sao và đa giác đều với số cánh/cạnh tuỳ chọn",
-      "Chỉ hình sao 5 cánh cố định",
-      "Đường cong tự do",
-      "Ảnh chụp màn hình",
+      "Hình sao và đa giác đều, tuỳ chọn số cánh",
+      "Hình sao 5 cánh với kích thước cố định",
+      "Đường cong tự do đi qua các điểm neo",
+      "Đa giác bất kì có các cạnh dài ngắn khác nhau",
     ],
     answer: 0,
-    explain: "Trên thanh thuộc tính có thể đổi số cánh, độ nhọn... để tạo nhiều biến thể hình sao/đa giác.",
+    explain:
+      "Trên thanh thuộc tính có thể đổi số cánh/cạnh, độ nhọn, độ bo tròn nên không hề cố định 5 cánh. Đa giác cạnh không đều hay đường cong tự do phải vẽ bằng công cụ Bezier.",
   },
   {
     id: "b13-09",
     q: "Muốn đổi màu tô của hình đang chọn nhanh nhất, ta:",
     options: [
-      "Nháy chuột vào một ô màu trên bảng màu (palette)",
-      "Vẽ lại hình từ đầu",
-      "Xoá hình rồi tạo hình mới",
-      "Đổi tên tệp",
+      "Nháy chuột vào một ô màu trên bảng màu",
+      "Giữ Shift rồi nháy vào ô màu cần dùng",
+      "Vào Edit > Preferences để đặt lại màu",
+      "Xoá hình cũ rồi vẽ lại hình bằng màu mới",
     ],
     answer: 0,
-    explain: "Click bảng màu đổi fill; Shift+click đổi stroke — hoặc mở hộp thoại Fill & Stroke để chỉnh chi tiết.",
+    explain:
+      "Nháy vào bảng màu đổi ngay màu tô (fill). Giữ Shift rồi nháy lại đổi màu nét viền (stroke) chứ không phải màu tô. Preferences chỉ đặt tuỳ chọn chung, còn vẽ lại hình thì quá mất công.",
   },
   {
     id: "b13-10",
@@ -119,13 +125,14 @@ const questions: Question[] = [
     id: "b13-12",
     q: "Khi thiết kế một tấm thiệp gồm nền, hình trang trí và chữ, nên tổ chức thế nào?",
     options: [
-      "Xếp lớp hợp lí: nền dưới cùng, trang trí ở giữa, chữ trên cùng",
-      "Đặt tất cả cùng một lớp không phân biệt",
-      "Chữ dưới cùng cho khỏi che",
-      "Mỗi thứ lưu một tệp riêng biệt",
+      "Xếp lớp: nền dưới, trang trí giữa, chữ trên cùng",
+      "Xếp lớp: chữ dưới, nền giữa, trang trí trên cùng",
+      "Đặt cả ba thành phần chung vào một lớp duy nhất",
+      "Lưu nền, trang trí và chữ thành ba tệp riêng",
     ],
     answer: 0,
-    explain: "Tư duy xếp lớp (layer/z-order) là kĩ năng nền tảng của thiết kế đồ hoạ.",
+    explain:
+      "Chữ phải nằm trên cùng mới đọc được; nền đặt dưới cùng làm phông. Dồn chung một lớp thì khó chỉnh riêng từng phần, còn tách ba tệp thì không ghép lại thành một tấm thiệp được.",
   },
 ];
 

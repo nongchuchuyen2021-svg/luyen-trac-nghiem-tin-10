@@ -6,14 +6,14 @@ const questions: Question[] = [
     id: "b3-01",
     q: "Trong máy tính, dữ liệu thường được phân thành các kiểu cơ bản nào?",
     options: [
-      "Số nguyên, số thực, lôgic, văn bản (kí tự)",
-      "Chỉ có số và chữ",
-      "Ảnh, video, âm thanh",
-      "Tệp và thư mục",
+      "Số nguyên, số thực, lôgic và văn bản (kí tự)",
+      "Số nguyên, số thực, ngày tháng và tiền tệ",
+      "Văn bản, hình ảnh, âm thanh và phim video",
+      "Tệp, thư mục, ổ đĩa và phân vùng trên đĩa",
     ],
     answer: 0,
     explain:
-      "Bốn kiểu dữ liệu cơ bản: số nguyên, số thực, lôgic (đúng/sai) và văn bản — mỗi kiểu có cách biểu diễn riêng.",
+      "Bốn kiểu cơ bản là số nguyên, số thực, lôgic (đúng/sai) và văn bản. Ngày tháng hay tiền tệ là kiểu dẫn xuất do phần mềm quy ước; ảnh/âm thanh là dạng dữ liệu đa phương tiện; tệp và thư mục là cách tổ chức lưu trữ, không phải kiểu dữ liệu.",
   },
   {
     id: "b3-02",
@@ -25,45 +25,50 @@ const questions: Question[] = [
   {
     id: "b3-03",
     q: "Bảng mã ASCII dùng bao nhiêu bit để mã hoá một kí tự?",
-    options: ["7 bit (mở rộng 8 bit)", "16 bit", "32 bit", "2 bit"],
+    options: [
+      "7 bit, bản mở rộng dùng 8 bit",
+      "8 bit, bản mở rộng dùng 16 bit",
+      "16 bit, giống bảng mã Unicode",
+      "4 bit, đủ mã hoá 26 chữ cái",
+    ],
     answer: 0,
     explain:
-      "ASCII gốc dùng 7 bit mã hoá 128 kí tự; bản mở rộng dùng 8 bit cho 256 kí tự.",
+      "ASCII gốc dùng 7 bit mã hoá 128 kí tự, bản mở rộng dùng 8 bit cho 256 kí tự. 16 bit là cỡ mã của UTF-16, còn 4 bit chỉ biểu diễn được 16 giá trị nên không đủ cho cả bảng chữ cái.",
   },
   {
     id: "b3-04",
     q: "Hạn chế lớn nhất của bảng mã ASCII là gì?",
     options: [
-      "Không đủ chỗ mã hoá kí tự của nhiều ngôn ngữ (như chữ Việt có dấu)",
-      "Chiếm quá nhiều bộ nhớ",
-      "Không mã hoá được chữ số",
-      "Chỉ dùng được trên máy tính cũ",
+      "Không đủ mã cho kí tự của nhiều ngôn ngữ khác",
+      "Chiếm quá nhiều bộ nhớ cho mỗi kí tự lưu trữ",
+      "Không mã hoá được các chữ số và dấu câu",
+      "Không dùng được trên máy tính đời mới",
     ],
     answer: 0,
     explain:
-      "256 mã của ASCII mở rộng không đủ cho các ngôn ngữ ngoài tiếng Anh — vì vậy Unicode ra đời.",
+      "256 mã của ASCII mở rộng không đủ cho các ngôn ngữ ngoài tiếng Anh nên Unicode ra đời. Ngược lại, ASCII rất tiết kiệm (1 byte/kí tự), có mã đầy đủ cho chữ số và dấu câu, và vẫn được mọi máy tính hiện nay hỗ trợ.",
   },
   {
     id: "b3-05",
     q: "Unicode là gì?",
     options: [
-      "Bảng mã chung mã hoá kí tự của hầu hết ngôn ngữ trên thế giới",
-      "Một phần mềm gõ tiếng Việt",
-      "Bảng mã chỉ dành cho tiếng Anh",
-      "Tên một loại phông chữ",
+      "Bảng mã chung cho kí tự của hầu hết ngôn ngữ",
+      "Phần mềm gõ tiếng Việt có dấu trên máy tính",
+      "Bộ phông chữ giúp hiển thị chữ Việt có dấu",
+      "Bảng mã mở rộng dành riêng cho tiếng Anh",
     ],
     answer: 0,
     explain:
-      "Unicode gán mã duy nhất cho kí tự của mọi ngôn ngữ (hơn 149 000 kí tự), giúp trao đổi văn bản toàn cầu thống nhất.",
+      "Unicode gán mã duy nhất cho kí tự của mọi ngôn ngữ (hơn 149 000 kí tự). Phần mềm gõ tiếng Việt là Unikey/Vietkey, phông chữ là Times New Roman, Arial... — chúng dùng bảng mã chứ không phải là bảng mã.",
   },
   {
     id: "b3-06",
     q: "UTF-8 là gì?",
     options: [
-      "Một cách mã hoá Unicode có độ dài thay đổi (1-4 byte mỗi kí tự), phổ biến nhất trên web",
-      "Bảng mã thay thế hoàn toàn Unicode",
-      "Phông chữ tiếng Việt",
-      "Định dạng ảnh",
+      "Cách mã hoá Unicode dùng 1-4 byte cho mỗi kí tự",
+      "Bảng mã mới ra đời để thay thế hẳn Unicode",
+      "Phông chữ tiếng Việt dùng chung trên trình duyệt",
+      "Định dạng nén ảnh phổ biến trên các trang web",
     ],
     answer: 0,
     explain:
@@ -81,21 +86,27 @@ const questions: Question[] = [
     id: "b3-08",
     q: 'Xâu "1234" khác số 1234 ở điểm nào?',
     options: [
-      'Xâu "1234" là dãy 4 kí tự, không dùng trực tiếp để tính toán số học',
-      "Không khác gì nhau",
-      'Xâu "1234" chiếm ít bộ nhớ hơn',
-      "Số 1234 không lưu được trong máy tính",
+      "Xâu \"1234\" là dãy 4 kí tự, không cộng trừ trực tiếp",
+      "Xâu \"1234\" chiếm ít bộ nhớ hơn số 1234",
+      "Số 1234 phải viết trong dấu nháy khi khai báo",
+      "Hai giá trị này hoàn toàn giống nhau trong Python",
     ],
     answer: 0,
     explain:
-      "Dữ liệu văn bản lưu mã kí tự từng chữ số; muốn tính toán phải chuyển sang kiểu số (ví dụ int(\"1234\")).",
+      "Dữ liệu văn bản lưu mã của từng kí tự chữ số, muốn tính toán phải chuyển sang kiểu số bằng int(\"1234\"). Xâu thường tốn bộ nhớ hơn chứ không ít hơn, và chỉ xâu mới cần dấu nháy.",
   },
   {
     id: "b3-09",
     q: "Giá trị kiểu lôgic chỉ có thể là:",
-    options: ["Đúng (True) hoặc Sai (False)", "0 đến 9", "Âm hoặc dương", "Chẵn hoặc lẻ"],
+    options: [
+      "Đúng (True) hoặc Sai (False)",
+      "Hai chữ số 0 và 1 trong hệ nhị phân",
+      "Một trong ba giá trị Yes, No hoặc Null",
+      "Giá trị âm, bằng không hoặc dương",
+    ],
     answer: 0,
-    explain: "Kiểu lôgic (boolean) chỉ có hai giá trị True/False — nền tảng của các biểu thức điều kiện.",
+    explain:
+      "Kiểu lôgic (boolean) có đúng hai giá trị True/False — nền tảng của các biểu thức điều kiện. Bên trong máy chúng được lưu bằng bit 0/1, nhưng bản thân bit là đơn vị lưu trữ chứ không phải giá trị của kiểu lôgic.",
   },
   {
     id: "b3-10",
@@ -115,14 +126,14 @@ const questions: Question[] = [
     id: "b3-12",
     q: "Vì sao cần quy định kiểu dữ liệu?",
     options: [
-      "Để máy tính biết cách lưu trữ và phép toán nào áp dụng được trên dữ liệu đó",
-      "Để chương trình dài hơn",
-      "Chỉ để trang trí code",
-      "Để tiết kiệm màn hình",
+      "Để máy biết cách lưu trữ và phép toán nào dùng được",
+      "Để chương trình chạy nhanh hơn trên mọi máy tính",
+      "Để mã nguồn trông chuyên nghiệp và dễ đọc hơn",
+      "Để tiết kiệm dung lượng ổ đĩa khi lưu tệp mã",
     ],
     answer: 0,
     explain:
-      "Mỗi kiểu có cách biểu diễn và phép toán riêng: số cộng trừ được, xâu ghép nối được — kiểu giúp máy xử lí đúng.",
+      "Mỗi kiểu có cách biểu diễn và phép toán riêng: số cộng trừ được, xâu ghép nối được. Kiểu dữ liệu giúp máy xử lí đúng chứ không nhằm tăng tốc độ, làm đẹp mã nguồn hay tiết kiệm ổ đĩa.",
   },
 ];
 

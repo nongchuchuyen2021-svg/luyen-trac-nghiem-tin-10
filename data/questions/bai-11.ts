@@ -19,10 +19,10 @@ const questions: Question[] = [
     id: "b11-02",
     q: "Đăng tải thông tin sai sự thật, xúc phạm danh dự người khác trên mạng có thể bị xử lí như thế nào?",
     options: [
-      "Bị xử phạt hành chính, thậm chí truy cứu trách nhiệm hình sự theo pháp luật Việt Nam",
-      "Không sao vì mạng là ảo",
-      "Chỉ bị nhắc nhở bởi mạng xã hội",
-      "Chỉ bị xoá bài viết",
+      "Bị xử phạt hành chính, nặng hơn là truy cứu hình sự",
+      "Chỉ bị mạng xã hội nhắc nhở và hạn chế bài đăng",
+      "Chỉ bị buộc gỡ bài viết và xin lỗi công khai",
+      "Không bị xử lí vì hoạt động trên mạng là ẩn danh",
     ],
     answer: 0,
     explain:
@@ -32,14 +32,14 @@ const questions: Question[] = [
     id: "b11-03",
     q: "Bản quyền (quyền tác giả) bảo vệ điều gì?",
     options: [
-      "Quyền của người sáng tạo đối với tác phẩm của mình (văn học, phần mềm, âm nhạc, hình ảnh...)",
-      "Chỉ bảo vệ sách in giấy",
-      "Quyền sử dụng Internet của mọi người",
-      "Giá bán của sản phẩm",
+      "Quyền của người sáng tạo với tác phẩm của mình",
+      "Quyền của người mua đối với bản sao đã mua",
+      "Quyền được tự do truy cập Internet của mọi người",
+      "Giá bán và lợi nhuận của sản phẩm trên thị trường",
     ],
     answer: 0,
     explain:
-      "Quyền tác giả bảo hộ tác phẩm trí tuệ; phần mềm máy tính cũng là đối tượng được bảo hộ như tác phẩm viết.",
+      "Quyền tác giả bảo hộ tác phẩm trí tuệ — văn học, âm nhạc, hình ảnh và cả phần mềm máy tính. Người mua chỉ có quyền với bản sao mình sở hữu chứ không có quyền tác giả; còn giá bán do thị trường quyết định, không thuộc phạm vi bản quyền.",
   },
   {
     id: "b11-04",
@@ -84,10 +84,10 @@ const questions: Question[] = [
     id: "b11-07",
     q: "Bắt nạt trên mạng (cyberbullying) là:",
     options: [
-      "Dùng môi trường số để đe doạ, sỉ nhục, cô lập người khác một cách lặp đi lặp lại",
-      "Tranh luận lịch sự về một chủ đề",
-      "Không trả lời tin nhắn của bạn",
-      "Chặn tài khoản quảng cáo",
+      "Dùng môi trường số đe doạ, sỉ nhục người khác nhiều lần",
+      "Tranh luận gay gắt nhưng lịch sự về một chủ đề",
+      "Chặn và không trả lời tin nhắn của một người bạn",
+      "Đăng lại bài của người khác mà không xin phép",
     ],
     answer: 0,
     explain:
@@ -97,10 +97,10 @@ const questions: Question[] = [
     id: "b11-08",
     q: "Nhận được tin nhắn kêu gọi chuyển tiền từ thiện qua tài khoản cá nhân không rõ danh tính, em nên:",
     options: [
-      "Thận trọng kiểm chứng; chỉ ủng hộ qua tổ chức, kênh chính thống",
+      "Kiểm chứng kĩ, chỉ ủng hộ qua tổ chức chính thống",
+      "Chia sẻ lời kêu gọi để nhiều người cùng giúp",
       "Chuyển ngay vì việc thiện không nên chần chừ",
-      "Chia sẻ lời kêu gọi cho nhiều người",
-      "Chuyển một ít cho yên tâm",
+      "Chuyển một khoản nhỏ cho yên tâm rồi thôi",
     ],
     answer: 0,
     explain:
@@ -110,10 +110,10 @@ const questions: Question[] = [
     id: "b11-09",
     q: 'Quy tắc nào nên nhớ trước khi đăng bất kì nội dung gì lên mạng?',
     options: [
-      "Nội dung trên mạng lan truyền nhanh và gần như không thể thu hồi hoàn toàn",
-      "Có thể xoá sạch dấu vết bất cứ lúc nào",
-      "Chỉ bạn bè mới thấy được nội dung mình đăng",
-      "Nội dung cũ sẽ tự biến mất sau một năm",
+      "Nội dung lan truyền nhanh, gần như không thu hồi được",
+      "Chỉ bạn bè trong danh sách mới xem được bài đăng",
+      "Có thể xoá sạch dấu vết bất cứ lúc nào muốn",
+      "Nội dung cũ sẽ tự biến mất sau khoảng một năm",
     ],
     answer: 0,
     explain:
@@ -123,10 +123,10 @@ const questions: Question[] = [
     id: "b11-10",
     q: "Phần mềm mã nguồn mở khác phần mềm thương mại đóng ở điểm nào?",
     options: [
-      "Được công khai mã nguồn và cho phép sử dụng, sửa đổi theo giấy phép kèm theo",
-      "Luôn kém chất lượng hơn",
-      "Không có tác giả",
-      "Không có giấy phép sử dụng",
+      "Công khai mã nguồn, cho phép dùng và sửa theo giấy phép",
+      "Không có giấy phép và không ràng buộc điều kiện nào",
+      "Không có bản quyền nên ai muốn dùng sao cũng được",
+      "Chất lượng kém hơn vì không có công ty đứng sau",
     ],
     answer: 0,
     explain:
@@ -136,10 +136,10 @@ const questions: Question[] = [
     id: "b11-11",
     q: "Trích dẫn bài viết của người khác vào bài của mình, cách làm ĐÚNG là:",
     options: [
-      "Trích ngắn gọn phần cần thiết và ghi rõ tên tác giả, nguồn",
-      "Sao chép toàn bộ và để tên mình",
-      "Đổi vài từ rồi coi như của mình",
-      "Không cần ghi nguồn nếu bài không nổi tiếng",
+      "Trích ngắn phần cần thiết, ghi rõ tác giả và nguồn",
+      "Đổi vài từ trong bài rồi coi như của chính mình",
+      "Sao chép toàn bộ bài rồi để tên mình bên dưới",
+      "Chỉ cần ghi nguồn khi bài viết đó nổi tiếng",
     ],
     answer: 0,
     explain:

@@ -19,10 +19,10 @@ const questions: Question[] = [
     id: "b21-02",
     q: "Điểm khác nhau chính giữa for và while là:",
     options: [
-      "for lặp với số lần biết trước; while lặp theo điều kiện, số lần có thể chưa biết trước",
-      "for nhanh hơn while 10 lần",
-      "while không dùng được biến",
-      "for chỉ chạy được 100 lần",
+      "for lặp số lần biết trước, while lặp theo điều kiện",
+      "for chạy nhanh hơn while trên cùng số vòng lặp",
+      "while kiểm tra điều kiện sau khi chạy xong thân lặp",
+      "for chỉ duyệt được danh sách, không duyệt được dãy số",
     ],
     answer: 0,
     explain:
@@ -32,9 +32,15 @@ const questions: Question[] = [
     id: "b21-03",
     q: "Đoạn chương trình sau in ra gì?",
     code: "i = 1\nwhile i <= 3:\n    print(i)\n    i = i + 1",
-    options: ["1 2 3 (mỗi số một dòng)", "1 2 3 4", "1 1 1 mãi mãi", "Không in gì"],
+    options: [
+      "1 2 3 (mỗi số một dòng)",
+      "1 2 3 4 (mỗi số một dòng)",
+      "1 1 1 ... lặp lại mãi mãi",
+      "Không in ra gì cả",
+    ],
     answer: 0,
-    explain: "i chạy 1→2→3, đến khi i = 4 điều kiện i <= 3 sai thì dừng.",
+    explain:
+      "i chạy 1 → 2 → 3, đến khi i = 4 thì điều kiện i <= 3 sai nên dừng, vậy 4 không được in. Nhờ có lệnh i = i + 1 nên vòng lặp không bị vô hạn.",
   },
   {
     id: "b21-04",
@@ -42,9 +48,9 @@ const questions: Question[] = [
     code: "i = 1\nwhile i <= 3:\n    print(i)",
     options: [
       "Lặp vô hạn vì i không bao giờ thay đổi",
-      "Lỗi cú pháp",
-      "In đúng 3 lần rồi dừng",
-      "Không chạy được vì thiếu for",
+      "In đúng 3 lần rồi tự động dừng lại",
+      "Báo lỗi cú pháp vì thiếu lệnh tăng i",
+      "Không in gì vì điều kiện sai ngay từ đầu",
     ],
     answer: 0,
     explain:
@@ -63,9 +69,9 @@ const questions: Question[] = [
     q: "Vòng lặp while điều kiện sai NGAY TỪ ĐẦU thì khối lệnh bên trong:",
     options: [
       "Không được thực hiện lần nào",
-      "Chạy đúng một lần",
-      "Chạy vô hạn",
-      "Báo lỗi cú pháp",
+      "Vẫn chạy đúng một lần rồi thoát",
+      "Chạy lặp vô hạn không dừng lại",
+      "Gây lỗi khi chạy chương trình",
     ],
     answer: 0,
     explain: "while kiểm tra trước khi chạy: điều kiện sai từ đầu thì bỏ qua toàn bộ khối lệnh.",
@@ -91,10 +97,10 @@ const questions: Question[] = [
     id: "b21-09",
     q: "Bài toán nào NÊN dùng while thay vì for?",
     options: [
-      "Yêu cầu nhập điểm cho đến khi nhập giá trị hợp lệ từ 0 đến 10",
-      "In bảng cửu chương 2 (9 dòng)",
-      "Tính tổng 100 số đầu tiên",
-      "Duyệt qua danh sách 30 học sinh",
+      "Nhập lại điểm cho tới khi được giá trị hợp lệ",
+      "In bảng cửu chương 2 gồm đúng 9 dòng",
+      "Tính tổng của 100 số nguyên đầu tiên",
+      "Duyệt qua danh sách 30 học sinh trong lớp",
     ],
     answer: 0,
     explain:
@@ -121,13 +127,14 @@ const questions: Question[] = [
     id: "b21-12",
     q: "Nếu lỡ chạy chương trình bị lặp vô hạn trong môi trường Python, cách dừng thường dùng là:",
     options: [
-      "Nhấn Ctrl+C (hoặc nút Stop của môi trường lập trình)",
-      "Gõ thêm số 0",
-      "Chờ nó tự dừng sau 1 phút",
-      "Nhấn Caps Lock",
+      "Nhấn Ctrl+C hoặc nút Stop của môi trường lập trình",
+      "Nhấn Ctrl+S để lưu lại rồi chương trình dừng",
+      "Chờ Python tự ngắt vòng lặp sau khoảng 1 phút",
+      "Nhấn Enter nhiều lần cho hết bộ nhớ đệm",
     ],
     answer: 0,
-    explain: "Ctrl+C gửi tín hiệu ngắt (KeyboardInterrupt) dừng chương trình đang chạy.",
+    explain:
+      "Ctrl+C gửi tín hiệu ngắt (KeyboardInterrupt) dừng chương trình đang chạy. Python không tự đặt giới hạn thời gian cho vòng lặp, còn Ctrl+S chỉ lưu tệp chứ không tác động tới tiến trình đang chạy.",
   },
 ];
 
