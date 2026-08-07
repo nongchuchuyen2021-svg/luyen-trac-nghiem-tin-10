@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import type { EssayQuestion, Question, TFQuestion } from "@/lib/types";
+import type { EssayQuestion, LessonTheory, Question, TFQuestion } from "@/lib/types";
 import { getLessonProgress } from "@/lib/progress";
 import QuizClient from "@/components/QuizClient";
 import TrueFalseQuiz from "@/components/TrueFalseQuiz";
 import EssayViewer from "@/components/EssayViewer";
+import TheoryViewer from "@/components/TheoryViewer";
 
-type Mode = "menu" | "mcq" | "tf" | "essay";
+type Mode = "menu" | "mcq" | "tf" | "essay" | "theory";
 
 export default function LessonClient({
   lessonId,
@@ -17,6 +18,7 @@ export default function LessonClient({
   mcq,
   tf,
   essay,
+  theory,
 }: {
   lessonId: string;
   lessonTitle: string;
@@ -24,6 +26,7 @@ export default function LessonClient({
   mcq: Question[];
   tf: TFQuestion[];
   essay: EssayQuestion[];
+  theory: LessonTheory | null;
 }) {
   const [mode, setMode] = useState<Mode>("menu");
   const [bestMcq, setBestMcq] = useState<number | null>(null);
@@ -36,8 +39,22 @@ export default function LessonClient({
     }
   }, [mode, lessonId]);
 
+  if (mode === "theory" && theory) {
+    return (
+      <main className="playground min-h-screen pb-16">
+        <TheoryViewer
+          lessonId={lessonId}
+          lessonTitle={lessonTitle}
+          topicName={topicName}
+          theory={theory}
+          onBack={() => setMode("menu")}
+          onGoQuiz={() => setMode("mcq")}
+        />
+      </main>
+    );
+  }
+
   if (mode === "mcq") {
-    // QuizClient tự bọc <main> riêng nên không bọc thêm ở đây
     return (
       <QuizClient
         lessonId={lessonId}
@@ -75,6 +92,18 @@ export default function LessonClient({
   }
 
   const options = [
+    ...(theory
+      ? [
+          {
+            key: "theory" as Mode,
+            emoji: "📖",
+            name: "Lý thuyết",
+            desc: `~${theory.minutes} phút đọc · tóm tắt kiến thức bài học kèm hình minh hoạ`,
+            best: null,
+            enabled: true,
+          },
+        ]
+      : []),
     {
       key: "mcq" as Mode,
       emoji: "🎯",

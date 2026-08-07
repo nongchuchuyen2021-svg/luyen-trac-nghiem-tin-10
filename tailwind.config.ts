@@ -11,9 +11,13 @@ const config: Config = {
         grape: "#7C3AED",
         "grape-deep": "#5B21B6",
         bubble: "#EC4899",
+        "bubble-deep": "#C8156E",
         mint: "#10B981",
+        "mint-deep": "#0A7753",
         sun: "#F59E0B",
+        "sun-deep": "#915E06",
         tomato: "#EF4444",
+        "tomato-deep": "#D01212",
       },
       fontFamily: {
         display: ["var(--font-display)"],

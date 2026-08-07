@@ -27,3 +27,11 @@ export function saveAttempt(lessonId: string, scorePercent: number) {
   };
   localStorage.setItem(KEY, JSON.stringify(all));
 }
+
+export function markTheoryRead(lessonId: string) {
+  if (typeof window === "undefined") return;
+  const key = `ltn10:theory:${lessonId}`;
+  if (!localStorage.getItem(key)) {
+    localStorage.setItem(key, new Date().toISOString());
+  }
+}

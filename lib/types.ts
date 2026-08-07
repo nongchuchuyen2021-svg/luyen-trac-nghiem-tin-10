@@ -59,3 +59,60 @@ export type LessonProgress = {
 };
 
 export type ProgressMap = Record<string, LessonProgress>;
+
+// ─── Lý thuyết tự học ────────────────────────────────────────────────────────
+// Bài lí thuyết được ghép từ các "khối" (block) thay vì một đoạn văn dài, để
+// mỗi ý đứng riêng trong một hình thức trực quan phù hợp: thẻ màu, bảng so
+// sánh, dòng thời gian, hình vẽ SVG… Học sinh lướt tới đâu hiểu tới đó.
+
+// Màu nền của thẻ/hộp — dùng tên màu trong tailwind.config.ts.
+export type Tone = "grape" | "bubble" | "mint" | "sun" | "tomato";
+
+export type TheoryCard = {
+  emoji: string;
+  title: string;
+  text: string;
+};
+
+export type TheoryBlock =
+  // Đoạn văn thường. Bọc **…** để in đậm một cụm từ khoá.
+  | { kind: "text"; text: string }
+  | { kind: "list"; items: string[]; ordered?: boolean }
+  // Lưới thẻ có emoji — dùng cho các nhóm ngang hàng (đặc trưng, lĩnh vực…)
+  | { kind: "cards"; tone?: Tone; items: TheoryCard[] }
+  // Bảng so sánh hai cột, kiểu "cái này khác cái kia chỗ nào"
+  | {
+      kind: "compare";
+      left: { title: string; emoji: string; items: string[] };
+      right: { title: string; emoji: string; items: string[] };
+    }
+  // Dòng thời gian / quy trình các bước
+  | { kind: "steps"; items: { label: string; title: string; text: string }[] }
+  // Hình vẽ SVG, khoá tra trong components/theory/Diagram.tsx
+  | { kind: "figure"; diagram: string; caption: string }
+  // Khối mã HTML/CSS. preview = true thì hiện thêm khung "kết quả trên trình
+  // duyệt". tall = true thì khung xem trước cao gấp đôi (340px thay vì 180px)
+  // — dành cho nội dung dài như biểu mẫu, bảng.
+  | { kind: "code"; code: string; caption?: string; preview?: boolean; tall?: boolean }
+  // Hộp ví dụ đời thường, nền ấm nhạt
+  | { kind: "example"; title: string; text: string }
+  // Hộp ghi nhớ, nền vàng/ấm — lấy đúng kết luận đóng khung trong SGK
+  | { kind: "note"; text: string }
+  // Hộp "Cập nhật 2026": chỗ SGK đã lạc hậu so với thực tế
+  | { kind: "update"; title: string; text: string; items?: TheoryCard[] }
+  // Câu hỏi kiểm tra nhanh xen giữa bài, trả lời xong hiện giải thích ngay
+  | { kind: "check"; q: string; options: string[]; answer: number; explain: string };
+
+export type TheorySection = {
+  id: string;
+  emoji: string;
+  heading: string;
+  blocks: TheoryBlock[];
+};
+
+export type LessonTheory = {
+  intro: string; // 1-2 câu dẫn nhập, nói bài này học gì
+  minutes: number; // ước lượng thời gian đọc
+  sections: TheorySection[];
+  summary: string[]; // "Ghi nhớ nhanh" cuối bài, 3-5 gạch đầu dòng
+};
