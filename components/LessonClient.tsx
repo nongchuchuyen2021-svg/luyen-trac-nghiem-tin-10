@@ -9,7 +9,7 @@ import TrueFalseQuiz from "@/components/TrueFalseQuiz";
 import EssayViewer from "@/components/EssayViewer";
 import TheoryViewer from "@/components/TheoryViewer";
 
-type Mode = "menu" | "mcq" | "tf" | "essay" | "theory";
+type Mode = "menu" | "mcq" | "tf" | "essay" | "theory" | "sgk";
 
 export default function LessonClient({
   lessonId,
@@ -19,6 +19,7 @@ export default function LessonClient({
   tf,
   essay,
   theory,
+  sgkUrl,
 }: {
   lessonId: string;
   lessonTitle: string;
@@ -27,6 +28,7 @@ export default function LessonClient({
   tf: TFQuestion[];
   essay: EssayQuestion[];
   theory: LessonTheory | null;
+  sgkUrl?: string | null;
 }) {
   const [mode, setMode] = useState<Mode>("menu");
   const [bestMcq, setBestMcq] = useState<number | null>(null);
@@ -38,6 +40,24 @@ export default function LessonClient({
       setBestTf(getLessonProgress(`${lessonId}:ds`)?.best ?? null);
     }
   }, [mode, lessonId]);
+
+  if (mode === "sgk" && sgkUrl) {
+    return (
+      <div className="fixed inset-0 z-50 bg-[#05070b]">
+        <button
+          onClick={() => setMode("menu")}
+          className="fixed left-3 top-3 z-10 rounded-full border border-white/20 bg-black/60 px-3 py-1.5 font-mono text-xs text-white backdrop-blur transition hover:border-white/40"
+        >
+          ← Quay lại
+        </button>
+        <iframe
+          src={sgkUrl}
+          title={`SGK · ${lessonTitle}`}
+          className="h-full w-full border-0"
+        />
+      </div>
+    );
+  }
 
   if (mode === "theory" && theory) {
     return (
@@ -99,6 +119,18 @@ export default function LessonClient({
             emoji: "📖",
             name: "Lý thuyết",
             desc: `~${theory.minutes} phút đọc · tóm tắt kiến thức bài học kèm hình minh hoạ`,
+            best: null,
+            enabled: true,
+          },
+        ]
+      : []),
+    ...(sgkUrl
+      ? [
+          {
+            key: "sgk" as Mode,
+            emoji: "📘",
+            name: "SGK",
+            desc: "Sách điện tử — xem nguyên bài trong sách giáo khoa",
             best: null,
             enabled: true,
           },

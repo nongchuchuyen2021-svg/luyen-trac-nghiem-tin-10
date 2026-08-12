@@ -3,6 +3,7 @@ import { findLesson, CURRICULUM } from "@/data/curriculum";
 import { getQuestions } from "@/lib/questions";
 import { getTF, getEssay } from "@/lib/extras";
 import { getTheory } from "@/lib/theory";
+import { getSgkUrl } from "@/data/sgkEbook";
 import LessonClient from "@/components/LessonClient";
 
 export function generateStaticParams() {
@@ -26,6 +27,7 @@ export default function LuyenPage({ params }: { params: { baiId: string } }) {
       tf={getTF(params.baiId)}
       essay={getEssay(params.baiId)}
       theory={getTheory(params.baiId)}
+      sgkUrl={getSgkUrl(params.baiId)}
     />
   );
 }
