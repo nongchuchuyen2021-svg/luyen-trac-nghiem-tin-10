@@ -266,11 +266,53 @@ function ManHinhDienThoai() {
   );
 }
 
+// ── Bài 8: Mô hình LAN kết nối qua Internet (Hình 8.2 SGK) ──────────────────
+function LanQuaInternet() {
+  function LanCluster({ x, flip, label }: { x: number; flip: boolean; label: string }) {
+    const iconsX = flip ? x + 20 : x;
+    const swX = flip ? x + 60 : x + 20;
+    const rtX = flip ? x + 20 : x + 60;
+    return (
+      <g>
+        <rect x={x - 10} y="30" width="150" height="230" rx="16" fill={C.grape} fillOpacity="0.04" stroke={C.line} strokeWidth="1.5" strokeDasharray="4 4" />
+        <Lines x={x + 65} y={48} lines={[label]} size={13} fill={C.grapeDeep} weight={700} />
+        {["💻", "🖥️", "🖨️"].map((ic, i) => (
+          <Lines key={i} x={iconsX + i * 30} y={80} lines={[ic]} size={16} />
+        ))}
+        <line x1={iconsX + 30} y1="88" x2={swX + 30} y2="118" stroke={C.grape} strokeWidth="1.5" />
+        <rect x={swX} y="118" width="60" height="30" rx="8" fill={C.white} stroke={C.grape} strokeWidth="2" />
+        <Lines x={swX + 30} y={137} lines={["Switch"]} size={12} fill={C.grapeDeep} weight={600} />
+        <line x1={swX + 30} y1="148" x2={rtX + 30} y2="178" stroke={C.grape} strokeWidth="1.5" />
+        <rect x={rtX} y="178" width="60" height="30" rx="8" fill={C.bubble} fillOpacity="0.12" stroke={C.bubble} strokeWidth="2" />
+        <Lines x={rtX + 30} y={197} lines={["Router"]} size={12} fill={C.bubbleDeep} weight={600} />
+        <Lines x={x + 65} y={225} lines={["LAN"]} size={12} fill={C.inkSoft} weight={500} />
+      </g>
+    );
+  }
+
+  return (
+    <Frame viewBox="0 0 640 300">
+      <LanCluster x={20} flip={false} label="Cơ quan A" />
+      <LanCluster x={470} flip={true} label="Cơ quan B" />
+
+      <line x1="200" y1="193" x2="255" y2="160" stroke={C.bubble} strokeWidth="2" markerEnd="url(#arrow-bubble)" />
+      <line x1="440" y1="193" x2="385" y2="160" stroke={C.bubble} strokeWidth="2" markerEnd="url(#arrow-bubble)" />
+
+      <circle cx="320" cy="150" r="58" fill={C.white} stroke={C.bubble} strokeWidth="2.5" />
+      <Lines x={320} y={142} lines={["☁️"]} size={22} />
+      <Lines x={320} y={168} lines={["INTERNET"]} size={13} fill={C.bubbleDeep} weight={700} />
+
+      <Lines x={320} y={280} lines={["Router kết nối mỗi LAN với Internet; Switch chỉ chuyển tiếp dữ liệu trong nội bộ LAN"]} size={12} fill={C.inkSoft} weight={500} />
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
   "iot-ket-noi-thiet-bi": IoTKetNoi,
   "man-hinh-dien-thoai-thong-minh": ManHinhDienThoai,
+  "lan-qua-internet": LanQuaInternet,
 };
 
 export default function Diagram({ name }: { name: string }) {

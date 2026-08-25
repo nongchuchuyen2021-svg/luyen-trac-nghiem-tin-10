@@ -1,0 +1,1054 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bài 8: Mạng Máy Tính Trong Cuộc Sống Hiện Đại</title>
+    <style>
+      :root {
+        --bg-main: #0f172a;
+        --bg-card: #1e293b;
+        --bg-card-hover: #334155;
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --accent-cyan: #38bdf8;
+        --accent-green: #4ade80;
+        --accent-yellow: #facc15;
+        --accent-purple: #c084fc;
+        --accent-pink: #f472b6;
+        --accent-orange: #fb923c;
+        --border-color: #334155;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+          Arial, sans-serif;
+        background-color: var(--bg-main);
+        color: var(--text-main);
+        line-height: 1.7;
+        padding: 16px;
+      }
+
+      .container {
+        max-width: 860px;
+        margin: 0 auto;
+        padding-bottom: 60px;
+      }
+
+      /* Header Styling */
+      header {
+        text-align: center;
+        padding: 28px 16px;
+        background: linear-gradient(135deg, #1e1b4b, #0f172a);
+        border: 1px solid var(--accent-cyan);
+        border-radius: 16px;
+        margin-bottom: 24px;
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.15);
+      }
+
+      .topic-badge {
+        background-color: var(--accent-yellow);
+        color: #000;
+        font-weight: bold;
+        font-size: 0.85rem;
+        padding: 4px 12px;
+        border-radius: 20px;
+        display: inline-block;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        color: var(--accent-cyan);
+        font-size: 1.8rem;
+        margin-bottom: 8px;
+        line-height: 1.3;
+      }
+
+      .subtitle {
+        color: var(--accent-pink);
+        font-size: 1.1rem;
+        font-weight: 500;
+      }
+
+      /* Target Box */
+      .target-card {
+        background-color: #1e293b;
+        border-left: 5px solid var(--accent-green);
+        padding: 16px 20px;
+        border-radius: 8px;
+        margin-bottom: 24px;
+      }
+
+      .target-card h3 {
+        color: var(--accent-green);
+        margin-bottom: 8px;
+        font-size: 1.1rem;
+      }
+
+      .target-card ul {
+        padding-left: 20px;
+        color: #e2e8f0;
+      }
+
+      .target-card li {
+        margin-bottom: 6px;
+      }
+
+      /* Section Styling */
+      section {
+        background-color: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        padding: 20px;
+        margin-bottom: 24px;
+      }
+
+      h2 {
+        font-size: 1.35rem;
+        margin-bottom: 14px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .sec-1 h2 {
+        color: var(--accent-cyan);
+      }
+      .sec-2 h2 {
+        color: var(--accent-yellow);
+      }
+      .sec-3 h2 {
+        color: var(--accent-purple);
+      }
+      .sec-4 h2 {
+        color: var(--accent-orange);
+      }
+
+      h3 {
+        font-size: 1.15rem;
+        margin: 16px 0 10px;
+        color: #e2e8f0;
+      }
+
+      p {
+        margin-bottom: 12px;
+        color: #cbd5e1;
+        font-size: 1rem;
+      }
+
+      /* Figures & SVGs */
+      .figure-box {
+        background-color: #0b1120;
+        border: 1px dashed var(--accent-cyan);
+        border-radius: 12px;
+        padding: 16px;
+        margin: 16px 0;
+        text-align: center;
+      }
+
+      .figure-box svg {
+        max-width: 100%;
+        height: auto;
+      }
+
+      .figure-caption {
+        font-size: 0.9rem;
+        color: var(--accent-cyan);
+        margin-top: 10px;
+        font-style: italic;
+      }
+
+      /* Summary / Takeaway box */
+      .summary-box {
+        background: rgba(56, 189, 248, 0.08);
+        border: 1px solid var(--accent-cyan);
+        border-radius: 10px;
+        padding: 14px 18px;
+        margin: 16px 0;
+      }
+
+      .summary-box strong {
+        color: var(--accent-yellow);
+      }
+
+      /* Comparison Table */
+      .table-responsive {
+        overflow-x: auto;
+        margin: 16px 0;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        font-size: 0.95rem;
+      }
+
+      th,
+      td {
+        padding: 12px 14px;
+        border: 1px solid var(--border-color);
+      }
+
+      th {
+        background-color: #0f172a;
+        color: var(--accent-yellow);
+      }
+
+      tr:nth-child(even) {
+        background-color: #1a2234;
+      }
+
+      /* Interactive Activities & Quizzes */
+      .interactive-card {
+        background-color: #090d16;
+        border: 1px solid var(--accent-purple);
+        border-radius: 10px;
+        padding: 16px;
+        margin: 18px 0;
+      }
+
+      .interactive-title {
+        color: var(--accent-pink);
+        font-weight: bold;
+        font-size: 1.05rem;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .quiz-opt {
+        display: block;
+        background-color: var(--bg-card);
+        border: 1px solid var(--border-color);
+        padding: 10px 14px;
+        border-radius: 8px;
+        margin-bottom: 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+        color: #f8fafc;
+        text-align: left;
+        width: 100%;
+        font-size: 0.95rem;
+      }
+
+      .quiz-opt:hover {
+        border-color: var(--accent-cyan);
+        background-color: var(--bg-card-hover);
+      }
+
+      .quiz-opt.correct {
+        background-color: rgba(74, 222, 128, 0.2) !important;
+        border-color: var(--accent-green) !important;
+        color: var(--accent-green) !important;
+        font-weight: bold;
+      }
+
+      .quiz-opt.incorrect {
+        background-color: rgba(244, 114, 182, 0.2) !important;
+        border-color: var(--accent-pink) !important;
+        color: var(--accent-pink) !important;
+      }
+
+      .feedback-text {
+        margin-top: 8px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        display: none;
+      }
+
+      /* Accordion for Discussion */
+      details {
+        background-color: #0f172a;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 10px 14px;
+        margin: 10px 0;
+        cursor: pointer;
+      }
+
+      summary {
+        font-weight: 600;
+        color: var(--accent-cyan);
+        outline: none;
+      }
+
+      details p {
+        margin-top: 10px;
+        color: #94a3b8;
+        font-size: 0.95rem;
+      }
+
+      /* Cloud Tag Types */
+      .cloud-badge {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        font-weight: bold;
+        margin-right: 6px;
+      }
+      .badge-saas {
+        background: #0284c7;
+        color: #fff;
+      }
+      .badge-paas {
+        background: #7c3aed;
+        color: #fff;
+      }
+      .badge-iaas {
+        background: #d97706;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="topic-badge">Chủ đề 2: Mạng máy tính và Internet</div>
+        <h1>BÀI 8: MẠNG MÁY TÍNH TRONG CUỘC SỐNG HIỆN ĐẠI</h1>
+        <div class="subtitle">
+          Sách giáo khoa Tin học 10 - Kết nối tri thức với cuộc sống
+        </div>
+      </header>
+
+      <div class="target-card">
+        <h3>🎯 Sau bài học này, học sinh sẽ:</h3>
+        <ul>
+          <li>Hiểu được sự khác biệt cơ bản giữa mạng LAN và Internet.</li>
+          <li>
+            Nhận biết những thay đổi về chất lượng cuộc sống, phương thức học
+            tập, làm việc khi mạng máy tính phổ biến.
+          </li>
+          <li>
+            Hiểu bản chất và ứng dụng của
+            <strong>Điện toán đám mây (Cloud Computing)</strong> và
+            <strong>Kết nối vạn vật (IoT)</strong>.
+          </li>
+        </ul>
+      </div>
+
+      <section class="sec-1">
+        <h2>🌐 1. Mạng LAN và Internet</h2>
+        <p>
+          Theo phạm vi địa lí, mạng máy tính được chia thành hai loại chính:
+          <strong>Mạng cục bộ (LAN)</strong> và
+          <strong>Mạng diện rộng (WAN)</strong>.
+        </p>
+
+        <div class="figure-box">
+          <svg viewBox="0 0 700 240" xmlns="http://www.w3.org/2000/svg">
+            <rect
+              x="250"
+              y="140"
+              width="180"
+              height="50"
+              rx="8"
+              fill="#1e293b"
+              stroke="#38bdf8"
+              stroke-width="2"
+            />
+            <text
+              x="340"
+              y="165"
+              fill="#f8fafc"
+              font-size="13"
+              text-anchor="middle"
+              font-weight="bold"
+            >
+              Bộ chia (Hub) / Switch
+            </text>
+            <circle cx="280" cy="175" r="3" fill="#4ade80" />
+            <circle cx="300" cy="175" r="3" fill="#4ade80" />
+            <circle cx="320" cy="175" r="3" fill="#4ade80" />
+            <circle cx="340" cy="175" r="3" fill="#4ade80" />
+            <circle cx="360" cy="175" r="3" fill="#4ade80" />
+
+            <rect
+              x="40"
+              y="30"
+              width="100"
+              height="60"
+              rx="6"
+              fill="#1e1b4b"
+              stroke="#c084fc"
+              stroke-width="1.5"
+            />
+            <text
+              x="90"
+              y="65"
+              fill="#c084fc"
+              font-size="13"
+              text-anchor="middle"
+            >
+              Máy chủ (Server)
+            </text>
+            <path
+              d="M 90 90 L 90 165 L 250 165"
+              stroke="#facc15"
+              stroke-width="2"
+              fill="none"
+            />
+
+            <rect
+              x="290"
+              y="30"
+              width="100"
+              height="60"
+              rx="6"
+              fill="#1e1b4b"
+              stroke="#38bdf8"
+              stroke-width="1.5"
+            />
+            <text
+              x="340"
+              y="65"
+              fill="#38bdf8"
+              font-size="13"
+              text-anchor="middle"
+            >
+              Máy tính
+            </text>
+            <path
+              d="M 340 90 L 340 140"
+              stroke="#facc15"
+              stroke-width="2"
+              fill="none"
+            />
+
+            <rect
+              x="540"
+              y="30"
+              width="100"
+              height="60"
+              rx="6"
+              fill="#1e1b4b"
+              stroke="#4ade80"
+              stroke-width="1.5"
+            />
+            <text
+              x="590"
+              y="65"
+              fill="#4ade80"
+              font-size="13"
+              text-anchor="middle"
+            >
+              Máy in
+            </text>
+            <path
+              d="M 590 90 L 590 165 L 430 165"
+              stroke="#facc15"
+              stroke-width="2"
+              fill="none"
+            />
+
+            <rect
+              x="490"
+              y="140"
+              width="160"
+              height="50"
+              rx="8"
+              fill="#312e81"
+              stroke="#f472b6"
+              stroke-width="2"
+            />
+            <text
+              x="570"
+              y="165"
+              fill="#f472b6"
+              font-size="13"
+              text-anchor="middle"
+              font-weight="bold"
+            >
+              Router (Định tuyến)
+            </text>
+            <path
+              d="M 430 165 L 490 165"
+              stroke="#fb923c"
+              stroke-width="2"
+              stroke-dasharray="4"
+              fill="none"
+            />
+            <text
+              x="460"
+              y="155"
+              fill="#fb923c"
+              font-size="10"
+              text-anchor="middle"
+            >
+              LAN Port
+            </text>
+
+            <path
+              d="M 650 165 L 685 165"
+              stroke="#38bdf8"
+              stroke-width="2"
+              fill="none"
+            />
+            <text
+              x="668"
+              y="155"
+              fill="#38bdf8"
+              font-size="10"
+              text-anchor="middle"
+            >
+              Internet
+            </text>
+          </svg>
+          <div class="figure-caption">
+            Hình 8.1: Mô hình của mạng cục bộ (LAN) với thiết bị đầu cuối và
+            thiết bị kết nối
+          </div>
+        </div>
+
+        <p>
+          <strong>Nguyên lý hoạt động của Router:</strong> Switch/Hub chỉ chuyển
+          tiếp dữ liệu nội bộ trong LAN. Khi Router nhận thấy gói tin có đích
+          đến nằm ngoài mạng LAN, nó sẽ chuyển tiếp ra
+          <strong>cổng Internet (WAN)</strong>.
+        </p>
+
+        <div class="figure-box">
+          <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg">
+            <ellipse
+              cx="350"
+              cy="110"
+              rx="90"
+              ry="45"
+              fill="#0284c7"
+              opacity="0.3"
+              stroke="#38bdf8"
+              stroke-width="2"
+            />
+            <text
+              x="350"
+              y="115"
+              fill="#38bdf8"
+              font-size="16"
+              font-weight="bold"
+              text-anchor="middle"
+            >
+              INTERNET
+            </text>
+
+            <rect
+              x="30"
+              y="20"
+              width="130"
+              height="70"
+              rx="10"
+              fill="#1e293b"
+              stroke="#facc15"
+              stroke-width="1.5"
+            />
+            <text
+              x="95"
+              y="45"
+              fill="#facc15"
+              font-size="12"
+              text-anchor="middle"
+              font-weight="bold"
+            >
+              MẠNG LAN 1
+            </text>
+            <text
+              x="95"
+              y="65"
+              fill="#94a3b8"
+              font-size="11"
+              text-anchor="middle"
+            >
+              Switch + PC
+            </text>
+            <path
+              d="M 160 55 L 270 95"
+              stroke="#facc15"
+              stroke-width="2"
+              stroke-dasharray="3"
+            />
+
+            <rect
+              x="540"
+              y="20"
+              width="130"
+              height="70"
+              rx="10"
+              fill="#1e293b"
+              stroke="#facc15"
+              stroke-width="1.5"
+            />
+            <text
+              x="605"
+              y="45"
+              fill="#facc15"
+              font-size="12"
+              text-anchor="middle"
+              font-weight="bold"
+            >
+              MẠNG LAN 2
+            </text>
+            <text
+              x="605"
+              y="65"
+              fill="#94a3b8"
+              font-size="11"
+              text-anchor="middle"
+            >
+              Switch + PC
+            </text>
+            <path
+              d="M 540 55 L 430 95"
+              stroke="#facc15"
+              stroke-width="2"
+              stroke-dasharray="3"
+            />
+
+            <rect
+              x="30"
+              y="130"
+              width="130"
+              height="70"
+              rx="10"
+              fill="#1e293b"
+              stroke="#facc15"
+              stroke-width="1.5"
+            />
+            <text
+              x="95"
+              y="155"
+              fill="#facc15"
+              font-size="12"
+              text-anchor="middle"
+              font-weight="bold"
+            >
+              MẠNG LAN 3
+            </text>
+            <text
+              x="95"
+              y="175"
+              fill="#94a3b8"
+              font-size="11"
+              text-anchor="middle"
+            >
+              Switch + PC
+            </text>
+            <path
+              d="M 160 165 L 270 125"
+              stroke="#facc15"
+              stroke-width="2"
+              stroke-dasharray="3"
+            />
+
+            <rect
+              x="540"
+              y="130"
+              width="130"
+              height="70"
+              rx="10"
+              fill="#1e293b"
+              stroke="#facc15"
+              stroke-width="1.5"
+            />
+            <text
+              x="605"
+              y="155"
+              fill="#facc15"
+              font-size="12"
+              text-anchor="middle"
+              font-weight="bold"
+            >
+              MẠNG LAN 4
+            </text>
+            <text
+              x="605"
+              y="175"
+              fill="#94a3b8"
+              font-size="11"
+              text-anchor="middle"
+            >
+              Switch + PC
+            </text>
+            <path
+              d="M 540 165 L 430 125"
+              stroke="#facc15"
+              stroke-width="2"
+              stroke-dasharray="3"
+            />
+          </svg>
+          <div class="figure-caption">
+            Hình 8.2: Mô hình Internet kết nối các mạng LAN qua thiết bị định
+            tuyến Router
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Đặc điểm</th>
+                <th>Mạng cục bộ (LAN)</th>
+                <th>Mạng toàn cầu (Internet)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Phạm vi, quy mô</strong></td>
+                <td>Nhỏ (gia đình, phòng máy, trường học, cơ quan).</td>
+                <td>Toàn cầu (liên kết hàng triệu mạng khác nhau).</td>
+              </tr>
+              <tr>
+                <td><strong>Cách kết nối</strong></td>
+                <td>Trực tiếp qua Hub, Switch, Access Point (Wifi).</td>
+                <td>Qua Router thông qua nhà cung cấp dịch vụ (ISP).</td>
+              </tr>
+              <tr>
+                <td><strong>Quyền sở hữu</strong></td>
+                <td>Có chủ sở hữu cụ thể (cá nhân, cơ quan).</td>
+                <td>Không có chủ sở hữu duy nhất, hoạt động phi tập trung.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="interactive-card">
+          <div class="interactive-title">
+            ⚡ Khám phá nhanh 1: Phạm vi của Internet
+          </div>
+          <p>Phạm vi kết nối và sử dụng của mạng Internet là:</p>
+          <button class="quiz-opt" onclick="checkAnswer(this, false, 'fb1')">
+            A. Chỉ trong gia đình
+          </button>
+          <button class="quiz-opt" onclick="checkAnswer(this, false, 'fb1')">
+            B. Chỉ trong một cơ quan, doanh nghiệp
+          </button>
+          <button class="quiz-opt" onclick="checkAnswer(this, true, 'fb1')">
+            C. Toàn cầu
+          </button>
+          <div id="fb1" class="feedback-text"></div>
+        </div>
+      </section>
+
+      <section class="sec-2">
+        <h2>🚀 2. Vai Trò Của Internet Trong Đời Sống</h2>
+        <p>Internet làm thay đổi sâu sắc mọi hoạt động của con người:</p>
+        <ul style="padding-left: 20px; color: #cbd5e1; margin-bottom: 12px">
+          <li>
+            <strong>Trong giao tiếp cộng đồng:</strong> Nhận phản hồi tức thì,
+            kết nối xuyên biên giới, chia sẻ kinh nghiệm mà không bị rào cản địa
+            lý.
+          </li>
+          <li>
+            <strong>Trong giáo dục:</strong> Kho tài nguyên số, bách khoa toàn
+            thư, thư viện mở, các nền tảng E-learning hỗ trợ tinh thần
+            <em>"học tập suốt đời"</em>.
+          </li>
+        </ul>
+
+        <div class="summary-box">
+          📌 <strong>Tóm tắt cốt lõi:</strong> Internet là kho tri thức khổng lồ
+          được cập nhật liên tục, hỗ trợ giao tiếp đa phương thức và làm thay
+          đổi căn bản cách mạng hóa phương thức làm việc, học tập của xã hội.
+        </div>
+      </section>
+
+      <section class="sec-3">
+        <h2>☁️ 3. Điện Toán Đám Mây (Cloud Computing)</h2>
+        <p>
+          <strong>Khái niệm:</strong> Là việc phân phối tài nguyên CNTT (máy
+          chủ, ổ cứng lưu trữ, phần mềm ứng dụng, nền tảng cơ sở dữ liệu) theo
+          nhu cầu thông qua mạng Internet, thanh toán linh hoạt theo mức sử
+          dụng.
+        </p>
+
+        <h3>Ba mô hình dịch vụ đám mây chủ yếu:</h3>
+        <p>
+          <span class="cloud-badge badge-saas">SaaS</span>
+          <strong>Phần mềm như một dịch vụ (Software as a Service):</strong>
+          Thuê ứng dụng hoàn chỉnh qua mạng mà không cần cài đặt tại máy cá
+          nhân. <em>(Ví dụ: Google Docs, Office 365, Zoom).</em>
+        </p>
+
+        <p>
+          <span class="cloud-badge badge-paas">PaaS</span>
+          <strong>Nền tảng như một dịch vụ (Platform as a Service):</strong>
+          Thuê môi trường và công cụ phát triển phần mềm.
+          <em
+            >(Ví dụ: Google Maps API, môi trường cơ sở dữ liệu trên cloud).</em
+          >
+        </p>
+
+        <p>
+          <span class="cloud-badge badge-iaas">IaaS</span>
+          <strong
+            >Hạ tầng như một dịch vụ (Infrastructure as a Service):</strong
+          >
+          Thuê tài nguyên phần cứng, máy chủ ảo, không gian lưu trữ thô.
+          <em>(Ví dụ: Google Drive, Dropbox, Amazon AWS S3).</em>
+        </p>
+
+        <div class="interactive-card">
+          <div class="interactive-title">
+            ⚡ Khám phá nhanh 2: Phân loại dịch vụ đám mây
+          </div>
+          <p>
+            Ứng dụng soạn thảo văn bản <strong>Google Docs</strong> thuộc mô
+            hình dịch vụ đám mây nào?
+          </p>
+          <button class="quiz-opt" onclick="checkAnswer(this, true, 'fb2')">
+            A. SaaS (Software as a Service - Phần mềm như một dịch vụ)
+          </button>
+          <button class="quiz-opt" onclick="checkAnswer(this, false, 'fb2')">
+            B. PaaS (Platform as a Service - Nền tảng như một dịch vụ)
+          </button>
+          <button class="quiz-opt" onclick="checkAnswer(this, false, 'fb2')">
+            C. IaaS (Infrastructure as a Service - Hạ tầng như một dịch vụ)
+          </button>
+          <div id="fb2" class="feedback-text"></div>
+        </div>
+      </section>
+
+      <section class="sec-4">
+        <h2>📡 4. Internet Vạn Vật (IoT - Internet of Things)</h2>
+        <p>
+          <strong>Định nghĩa:</strong> Mạng lưới liên kết các thiết bị thông
+          minh (gắn cảm biến, vi xử lý) để tự động thu thập, trao đổi và xử lý
+          dữ liệu qua Internet mà không cần sự can thiệp trực tiếp của con
+          người.
+        </p>
+
+        <div class="figure-box">
+          <svg viewBox="0 0 700 180" xmlns="http://www.w3.org/2000/svg">
+            <rect
+              x="40"
+              y="30"
+              width="160"
+              height="100"
+              rx="8"
+              fill="#1e293b"
+              stroke="#4ade80"
+              stroke-width="1.5"
+            />
+            <text
+              x="120"
+              y="60"
+              fill="#4ade80"
+              font-size="13"
+              font-weight="bold"
+              text-anchor="middle"
+            >
+              Xe gắn thẻ RFID
+            </text>
+            <text
+              x="120"
+              y="85"
+              fill="#94a3b8"
+              font-size="11"
+              text-anchor="middle"
+            >
+              Sóng vô tuyến (Radio)
+            </text>
+            <text
+              x="120"
+              y="110"
+              fill="#cbd5e1"
+              font-size="11"
+              text-anchor="middle"
+            >
+              Tự nhận diện xe
+            </text>
+
+            <path
+              d="M 200 80 L 260 80"
+              stroke="#facc15"
+              stroke-width="2"
+              stroke-dasharray="4"
+            />
+
+            <rect
+              x="270"
+              y="30"
+              width="160"
+              height="100"
+              rx="8"
+              fill="#1e293b"
+              stroke="#facc15"
+              stroke-width="1.5"
+            />
+            <text
+              x="350"
+              y="60"
+              fill="#facc15"
+              font-size="13"
+              font-weight="bold"
+              text-anchor="middle"
+            >
+              Trạm thu phí ETC
+            </text>
+            <text
+              x="350"
+              y="85"
+              fill="#94a3b8"
+              font-size="11"
+              text-anchor="middle"
+            >
+              Đầu đọc tín hiệu RFID
+            </text>
+            <text
+              x="350"
+              y="110"
+              fill="#cbd5e1"
+              font-size="11"
+              text-anchor="middle"
+            >
+              Mở thanh chắn Barie
+            </text>
+
+            <path
+              d="M 430 80 L 490 80"
+              stroke="#38bdf8"
+              stroke-width="2"
+              stroke-dasharray="4"
+            />
+
+            <rect
+              x="500"
+              y="30"
+              width="160"
+              height="100"
+              rx="8"
+              fill="#1e293b"
+              stroke="#38bdf8"
+              stroke-width="1.5"
+            />
+            <text
+              x="580"
+              y="60"
+              fill="#38bdf8"
+              font-size="13"
+              font-weight="bold"
+              text-anchor="middle"
+            >
+              Trung Tâm Dữ Liệu
+            </text>
+            <text
+              x="580"
+              y="85"
+              fill="#94a3b8"
+              font-size="11"
+              text-anchor="middle"
+            >
+              Kiểm tra số dư TK
+            </text>
+            <text
+              x="580"
+              y="110"
+              fill="#cbd5e1"
+              font-size="11"
+              text-anchor="middle"
+            >
+              Trừ tiền tự động
+            </text>
+          </svg>
+          <div class="figure-caption">
+            Hình 8.4: Cơ chế tự động hóa của Hệ thống thu phí không dừng (ETC)
+            qua thẻ định danh RFID
+          </div>
+        </div>
+
+        <h3 style="color: var(--accent-orange)">Ứng dụng tiêu biểu:</h3>
+        <ul style="padding-left: 20px; color: #cbd5e1">
+          <li>
+            <strong>Công tơ điện tử:</strong> Tự động đọc chỉ số tiêu thụ và
+            truyền về trung tâm điều hành qua mạng.
+          </li>
+          <li>
+            <strong>Thu phí không dừng (ETC):</strong> Nhận dạng xe qua thẻ
+            RFID, tự động trừ phí và mở thanh chắn trong tích tắc.
+          </li>
+          <li>
+            <strong>Nhà thông minh (Smart Home):</strong> Cảm biến nhận diện chủ
+            nhà, tự động bật tắt đèn, khóa cửa khuôn mặt, điều hòa không khí.
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 style="color: var(--accent-green)">
+          📝 Luyện Tập & Thảo Luận Mở Rộng
+        </h2>
+
+        <details>
+          <summary>
+            Câu 1: Lợi ích vượt trội của giải pháp thu phí không dừng (ETC)?
+          </summary>
+          <p>
+            👉 Giảm ùn tắc tại trạm thu phí, tiết kiệm nhiên liệu do không phải
+            dừng đỗ chờ đợi, minh bạch hóa dòng tiền thu phí và giảm nhân công
+            trực trạm.
+          </p>
+        </details>
+
+        <details>
+          <summary>
+            Câu 2: Các mạng xã hội (Facebook, YouTube) có phải là dịch vụ đám
+            mây không?
+          </summary>
+          <p>
+            👉 <strong>Có</strong>. Bản chất các nền tảng này cung cấp phần mềm,
+            khả năng lưu trữ video/hình ảnh và tài nguyên mạng chạy hoàn toàn
+            trên nền tảng đám mây lớn cho người dùng truy cập từ xa.
+          </p>
+        </details>
+
+        <details>
+          <summary>
+            Câu 3: Hộp đen (bộ giám sát hành trình) gửi dữ liệu 30s/lần có thể
+            phát hiện vi phạm gì?
+          </summary>
+          <p>
+            👉 Phát hiện: Chạy quá tốc độ cho phép, lái xe liên tục quá số giờ
+            quy định, đi sai lộ trình đăng ký hoặc dừng đỗ sai quy định.
+          </p>
+        </details>
+      </section>
+    </div>
+
+    <script>
+      function checkAnswer(btn, isCorrect, feedbackId) {
+        const parent = btn.parentElement;
+        const buttons = parent.querySelectorAll(".quiz-opt");
+        const feedback = document.getElementById(feedbackId);
+
+        buttons.forEach((b) => {
+          b.disabled = true;
+          b.style.cursor = "default";
+        });
+
+        if (isCorrect) {
+          btn.classList.add("correct");
+          feedback.style.display = "block";
+          feedback.style.color = "#4ade80";
+          feedback.innerHTML =
+            "🎉 Chính xác! Bạn đã nắm vững nội dung bài học.";
+        } else {
+          btn.classList.add("incorrect");
+          feedback.style.display = "block";
+          feedback.style.color = "#f472b6";
+          feedback.innerHTML =
+            "❌ Chưa chính xác. Hãy xem lại sơ đồ và bảng đối chiếu bên trên nhé!";
+        }
+      }
+    </script>
+  </body>
+</html>
