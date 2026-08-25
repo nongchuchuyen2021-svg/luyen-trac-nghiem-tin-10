@@ -197,10 +197,80 @@ function IoTKetNoi() {
   );
 }
 
+// ── Bài 7: Các nút bấm và màn hình chính của điện thoại thông minh (Hình 7.4, 7.5) ──
+function ManHinhDienThoai() {
+  const px = 60, py = 20, pw = 150, ph = 300;
+  const ix = px + 8, iw = pw - 16, iyTop = py + 8;
+  const bands = { status: 28, icons: 152, dock: 42, nav: 62 };
+  const yStatus0 = iyTop;
+  const yIcons0 = yStatus0 + bands.status;
+  const yDock0 = yIcons0 + bands.icons;
+  const yNav0 = yDock0 + bands.dock;
+  const yNav1 = yNav0 + bands.nav;
+
+  const labels = [
+    { yFrom: yStatus0, yTo: yStatus0 + bands.status, lines: ["Thanh trạng thái", "giờ · pin · kết nối"] },
+    { yFrom: yIcons0, yTo: yIcons0 + bands.icons, lines: ["Các biểu tượng", "ứng dụng đã cài"] },
+    { yFrom: yDock0, yTo: yDock0 + bands.dock, lines: ["Thanh truy cập nhanh", "ứng dụng hay dùng"] },
+    { yFrom: yNav0, yTo: yNav1, lines: ["Thanh điều hướng", "◁ Quay lại · ○ Home · ▢ Tổng quan"] },
+  ];
+
+  return (
+    <Frame viewBox="0 0 640 370">
+      {/* Vỏ điện thoại */}
+      <rect x={px} y={py} width={pw} height={ph} rx="24" fill={C.white} stroke={C.ink} strokeWidth="2.5" />
+      {/* Nút khoá + nút âm lượng bên trái */}
+      <rect x={px - 6} y="70" width="6" height="22" rx="2" fill={C.ink} />
+      <rect x={px - 6} y="110" width="6" height="50" rx="2" fill={C.ink} />
+      <Lines x={320} y={py + ph + 22} lines={["🔒 Nút khoá  ·  🔊 Nút tăng/giảm âm lượng", "(hai bên thân máy)"]} size={12} fill={C.inkSoft} weight={500} gap={16} />
+
+      {/* Màn hình: 4 vùng */}
+      <rect x={ix} y={yStatus0} width={iw} height={bands.status} fill={C.bubble} fillOpacity="0.12" />
+      <rect x={ix} y={yIcons0} width={iw} height={bands.icons} fill={C.grape} fillOpacity="0.05" />
+      <rect x={ix} y={yDock0} width={iw} height={bands.dock} fill={C.mint} fillOpacity="0.12" />
+      <rect x={ix} y={yNav0} width={iw} height={bands.nav} fill={C.sun} fillOpacity="0.12" />
+      <rect x={ix} y={yStatus0} width={iw} height={yNav1 - yStatus0} rx="16" fill="none" stroke={C.ink} strokeWidth="1" strokeOpacity="0.15" />
+
+      {/* Nội dung minh hoạ trong từng vùng */}
+      <Lines x={ix + iw / 2} y={yStatus0 + 18} lines={["16:10  📶 🔋92%"]} size={12} fill={C.inkSoft} weight={600} />
+      {[0, 1, 2].map((row) =>
+        [0, 1].map((col) => (
+          <rect
+            key={`${row}-${col}`}
+            x={ix + 24 + col * 56}
+            y={yIcons0 + 24 + row * 46}
+            width="26"
+            height="26"
+            rx="7"
+            fill={[C.grape, C.bubble, C.mint][(row + col) % 3]}
+            fillOpacity="0.75"
+          />
+        )),
+      )}
+      {[0, 1, 2, 3].map((i) => (
+        <circle key={i} cx={ix + 22 + i * 30} cy={yDock0 + bands.dock / 2} r="10" fill={C.mintDeep} />
+      ))}
+      <Lines x={ix + iw / 2} y={yNav0 + bands.nav / 2 + 5} lines={["◁   ○   ▢"]} size={16} fill={C.sunDeep} weight={700} />
+
+      {/* Nhãn chú thích bên phải, có mũi tên trỏ vào từng vùng */}
+      {labels.map((l, i) => {
+        const yMid = (l.yFrom + l.yTo) / 2;
+        return (
+          <g key={i}>
+            <line x1={ix + iw} y1={yMid} x2="248" y2={yMid} stroke={C.line} strokeWidth="1.5" markerEnd="url(#arrow-soft)" />
+            <Lines x={254} y={yMid - 4} lines={l.lines} size={13} fill={C.inkSoft} weight={500} anchor="start" gap={15} />
+          </g>
+        );
+      })}
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
   "iot-ket-noi-thiet-bi": IoTKetNoi,
+  "man-hinh-dien-thoai-thong-minh": ManHinhDienThoai,
 };
 
 export default function Diagram({ name }: { name: string }) {
