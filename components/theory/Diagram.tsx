@@ -147,9 +147,60 @@ function DonViLuuTru() {
   );
 }
 
+// ── Bài 2: Kết nối IoT giữa các thiết bị thông minh ─────────────────────────
+function IoTKetNoi() {
+  const nodes = [
+    { x: 40, y: 20, icon: "📱", lines: ["Điện thoại", "thông minh"] },
+    { x: 450, y: 20, icon: "📷", lines: ["Camera", "kết nối"] },
+    { x: 40, y: 196, icon: "⌚", lines: ["Đồng hồ", "thông minh"] },
+    { x: 450, y: 196, icon: "🌡️", lines: ["Cảm biến", "IoT"] },
+  ];
+  const hub = { cx: 320, cy: 148 };
+  const nodeW = 150;
+  const nodeH = 64;
+
+  return (
+    <Frame viewBox="0 0 640 280">
+      <rect x="10" y="10" width="620" height="260" rx="16" fill={C.grape} fillOpacity="0.04" stroke={C.line} strokeWidth="1.5" />
+
+      {/* Đường nối từ mỗi thiết bị tới trung tâm, có nhãn 2 chiều */}
+      {nodes.map((n, i) => {
+        const nx = n.x + nodeW / 2;
+        const ny = n.y + nodeH / 2;
+        const mx = (nx + hub.cx) / 2;
+        const my = (ny + hub.cy) / 2;
+        return (
+          <g key={i}>
+            <line x1={nx} y1={ny} x2={hub.cx} y2={hub.cy} stroke={C.grape} strokeWidth="1.5" strokeDasharray="5 4" />
+            <circle cx={mx} cy={my} r="11" fill={C.white} stroke={C.grape} strokeWidth="1.2" />
+            <Lines x={mx} y={my + 4} lines={["↔"]} size={13} fill={C.grapeDeep} weight={700} />
+          </g>
+        );
+      })}
+
+      {/* Trung tâm: Internet / đám mây */}
+      <circle cx={hub.cx} cy={hub.cy} r="56" fill={C.white} stroke={C.grape} strokeWidth="2.5" />
+      <Lines x={hub.cx} y={hub.cy - 8} lines={["☁️"]} size={22} />
+      <Lines x={hub.cx} y={hub.cy + 16} lines={["Internet", "(đám mây)"]} size={12} fill={C.grapeDeep} weight={700} gap={15} />
+
+      {/* Bốn thiết bị thông minh quanh trung tâm */}
+      {nodes.map((n, i) => (
+        <g key={i}>
+          <rect x={n.x} y={n.y} width={nodeW} height={nodeH} rx="14" fill={C.white} stroke={C.bubble} strokeWidth="2" />
+          <Lines x={n.x + nodeW / 2} y={n.y + 24} lines={[n.icon]} size={18} />
+          <Lines x={n.x + nodeW / 2} y={n.y + 46} lines={n.lines} size={12} fill={C.bubbleDeep} weight={600} gap={14} />
+        </g>
+      ))}
+
+      <Lines x={320} y={272} lines={["Các thiết bị thông minh tự động trao đổi dữ liệu qua mạng không dây, không cần con người can thiệp"]} size={12} fill={C.inkSoft} weight={500} />
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
+  "iot-ket-noi-thiet-bi": IoTKetNoi,
 };
 
 export default function Diagram({ name }: { name: string }) {

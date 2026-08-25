@@ -2,9 +2,11 @@ import type { LessonTheory } from "@/lib/types";
 
 // Import từng bài đã soạn — thêm 1 dòng mỗi khi soạn xong 1 bài
 import bai01 from "@/data/theory/bai-01";
+import bai02 from "@/data/theory/bai-02";
 
 export const THEORY_BANK: Record<string, LessonTheory> = {
   "bai-01": bai01,
+  "bai-02": bai02,
 };
 
 export function getTheory(lessonId: string): LessonTheory | null {
