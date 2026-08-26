@@ -3207,6 +3207,128 @@ function ReturnKetThucHam() {
   );
 }
 
+// ── Bài 27: Tham số (ô trống trong công thức) và đối số (giá trị điền vào) ──
+function ThamSoVsDoiSo() {
+  return (
+    <Frame viewBox="0 0 640 240">
+      <rect x="15" y="15" width="300" height="210" rx="16" fill={C.white} stroke={C.grape} strokeWidth="2" />
+      <rect x="15" y="15" width="300" height="34" rx="16" fill={C.grape} fillOpacity="0.12" />
+      <Lines x={165} y={37} lines={["📐 THAM SỐ — ô trống trong định nghĩa"]} size={9.5} fill={C.grapeDeep} weight={700} />
+
+      <rect x="40" y="65" width="240" height="40" rx="8" fill={C.ink} />
+      <text x="160" y="90" fontSize="10.5" fill="#8CF29B" fontFamily="monospace" textAnchor="middle">
+        def tinh_tien(sl, dg):
+      </text>
+      <rect x="107" y="70" width="24" height="20" rx="4" fill={C.grape} fillOpacity="0.4" stroke={C.grapeDeep} strokeWidth="1.3" />
+      <rect x="140" y="70" width="24" height="20" rx="4" fill={C.grape} fillOpacity="0.4" stroke={C.grapeDeep} strokeWidth="1.3" />
+
+      <rect x="40" y="120" width="240" height="80" rx="8" fill={C.grape} fillOpacity="0.08" />
+      <Lines x={160} y={142} lines={["sl, dg chỉ là hai cái TÊN đại diện"]} size={9.5} fill={C.grapeDeep} weight={700} />
+      <Lines x={160} y={160} lines={["— giống hai ô trống chờ được điền"]} size={9.5} fill={C.inkSoft} weight={600} />
+      <Lines x={160} y={178} lines={["giá trị mỗi khi hàm được gọi"]} size={9.5} fill={C.inkSoft} weight={600} />
+
+      <rect x="325" y="15" width="300" height="210" rx="16" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="325" y="15" width="300" height="34" rx="16" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={475} y={37} lines={["🔢 ĐỐI SỐ — giá trị thật khi gọi"]} size={9.5} fill={C.mintDeep} weight={700} />
+
+      <rect x="350" y="65" width="240" height="40" rx="8" fill={C.ink} />
+      <text x="470" y="90" fontSize="10.5" fill="#8CF29B" fontFamily="monospace" textAnchor="middle">
+        tinh_tien(3, 5000)
+      </text>
+      <rect x="417" y="70" width="16" height="20" rx="4" fill={C.mint} fillOpacity="0.5" stroke={C.mintDeep} strokeWidth="1.3" />
+      <rect x="445" y="70" width="36" height="20" rx="4" fill={C.mint} fillOpacity="0.5" stroke={C.mintDeep} strokeWidth="1.3" />
+
+      <rect x="350" y="120" width="240" height="80" rx="8" fill={C.mint} fillOpacity="0.1" />
+      <Lines x={470} y={142} lines={["3 và 5000 là dữ liệu CỤ THỂ"]} size={9.5} fill={C.mintDeep} weight={700} />
+      <Lines x={470} y={160} lines={["— điền vào đúng thứ tự: sl = 3,"]} size={9.5} fill={C.inkSoft} weight={600} />
+      <Lines x={470} y={178} lines={["dg = 5000 (theo vị trí, không theo tên)"]} size={9.5} fill={C.inkSoft} weight={600} />
+    </Frame>
+  );
+}
+
+// ── Bài 27: Đổi thứ tự đối số — kết quả sai mà KHÔNG hề báo lỗi ─────────────
+function ThuTuDoiSoQuanTrong() {
+  return (
+    <Frame viewBox="0 0 640 260">
+      <rect x="15" y="15" width="300" height="230" rx="16" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="15" y="15" width="300" height="34" rx="16" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={165} y={37} lines={["✅ con_lai(tong_quy, da_chi) — đúng thứ tự"]} size={9} fill={C.mintDeep} weight={700} />
+
+      <rect x="35" y="60" width="260" height="34" rx="6" fill={C.ink} />
+      <text x="165" y="82" fontSize="10" fill="#8CF29B" fontFamily="monospace" textAnchor="middle">
+        con_lai(500000, 200000)
+      </text>
+      <path d="M165,98 L165,118" stroke={C.mintDeep} strokeWidth="2" markerEnd="url(#arrow)" />
+      <rect x="115" y="123" width="100" height="38" rx="8" fill={C.mint} fillOpacity="0.25" stroke={C.mintDeep} strokeWidth="1.8" />
+      <Lines x={165} y={147} lines={["300000"]} size={13} fill={C.mintDeep} weight={700} />
+
+      <rect x="30" y="175" width="270" height="55" rx="8" fill={C.mint} fillOpacity="0.1" />
+      <Lines x={165} y={195} lines={["tong_quy = 500000, da_chi = 200000"]} size={9} fill={C.mintDeep} weight={700} />
+      <Lines x={165} y={212} lines={["→ quỹ còn dư 300000, hợp lí!"]} size={9} fill={C.mintDeep} weight={600} />
+
+      <rect x="325" y="15" width="300" height="230" rx="16" fill={C.white} stroke="#DC2626" strokeWidth="2" />
+      <rect x="325" y="15" width="300" height="34" rx="16" fill="#FEE2E2" />
+      <Lines x={475} y={37} lines={["❌ con_lai(da_chi, tong_quy) — lỡ đảo chỗ"]} size={9} fill="#B91C1C" weight={700} />
+
+      <rect x="345" y="60" width="260" height="34" rx="6" fill={C.ink} />
+      <text x="475" y="82" fontSize="10" fill="#8CF29B" fontFamily="monospace" textAnchor="middle">
+        con_lai(200000, 500000)
+      </text>
+      <path d="M475,98 L475,118" stroke="#DC2626" strokeWidth="2" markerEnd="url(#arrow)" />
+      <rect x="415" y="123" width="120" height="38" rx="8" fill="#FEE2E2" stroke="#DC2626" strokeWidth="1.8" />
+      <Lines x={475} y={147} lines={["-300000"]} size={13} fill="#B91C1C" weight={700} />
+
+      <rect x="340" y="175" width="270" height="55" rx="8" fill="#FEE2E2" fillOpacity="0.6" />
+      <Lines x={475} y={195} lines={["Không hề có lỗi cú pháp nào —"]} size={9} fill="#B91C1C" weight={700} />
+      <Lines x={475} y={212} lines={["chỉ ra một con số ÂM vô lí, dễ bỏ sót!"]} size={9} fill="#B91C1C" weight={600} />
+    </Frame>
+  );
+}
+
+// ── Bài 27: Trả về nhiều giá trị cùng lúc — và lời gọi hàm lồng nhau ────────
+function NhieuGiaTriTraVeVaLongNhau() {
+  return (
+    <Frame viewBox="0 0 640 260">
+      <rect x="15" y="15" width="300" height="230" rx="16" fill={C.white} stroke={C.grape} strokeWidth="2" />
+      <rect x="15" y="15" width="300" height="34" rx="16" fill={C.grape} fillOpacity="0.12" />
+      <Lines x={165} y={37} lines={["🎁 return a, b — trả về HAI giá trị"]} size={10} fill={C.grapeDeep} weight={700} />
+
+      <rect x="35" y="60" width="260" height="34" rx="6" fill={C.ink} />
+      <text x="165" y="82" fontSize="9.5" fill="#8CF29B" fontFamily="monospace" textAnchor="middle">
+        return tong, con_lai
+      </text>
+      <path d="M120,98 L100,118" stroke={C.grapeDeep} strokeWidth="2" markerEnd="url(#arrow)" />
+      <path d="M210,98 L230,118" stroke={C.grapeDeep} strokeWidth="2" markerEnd="url(#arrow)" />
+      <rect x="55" y="123" width="90" height="36" rx="8" fill={C.grape} fillOpacity="0.2" stroke={C.grapeDeep} strokeWidth="1.5" />
+      <Lines x={100} y={146} lines={["t = 500000"]} size={9} fill={C.grapeDeep} weight={700} />
+      <rect x="185" y="123" width="90" height="36" rx="8" fill={C.grape} fillOpacity="0.2" stroke={C.grapeDeep} strokeWidth="1.5" />
+      <Lines x={230} y={146} lines={["h = 300000"]} size={9} fill={C.grapeDeep} weight={700} />
+
+      <rect x="30" y="175" width="270" height="55" rx="8" fill={C.line} fillOpacity="0.35" />
+      <Lines x={165} y={195} lines={["t, h = quy_va_con_lai(...)"]} size={9.5} fill={C.ink} weight={700} />
+      <Lines x={165} y={212} lines={["nhận đủ 2 giá trị vào 2 biến cùng lúc"]} size={9} fill={C.inkSoft} weight={500} />
+
+      <rect x="325" y="15" width="300" height="230" rx="16" fill={C.white} stroke={C.bubble} strokeWidth="2" />
+      <rect x="325" y="15" width="300" height="34" rx="16" fill={C.bubble} fillOpacity="0.12" />
+      <Lines x={475} y={37} lines={["🪆 f(f(3)) — gọi hàm lồng nhau"]} size={10} fill={C.bubbleDeep} weight={700} />
+
+      <rect x="400" y="60" width="150" height="32" rx="16" fill={C.bubble} fillOpacity="0.15" stroke={C.bubbleDeep} strokeWidth="1.5" />
+      <Lines x={475} y={81} lines={["f(3)"]} size={11} fill={C.bubbleDeep} weight={700} />
+      <path d="M475,92 L475,110" stroke={C.bubbleDeep} strokeWidth="2" markerEnd="url(#arrow)" />
+      <Lines x={510} y={104} lines={["tính trước"]} size={8.5} fill={C.bubbleDeep} weight={600} anchor="start" />
+      <rect x="415" y="115" width="120" height="32" rx="16" fill={C.bubble} fillOpacity="0.3" stroke={C.bubbleDeep} strokeWidth="1.8" />
+      <Lines x={475} y={136} lines={["kết quả = 6"]} size={10} fill={C.bubbleDeep} weight={700} />
+      <path d="M475,147 L475,165" stroke={C.bubbleDeep} strokeWidth="2" markerEnd="url(#arrow)" />
+      <Lines x={520} y={159} lines={["rồi tính f(6)"]} size={8.5} fill={C.bubbleDeep} weight={600} anchor="start" />
+      <rect x="430" y="170" width="90" height="34" rx="8" fill={C.bubble} fillOpacity="0.4" stroke={C.bubbleDeep} strokeWidth="2" />
+      <Lines x={475} y={192} lines={["f(f(3)) = 12"]} size={10} fill={C.bubbleDeep} weight={700} />
+
+      <rect x="340" y="212" width="270" height="20" rx="6" fill={C.line} fillOpacity="0.35" />
+      <Lines x={475} y={226} lines={["Hàm bên trong luôn được tính XONG trước"]} size={8.5} fill={C.ink} weight={600} />
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
@@ -3272,6 +3394,9 @@ const DIAGRAMS: Record<string, () => JSX.Element> = {
   "dinh-nghia-vs-goi-ham": DinhNghiaVsGoiHam,
   "return-vs-print": ReturnVsPrint,
   "return-ket-thuc-ham": ReturnKetThucHam,
+  "tham-so-vs-doi-so": ThamSoVsDoiSo,
+  "thu-tu-doi-so-quan-trong": ThuTuDoiSoQuanTrong,
+  "nhieu-gia-tri-tra-ve-va-long-nhau": NhieuGiaTriTraVeVaLongNhau,
 };
 
 export default function Diagram({ name }: { name: string }) {
