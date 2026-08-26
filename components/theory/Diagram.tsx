@@ -2210,6 +2210,145 @@ function AndOrGates() {
   );
 }
 
+// ── Bài 20: range(n) và range(a,b) trên trục số — bẫy "hụt" giá trị cuối ────
+function RangeSoLine() {
+  const dots1 = [0, 1, 2, 3, 4];
+  const dots2 = [1, 2, 3, 4, 5];
+
+  return (
+    <Frame viewBox="0 0 640 260">
+      <rect x="15" y="15" width="610" height="105" rx="14" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <Lines x={320} y={40} lines={["range(5) → chỉ gồm 0, 1, 2, 3, 4 — KHÔNG có số 5"]} size={12} fill={C.mintDeep} weight={700} />
+      {dots1.map((n, i) => (
+        <g key={n}>
+          <circle cx={90 + i * 80} cy="80" r="20" fill={C.mint} fillOpacity="0.25" stroke={C.mintDeep} strokeWidth="2" />
+          <Lines x={90 + i * 80} y={85} lines={[String(n)]} size={14} fill={C.mintDeep} weight={700} />
+        </g>
+      ))}
+      <circle cx="490" cy="80" r="20" fill={C.white} stroke="#DC2626" strokeWidth="2" strokeDasharray="4 3" />
+      <Lines x={490} y={85} lines={["5"]} size={14} fill="#DC2626" weight={700} />
+      <Lines x={490} y={112} lines={["bị loại!"]} size={9} fill="#DC2626" weight={700} />
+
+      <rect x="15" y="140" width="610" height="105" rx="14" fill={C.white} stroke={C.grape} strokeWidth="2" />
+      <Lines x={320} y={165} lines={["range(1, 6) → chỉ gồm 1, 2, 3, 4, 5 — KHÔNG có số 6"]} size={12} fill={C.grapeDeep} weight={700} />
+      {dots2.map((n, i) => (
+        <g key={n}>
+          <circle cx={90 + i * 80} cy="205" r="20" fill={C.grape} fillOpacity="0.2" stroke={C.grapeDeep} strokeWidth="2" />
+          <Lines x={90 + i * 80} y={210} lines={[String(n)]} size={14} fill={C.grapeDeep} weight={700} />
+        </g>
+      ))}
+      <circle cx="490" cy="205" r="20" fill={C.white} stroke="#DC2626" strokeWidth="2" strokeDasharray="4 3" />
+      <Lines x={490} y={210} lines={["6"]} size={14} fill="#DC2626" weight={700} />
+      <Lines x={490} y={237} lines={["bị loại!"]} size={9} fill="#DC2626" weight={700} />
+    </Frame>
+  );
+}
+
+// ── Bài 20: Vòng lặp for chạy qua từng "khung hình" theo thời gian ──────────
+function VongLapFilmstrip() {
+  const frames = [0, 1, 2, 3, 4];
+  return (
+    <Frame viewBox="0 0 640 220">
+      <Lines x={320} y={26} lines={["for i in range(5): 🔔 — cùng một lệnh, chạy lại 5 lần với i khác nhau"]} size={11.5} fill={C.grapeDeep} weight={700} />
+
+      {frames.map((i, idx) => (
+        <g key={i}>
+          <rect x={20 + idx * 122} y="45" width="102" height="120" rx="10" fill={C.white} stroke={C.grape} strokeWidth="1.8" />
+          <rect x={20 + idx * 122} y="45" width="102" height="30" rx="10" fill={C.grape} fillOpacity="0.15" />
+          <Lines x={71 + idx * 122} y={65} lines={[`Vòng ${idx + 1}`]} size={10} fill={C.grapeDeep} weight={700} />
+          <Lines x={71 + idx * 122} y={100} lines={[`i = ${i}`]} size={16} fill={C.ink} weight={700} />
+          <Lines x={71 + idx * 122} y={130} lines={["🔔"]} size={22} />
+          <Lines x={71 + idx * 122} y={155} lines={["Rung chuông!"]} size={8.5} fill={C.inkSoft} weight={600} />
+          {idx < 4 && (
+            <path d={`M${122 + idx * 122},105 L${142 + idx * 122},105`} stroke={C.grapeDeep} strokeWidth="2" markerEnd="url(#arrow)" />
+          )}
+        </g>
+      ))}
+
+      <Lines x={320} y={195} lines={["Hết 5 vòng, i không còn tồn tại — chương trình chạy tiếp lệnh phía sau for"]} size={10} fill={C.inkSoft} weight={500} />
+    </Frame>
+  );
+}
+
+// ── Bài 20: Biến cộng dồn — khởi tạo trước vòng lặp mới đúng ─────────────────
+function BienCongDon() {
+  const steps = [
+    { i: 1, s: 1 },
+    { i: 2, s: 3 },
+    { i: 3, s: 6 },
+    { i: 4, s: 10 },
+    { i: 5, s: 15 },
+  ];
+
+  return (
+    <Frame viewBox="0 0 640 300">
+      <rect x="15" y="15" width="300" height="270" rx="16" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="15" y="15" width="300" height="34" rx="16" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={165} y={37} lines={["✅ ĐÚNG: s = 0 đặt TRƯỚC vòng lặp"]} size={10.5} fill={C.mintDeep} weight={700} />
+
+      {steps.map((st, i) => (
+        <g key={i}>
+          <rect x={35 + i * 53} y={70 + (15 - st.s) * 3} width="40" height={st.s * 3 + 30} rx="6" fill={C.mint} fillOpacity="0.55" stroke={C.mintDeep} strokeWidth="1.3" />
+          <Lines x={55 + i * 53} y={260} lines={[`i=${st.i}`]} size={9} fill={C.inkSoft} weight={600} />
+          <Lines x={55 + i * 53} y={62 + (15 - st.s) * 3} lines={[`s=${st.s}`]} size={9.5} fill={C.mintDeep} weight={700} />
+        </g>
+      ))}
+      <Lines x={165} y={280} lines={["Bể \"s\" đầy dần lên — kết quả cuối: 15 quyển sách"]} size={9.5} fill={C.inkSoft} weight={500} />
+
+      <rect x="325" y="15" width="300" height="270" rx="16" fill={C.white} stroke={C.bubble} strokeWidth="2" />
+      <rect x="325" y="15" width="300" height="34" rx="16" fill={C.bubble} fillOpacity="0.12" />
+      <Lines x={475} y={37} lines={["❌ SAI: s = 0 đặt TRONG vòng lặp"]} size={10.5} fill={C.bubbleDeep} weight={700} />
+
+      {steps.map((st, i) => (
+        <g key={i}>
+          <rect x={345 + i * 53} y={70 + (15 - st.i) * 3} width="40" height={st.i * 3 + 30} rx="6" fill={C.bubble} fillOpacity="0.4" stroke={C.bubbleDeep} strokeWidth="1.3" />
+          <Lines x={365 + i * 53} y={260} lines={[`i=${st.i}`]} size={9} fill={C.inkSoft} weight={600} />
+          <Lines x={365 + i * 53} y={62 + (15 - st.i) * 3} lines={[`s=${st.i}`]} size={9.5} fill={C.bubbleDeep} weight={700} />
+        </g>
+      ))}
+      <Lines x={475} y={280} lines={["Bể \"s\" bị đổ lại mỗi vòng — kết quả cuối chỉ còn 5, sai hoàn toàn"]} size={9.5} fill={C.inkSoft} weight={500} />
+    </Frame>
+  );
+}
+
+// ── Bài 20: for lồng nhau — sơ đồ ghế ngồi rạp chiếu phim ───────────────────
+function GheRapChieuPhim() {
+  const rows = [1, 2, 3];
+  const seats = [1, 2, 3, 4, 5];
+
+  return (
+    <Frame viewBox="0 0 640 280">
+      <Lines x={320} y={26} lines={["🎬 Màn hình"]} size={11} fill={C.inkSoft} weight={700} />
+      <rect x="180" y="34" width="280" height="10" rx="5" fill={C.line} />
+
+      {rows.map((r, ri) => (
+        <g key={r}>
+          <Lines x={70} y={95 + ri * 55} lines={[`Hàng ${r}`]} size={10.5} fill={C.grapeDeep} weight={700} />
+          {seats.map((s, si) => (
+            <g key={s}>
+              <rect
+                x={135 + si * 75}
+                y={72 + ri * 55}
+                width="60"
+                height="40"
+                rx="8"
+                fill={C.grape}
+                fillOpacity="0.15"
+                stroke={C.grape}
+                strokeWidth="1.5"
+              />
+              <Lines x={165 + si * 75} y={97 + ri * 55} lines={[`H${r}-G${s}`]} size={10} fill={C.grapeDeep} weight={700} />
+            </g>
+          ))}
+        </g>
+      ))}
+
+      <rect x="60" y="245" width="520" height="28" rx="8" fill={C.line} fillOpacity="0.35" />
+      <Lines x={320} y={263} lines={["Vòng ngoài chạy qua 3 hàng — mỗi hàng, vòng trong chạy qua 5 ghế → in đủ 15 nhãn ghế"]} size={9.5} fill={C.ink} weight={600} />
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
@@ -2250,6 +2389,10 @@ const DIAGRAMS: Record<string, () => JSX.Element> = {
   "if-don-luu-do": IfDonLuuDo,
   "if-elif-else-luu-do": IfElifElseLuuDo,
   "and-or-gates": AndOrGates,
+  "range-so-line": RangeSoLine,
+  "vong-lap-filmstrip": VongLapFilmstrip,
+  "bien-cong-don": BienCongDon,
+  "ghe-rap-chieu-phim": GheRapChieuPhim,
 };
 
 export default function Diagram({ name }: { name: string }) {
