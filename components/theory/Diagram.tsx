@@ -2840,6 +2840,122 @@ function ThuTuTruocSauSort() {
   );
 }
 
+// ── Bài 24: Danh sách SỬA được từng phần tử — xâu thì KHÔNG ─────────────────
+function XauBatBien() {
+  return (
+    <Frame viewBox="0 0 640 260">
+      <rect x="15" y="15" width="300" height="230" rx="16" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="15" y="15" width="300" height="34" rx="16" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={165} y={37} lines={["✅ Danh sách: ten[0] = \"B\" — OK"]} size={10.5} fill={C.mintDeep} weight={700} />
+
+      {["V", "y"].map((ch, i) => (
+        <rect key={i} x={130 + i * 50} y="65" width="42" height="42" rx="8" fill={C.mint} fillOpacity="0.18" stroke={C.mintDeep} strokeWidth="1.5" />
+      ))}
+      <Lines x={151} y={91} lines={["V"]} size={16} fill={C.mintDeep} weight={700} />
+      <Lines x={201} y={91} lines={["y"]} size={16} fill={C.mintDeep} weight={700} />
+      <path d="M165,115 L165,135" stroke={C.mintDeep} strokeWidth="2" markerEnd="url(#arrow)" />
+      {["B", "y"].map((ch, i) => (
+        <rect key={i} x={130 + i * 50} y="140" width="42" height="42" rx="8" fill={C.mint} fillOpacity="0.3" stroke={C.mintDeep} strokeWidth="2" />
+      ))}
+      <Lines x={151} y={166} lines={["B"]} size={16} fill={C.mintDeep} weight={700} />
+      <Lines x={201} y={166} lines={["y"]} size={16} fill={C.mintDeep} weight={700} />
+
+      <rect x="30" y="195" width="270" height="42" rx="8" fill={C.line} fillOpacity="0.3" />
+      <Lines x={165} y={212} lines={["Danh sách ['V','y'] là kiểu MUTABLE"]} size={9.5} fill={C.ink} weight={600} />
+      <Lines x={165} y={227} lines={["— sửa trực tiếp từng ô được"]} size={9.5} fill={C.ink} weight={600} />
+
+      <rect x="325" y="15" width="300" height="230" rx="16" fill={C.white} stroke="#DC2626" strokeWidth="2" />
+      <rect x="325" y="15" width="300" height="34" rx="16" fill="#FEE2E2" />
+      <Lines x={475} y={37} lines={["❌ Xâu: ten[0] = \"B\" — LỖI"]} size={10.5} fill="#B91C1C" weight={700} />
+
+      {["V", "y"].map((ch, i) => (
+        <rect key={i} x={440 + i * 50} y="65" width="42" height="42" rx="8" fill={C.bubble} fillOpacity="0.18" stroke={C.bubbleDeep} strokeWidth="1.5" />
+      ))}
+      <Lines x={461} y={91} lines={["V"]} size={16} fill={C.bubbleDeep} weight={700} />
+      <Lines x={511} y={91} lines={["y"]} size={16} fill={C.bubbleDeep} weight={700} />
+      <path d="M475,115 L475,135" stroke="#DC2626" strokeWidth="2" markerEnd="url(#arrow)" />
+      <rect x="415" y="140" width="120" height="42" rx="8" fill="#FEE2E2" stroke="#DC2626" strokeWidth="1.8" />
+      <Lines x={475} y={166} lines={["TypeError"]} size={13} fill="#B91C1C" weight={700} />
+
+      <rect x="340" y="195" width="270" height="42" rx="8" fill={C.line} fillOpacity="0.3" />
+      <Lines x={475} y={212} lines={["Xâu \"Vy\" là kiểu IMMUTABLE — muốn"]} size={9.5} fill={C.ink} weight={600} />
+      <Lines x={475} y={227} lines={["\"sửa\", phải TẠO XÂU MỚI hoàn toàn"]} size={9.5} fill={C.ink} weight={600} />
+    </Frame>
+  );
+}
+
+// ── Bài 24: Ghép nối (+), lặp (nhân với số) và lát cắt s[a:b] ───────────────
+function GhepNoiVaLatCat() {
+  return (
+    <Frame viewBox="0 0 640 280">
+      <rect x="15" y="15" width="610" height="110" rx="16" fill={C.white} stroke={C.grape} strokeWidth="2" />
+      <Lines x={320} y={38} lines={["Ghép nối bằng + — KHÔNG tự thêm dấu cách!"]} size={11.5} fill={C.grapeDeep} weight={700} />
+
+      <rect x="60" y="55" width="130" height="38" rx="8" fill={C.grape} fillOpacity="0.15" stroke={C.grapeDeep} strokeWidth="1.5" />
+      <Lines x={125} y={79} lines={["\"Xin chào, \""]} size={10} fill={C.grapeDeep} weight={700} />
+      <Lines x={205} y={79} lines={["+"]} size={16} fill={C.ink} weight={700} />
+      <rect x="225" y="55" width="60" height="38" rx="8" fill={C.mint} fillOpacity="0.2" stroke={C.mintDeep} strokeWidth="1.5" />
+      <Lines x={255} y={79} lines={["\"Vy\""]} size={10} fill={C.mintDeep} weight={700} />
+      <path d="M290,74 L320,74" stroke={C.ink} strokeWidth="2" markerEnd="url(#arrow)" />
+      <rect x="325" y="55" width="200" height="38" rx="8" fill={C.line} fillOpacity="0.4" />
+      <Lines x={425} y={79} lines={["\"Xin chào, Vy\" — liền một mạch"]} size={10} fill={C.ink} weight={700} />
+
+      <Lines x={320} y={112} lines={["Quên khoảng trắng trong xâu đầu → dính chữ luôn, Python không tự sửa giúp"]} size={9.5} fill="#B91C1C" weight={600} />
+
+      <Lines x={320} y={148} lines={["Lát cắt s[0:3] — lấy từ chỉ số 0 đến TRƯỚC 3 (giống range())"]} size={11.5} fill={C.bubbleDeep} weight={700} />
+      {["P", "y", "t", "h", "o", "n"].map((ch, i) => (
+        <g key={i}>
+          <rect
+            x={220 + i * 40}
+            y="165"
+            width="35"
+            height="40"
+            rx="6"
+            fill={i < 3 ? C.bubble : C.line}
+            fillOpacity={i < 3 ? 0.3 : 0.3}
+            stroke={i < 3 ? C.bubbleDeep : C.inkSoft}
+            strokeWidth={i < 3 ? 2 : 1.2}
+          />
+          <Lines x={237 + i * 40} y={190} lines={[ch]} size={15} fill={i < 3 ? C.bubbleDeep : C.inkSoft} weight={700} />
+          <Lines x={237 + i * 40} y={220} lines={[String(i)]} size={9} fill={C.inkSoft} weight={600} />
+        </g>
+      ))}
+      <rect x="180" y="235" width="280" height="34" rx="8" fill={C.bubble} fillOpacity="0.12" />
+      <Lines x={320} y={257} lines={["s[0:3] → \"Pyt\" — chỉ số 3 (\"h\") KHÔNG được lấy"]} size={10} fill={C.bubbleDeep} weight={700} />
+    </Frame>
+  );
+}
+
+// ── Bài 24: So sánh xâu theo thứ tự từ điển — từng kí tự một, không theo độ dài ─
+function SoSanhXau() {
+  return (
+    <Frame viewBox="0 0 640 220">
+      <Lines x={320} y={28} lines={["\"an\" < \"b\" → True — so sánh từng kí tự, KHÔNG so theo độ dài"]} size={12} fill={C.grapeDeep} weight={700} />
+
+      <rect x="60" y="55" width="220" height="90" rx="14" fill={C.mint} fillOpacity="0.12" stroke={C.mintDeep} strokeWidth="1.8" />
+      {["a", "n"].map((ch, i) => (
+        <g key={i}>
+          <rect x={110 + i * 55} y="80" width="45" height="42" rx="8" fill={C.mint} fillOpacity="0.3" stroke={C.mintDeep} strokeWidth="1.8" />
+          <Lines x={132 + i * 55} y={106} lines={[ch]} size={17} fill={C.mintDeep} weight={700} />
+        </g>
+      ))}
+      <Lines x={170} y={70} lines={["\"an\""]} size={11} fill={C.mintDeep} weight={700} />
+
+      <rect x="360" y="55" width="220" height="90" rx="14" fill={C.bubble} fillOpacity="0.12" stroke={C.bubbleDeep} strokeWidth="1.8" />
+      <rect x={438} y="80" width="45" height="42" rx="8" fill={C.bubble} fillOpacity="0.3" stroke={C.bubbleDeep} strokeWidth="1.8" />
+      <Lines x={460} y={106} lines={["b"]} size={17} fill={C.bubbleDeep} weight={700} />
+      <Lines x={460} y={70} lines={["\"b\""]} size={11} fill={C.bubbleDeep} weight={700} />
+
+      <path d="M155,101 L438,101" fill="none" stroke={C.grapeDeep} strokeWidth="2" strokeDasharray="5 4" />
+      <Lines x={297} y={90} lines={["so \"a\" với \"b\" trước tiên"]} size={10} fill={C.grapeDeep} weight={700} />
+
+      <rect x="150" y="165" width="340" height="45" rx="10" fill={C.line} fillOpacity="0.35" />
+      <Lines x={320} y={185} lines={["\"a\" đứng trước \"b\" trong bảng chữ cái → \"an\" nhỏ hơn"]} size={10.5} fill={C.ink} weight={700} />
+      <Lines x={320} y={200} lines={["→ dừng so sánh ngay, không cần xét tới kí tự \"n\" hay độ dài"]} size={9.5} fill={C.inkSoft} weight={500} />
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
@@ -2895,6 +3011,9 @@ const DIAGRAMS: Record<string, () => JSX.Element> = {
   "sort-tai-cho-va-bay": SortTaiChoVaBay,
   "append-vs-extend": AppendVsExtend,
   "thu-tu-truoc-sau-sort": ThuTuTruocSauSort,
+  "xau-bat-bien": XauBatBien,
+  "ghep-noi-va-lat-cat": GhepNoiVaLatCat,
+  "so-sanh-xau": SoSanhXau,
 };
 
 export default function Diagram({ name }: { name: string }) {
