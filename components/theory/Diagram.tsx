@@ -3445,6 +3445,104 @@ function DocLapGiuaCacHam() {
   );
 }
 
+// ── Bài 29: Lỗi cú pháp — xe chưa hề lăn bánh đã bị chặn ngay vạch xuất phát ─
+function LoiCuPhapKhongChay() {
+  return (
+    <Frame viewBox="0 0 640 240">
+      <Lines x={320} y={26} lines={["🏁 Lỗi cú pháp (SyntaxError) — bị chặn NGAY TỪ ĐẦU, chưa chạy dòng nào"]} size={11.5} fill={C.grapeDeep} weight={700} />
+
+      <line x1="60" y1="130" x2="580" y2="130" stroke={C.line} strokeWidth="10" />
+      <line x1="60" y1="130" x2="580" y2="130" stroke={C.inkSoft} strokeWidth="1" strokeDasharray="10 8" />
+
+      <text x="75" y="140" fontSize="22">🚦</text>
+      <text x="115" y="140" fontSize="26">🏎️</text>
+      <rect x="150" y="105" width="14" height="55" fill="#DC2626" />
+      <text x="145" y="98" fontSize="20">🚫</text>
+      <text x="560" y="140" fontSize="22">🏁</text>
+
+      <rect x="60" y="55" width="240" height="42" rx="6" fill={C.ink} />
+      <text x="75" y="80" fontSize="10" fill="#FF6B9D" fontFamily="monospace">
+        if diem &gt; 5
+      </text>
+      <text x="205" y="80" fontSize="14" fill="#FF6B9D">❓</text>
+
+      <rect x="340" y="55" width="260" height="42" rx="6" fill="#FEE2E2" stroke="#DC2626" strokeWidth="1.5" />
+      <Lines x={470} y={72} lines={["SyntaxError: expected ':'"]} size={9.5} fill="#B91C1C" weight={700} />
+      <Lines x={470} y={88} lines={["thiếu dấu hai chấm sau if"]} size={8.5} fill="#B91C1C" weight={600} />
+
+      <rect x="80" y="175" width="480" height="50" rx="10" fill={C.line} fillOpacity="0.35" />
+      <Lines x={320} y={195} lines={["Python đọc thấy sai NGỮ PHÁP trước khi chạy bất kì dòng nào"]} size={10} fill={C.ink} weight={700} />
+      <Lines x={320} y={212} lines={["— toàn bộ chương trình đứng yên tại vạch xuất phát"]} size={9.5} fill={C.inkSoft} weight={500} />
+    </Frame>
+  );
+}
+
+// ── Bài 29: Lỗi ngoại lệ — xe chạy được rồi chết máy giữa đường ─────────────
+function LoiNgoaiLeDungGiuaChuong() {
+  const loai = [
+    { ten: "ZeroDivisionError", nguyen_nhan: "chia cho số 0" },
+    { ten: "ValueError", nguyen_nhan: "đổi kiểu dữ liệu không hợp lệ" },
+    { ten: "IndexError", nguyen_nhan: "chỉ số vượt phạm vi danh sách" },
+    { ten: "NameError", nguyen_nhan: "dùng biến chưa được gán" },
+    { ten: "TypeError", nguyen_nhan: "trộn lẫn kiểu dữ liệu sai cách" },
+  ];
+  return (
+    <Frame viewBox="0 0 640 300">
+      <Lines x={320} y={24} lines={["🚧 Lỗi ngoại lệ (Exception) — chạy được một đoạn rồi DỪNG đột ngột"]} size={11} fill={C.bubbleDeep} weight={700} />
+
+      <line x1="50" y1="90" x2="590" y2="90" stroke={C.line} strokeWidth="10" />
+      <text x="60" y="98" fontSize="20">🏁</text>
+      <text x="330" y="98" fontSize="26">🏎️</text>
+      <text x="300" y="65" fontSize="20">💥</text>
+      <text x="570" y="98" fontSize="20">🏁</text>
+
+      <rect x="255" y="105" width="220" height="55" rx="8" fill="#FEE2E2" stroke="#DC2626" strokeWidth="1.6" />
+      <Lines x={365} y={125} lines={["Traceback (dòng 4)"]} size={9.5} fill="#B91C1C" weight={700} />
+      <Lines x={365} y={142} lines={["ZeroDivisionError:"]} size={9.5} fill="#B91C1C" weight={700} />
+      <Lines x={365} y={155} lines={["division by zero"]} size={9} fill="#B91C1C" weight={600} />
+
+      <rect x="30" y="175" width="580" height="115" rx="10" fill={C.white} stroke={C.bubble} strokeWidth="1.5" />
+      <Lines x={320} y={195} lines={["📋 Vài lỗi ngoại lệ thường gặp"]} size={10.5} fill={C.bubbleDeep} weight={700} />
+      {loai.map((l, i) => (
+        <g key={i}>
+          <text x={50} y={216 + i * 15} fontSize="10" fill={C.bubbleDeep} fontFamily="monospace" fontWeight={700}>
+            {l.ten}
+          </text>
+          <text x={220} y={216 + i * 15} fontSize="9.5" fill={C.inkSoft}>
+            — {l.nguyen_nhan}
+          </text>
+        </g>
+      ))}
+    </Frame>
+  );
+}
+
+// ── Bài 29: Lỗi lôgic — xe chạy êm ru nhưng tới SAI địa điểm, không báo gì ──
+function LoiLogicDenSaiDich() {
+  return (
+    <Frame viewBox="0 0 640 260">
+      <Lines x={320} y={24} lines={["🎯 Lỗi lôgic — chạy êm ru, KHÔNG báo gì cả, chỉ là đến sai đích"]} size={11.5} fill={C.grapeDeep} weight={700} />
+
+      <line x1="50" y1="110" x2="590" y2="110" stroke={C.line} strokeWidth="10" />
+      <text x="60" y="118" fontSize="20">🏁</text>
+      <text x="560" y="118" fontSize="26">🏎️</text>
+      <text x="555" y="80" fontSize="14" fill={C.inkSoft}>không đèn báo nào!</text>
+
+      <rect x="460" y="130" width="150" height="42" rx="8" fill="#FEE2E2" stroke="#DC2626" strokeWidth="1.6" />
+      <Lines x={535} y={148} lines={["📍 Đích thực tế: 11"]} size={10} fill="#B91C1C" weight={700} />
+      <Lines x={535} y={163} lines={["(a + b/2, sai thứ tự)"]} size={8.5} fill="#B91C1C" weight={600} />
+
+      <rect x="270" y="130" width="150" height="42" rx="8" fill={C.mint} fillOpacity="0.15" stroke={C.mintDeep} strokeWidth="1.6" strokeDasharray="4 3" />
+      <Lines x={345} y={148} lines={["🎯 Đích mong muốn: 7"]} size={10} fill={C.mintDeep} weight={700} />
+      <Lines x={345} y={163} lines={["((a + b)/2, đúng ý)"]} size={8.5} fill={C.mintDeep} weight={600} />
+
+      <rect x="70" y="190" width="500" height="55" rx="10" fill={C.line} fillOpacity="0.35" />
+      <Lines x={320} y={210} lines={["Chương trình chạy hết, không một dòng lỗi màu đỏ nào xuất hiện"]} size={10} fill={C.ink} weight={700} />
+      <Lines x={320} y={227} lines={["— chỉ tự kiểm thử, đối chiếu kết quả đúng mới phát hiện ra được"]} size={9.5} fill={C.inkSoft} weight={500} />
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
@@ -3516,6 +3614,9 @@ const DIAGRAMS: Record<string, () => JSX.Element> = {
   "bien-cuc-bo-phong-rieng": BienCucBoPhongRieng,
   "bay-che-bien-toan-cuc": BayCheBienToanCuc,
   "doc-lap-giua-cac-ham": DocLapGiuaCacHam,
+  "loi-cu-phap-khong-chay": LoiCuPhapKhongChay,
+  "loi-ngoai-le-dung-giua-chung": LoiNgoaiLeDungGiuaChuong,
+  "loi-logic-den-sai-dich": LoiLogicDenSaiDich,
 };
 
 export default function Diagram({ name }: { name: string }) {
