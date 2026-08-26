@@ -530,6 +530,209 @@ function CheDoQuetDefender() {
   );
 }
 
+// ── Bài 10: 4 Cú pháp tìm kiếm Google thần thánh ─────────────────────────────
+function CuPhapTimKiem() {
+  const items = [
+    {
+      syntax: '"cụm từ khóa"',
+      emoji: '🎯',
+      name: "Tìm chính xác nguyên cụm",
+      desc: "Chỉ hiện kết quả chứa đúng cụm từ theo đúng thứ tự, lọc kết quả rời rạc.",
+      example: '"chiến dịch Điện Biên Phủ"',
+      color: C.grape,
+      deep: C.grapeDeep,
+      x: 20,
+      y: 20,
+    },
+    {
+      syntax: "site:tenmien.vn",
+      emoji: '🌐',
+      name: "Giới hạn trong 1 website",
+      desc: "Thu hẹp phạm vi tìm kiếm trong một trang web hoặc đuôi tên miền uy tín (.gov, .edu).",
+      example: "lịch thi tốt nghiệp site:moet.gov.vn",
+      color: C.mint,
+      deep: C.mintDeep,
+      x: 330,
+      y: 20,
+    },
+    {
+      syntax: "filetype:dinhdang",
+      emoji: '📑',
+      name: "Tìm tệp tài liệu cụ thể",
+      desc: "Chỉ tải các tệp định dạng yêu cầu (pdf, pptx, docx, xlsx) để làm bài tập/thuyết trình.",
+      example: "tin học 10 bài 10 filetype:pptx",
+      color: C.bubble,
+      deep: C.bubbleDeep,
+      x: 20,
+      y: 155,
+    },
+    {
+      syntax: "từ_khóa -từ_loại_trừ",
+      emoji: '➖',
+      name: "Loại trừ kết quả gây nhiễu",
+      desc: "Loại bỏ các trang chứa từ khoá không mong muốn, cực kì hữu ích với từ đa nghĩa.",
+      example: "lập trình python -rắn",
+      color: C.sun,
+      deep: C.sunDeep,
+      x: 330,
+      y: 155,
+    },
+  ];
+
+  return (
+    <Frame viewBox="0 0 640 310">
+      {items.map((it, i) => (
+        <g key={i}>
+          <rect x={it.x} y={it.y} width="290" height="120" rx="12" fill={C.white} stroke={it.color} strokeWidth="2" />
+          <rect x={it.x} y={it.y} width="290" height="32" rx="12" fill={it.color} fillOpacity="0.12" />
+
+          <Lines x={it.x + 18} y={it.y + 22} lines={[it.emoji]} size={16} />
+          <Lines x={it.x + 42} y={it.y + 21} lines={[it.syntax]} size={12.5} fill={it.deep} weight={700} anchor="start" />
+
+          <Lines x={it.x + 14} y={it.y + 52} lines={[it.name]} size={11.5} fill={it.deep} weight={600} anchor="start" />
+          <Lines
+            x={it.x + 14}
+            y={it.y + 68}
+            lines={[it.desc.slice(0, 42), it.desc.slice(42)].filter(Boolean)}
+            size={10.5}
+            fill={C.inkSoft}
+            weight={400}
+            anchor="start"
+            gap={13}
+          />
+
+          <rect x={it.x + 10} y={it.y + 92} width="270" height="22" rx="6" fill={C.line} fillOpacity="0.3" />
+          <Lines x={it.x + 16} y={it.y + 107} lines={["Ví dụ: " + it.example]} size={10} fill={C.ink} weight={600} anchor="start" />
+        </g>
+      ))}
+
+      <Lines
+        x={320}
+        y={295}
+        lines={["Kết hợp linh hoạt các toán tử trên sẽ giúp tìm đúng thông tin cần thiết chỉ sau vài giây"]}
+        size={11}
+        fill={C.inkSoft}
+        weight={500}
+      />
+    </Frame>
+  );
+}
+
+// ── Bài 10: Giao diện & 3 chế độ dịch của Google Translate ──────────────────
+function GoogleTranslateDiagram() {
+  return (
+    <Frame viewBox="0 0 640 280">
+      {/* Khung giao diện dịch */}
+      <rect x="20" y="20" width="600" height="235" rx="14" fill={C.white} stroke={C.grape} strokeWidth="2" />
+      
+      {/* Thanh tab chế độ */}
+      <rect x="20" y="20" width="600" height="40" rx="14" fill={C.grape} fillOpacity="0.08" />
+      <rect x="35" y="28" width="105" height="24" rx="6" fill={C.grape} />
+      <Lines x={87} y={44} lines={["✍️ Văn bản"]} size={11} fill={C.white} weight={600} />
+      
+      <rect x="150" y="28" width="105" height="24" rx="6" fill={C.white} stroke={C.line} strokeWidth="1" />
+      <Lines x={202} y={44} lines={["📄 Tài liệu (tệp)"]} size={11} fill={C.inkSoft} weight={600} />
+
+      <rect x="265" y="28" width="105" height="24" rx="6" fill={C.white} stroke={C.line} strokeWidth="1" />
+      <Lines x={317} y={44} lines={["🖼️ Hình ảnh"]} size={11} fill={C.inkSoft} weight={600} />
+
+      {/* Thanh chọn ngôn ngữ nguồn & đích */}
+      <rect x="35" y="70" width="260" height="30" rx="6" fill={C.line} fillOpacity="0.3" />
+      <Lines x={45} y={89} lines={["Phát hiện ngôn ngữ | TIẾNG VIỆT ▾"]} size={11} fill={C.grapeDeep} weight={600} anchor="start" />
+
+      {/* Nút đảo chiều */}
+      <circle cx="320" cy="85" r="14" fill={C.bubble} fillOpacity="0.15" stroke={C.bubble} strokeWidth="1.5" />
+      <Lines x={320} y={90} lines={["⇆"]} size={15} fill={C.bubbleDeep} weight={700} />
+
+      <rect x="345" y="70" width="260" height="30" rx="6" fill={C.line} fillOpacity="0.3" />
+      <Lines x={355} y={89} lines={["TIẾNG ANH ▾ | TIẾNG PHÁP | KHÁC..."]} size={11} fill={C.grapeDeep} weight={600} anchor="start" />
+
+      {/* Khung nội dung 2 cột */}
+      <rect x="35" y="110" width="260" height="110" rx="8" fill={C.white} stroke={C.line} strokeWidth="1.5" />
+      <Lines x={48} y={135} lines={["Cái quý giá nhất của con", "người là cuộc sống."]} size={12} fill={C.ink} weight={500} anchor="start" gap={16} />
+      {/* Icon micro & loa bên nguồn */}
+      <Lines x={50} y={205} lines={["🎙️ Nói để nhập"]} size={11} fill={C.bubbleDeep} weight={600} anchor="start" />
+      <Lines x={160} y={205} lines={["🔊 Nghe đọc"]} size={11} fill={C.grapeDeep} weight={600} anchor="start" />
+
+      <rect x="345" y="110" width="260" height="110" rx="8" fill={C.mint} fillOpacity="0.06" stroke={C.mint} strokeWidth="1.5" />
+      <Lines x={358} y={135} lines={["The most precious thing in", "life is life itself."]} size={12} fill={C.mintDeep} weight={600} anchor="start" gap={16} />
+      {/* Icon loa bên đích */}
+      <Lines x={358} y={205} lines={["🔊 Nghe phát âm (nhấp 2 lần để đọc chậm)"]} size={10.5} fill={C.mintDeep} weight={600} anchor="start" />
+
+      <Lines
+        x={320}
+        y={270}
+        lines={["Google Dịch hỗ trợ dịch cả tệp Word, Excel, PowerPoint, PDF mà vẫn giữ nguyên bố cục bảng biểu"]}
+        size={11}
+        fill={C.inkSoft}
+        weight={500}
+      />
+    </Frame>
+  );
+}
+
+// ── Bài 10: Cây thư mục Kho học liệu số igiaoduc.vn ──────────────────────────
+function KhoHocLieuDiagram() {
+  return (
+    <Frame viewBox="0 0 640 270">
+      {/* Cột 1: Cấp 1 */}
+      <rect x="20" y="25" width="170" height="200" rx="12" fill={C.white} stroke={C.grape} strokeWidth="2" />
+      <rect x="20" y="25" width="170" height="34" rx="12" fill={C.grape} fillOpacity="0.12" />
+      <Lines x={105} y={47} lines={["📁 CẤP 1: Danh mục"]} size={11.5} fill={C.grapeDeep} weight={700} />
+      
+      <rect x="30" y="68" width="150" height="28" rx="6" fill={C.grape} />
+      <Lines x={40} y={86} lines={["📚 Học liệu số  ›"]} size={11} fill={C.white} weight={600} anchor="start" />
+      <rect x="30" y="102" width="150" height="28" rx="6" fill={C.line} fillOpacity="0.3" />
+      <Lines x={40} y={120} lines={["📖 Sách giáo khoa"]} size={11} fill={C.inkSoft} weight={500} anchor="start" />
+      <rect x="30" y="136" width="150" height="28" rx="6" fill={C.line} fillOpacity="0.3" />
+      <Lines x={40} y={154} lines={["🗺️ Dư địa chí"]} size={11} fill={C.inkSoft} weight={500} anchor="start" />
+
+      {/* Mũi tên sang cấp 2 */}
+      <line x1="190" y1="82" x2="225" y2="82" stroke={C.grape} strokeWidth="2" markerEnd="url(#arrow)" />
+
+      {/* Cột 2: Cấp 2 */}
+      <rect x="235" y="25" width="170" height="200" rx="12" fill={C.white} stroke={C.bubble} strokeWidth="2" />
+      <rect x="235" y="25" width="170" height="34" rx="12" fill={C.bubble} fillOpacity="0.12" />
+      <Lines x={320} y={47} lines={["🏫 CẤP 2: Khối lớp"]} size={11.5} fill={C.bubbleDeep} weight={700} />
+      
+      <rect x="245" y="68" width="150" height="26" rx="6" fill={C.line} fillOpacity="0.3" />
+      <Lines x={255} y={85} lines={["Mầm non, Tiểu học"]} size={10.5} fill={C.inkSoft} weight={500} anchor="start" />
+      <rect x="245" y="98" width="150" height="26" rx="6" fill={C.line} fillOpacity="0.3" />
+      <Lines x={255} y={115} lines={["THCS (Lớp 6–9)"]} size={10.5} fill={C.inkSoft} weight={500} anchor="start" />
+      <rect x="245" y="128" width="150" height="26" rx="6" fill={C.bubble} />
+      <Lines x={255} y={145} lines={["🎓 Lớp 10  ›"]} size={11} fill={C.white} weight={600} anchor="start" />
+      <rect x="245" y="158" width="150" height="26" rx="6" fill={C.line} fillOpacity="0.3" />
+      <Lines x={255} y={175} lines={["Lớp 11 & Lớp 12"]} size={10.5} fill={C.inkSoft} weight={500} anchor="start" />
+
+      {/* Mũi tên sang cấp 3 */}
+      <line x1="405" y1="141" x2="440" y2="141" stroke={C.bubble} strokeWidth="2" markerEnd="url(#arrow-bubble)" />
+
+      {/* Cột 3: Cấp 3 */}
+      <rect x="450" y="25" width="170" height="200" rx="12" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="450" y="25" width="170" height="34" rx="12" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={535} y={47} lines={["💻 CẤP 3: Môn học"]} size={11.5} fill={C.mintDeep} weight={700} />
+      
+      <rect x="460" y="68" width="150" height="26" rx="6" fill={C.mint} />
+      <Lines x={470} y={85} lines={["💻 Tin học 10 (367)"]} size={11} fill={C.white} weight={600} anchor="start" />
+      <rect x="460" y="98" width="150" height="26" rx="6" fill={C.line} fillOpacity="0.3" />
+      <Lines x={470} y={115} lines={["📐 Đại số 10 (15)"]} size={10.5} fill={C.inkSoft} weight={500} anchor="start" />
+      <rect x="460" y="128" width="150" height="26" rx="6" fill={C.line} fillOpacity="0.3" />
+      <Lines x={470} y={145} lines={["🧪 Hóa học 10 (38)"]} size={10.5} fill={C.inkSoft} weight={500} anchor="start" />
+      <rect x="460" y="158" width="150" height="26" rx="6" fill={C.line} fillOpacity="0.3" />
+      <Lines x={470} y={175} lines={["🌐 Ngoại ngữ (62)"]} size={10.5} fill={C.inkSoft} weight={500} anchor="start" />
+
+      <Lines
+        x={320}
+        y={252}
+        lines={["Kho igiaoduc.vn do Bộ GD&ĐT xây dựng cung cấp hàng vạn bài giảng video và tài liệu số chuẩn"]}
+        size={11}
+        fill={C.inkSoft}
+        weight={500}
+      />
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
@@ -539,6 +742,9 @@ const DIAGRAMS: Record<string, () => JSX.Element> = {
   "nguy-co-khong-gian-mang": NguyCoKhongGianMang,
   "phan-biet-malware": PhanBietMalware,
   "che-do-quet-defender": CheDoQuetDefender,
+  "cu-phap-tim-kiem-nang-cao": CuPhapTimKiem,
+  "google-translate-tinh-nang": GoogleTranslateDiagram,
+  "kho-hoc-lieu-mo": KhoHocLieuDiagram,
 };
 
 export default function Diagram({ name }: { name: string }) {
