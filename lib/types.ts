@@ -60,6 +60,13 @@ export type LessonProgress = {
 
 export type ProgressMap = Record<string, LessonProgress>;
 
+export type LessonCounts = {
+  mcq: number;
+  tf: number;
+  essay: number;
+  theory: boolean;
+};
+
 // ─── Lý thuyết tự học ────────────────────────────────────────────────────────
 // Bài lí thuyết được ghép từ các "khối" (block) thay vì một đoạn văn dài, để
 // mỗi ý đứng riêng trong một hình thức trực quan phù hợp: thẻ màu, bảng so

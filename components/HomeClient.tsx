@@ -3,9 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { CURRICULUM } from "@/data/curriculum";
-import { getQuestions } from "@/lib/questions";
 import { getProgress } from "@/lib/progress";
-import type { ProgressMap } from "@/lib/types";
+import type { LessonCounts, ProgressMap } from "@/lib/types";
 
 function ScoreBadge({ best }: { best: number }) {
   if (best >= 80) {
@@ -29,7 +28,7 @@ function ScoreBadge({ best }: { best: number }) {
   );
 }
 
-export default function HomeClient() {
+export default function HomeClient({ counts }: { counts: Record<string, LessonCounts> }) {
   const [progress, setProgress] = useState<ProgressMap>({});
   const [loaded, setLoaded] = useState(false);
 
@@ -45,8 +44,8 @@ export default function HomeClient() {
     <main className="playground min-h-screen pb-16">
       <div className="mx-auto max-w-3xl px-5 pt-12 sm:px-8">
         <header className="text-center">
-          <p className="inline-block rounded-full bg-gradient-to-r from-grape to-bubble px-4 py-1.5 font-display text-sm font-semibold text-white shadow-card">
-            🏫 Trường THPT Na Rì · Tỉnh Thái Nguyên
+          <p className="inline-block rounded-full bg-gradient-to-r from-grape to-bubble px-5 py-2 font-display text-base font-semibold text-white shadow-card sm:px-6 sm:py-2.5 sm:text-xl">
+            🏫 Trường THPT Na Rì - Tỉnh Thái Nguyên
           </p>
           <p className="mt-5 text-5xl">📚✨</p>
           <h1 className="mt-3 font-display text-3xl font-bold leading-tight text-ink sm:text-4xl">
@@ -56,8 +55,8 @@ export default function HomeClient() {
             </span>
           </h1>
           <p className="mx-auto mt-3 max-w-xl text-ink-soft">
-            Chọn bài để luyện — làm đến đâu chấm đến đó, có giải thích từng câu. Đạt từ 80%
-            trở lên sẽ nhận sao ⭐. Tiến độ được lưu ngay trên máy của em.
+            Chọn bài để luyện — làm đến đâu chấm đến đó, có giải thích từng câu. Đạt
+            từ 80% trở lên sẽ nhận sao ⭐. Tiến độ được lưu ngay trên máy của em.
           </p>
           {loaded && (
             <p className="mt-4 inline-block rounded-full border border-grape/20 bg-white px-4 py-1.5 font-mono text-sm text-grape-deep shadow-card">
@@ -66,7 +65,7 @@ export default function HomeClient() {
           )}
         </header>
 
-        <div className="mt-10 space-y-8">
+        <div className="mt-8 space-y-8">
           {CURRICULUM.map((topic) => {
             const hasAvailable = topic.lessons.some((l) => l.available);
             return (
@@ -88,7 +87,16 @@ export default function HomeClient() {
                         </li>
                       );
                     }
-                    const count = getQuestions(lesson.id).length;
+                    const c = counts[lesson.id];
+                    const meta = [
+                      c ? `${c.mcq} trắc nghiệm` : "",
+                      c && c.tf > 0 ? `${c.tf} đúng/sai` : "",
+                      c && c.essay > 0 ? `${c.essay} tự luận` : "",
+                      c && c.theory ? "📖 có lý thuyết" : "",
+                      p ? `đã làm ${p.attempts} lần` : "",
+                    ]
+                      .filter(Boolean)
+                      .join(" · ");
                     return (
                       <li key={lesson.id}>
                         <Link
@@ -96,12 +104,11 @@ export default function HomeClient() {
                           className="group flex items-center justify-between gap-3 rounded-xl border border-ink/5 bg-white px-4 py-3 shadow-card transition hover:-translate-y-0.5 hover:border-grape/30 hover:shadow-card-hover"
                         >
                           <div className="min-w-0">
-                            <p className="truncate text-sm font-medium text-ink group-hover:text-grape-deep">
+                            <p className="text-sm font-medium leading-snug text-ink group-hover:text-grape-deep">
                               {lesson.title}
                             </p>
-                            <p className="mt-0.5 font-mono text-xs text-ink-soft/70">
-                              {count} câu hỏi
-                              {p ? ` · đã làm ${p.attempts} lần` : ""}
+                            <p className="mt-0.5 font-mono text-xs leading-relaxed text-ink-soft/70">
+                              {meta}
                             </p>
                           </div>
                           <div className="flex shrink-0 items-center gap-2">
