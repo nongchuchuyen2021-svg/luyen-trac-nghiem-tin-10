@@ -2956,6 +2956,156 @@ function SoSanhXau() {
   );
 }
 
+// ── Bài 25: find() trả về -1 an toàn — index() của danh sách báo lỗi ────────
+function FindVsIndex() {
+  return (
+    <Frame viewBox="0 0 640 240">
+      <rect x="15" y="15" width="300" height="210" rx="16" fill={C.white} stroke="#DC2626" strokeWidth="2" />
+      <rect x="15" y="15" width="300" height="34" rx="16" fill="#FEE2E2" />
+      <Lines x={165} y={37} lines={["📋 ds.index(\"Khang\") — không có trong danh sách"]} size={9.5} fill="#B91C1C" weight={700} />
+
+      <rect x="40" y="60" width="240" height="34" rx="6" fill={C.ink} />
+      <text x="160" y="82" fontSize="10.5" fill="#8CF29B" fontFamily="monospace" textAnchor="middle">
+        ds = [&quot;An&quot;, &quot;Bình&quot;, &quot;Chi&quot;]
+      </text>
+      <path d="M160,98 L160,118" stroke="#DC2626" strokeWidth="2" markerEnd="url(#arrow)" />
+      <rect x="90" y="123" width="140" height="42" rx="8" fill="#FEE2E2" stroke="#DC2626" strokeWidth="1.8" />
+      <Lines x={160} y={150} lines={["🚫 ValueError"]} size={13} fill="#B91C1C" weight={700} />
+
+      <rect x="30" y="175" width="260" height="42" rx="8" fill="#FEE2E2" fillOpacity="0.6" />
+      <Lines x={160} y={193} lines={["Chương trình DỪNG LẠI ngay lập tức"]} size={9.5} fill="#B91C1C" weight={700} />
+      <Lines x={160} y={209} lines={["nếu không kiểm tra trước bằng \"in\""]} size={9} fill="#B91C1C" weight={600} />
+
+      <rect x="325" y="15" width="300" height="210" rx="16" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="325" y="15" width="300" height="34" rx="16" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={475} y={37} lines={["📝 dk.find(\"Khang\") — không có trong xâu"]} size={9.5} fill={C.mintDeep} weight={700} />
+
+      <rect x="350" y="60" width="240" height="34" rx="6" fill={C.ink} />
+      <text x="470" y="82" fontSize="10.5" fill="#8CF29B" fontFamily="monospace" textAnchor="middle">
+        dk = &quot;An, Bình, Chi&quot;
+      </text>
+      <path d="M470,98 L470,118" stroke={C.mintDeep} strokeWidth="2" markerEnd="url(#arrow)" />
+      <rect x="410" y="123" width="120" height="42" rx="8" fill={C.mint} fillOpacity="0.2" stroke={C.mintDeep} strokeWidth="1.8" />
+      <Lines x={470} y={150} lines={["-1"]} size={16} fill={C.mintDeep} weight={700} />
+
+      <rect x="340" y="175" width="260" height="42" rx="8" fill={C.mint} fillOpacity="0.1" />
+      <Lines x={470} y={193} lines={["Chương trình VẪN CHẠY TIẾP bình thường"]} size={9.5} fill={C.mintDeep} weight={700} />
+      <Lines x={470} y={209} lines={["-1 nghĩa là \"không tìm thấy\", không phải lỗi"]} size={9} fill={C.mintDeep} weight={600} />
+    </Frame>
+  );
+}
+
+// ── Bài 25: split() tách thành danh sách — join() ghép ngược trở lại ────────
+function SplitVaJoin() {
+  return (
+    <Frame viewBox="0 0 640 260">
+      <Lines x={320} y={26} lines={["split() và join() — hai phép biến đổi ngược chiều nhau"]} size={12.5} fill={C.grapeDeep} weight={700} />
+
+      <rect x="40" y="55" width="220" height="42" rx="8" fill={C.mint} fillOpacity="0.15" stroke={C.mintDeep} strokeWidth="1.5" />
+      <Lines x={150} y={80} lines={["\"An, Bình, Chi\""]} size={12} fill={C.mintDeep} weight={700} />
+
+      <path d="M150,100 L150,125" stroke={C.grapeDeep} strokeWidth="2.5" markerEnd="url(#arrow)" />
+      <Lines x={200} y={116} lines={[".split(\", \")"]} size={10} fill={C.grapeDeep} weight={700} anchor="start" />
+
+      {["An", "Bình", "Chi"].map((it, i) => (
+        <rect key={i} x={60 + i * 65} y="130" width="55" height="36" rx="6" fill={C.mint} fillOpacity="0.25" stroke={C.mintDeep} strokeWidth="1.5" />
+      ))}
+      {["An", "Bình", "Chi"].map((it, i) => (
+        <Lines key={`t${i}`} x={87 + i * 65} y={152} lines={[it]} size={10} fill={C.mintDeep} weight={700} />
+      ))}
+      <Lines x={150} y={182} lines={["→ một DANH SÁCH 3 phần tử"]} size={9.5} fill={C.inkSoft} weight={600} />
+
+      <path d="M420,150 L370,150" stroke={C.bubbleDeep} strokeWidth="2.5" markerEnd="url(#arrow)" />
+      <Lines x={395} y={135} lines={["\", \".join(...)"]} size={10} fill={C.bubbleDeep} weight={700} />
+
+      {["An", "Bình", "Chi"].map((it, i) => (
+        <rect key={i} x={430 + i * 65} y="130" width="55" height="36" rx="6" fill={C.bubble} fillOpacity="0.2" stroke={C.bubbleDeep} strokeWidth="1.5" />
+      ))}
+      {["An", "Bình", "Chi"].map((it, i) => (
+        <Lines key={`t${i}`} x={457 + i * 65} y={152} lines={[it]} size={10} fill={C.bubbleDeep} weight={700} />
+      ))}
+
+      <path d="M550,125 L550,100" stroke={C.bubbleDeep} strokeWidth="2.5" markerEnd="url(#arrow)" />
+      <rect x="440" y="55" width="220" height="42" rx="8" fill={C.bubble} fillOpacity="0.15" stroke={C.bubbleDeep} strokeWidth="1.5" />
+      <Lines x={550} y={80} lines={["\"An, Bình, Chi\""]} size={12} fill={C.bubbleDeep} weight={700} />
+
+      <rect x="60" y="205" width="520" height="42" rx="10" fill={C.line} fillOpacity="0.35" />
+      <Lines x={320} y={224} lines={["split() luôn trả về DANH SÁCH — join() cần một xâu nối đứng trước dấu chấm"]} size={10} fill={C.ink} weight={700} />
+      <Lines x={320} y={240} lines={["ví dụ \", \".join(danh_sach), không phải danh_sach.join(...)"]} size={9.5} fill={C.inkSoft} weight={500} />
+    </Frame>
+  );
+}
+
+// ── Bài 25: strip() chỉ cắt HAI ĐẦU — giữa xâu không đụng tới ───────────────
+function StripChiHaiDau() {
+  return (
+    <Frame viewBox="0 0 640 220">
+      <Lines x={320} y={26} lines={["\"   Vy   Anh   \".strip() — chỉ dọn khoảng trắng ở HAI ĐẦU"]} size={11.5} fill={C.grapeDeep} weight={700} />
+
+      <rect x="60" y="55" width="60" height="40" rx="6" fill="#FEE2E2" stroke="#DC2626" strokeWidth="1.5" strokeDasharray="3 2" />
+      <Lines x={90} y={78} lines={["␣␣␣"]} size={11} fill="#B91C1C" weight={700} />
+      <rect x="120" y="55" width="60" height="40" rx="6" fill={C.mint} fillOpacity="0.2" stroke={C.mintDeep} strokeWidth="1.5" />
+      <Lines x={150} y={78} lines={["Vy"]} size={13} fill={C.mintDeep} weight={700} />
+      <rect x="180" y="55" width="70" height="40" rx="6" fill={C.sun} fillOpacity="0.2" stroke={C.sunDeep} strokeWidth="1.5" />
+      <Lines x={215} y={78} lines={["␣␣␣"]} size={11} fill={C.sunDeep} weight={700} />
+      <rect x="250" y="55" width="70" height="40" rx="6" fill={C.mint} fillOpacity="0.2" stroke={C.mintDeep} strokeWidth="1.5" />
+      <Lines x={285} y={78} lines={["Anh"]} size={13} fill={C.mintDeep} weight={700} />
+      <rect x="320" y="55" width="60" height="40" rx="6" fill="#FEE2E2" stroke="#DC2626" strokeWidth="1.5" strokeDasharray="3 2" />
+      <Lines x={350} y={78} lines={["␣␣␣"]} size={11} fill="#B91C1C" weight={700} />
+
+      <Lines x={90} y={112} lines={["❌ bị cắt"]} size={9} fill="#B91C1C" weight={700} />
+      <Lines x={215} y={112} lines={["✅ vẫn giữ nguyên!"]} size={9} fill={C.sunDeep} weight={700} />
+      <Lines x={350} y={112} lines={["❌ bị cắt"]} size={9} fill="#B91C1C" weight={700} />
+
+      <path d="M215,130 L215,150" stroke={C.grapeDeep} strokeWidth="2" markerEnd="url(#arrow)" />
+      <rect x="150" y="155" width="130" height="40" rx="6" fill={C.mint} fillOpacity="0.15" stroke={C.mintDeep} strokeWidth="1.5" />
+      <Lines x={215} y={180} lines={["\"Vy   Anh\""]} size={12} fill={C.mintDeep} weight={700} />
+
+      <rect x="360" y="60" width="260" height="140" rx="10" fill={C.line} fillOpacity="0.3" />
+      <Lines x={490} y={85} lines={["📌 strip() chỉ đụng tới"]} size={10.5} fill={C.ink} weight={700} />
+      <Lines x={490} y={103} lines={["khoảng trắng ở ĐẦU và CUỐI"]} size={10.5} fill={C.ink} weight={700} />
+      <Lines x={490} y={128} lines={["Khoảng trắng THỪA ở giữa"]} size={9.5} fill={C.inkSoft} weight={500} />
+      <Lines x={490} y={144} lines={["(như giữa \"Vy\" và \"Anh\")"]} size={9.5} fill={C.inkSoft} weight={500} />
+      <Lines x={490} y={160} lines={["vẫn còn nguyên sau strip()"]} size={9.5} fill={C.inkSoft} weight={500} />
+      <Lines x={490} y={182} lines={["Muốn dọn cả giữa, dùng replace"]} size={9} fill={C.grapeDeep} weight={600} />
+    </Frame>
+  );
+}
+
+// ── Bài 25: Chuẩn hoá dữ liệu đăng kí — kết hợp strip + title + replace ─────
+function ChuanHoaDuLieu() {
+  const steps = [
+    { code: 'ten = "   nguyễn  văn A  "', out: "   nguyễn  văn A  ", label: "Dữ liệu gõ vội, lộn xộn" },
+    { code: "ten = ten.strip()", out: "nguyễn  văn A", label: "Cắt khoảng trắng 2 đầu" },
+    { code: "ten = ten.title()", out: "Nguyễn  Văn A", label: "Viết hoa đầu mỗi từ" },
+  ];
+  return (
+    <Frame viewBox="0 0 640 260">
+      <Lines x={320} y={26} lines={["🧹 Ba bước làm sạch một phiếu đăng kí lộn xộn"]} size={12.5} fill={C.grapeDeep} weight={700} />
+
+      {steps.map((s, i) => (
+        <g key={i}>
+          <rect x={20 + i * 210} y="50" width="190" height="150" rx="12" fill={C.white} stroke={C.grape} strokeWidth="1.6" />
+          <Lines x={115 + i * 210} y={72} lines={[`Bước ${i + 1}`]} size={10} fill={C.grapeDeep} weight={700} />
+          <rect x={32 + i * 210} y="82" width="156" height="30" rx="6" fill={C.ink} />
+          <text x={110 + i * 210} y="101" fontSize="8.5" fill="#8CF29B" fontFamily="monospace" textAnchor="middle">
+            {s.code}
+          </text>
+          <rect x={32 + i * 210} y="122" width="156" height="46" rx="8" fill={C.mint} fillOpacity="0.15" stroke={C.mintDeep} strokeWidth="1.3" />
+          <text x={110 + i * 210} y="150" fontSize="10" fill={C.mintDeep} fontFamily="monospace" textAnchor="middle">
+            &quot;{s.out}&quot;
+          </text>
+          <Lines x={115 + i * 210} y={185} lines={[s.label]} size={8.5} fill={C.inkSoft} weight={500} />
+          {i < 2 && <path d={`M${212 + i * 210},125 L${228 + i * 210},125`} stroke={C.grapeDeep} strokeWidth="2.5" markerEnd="url(#arrow)" />}
+        </g>
+      ))}
+
+      <rect x="60" y="215" width="520" height="35" rx="8" fill={C.line} fillOpacity="0.35" />
+      <Lines x={320} y={237} lines={["Mỗi bước đều phải GÁN LẠI (ten = ten...) vì xâu là kiểu bất biến"]} size={10} fill={C.ink} weight={700} />
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
@@ -3014,6 +3164,10 @@ const DIAGRAMS: Record<string, () => JSX.Element> = {
   "xau-bat-bien": XauBatBien,
   "ghep-noi-va-lat-cat": GhepNoiVaLatCat,
   "so-sanh-xau": SoSanhXau,
+  "find-vs-index": FindVsIndex,
+  "split-va-join": SplitVaJoin,
+  "strip-chi-hai-dau": StripChiHaiDau,
+  "chuan-hoa-du-lieu": ChuanHoaDuLieu,
 };
 
 export default function Diagram({ name }: { name: string }) {
