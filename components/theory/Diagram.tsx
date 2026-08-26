@@ -307,12 +307,238 @@ function LanQuaInternet() {
   );
 }
 
+// ── Bài 9: 5 Nguy cơ trên không gian mạng ────────────────────────────────────
+function NguyCoKhongGianMang() {
+  const threats = [
+    { emoji: "📰", title: "Tin giả, phản văn hoá", desc: "Tin bịa đặt, kích động, độc hại", x: 130, y: 55, color: "#EF4444", deep: "#B91C1C" },
+    { emoji: "🎣", title: "Lừa đảo trực tuyến", desc: "Mạo danh vay tiền, web giả", x: 510, y: 55, color: C.sun, deep: C.sunDeep },
+    { emoji: "🔓", title: "Lộ thông tin cá nhân", desc: "Mật khẩu, CCCD, thẻ ngân hàng", x: 100, y: 225, color: C.grape, deep: C.grapeDeep },
+    { emoji: "⚠️", title: "Bắt nạt qua mạng", desc: "Xỉ vả, bêu xấu, đe dọa ẩn danh", x: 540, y: 225, color: C.bubble, deep: C.bubbleDeep },
+    { emoji: "🎮", title: "Nghiện mạng & game", desc: "Mất thời gian, hại sức khoẻ", x: 320, y: 290, color: C.mint, deep: C.mintDeep },
+  ];
+
+  return (
+    <Frame viewBox="0 0 640 370">
+      {/* Vòng tròn trung tâm: Môi trường Internet */}
+      <circle cx="320" cy="150" r="52" fill={C.white} stroke={C.grape} strokeWidth="2.5" />
+      <Lines x={320} y={140} lines={["🌐"]} size={26} />
+      <Lines x={320} y={166} lines={["KHÔNG GIAN", "MẠNG"]} size={11} fill={C.grapeDeep} weight={700} gap={13} />
+
+      {/* Đường nối và các hộp nguy cơ */}
+      {threats.map((t, i) => (
+        <g key={i}>
+          <line x1="320" y1="150" x2={t.x} y2={t.y + 20} stroke={C.line} strokeWidth="2" strokeDasharray="4 4" />
+          <rect
+            x={t.x - 90}
+            y={t.y - 10}
+            width="180"
+            height="62"
+            rx="12"
+            fill={C.white}
+            stroke={t.color}
+            strokeWidth="2"
+          />
+          <Lines x={t.x - 70} y={t.y + 25} lines={[t.emoji]} size={20} />
+          <Lines x={t.x - 45} y={t.y + 14} lines={[t.title]} size={12} fill={t.deep} weight={700} anchor="start" />
+          <Lines x={t.x - 45} y={t.y + 32} lines={[t.desc]} size={10.5} fill={C.inkSoft} weight={500} anchor="start" />
+        </g>
+      ))}
+
+      <Lines
+        x={320}
+        y={355}
+        lines={["Mạng Internet rất mở và tiện lợi, nhưng luôn tiềm ẩn các cạm bẫy cần nhận biết để phòng vệ"]}
+        size={11.5}
+        fill={C.inkSoft}
+        weight={500}
+      />
+    </Frame>
+  );
+}
+
+// ── Bài 9: Phân biệt 3 loại mã độc (Virus vs Worm vs Trojan) ─────────────────
+function PhanBietMalware() {
+  const cards = [
+    {
+      type: "VIRUS",
+      emoji: "🦠",
+      color: "#EF4444",
+      deep: "#B91C1C",
+      x: 20,
+      tags: ["Không hoàn chỉnh", "Ký sinh trong tệp chủ"],
+      desc: ["Chỉ là đoạn mã độc, phải", "gắn vào 1 tệp/chương trình", "để lây khi tệp đó chạy."],
+      example: "File .exe, Word macro nhiễm virus",
+    },
+    {
+      type: "WORM (Sâu)",
+      emoji: "🐛",
+      color: C.sun,
+      deep: C.sunDeep,
+      x: 225,
+      tags: ["Phần mềm hoàn chỉnh", "Tự lây lan độc lập"],
+      desc: ["Tự nhân bản, tự tìm lỗ hổng", "mạng để bò sang máy khác mà", "không cần người dùng mở tệp."],
+      example: "Sâu WannaCry, sâu Melissa",
+    },
+    {
+      type: "TROJAN (Ngựa Troa)",
+      emoji: "🐴",
+      color: C.grape,
+      deep: C.grapeDeep,
+      x: 430,
+      tags: ["Phần mềm nội gián", "Nguỵ trang có ích"],
+      desc: ["Đội lốt game crack, app hay", "lừa người dùng tự cài, sau", "đó mở cửa sau (backdoor/spy)."],
+      example: "App lậu, game crack, keygen",
+    },
+  ];
+
+  return (
+    <Frame viewBox="0 0 640 310">
+      {cards.map((c, i) => (
+        <g key={i}>
+          {/* Khung thẻ */}
+          <rect x={c.x} y="15" width="190" height="255" rx="14" fill={C.white} stroke={c.color} strokeWidth="2" />
+          <rect x={c.x} y="15" width="190" height="42" rx="14" fill={c.color} fillOpacity="0.12" />
+
+          {/* Tiêu đề & Icon */}
+          <Lines x={c.x + 24} y={42} lines={[c.emoji]} size={20} />
+          <Lines x={c.x + 50} y={40} lines={[c.type]} size={13} fill={c.deep} weight={700} anchor="start" />
+
+          {/* Tags đặc trưng */}
+          <rect x={c.x + 12} y="68" width="166" height="22" rx="6" fill={C.line} fillOpacity="0.4" />
+          <Lines x={c.x + 95} y={83} lines={[c.tags[0]]} size={10.5} fill={c.deep} weight={600} />
+
+          <rect x={c.x + 12} y="96" width="166" height="22" rx="6" fill={c.color} fillOpacity="0.08" />
+          <Lines x={c.x + 95} y={111} lines={[c.tags[1]]} size={10.5} fill={c.deep} weight={600} />
+
+          {/* Mô tả chi tiết */}
+          <Lines
+            x={c.x + 15}
+            y={136}
+            lines={c.desc}
+            size={11}
+            fill={C.inkSoft}
+            weight={400}
+            anchor="start"
+            gap={15}
+          />
+
+          {/* Hộp ví dụ */}
+          <rect x={c.x + 10} y="200" width="170" height="58" rx="8" fill={C.line} fillOpacity="0.25" />
+          <Lines x={c.x + 16} y={218} lines={["💡 Ví dụ thực tế:"]} size={10.5} fill={c.deep} weight={700} anchor="start" />
+          <Lines x={c.x + 16} y={236} lines={[c.example]} size={10.5} fill={C.ink} weight={500} anchor="start" />
+        </g>
+      ))}
+
+      <Lines
+        x={320}
+        y={295}
+        lines={["Hiểu đúng cơ chế của từng loại giúp ta chọn cách phòng ngừa và bảo vệ dữ liệu hiệu quả"]}
+        size={11.5}
+        fill={C.inkSoft}
+        weight={500}
+      />
+    </Frame>
+  );
+}
+
+// ── Bài 9: Các chế độ quét trong Windows Defender ────────────────────────────
+function CheDoQuetDefender() {
+  const modes = [
+    {
+      name: "1. Quick scan (Quét nhanh)",
+      icon: "⚡",
+      color: C.mint,
+      deep: C.mintDeep,
+      focus: ["Quét các thư mục trọng yếu", "& vị trí mã độc hay trú ngụ"],
+      time: "Vài phút",
+      usage: ["Nên dùng hàng ngày hoặc khi", "thấy máy chậm bất thường"],
+      x: 20,
+    },
+    {
+      name: "2. Full scan (Quét toàn bộ)",
+      icon: "🛡️",
+      color: C.bubble,
+      deep: C.bubbleDeep,
+      focus: ["Quét triệt để tất cả ổ đĩa,", "tệp tin và tiến trình bộ nhớ"],
+      time: "1 – vài giờ",
+      usage: ["Nên chạy định kì (1–2 tuần/lần)", "hoặc sau khi vừa xử lí mã độc"],
+      x: 225,
+    },
+    {
+      name: "3. Custom scan (Quét tuỳ chọn)",
+      icon: "🎯",
+      color: C.grape,
+      deep: C.grapeDeep,
+      focus: ["Chỉ quét một thư mục, tệp hoặc", "ổ USB cắm ngoài chỉ định"],
+      time: "Tuỳ dung lượng",
+      usage: ["Dùng trước khi mở tệp tải từ", "mạng hoặc vừa cắm USB lạ"],
+      x: 430,
+    },
+  ];
+
+  return (
+    <Frame viewBox="0 0 640 280">
+      {modes.map((m, i) => (
+        <g key={i}>
+          <rect x={m.x} y="20" width="190" height="230" rx="14" fill={C.white} stroke={m.color} strokeWidth="2" />
+          <rect x={m.x} y="20" width="190" height="40" rx="14" fill={m.color} fillOpacity="0.12" />
+
+          <Lines x={m.x + 22} y={45} lines={[m.icon]} size={18} />
+          <Lines x={m.x + 44} y={44} lines={[m.name]} size={11} fill={m.deep} weight={700} anchor="start" />
+
+          {/* Phạm vi quét */}
+          <Lines x={m.x + 14} y={80} lines={["Phạm vi quét:"]} size={11} fill={m.deep} weight={700} anchor="start" />
+          <Lines
+            x={m.x + 14}
+            y={98}
+            lines={m.focus}
+            size={11}
+            fill={C.inkSoft}
+            weight={400}
+            anchor="start"
+            gap={14}
+          />
+
+          {/* Thời gian */}
+          <Lines x={m.x + 14} y={142} lines={["⏱️ Thời gian: " + m.time]} size={11} fill={C.ink} weight={600} anchor="start" />
+
+          {/* Khi nào nên dùng */}
+          <rect x={m.x + 10} y="160" width="170" height="78" rx="8" fill={C.line} fillOpacity="0.25" />
+          <Lines x={m.x + 16} y={178} lines={["📌 Khi nào nên dùng?"]} size={10.5} fill={m.deep} weight={700} anchor="start" />
+          <Lines
+            x={m.x + 16}
+            y={196}
+            lines={m.usage}
+            size={10}
+            fill={C.inkSoft}
+            weight={500}
+            anchor="start"
+            gap={13}
+          />
+        </g>
+      ))}
+
+      <Lines
+        x={320}
+        y={268}
+        lines={["Có thể nháy chuột phải vào một thư mục bất kì ➜ chọn 'Scan with Microsoft Defender' để quét nhanh"]}
+        size={11}
+        fill={C.inkSoft}
+        weight={500}
+      />
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
   "iot-ket-noi-thiet-bi": IoTKetNoi,
   "man-hinh-dien-thoai-thong-minh": ManHinhDienThoai,
   "lan-qua-internet": LanQuaInternet,
+  "nguy-co-khong-gian-mang": NguyCoKhongGianMang,
+  "phan-biet-malware": PhanBietMalware,
+  "che-do-quet-defender": CheDoQuetDefender,
 };
 
 export default function Diagram({ name }: { name: string }) {

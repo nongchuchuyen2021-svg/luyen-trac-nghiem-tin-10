@@ -4,3 +4,8 @@ out/
 *.tsbuildinfo
 .env*.local
 tai-lieu/sgk-pages/
+data/sgk/
+*.pdf
+.claude/
+.vercel
+
