@@ -171,7 +171,7 @@ const theory: LessonTheory = {
             {
               label: "1999",
               title: "Sâu Melissa — Lây lan qua Email",
-              text: "Nguỵ trang dưới tệp văn bản Word gửi qua email, tự gửi thư tới 50 địa chỉ đầu tiên trong danh bạ Outlook, gây thiệt hại hơn 1 tỉ USD.",
+              text: "Nguỵ trang dưới tệp văn bản Word gửi qua email, tự gửi thư tới 50 địa chỉ đầu tiên trong danh bạ Outlook; có ước tính thiệt hại toàn cầu lên tới hơn 1 tỉ USD.",
             },
             {
               label: "2001",
