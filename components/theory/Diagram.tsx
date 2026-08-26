@@ -733,6 +733,195 @@ function KhoHocLieuDiagram() {
   );
 }
 
+// ── Bài 11: 3 Trụ cột ứng xử trong môi trường số ───────────────────────────
+function VanHoaVaPhapLuat() {
+  const pillars = [
+    {
+      title: "1. ĐẠO ĐỨC",
+      emoji: "❤️",
+      color: C.bubble,
+      deep: C.bubbleDeep,
+      desc: ["Chuẩn mực tự giác", "Lương tâm & trách nhiệm", "Không làm tổn thương người khác"],
+      x: 20,
+    },
+    {
+      title: "2. VĂN HOÁ",
+      emoji: "🤝",
+      color: C.mint,
+      deep: C.mintDeep,
+      desc: ["Lịch sự, tôn trọng người nghe", "Không văng tục, xúc phạm", "Chia sẻ năng lượng tích cực"],
+      x: 225,
+    },
+    {
+      title: "3. PHÁP LUẬT",
+      emoji: "⚖️",
+      color: C.grape,
+      deep: C.grapeDeep,
+      desc: ["Quy định bắt buộc thi hành", "Chế tài xử phạt vi phạm", "Bảo vệ an ninh & quyền con người"],
+      x: 430,
+    },
+  ];
+
+  return (
+    <Frame viewBox="0 0 640 260">
+      {pillars.map((p, i) => (
+        <g key={i}>
+          <rect x={p.x} y="20" width="190" height="200" rx="14" fill={C.white} stroke={p.color} strokeWidth="2" />
+          <rect x={p.x} y="20" width="190" height="42" rx="14" fill={p.color} fillOpacity="0.12" />
+
+          <Lines x={p.x + 24} y={48} lines={[p.emoji]} size={18} />
+          <Lines x={p.x + 50} y={46} lines={[p.title]} size={12} fill={p.deep} weight={700} anchor="start" />
+
+          <ul className="space-y-1">
+            {p.desc.map((d, j) => (
+              <g key={j}>
+                <circle cx={p.x + 22} cy={90 + j * 38} r="3" fill={p.deep} />
+                <Lines x={p.x + 32} y={94 + j * 38} lines={[d]} size={11} fill={C.inkSoft} weight={500} anchor="start" />
+              </g>
+            ))}
+          </ul>
+        </g>
+      ))}
+
+      <Lines
+        x={320}
+        y={245}
+        lines={["Hành vi trên mạng dù ẩn danh vẫn phải chịu trách nhiệm đạo đức và xử lí theo pháp luật"]}
+        size={11}
+        fill={C.inkSoft}
+        weight={500}
+      />
+    </Frame>
+  );
+}
+
+// ── Bài 11: Cấu trúc Quyền tác giả (Quyền nhân thân vs Quyền tài sản) ────────
+function QuyenTacGiaDiagram() {
+  return (
+    <Frame viewBox="0 0 640 280">
+      {/* Hộp gốc trung tâm */}
+      <rect x="220" y="15" width="200" height="45" rx="10" fill={C.grape} />
+      <Lines x={320} y={35} lines={["📜 QUYỀN TÁC GIẢ"]} size={13} fill={C.white} weight={700} />
+      <Lines x={320} y={50} lines={["(Luật Sở hữu trí tuệ)"]} size={10} fill={C.line} weight={500} />
+
+      {/* Đường rẽ nhánh */}
+      <line x1="280" y1="60" x2="160" y2="90" stroke={C.grape} strokeWidth="2" markerEnd="url(#arrow)" />
+      <line x1="360" y1="60" x2="480" y2="90" stroke={C.grape} strokeWidth="2" markerEnd="url(#arrow)" />
+
+      {/* Nhánh 1: Quyền nhân thân */}
+      <rect x="20" y="90" width="280" height="155" rx="12" fill={C.white} stroke={C.bubble} strokeWidth="2" />
+      <rect x="20" y="90" width="280" height="34" rx="12" fill={C.bubble} fillOpacity="0.12" />
+      <Lines x={160} y={112} lines={["👤 QUYỀN NHÂN THÂN (Gắn với tác giả)"]} size={11.5} fill={C.bubbleDeep} weight={700} />
+
+      <Lines
+        x={35}
+        y={145}
+        lines={[
+          "• Đặt tên cho tác phẩm do mình sáng tạo",
+          "• Đứng tên thật hoặc bút danh trên tác phẩm",
+          "• Được nêu tên khi tác phẩm được công bố, sử dụng",
+          "• Bảo vệ sự toàn vẹn của tác phẩm (cấm cắt xén, xuyên tạc)",
+        ]}
+        size={11}
+        fill={C.inkSoft}
+        weight={500}
+        anchor="start"
+        gap={22}
+      />
+
+      {/* Nhánh 2: Quyền tài sản */}
+      <rect x="340" y="90" width="280" height="155" rx="12" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="340" y="90" width="280" height="34" rx="12" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={480} y={112} lines={["💰 QUYỀN TÀI SẢN (Khai thác kinh tế)"]} size={11.5} fill={C.mintDeep} weight={700} />
+
+      <Lines
+        x={355}
+        y={145}
+        lines={[
+          "• Quyền làm tác phẩm phái sinh (chuyển thể, dịch)",
+          "• Quyền sao chép, in ấn tác phẩm số lượng lớn",
+          "• Quyền phân phối, bán, cho thuê bản gốc/bản sao",
+          "• Quyền truyền đạt tác phẩm đến công chúng qua mạng",
+        ]}
+        size={11}
+        fill={C.inkSoft}
+        weight={500}
+        anchor="start"
+        gap={22}
+      />
+
+      <Lines
+        x={320}
+        y={265}
+        lines={["Quyền nhân thân không thể chuyển nhượng; quyền tài sản có thể chuyển giao, cấp phép"]}
+        size={11}
+        fill={C.inkSoft}
+        weight={500}
+      />
+    </Frame>
+  );
+}
+
+// ── Bài 11: Mua bản quyền vs Mua quyền sử dụng (Licence) ─────────────────────
+function BanQuyenVsGiayPhep() {
+  return (
+    <Frame viewBox="0 0 640 260">
+      <rect x="20" y="20" width="285" height="205" rx="14" fill={C.white} stroke={C.grape} strokeWidth="2" />
+      <rect x="20" y="20" width="285" height="40" rx="14" fill={C.grape} fillOpacity="0.1" />
+      <Lines x={162} y={45} lines={["👑 MUA BẢN QUYỀN (Ownership)"]} size={12} fill={C.grapeDeep} weight={700} />
+
+      <Lines
+        x={35}
+        y={80}
+        lines={[
+          "• Người mua trở thành CHỦ SỞ HỮU tác phẩm",
+          "• Có toàn quyền kinh doanh, sửa đổi, chuyển nhượng",
+          "• Thường áp dụng trong các thương vụ mua lại công ty",
+        ]}
+        size={11}
+        fill={C.inkSoft}
+        weight={500}
+        anchor="start"
+        gap={20}
+      />
+      <rect x="35" y="160" width="255" height="50" rx="8" fill={C.line} fillOpacity="0.3" />
+      <Lines x={45} y={180} lines={["💡 Ví dụ: Google mua lại YouTube"]} size={11} fill={C.grapeDeep} weight={700} anchor="start" />
+      <Lines x={45} y={198} lines={["Google nắm toàn quyền bản quyền YouTube"]} size={10} fill={C.inkSoft} weight={500} anchor="start" />
+
+      <rect x="335" y="20" width="285" height="205" rx="14" fill={C.white} stroke={C.sun} strokeWidth="2" />
+      <rect x="335" y="20" width="285" height="40" rx="14" fill={C.sun} fillOpacity="0.15" />
+      <Lines x={477} y={45} lines={["🔑 MUA QUYỀN SỬ DỤNG (Licence)"]} size={12} fill={C.sunDeep} weight={700} />
+
+      <Lines
+        x={350}
+        y={80}
+        lines={[
+          "• Chỉ được phép CÀI ĐẶT & DÙNG trên số máy nhất định",
+          "• Bản quyền vẫn thuộc về công ty sản xuất",
+          "• Cấm sao chép, bẻ khoá (crack) chia sẻ cho người khác",
+        ]}
+        size={11}
+        fill={C.inkSoft}
+        weight={500}
+        anchor="start"
+        gap={20}
+      />
+      <rect x="350" y="160" width="255" height="50" rx="8" fill={C.line} fillOpacity="0.3" />
+      <Lines x={360} y={180} lines={["💡 Ví dụ: Mua bản quyền Windows, Office 365"]} size={11} fill={C.sunDeep} weight={700} anchor="start" />
+      <Lines x={360} y={198} lines={["Bản quyền vẫn thuộc về công ty Microsoft"]} size={10} fill={C.inkSoft} weight={500} anchor="start" />
+
+      <Lines
+        x={320}
+        y={245}
+        lines={["Người dùng cá nhân chủ yếu mua Giấy phép sử dụng (Licence) chứ không sở hữu bản quyền gốc"]}
+        size={11}
+        fill={C.inkSoft}
+        weight={500}
+      />
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
@@ -745,6 +934,9 @@ const DIAGRAMS: Record<string, () => JSX.Element> = {
   "cu-phap-tim-kiem-nang-cao": CuPhapTimKiem,
   "google-translate-tinh-nang": GoogleTranslateDiagram,
   "kho-hoc-lieu-mo": KhoHocLieuDiagram,
+  "van-hoa-va-phap-luat-mang": VanHoaVaPhapLuat,
+  "quyen-tac-gia-phan-biet": QuyenTacGiaDiagram,
+  "ban-quyen-vs-giay-phep": BanQuyenVsGiayPhep,
 };
 
 export default function Diagram({ name }: { name: string }) {
