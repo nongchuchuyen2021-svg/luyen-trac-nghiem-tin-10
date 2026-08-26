@@ -2349,6 +2349,154 @@ function GheRapChieuPhim() {
   );
 }
 
+// ── Bài 21: for (biết trước số lần) và while (không biết trước) ────────────
+function ForVsWhileSoSanh() {
+  return (
+    <Frame viewBox="0 0 640 260">
+      <rect x="15" y="15" width="300" height="230" rx="16" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="15" y="15" width="300" height="36" rx="16" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={165} y={38} lines={["🔒 for — biết trước SỐ LẦN lặp"]} size={11.5} fill={C.mintDeep} weight={700} />
+
+      <rect x="45" y="60" width="240" height="60" rx="10" fill={C.mint} fillOpacity="0.12" stroke={C.mintDeep} strokeWidth="1.5" />
+      <Lines x={165} y={84} lines={["\"Rung chuông đúng 5 lần\""]} size={11} fill={C.mintDeep} weight={700} />
+      <Lines x={165} y={104} lines={["Biết chắc: 5 lần, không hơn không kém"]} size={9.5} fill={C.inkSoft} weight={500} />
+
+      <Lines x={165} y={140} lines={["for i in range(5):"]} size={11} fill={C.ink} weight={600} />
+      <Lines x={165} y={158} lines={["    🔔"]} size={11} fill={C.ink} weight={600} />
+
+      <rect x="45" y="180" width="240" height="50" rx="8" fill={C.line} fillOpacity="0.3" />
+      <Lines x={165} y={200} lines={["Dùng khi: số vòng cố định ngay"]} size={9.5} fill={C.ink} weight={600} />
+      <Lines x={165} y={216} lines={["từ lúc viết chương trình"]} size={9.5} fill={C.ink} weight={600} />
+
+      <rect x="325" y="15" width="300" height="230" rx="16" fill={C.white} stroke={C.bubble} strokeWidth="2" />
+      <rect x="325" y="15" width="300" height="36" rx="16" fill={C.bubble} fillOpacity="0.12" />
+      <Lines x={475} y={38} lines={["🔓 while — CHƯA BIẾT trước số lần"]} size={11.5} fill={C.bubbleDeep} weight={700} />
+
+      <rect x="355" y="60" width="240" height="60" rx="10" fill={C.bubble} fillOpacity="0.12" stroke={C.bubbleDeep} strokeWidth="1.5" />
+      <Lines x={475} y={84} lines={["\"Đoán mật khẩu đến khi đúng\""]} size={11} fill={C.bubbleDeep} weight={700} />
+      <Lines x={475} y={104} lines={["Không ai biết trước: 1 lần? 10 lần?"]} size={9.5} fill={C.inkSoft} weight={500} />
+
+      <Lines x={475} y={140} lines={["while mk != \"bimat\":"]} size={11} fill={C.ink} weight={600} />
+      <Lines x={475} y={158} lines={["    mk = input()"]} size={11} fill={C.ink} weight={600} />
+
+      <rect x="355" y="180" width="240" height="50" rx="8" fill={C.line} fillOpacity="0.3" />
+      <Lines x={475} y={200} lines={["Dùng khi: số vòng phụ thuộc"]} size={9.5} fill={C.ink} weight={600} />
+      <Lines x={475} y={216} lines={["kết quả lúc chương trình đang chạy"]} size={9.5} fill={C.ink} weight={600} />
+    </Frame>
+  );
+}
+
+// ── Bài 21: while kiểm tra điều kiện TRƯỚC mỗi vòng — có thể chạy 0 lần ─────
+function WhileKiemTraTruoc() {
+  return (
+    <Frame viewBox="0 0 640 300">
+      <rect x="220" y="10" width="200" height="32" rx="16" fill={C.grape} fillOpacity="0.15" stroke={C.grape} strokeWidth="1.5" />
+      <Lines x={320} y={31} lines={["🔑 mk = input(\"Mật khẩu: \")"]} size={10.5} fill={C.grapeDeep} weight={700} />
+
+      <path d="M320,42 L320,60" stroke={C.inkSoft} strokeWidth="2" markerEnd="url(#arrow-soft)" />
+
+      <polygon points="320,60 415,100 320,140 225,100" fill={C.sun} fillOpacity="0.18" stroke={C.sunDeep} strokeWidth="2" />
+      <Lines x={320} y={95} lines={["mk khác"]} size={10} fill={C.sunDeep} weight={700} />
+      <Lines x={320} y={110} lines={["\"bimat\" ?"]} size={10} fill={C.sunDeep} weight={700} />
+
+      {/* Đúng -> chạy thân lặp rồi quay lại kiểm tra */}
+      <path d="M225,100 L165,100" stroke={C.mintDeep} strokeWidth="2" markerEnd="url(#arrow)" />
+      <Lines x={195} y={90} lines={["Đúng"]} size={9} fill={C.mintDeep} weight={700} />
+      <rect x="30" y="80" width="135" height="40" rx="8" fill={C.mint} fillOpacity="0.2" stroke={C.mintDeep} strokeWidth="1.5" />
+      <Lines x={97} y={104} lines={["Nhập lại mk"]} size={10} fill={C.mintDeep} weight={700} />
+      <path d="M97,80 L97,20 L300,20" fill="none" stroke={C.mintDeep} strokeWidth="1.8" markerEnd="url(#arrow)" />
+      <Lines x={150} y={13} lines={["quay lại kiểm tra"]} size={9} fill={C.mintDeep} weight={600} />
+
+      {/* Sai -> thoát */}
+      <path d="M415,100 L470,100" stroke="#B91C1C" strokeWidth="2" markerEnd="url(#arrow)" />
+      <Lines x={442} y={90} lines={["Sai"]} size={9} fill="#B91C1C" weight={700} />
+      <rect x="475" y="80" width="140" height="40" rx="8" fill="#FEE2E2" stroke="#DC2626" strokeWidth="1.6" />
+      <Lines x={545} y={104} lines={["🎉 Chúc mừng!"]} size={10} fill="#B91C1C" weight={700} />
+
+      <rect x="60" y="185" width="520" height="95" rx="12" fill={C.line} fillOpacity="0.3" />
+      <Lines x={320} y={210} lines={["⚡ Nếu gõ ĐÚNG ngay từ lần đầu tiên:"]} size={11} fill={C.ink} weight={700} />
+      <Lines x={320} y={232} lines={["điều kiện \"mk khác bimat\" đã SAI trước khi vào vòng lặp,"]} size={10} fill={C.inkSoft} weight={500} />
+      <Lines x={320} y={250} lines={["nên thân lặp (nhập lại) không chạy lần nào cả —"]} size={10} fill={C.inkSoft} weight={500} />
+      <Lines x={320} y={268} lines={["while có thể chạy đúng 0 lần, khác hẳn với for"]} size={10} fill={C.inkSoft} weight={500} />
+    </Frame>
+  );
+}
+
+// ── Bài 21: Bẫy lặp vô hạn — quên cập nhật biến điều khiển ──────────────────
+function BayLapVoHan() {
+  return (
+    <Frame viewBox="0 0 640 300">
+      <rect x="15" y="15" width="300" height="270" rx="16" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="15" y="15" width="300" height="34" rx="16" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={165} y={37} lines={["✅ ĐÚNG: có cập nhật dem"]} size={11} fill={C.mintDeep} weight={700} />
+
+      <rect x="40" y="55" width="250" height="80" rx="8" fill={C.ink} />
+      <text x="60" y="75" fontSize="10.5" fill="#8CF29B" fontFamily="monospace">dem = 5</text>
+      <text x="60" y="93" fontSize="10.5" fill="#8CF29B" fontFamily="monospace">while dem &gt; 0:</text>
+      <text x="80" y="111" fontSize="10.5" fill="#8CF29B" fontFamily="monospace">print(dem)</text>
+      <text x="80" y="127" fontSize="10.5" fill="#FBBF24" fontFamily="monospace">dem = dem - 1</text>
+
+      {[5, 4, 3, 2, 1].map((n, i) => (
+        <circle key={n} cx={55 + i * 45} cy="165" r="16" fill={C.mint} fillOpacity="0.3" stroke={C.mintDeep} strokeWidth="1.5" />
+      ))}
+      {[5, 4, 3, 2, 1].map((n, i) => (
+        <Lines key={n} x={55 + i * 45} y={170} lines={[String(n)]} size={11} fill={C.mintDeep} weight={700} />
+      ))}
+      <path d="M280,165 L300,165" stroke={C.mintDeep} strokeWidth="2" markerEnd="url(#arrow)" />
+
+      <rect x="35" y="195" width="250" height="36" rx="8" fill={C.mint} fillOpacity="0.15" stroke={C.mintDeep} strokeWidth="1.3" />
+      <Lines x={160} y={218} lines={["dem về 0 → điều kiện Sai → dừng lại"]} size={9.5} fill={C.mintDeep} weight={700} />
+
+      <Lines x={165} y={255} lines={["Mỗi vòng dem giảm 1, sớm muộn"]} size={10} fill={C.inkSoft} weight={500} />
+      <Lines x={165} y={271} lines={["cũng chạm điều kiện dừng"]} size={10} fill={C.inkSoft} weight={500} />
+
+      <rect x="325" y="15" width="300" height="270" rx="16" fill={C.white} stroke={C.bubble} strokeWidth="2" />
+      <rect x="325" y="15" width="300" height="34" rx="16" fill={C.bubble} fillOpacity="0.12" />
+      <Lines x={475} y={37} lines={["❌ SAI: quên cập nhật dem"]} size={11} fill={C.bubbleDeep} weight={700} />
+
+      <rect x="350" y="55" width="250" height="80" rx="8" fill={C.ink} />
+      <text x="370" y="75" fontSize="10.5" fill="#8CF29B" fontFamily="monospace">dem = 5</text>
+      <text x="370" y="93" fontSize="10.5" fill="#8CF29B" fontFamily="monospace">while dem &gt; 0:</text>
+      <text x="390" y="111" fontSize="10.5" fill="#8CF29B" fontFamily="monospace">print(dem)</text>
+      <text x="390" y="127" fontSize="10" fill="#EF4444" fontFamily="monospace">  # thiếu dem = dem - 1</text>
+
+      <circle cx="475" cy="180" r="34" fill="none" stroke="#DC2626" strokeWidth="3" strokeDasharray="6 4" />
+      <path d="M475,146 A34,34 0 1,1 474,146" fill="none" stroke="#DC2626" strokeWidth="3" markerEnd="url(#arrow)" />
+      <Lines x={475} y={185} lines={["5, 5, 5..."]} size={13} fill="#B91C1C" weight={700} />
+
+      <rect x="350" y="225" width="250" height="42" rx="8" fill="#FEE2E2" stroke="#DC2626" strokeWidth="1.4" />
+      <Lines x={475} y={244} lines={["🚨 Lặp vô hạn — dem luôn = 5"]} size={9.5} fill="#B91C1C" weight={700} />
+      <Lines x={475} y={260} lines={["Thoát khẩn cấp: nhấn Ctrl+C"]} size={9} fill="#B91C1C" weight={600} />
+    </Frame>
+  );
+}
+
+// ── Bài 21: Gấp giấy tăng dần đến khi vượt ngưỡng — while tích luỹ ──────────
+function GapGiayToiNguong() {
+  const steps = [0.1, 0.2, 0.4, 0.8, 1.6, 3.2, 6.4, 12.8, 25.6, 51.2];
+  return (
+    <Frame viewBox="0 0 640 280">
+      <Lines x={320} y={26} lines={["📄 Gấp đôi một tờ giấy — độ dày tăng gấp đôi mỗi lần gấp"]} size={12} fill={C.grapeDeep} weight={700} />
+
+      <line x1="40" y1="220" x2="620" y2="220" stroke={C.inkSoft} strokeWidth="1.5" />
+      {steps.map((d, i) => {
+        const h = Math.min(d * 3, 170);
+        return (
+          <g key={i}>
+            <rect x={45 + i * 57} y={220 - h} width="42" height={h} rx="4" fill={C.grape} fillOpacity={0.25 + i * 0.06} stroke={C.grapeDeep} strokeWidth="1.2" />
+            <Lines x={66 + i * 57} y={235} lines={[`${i + 1}`]} size={9} fill={C.inkSoft} weight={600} />
+          </g>
+        );
+      })}
+      <Lines x={66} y={205} lines={["0.1mm"]} size={8} fill={C.grapeDeep} weight={700} />
+      <Lines x={66 + 9 * 57} y={55} lines={["51.2mm"]} size={9} fill={C.grapeDeep} weight={700} />
+
+      <rect x="60" y="248" width="520" height="26" rx="8" fill={C.line} fillOpacity="0.35" />
+      <Lines x={320} y={266} lines={["while do_day <= 1000: do_day = do_day * 2; lan_gap = lan_gap + 1 — dừng khi vượt 1000mm"]} size={9.5} fill={C.ink} weight={600} />
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
@@ -2393,6 +2541,10 @@ const DIAGRAMS: Record<string, () => JSX.Element> = {
   "vong-lap-filmstrip": VongLapFilmstrip,
   "bien-cong-don": BienCongDon,
   "ghe-rap-chieu-phim": GheRapChieuPhim,
+  "for-vs-while-so-sanh": ForVsWhileSoSanh,
+  "while-kiem-tra-truoc": WhileKiemTraTruoc,
+  "bay-lap-vo-han": BayLapVoHan,
+  "gap-giay-toi-nguong": GapGiayToiNguong,
 };
 
 export default function Diagram({ name }: { name: string }) {
