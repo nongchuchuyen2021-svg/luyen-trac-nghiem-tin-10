@@ -2049,6 +2049,167 @@ function HoaDonTraSua() {
   );
 }
 
+// ── Bài 19: Lưu đồ if đơn — cổng kiểm tra chiều cao tàu lượn ─────────────────
+function IfDonLuuDo() {
+  return (
+    <Frame viewBox="0 0 640 320">
+      {/* Cột trái: lưu đồ */}
+      <rect x="55" y="12" width="190" height="36" rx="18" fill={C.grape} fillOpacity="0.15" stroke={C.grape} strokeWidth="1.5" />
+      <Lines x={150} y={35} lines={["🎫 Đến cổng tàu lượn"]} size={11} fill={C.grapeDeep} weight={700} />
+
+      <path d="M150,48 L150,68" stroke={C.inkSoft} strokeWidth="2" markerEnd="url(#arrow-soft)" />
+
+      <polygon points="150,68 248,112 150,156 52,112" fill={C.sun} fillOpacity="0.18" stroke={C.sunDeep} strokeWidth="2" />
+      <Lines x={150} y={106} lines={["chiều cao"]} size={10.5} fill={C.sunDeep} weight={700} />
+      <Lines x={150} y={122} lines={["≥ 140cm ?"]} size={10.5} fill={C.sunDeep} weight={700} />
+
+      <path d="M150,156 L150,186" stroke={C.mintDeep} strokeWidth="2.2" markerEnd="url(#arrow)" />
+      <Lines x={172} y={175} lines={["Đúng"]} size={10} fill={C.mintDeep} weight={700} anchor="start" />
+
+      <rect x="55" y="192" width="190" height="46" rx="10" fill={C.mint} fillOpacity="0.18" stroke={C.mintDeep} strokeWidth="1.8" />
+      <Lines x={150} y={220} lines={["🎢 Được lên tàu lượn!"]} size={11} fill={C.mintDeep} weight={700} />
+
+      <path d="M248,112 L300,112 L300,270 L150,270" fill="none" stroke="#B91C1C" strokeWidth="2" markerEnd="url(#arrow)" />
+      <Lines x={280} y={104} lines={["Sai"]} size={10} fill="#B91C1C" weight={700} />
+
+      <path d="M150,238 L150,262" stroke={C.inkSoft} strokeWidth="2" markerEnd="url(#arrow-soft)" />
+
+      <rect x="80" y="272" width="140" height="34" rx="17" fill={C.line} fillOpacity="0.5" stroke={C.inkSoft} strokeWidth="1.3" />
+      <Lines x={150} y={293} lines={["Kết thúc"]} size={10.5} fill={C.ink} weight={600} />
+
+      {/* Cột phải: mã lệnh tương ứng */}
+      <rect x="340" y="20" width="280" height="180" rx="12" fill={C.ink} />
+      <text x="358" y="50" fontSize="11.5" fill="#8CF29B" fontFamily="monospace">
+        chieu_cao = float(input())
+      </text>
+      <text x="358" y="76" fontSize="11.5" fill="#FBBF24" fontFamily="monospace">
+        if chieu_cao &gt;= 140<tspan fill="#FF6B9D">:</tspan>
+      </text>
+      <text x="378" y="102" fontSize="11.5" fill="#8CF29B" fontFamily="monospace">
+        print(&quot;🎢 Được lên...&quot;)
+      </text>
+
+      <path d="M362,86 L362,102" stroke="#FF6B9D" strokeWidth="1.5" />
+      <path d="M362,102 L374,102" stroke="#FF6B9D" strokeWidth="1.5" />
+      <text x="358" y="128" fontSize="9" fill="#FF6B9D" fontFamily="monospace">
+        ↑ thụt lề 4 dấu cách = thuộc khối lệnh if
+      </text>
+
+      <Lines x={480} y={155} lines={["Dấu hai chấm ':' và thụt lề"]} size={10} fill={C.inkSoft} weight={600} />
+      <Lines x={480} y={172} lines={["là bắt buộc trong Python"]} size={10} fill={C.inkSoft} weight={600} />
+
+      <rect x="340" y="215" width="280" height="90" rx="12" fill={C.grape} fillOpacity="0.07" stroke={C.grape} strokeWidth="1.3" />
+      <Lines x={480} y={240} lines={["📌 Nếu chiều cao không đủ 140cm"]} size={10.5} fill={C.grapeDeep} weight={700} />
+      <Lines x={480} y={260} lines={["(điều kiện Sai), khối lệnh trong if"]} size={10} fill={C.inkSoft} weight={500} />
+      <Lines x={480} y={278} lines={["bị bỏ qua — chương trình kết thúc"]} size={10} fill={C.inkSoft} weight={500} />
+      <Lines x={480} y={295} lines={["mà không in gì cả"]} size={10} fill={C.inkSoft} weight={500} />
+    </Frame>
+  );
+}
+
+// ── Bài 19: Lưu đồ if-elif-else — ba mức chiều cao ba khu trò chơi ──────────
+function IfElifElseLuuDo() {
+  return (
+    <Frame viewBox="0 0 640 410">
+      <rect x="220" y="10" width="200" height="32" rx="16" fill={C.grape} fillOpacity="0.15" stroke={C.grape} strokeWidth="1.5" />
+      <Lines x={320} y={30} lines={["🎡 Đến khu Đu quay Ngựa gỗ"]} size={10.5} fill={C.grapeDeep} weight={700} />
+
+      <path d="M320,42 L320,58" stroke={C.inkSoft} strokeWidth="2" markerEnd="url(#arrow-soft)" />
+
+      {/* Kim cương 1 */}
+      <polygon points="320,58 400,93 320,128 240,93" fill={C.sun} fillOpacity="0.18" stroke={C.sunDeep} strokeWidth="2" />
+      <Lines x={320} y={89} lines={["chiều cao"]} size={9.5} fill={C.sunDeep} weight={700} />
+      <Lines x={320} y={103} lines={["< 120cm ?"]} size={9.5} fill={C.sunDeep} weight={700} />
+
+      {/* Đúng → không được chơi (rẽ trái) */}
+      <path d="M240,93 L210,93" stroke={C.mintDeep} strokeWidth="2" markerEnd="url(#arrow)" />
+      <Lines x={225} y={82} lines={["Đúng"]} size={9} fill={C.mintDeep} weight={700} />
+      <rect x="30" y="73" width="180" height="40" rx="10" fill="#FEE2E2" stroke="#DC2626" strokeWidth="1.6" />
+      <Lines x={120} y={97} lines={["🚫 Không được chơi"]} size={10} fill="#B91C1C" weight={700} />
+
+      {/* Sai → xuống kim cương 2 */}
+      <path d="M320,128 L320,168" stroke="#B91C1C" strokeWidth="2" markerEnd="url(#arrow)" />
+      <Lines x={342} y={152} lines={["Sai"]} size={9} fill="#B91C1C" weight={700} anchor="start" />
+
+      <polygon points="320,168 400,203 320,238 240,203" fill={C.sun} fillOpacity="0.18" stroke={C.sunDeep} strokeWidth="2" />
+      <Lines x={320} y={199} lines={["chiều cao"]} size={9.5} fill={C.sunDeep} weight={700} />
+      <Lines x={320} y={213} lines={["< 140cm ?"]} size={9.5} fill={C.sunDeep} weight={700} />
+
+      {/* Đúng → đi cùng người lớn (rẽ trái) */}
+      <path d="M240,203 L210,203" stroke={C.mintDeep} strokeWidth="2" markerEnd="url(#arrow)" />
+      <Lines x={225} y={192} lines={["Đúng"]} size={9} fill={C.mintDeep} weight={700} />
+      <rect x="20" y="183" width="200" height="40" rx="10" fill={C.sun} fillOpacity="0.2" stroke={C.sunDeep} strokeWidth="1.6" />
+      <Lines x={120} y={207} lines={["👨‍👩‍👧 Đi cùng người lớn"]} size={9.5} fill={C.sunDeep} weight={700} />
+
+      {/* Sai → chơi tự do (xuống) */}
+      <path d="M320,238 L320,275" stroke="#B91C1C" strokeWidth="2" markerEnd="url(#arrow)" />
+      <Lines x={342} y={260} lines={["Sai"]} size={9} fill="#B91C1C" weight={700} anchor="start" />
+
+      <rect x="230" y="280" width="180" height="40" rx="10" fill={C.mint} fillOpacity="0.2" stroke={C.mintDeep} strokeWidth="1.6" />
+      <Lines x={320} y={304} lines={["✅ Được chơi tự do"]} size={10} fill={C.mintDeep} weight={700} />
+
+      <rect x="60" y="345" width="520" height="55" rx="10" fill={C.line} fillOpacity="0.35" />
+      <Lines x={320} y={366} lines={["Chỉ MỘT nhánh chạy! Máy kiểm tra từng điều kiện từ trên xuống,"]} size={10.5} fill={C.ink} weight={700} />
+      <Lines x={320} y={384} lines={["gặp Đúng đầu tiên là dừng lại — các elif/else phía sau không được xét nữa"]} size={9.5} fill={C.inkSoft} weight={500} />
+    </Frame>
+  );
+}
+
+// ── Bài 19: and giống cổng nối tiếp — or giống cổng song song ───────────────
+function AndOrGates() {
+  return (
+    <Frame viewBox="0 0 640 300">
+      {/* Panel AND */}
+      <rect x="15" y="15" width="300" height="270" rx="16" fill={C.white} stroke={C.grape} strokeWidth="2" />
+      <rect x="15" y="15" width="300" height="36" rx="16" fill={C.grape} fillOpacity="0.12" />
+      <Lines x={165} y={38} lines={["🔒 and — như hai cổng NỐI TIẾP"]} size={11} fill={C.grapeDeep} weight={700} />
+
+      <Lines x={45} y={82} lines={["🧍"]} size={18} />
+      <path d="M60,75 L88,75" stroke={C.inkSoft} strokeWidth="2" markerEnd="url(#arrow-soft)" />
+      <rect x="92" y="57" width="150" height="36" rx="6" fill={C.mint} fillOpacity="0.2" stroke={C.mintDeep} strokeWidth="1.5" />
+      <Lines x={167} y={79} lines={["Đủ chiều cao?"]} size={10} fill={C.mintDeep} weight={700} />
+
+      <path d="M167,93 L167,113" stroke={C.inkSoft} strokeWidth="2" markerEnd="url(#arrow-soft)" />
+      <rect x="92" y="117" width="150" height="36" rx="6" fill={C.mint} fillOpacity="0.2" stroke={C.mintDeep} strokeWidth="1.5" />
+      <Lines x={167} y={139} lines={["Đủ cân nặng?"]} size={10} fill={C.mintDeep} weight={700} />
+
+      <path d="M167,153 L167,173" stroke={C.mintDeep} strokeWidth="2" markerEnd="url(#arrow)" />
+      <rect x="122" y="177" width="90" height="36" rx="8" fill={C.mint} fillOpacity="0.3" stroke={C.mintDeep} strokeWidth="1.8" />
+      <Lines x={167} y={199} lines={["✅ Được chơi"]} size={10} fill={C.mintDeep} weight={700} />
+
+      <rect x="30" y="225" width="270" height="55" rx="8" fill={C.line} fillOpacity="0.3" />
+      <Lines x={165} y={244} lines={["Phải qua CẢ HAI cổng mới đi tiếp được"]} size={9.5} fill={C.ink} weight={700} />
+      <Lines x={165} y={262} lines={["— một cổng Sai là bị chặn ngay, giống hệt and"]} size={9} fill={C.inkSoft} weight={500} />
+
+      {/* Panel OR */}
+      <rect x="325" y="15" width="300" height="270" rx="16" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="325" y="15" width="300" height="36" rx="16" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={475} y={38} lines={["🔓 or — như hai cổng SONG SONG"]} size={11} fill={C.mintDeep} weight={700} />
+
+      <Lines x={355} y={100} lines={["🧍"]} size={18} />
+      <path d="M370,93 L370,75 L398,75" fill="none" stroke={C.inkSoft} strokeWidth="2" />
+      <path d="M398,75 L420,75" stroke={C.inkSoft} strokeWidth="2" markerEnd="url(#arrow-soft)" />
+      <rect x="424" y="57" width="150" height="36" rx="6" fill={C.bubble} fillOpacity="0.18" stroke={C.bubbleDeep} strokeWidth="1.5" />
+      <Lines x={499} y={79} lines={["Có thẻ thành viên?"]} size={9.5} fill={C.bubbleDeep} weight={700} />
+
+      <path d="M370,107 L370,125 L398,125" fill="none" stroke={C.inkSoft} strokeWidth="2" />
+      <path d="M398,125 L420,125" stroke={C.inkSoft} strokeWidth="2" markerEnd="url(#arrow-soft)" />
+      <rect x="424" y="107" width="150" height="36" rx="6" fill={C.bubble} fillOpacity="0.18" stroke={C.bubbleDeep} strokeWidth="1.5" />
+      <Lines x={499} y={129} lines={["Là ngày sinh nhật?"]} size={9.5} fill={C.bubbleDeep} weight={700} />
+
+      <path d="M576,75 L598,75 L598,125 L576,125" fill="none" stroke={C.bubbleDeep} strokeWidth="2" />
+      <path d="M598,100 L598,173" stroke={C.bubbleDeep} strokeWidth="2" markerEnd="url(#arrow)" />
+
+      <rect x="553" y="177" width="90" height="36" rx="8" fill={C.bubble} fillOpacity="0.3" stroke={C.bubbleDeep} strokeWidth="1.8" />
+      <Lines x={598} y={199} lines={["✅ Miễn phí vé"]} size={9.5} fill={C.bubbleDeep} weight={700} />
+
+      <rect x="340" y="225" width="270" height="55" rx="8" fill={C.line} fillOpacity="0.3" />
+      <Lines x={475} y={244} lines={["Chỉ cần MỘT trong hai cổng mở là qua được"]} size={9.5} fill={C.ink} weight={700} />
+      <Lines x={475} y={262} lines={["— cả hai cùng đóng mới bị chặn, giống hệt or"]} size={9} fill={C.inkSoft} weight={500} />
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
@@ -2086,6 +2247,9 @@ const DIAGRAMS: Record<string, () => JSX.Element> = {
   "chuyen-doi-kieu": ChuyenDoiKieu,
   "print-nang-cao": PrintNangCao,
   "hoa-don-tra-sua": HoaDonTraSua,
+  "if-don-luu-do": IfDonLuuDo,
+  "if-elif-else-luu-do": IfElifElseLuuDo,
+  "and-or-gates": AndOrGates,
 };
 
 export default function Diagram({ name }: { name: string }) {
