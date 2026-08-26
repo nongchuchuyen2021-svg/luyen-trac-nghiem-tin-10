@@ -3858,6 +3858,98 @@ function BonBayTongHop() {
   );
 }
 
+// ── Bài 33: Một ngày làm việc của nhà thiết kế đồ hoạ (vòng lặp công việc) ──
+function MotNgayCuaNhaThietKe() {
+  const nodes = [
+    { x: 320, y: 40, icon: "🗣️", t: "Gặp khách hàng" },
+    { x: 443.6, y: 129.8, icon: "✏️", t: "Phác thảo ý tưởng" },
+    { x: 396.4, y: 275.2, icon: "💻", t: "Dựng trên phần mềm" },
+    { x: 243.6, y: 275.2, icon: "📤", t: "Gửi phương án" },
+    { x: 196.4, y: 129.8, icon: "💬", t: "Nhận góp ý" },
+  ];
+  return (
+    <Frame viewBox="0 0 640 340">
+      <Lines x={320} y={20} lines={["🔄 Một ngày làm việc của nhà thiết kế — theo lời kể của chị Hoa"]} size={11.5} fill={C.grapeDeep} weight={700} />
+
+      {nodes.map((n, i) => {
+        const next = nodes[(i + 1) % nodes.length];
+        return <path key={`l${i}`} d={`M${n.x},${n.y} L${next.x},${next.y}`} stroke={C.grapeDeep} strokeWidth="2" fill="none" markerEnd="url(#arrow)" />;
+      })}
+
+      <path d="M196.4,145 C150,210 260,290 380,283" stroke="#B91C1C" strokeWidth="2" strokeDasharray="5 4" fill="none" markerEnd="url(#arrow)" />
+      <Lines x={230} y={225} lines={["chưa ưng ý", "→ chỉnh sửa"]} size={8.5} fill="#B91C1C" weight={700} gap={11} />
+
+      {nodes.map((n, i) => (
+        <g key={i}>
+          <circle cx={n.x} cy={n.y} r="42" fill={C.white} stroke={C.grape} strokeWidth="2" />
+          <text x={n.x} y={n.y - 4} fontSize="18" textAnchor="middle">{n.icon}</text>
+          <Lines x={n.x} y={n.y + 16} lines={n.t.split(" ").length > 2 ? [n.t.split(" ").slice(0, 2).join(" "), n.t.split(" ").slice(2).join(" ")] : [n.t]} size={7.8} fill={C.grapeDeep} weight={700} gap={10} />
+        </g>
+      ))}
+
+      <Lines x={320} y={325} lines={["Thiết kế không chỉ là ngồi vẽ — phần lớn thời gian là giao tiếp và chỉnh sửa theo phản hồi"]} size={9.5} fill={C.inkSoft} weight={600} />
+    </Frame>
+  );
+}
+
+// ── Bài 33: Từ kiến thức lớp 10 đến công cụ nghề nghiệp thật ────────────────
+function TuKienThucDenCongCu() {
+  const pairs = [
+    { l: "📐 Vector và Bitmap (Bài 12)", r: "🎯 Vẽ logo, icon bằng Inkscape/Illustrator — cần vector co giãn không vỡ nét" },
+    { l: "🖌️ Thực hành Inkscape (Bài 13-15)", r: "🖼️ Chỉnh sửa, ghép ảnh chụp bằng GIMP/Photoshop — xử lí ảnh bitmap" },
+    { l: "🌐 Khai thác Internet & bản quyền (Bài 10-11)", r: "⚖️ Tìm tư liệu tham khảo đúng cách, tôn trọng bản quyền khi thiết kế" },
+  ];
+  return (
+    <Frame viewBox="0 0 640 300">
+      <Lines x={320} y={22} lines={["🔗 Những gì đã học ở lớp 10 chính là bước đầu của nghề thiết kế"]} size={11} fill={C.grapeDeep} weight={700} />
+      <Lines x={140} y={46} lines={["Kiến thức đã học"]} size={10} fill={C.mintDeep} weight={700} />
+      <Lines x={500} y={46} lines={["Ứng dụng trong nghề"]} size={10} fill={C.bubbleDeep} weight={700} />
+
+      {pairs.map((p, i) => {
+        const y = 60 + i * 78;
+        return (
+          <g key={i}>
+            <rect x="15" y={y} width="255" height="62" rx="10" fill={C.mint} fillOpacity="0.12" stroke={C.mint} strokeWidth="1.5" />
+            <Lines x={142} y={y + 26} lines={p.l.length > 26 ? [p.l.slice(0, 26), p.l.slice(26)] : [p.l]} size={9} fill={C.mintDeep} weight={700} gap={13} anchor="middle" />
+
+            <path d={`M275,${y + 31} L365,${y + 31}`} stroke={C.grapeDeep} strokeWidth="2" markerEnd="url(#arrow)" />
+
+            <rect x="370" y={y} width="255" height="62" rx="10" fill={C.bubble} fillOpacity="0.12" stroke={C.bubble} strokeWidth="1.5" />
+            <Lines x={497} y={y + 20} lines={[p.r.slice(0, 30), p.r.slice(30, 60), p.r.slice(60)].filter(Boolean)} size={8} fill={C.bubbleDeep} weight={600} gap={11} anchor="middle" />
+          </g>
+        );
+      })}
+    </Frame>
+  );
+}
+
+// ── Bài 33: Ba điều cần rèn luyện từ bây giờ ─────────────────────────────────
+function BaDieuRenLuyen() {
+  const items = [
+    { icon: "👁️", t: "Con mắt thẩm mĩ", d: "Quan sát, học hỏi từ những thiết kế đẹp mỗi ngày", color: C.grape, deep: C.grapeDeep },
+    { icon: "🖱️", t: "Tay nghề phần mềm", d: "Luyện tập bằng các bài nhỏ: thiệp, logo lớp, poster", color: C.mint, deep: C.mintDeep },
+    { icon: "⚖️", t: "Ý thức bản quyền", d: "Không sao chép, luôn ghi nguồn tư liệu tham khảo", color: C.bubble, deep: C.bubbleDeep },
+  ];
+  return (
+    <Frame viewBox="0 0 640 260">
+      <Lines x={320} y={22} lines={["🌱 Ba điều chị Hoa nhắn nhủ — rèn luyện được ngay từ lớp 10"]} size={11.5} fill={C.grapeDeep} weight={700} />
+
+      {items.map((it, i) => (
+        <g key={i}>
+          <rect x={20 + i * 205} y="45" width="190" height="130" rx="14" fill={C.white} stroke={it.color} strokeWidth="2" />
+          <rect x={20 + i * 205} y="45" width="190" height="34" rx="14" fill={it.color} fillOpacity="0.15" />
+          <text x={115 + i * 205} y="98" fontSize="26" textAnchor="middle">{it.icon}</text>
+          <Lines x={115 + i * 205} y={68} lines={[it.t]} size={10.5} fill={it.deep} weight={700} />
+          <Lines x={115 + i * 205} y={130} lines={it.d.split(" ").length > 4 ? [it.d.split(" ").slice(0, 4).join(" "), it.d.split(" ").slice(4).join(" ")] : [it.d]} size={8.3} fill={C.inkSoft} weight={500} gap={12} />
+        </g>
+      ))}
+
+      <rect x="20" y="195" width="600" height="46" rx="10" fill={C.sun} fillOpacity="0.15" stroke={C.sunDeep} strokeWidth="1.5" />
+      <Lines x={320} y={222} lines={["🤖 AI chỉ là công cụ hỗ trợ — không thay được người biết đặt câu hỏi đúng cho khách hàng"]} size={9.5} fill={C.sunDeep} weight={700} />
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
@@ -3941,6 +4033,9 @@ const DIAGRAMS: Record<string, () => JSX.Element> = {
   "ban-do-6-manh-ghep": BanDo6ManhGhep,
   "bang-do-bien-tung-buoc": BangDoBienTungBuoc,
   "bon-bay-tong-hop": BonBayTongHop,
+  "mot-ngay-cua-nha-thiet-ke": MotNgayCuaNhaThietKe,
+  "tu-kien-thuc-den-cong-cu": TuKienThucDenCongCu,
+  "ba-dieu-ren-luyen": BaDieuRenLuyen,
 };
 
 export default function Diagram({ name }: { name: string }) {
