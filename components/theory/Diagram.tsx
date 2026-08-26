@@ -3647,6 +3647,115 @@ function QuyTrinhGoLoi() {
   );
 }
 
+// ── Bài 31: Quy trình 4 bước giải bài toán bằng lập trình ───────────────────
+function QuyTrinh4BuocLapTrinh() {
+  const steps = [
+    { n: "1", t: "Xác định bài toán", d: "INPUT là gì? OUTPUT là gì?", icon: "🎯", color: C.grape, deep: C.grapeDeep },
+    { n: "2", t: "Thiết kế thuật toán", d: "Mô tả cách giải bằng lời/sơ đồ", icon: "🧩", color: C.sun, deep: C.sunDeep },
+    { n: "3", t: "Viết chương trình", d: "Chuyển thuật toán thành mã Python", icon: "⌨️", color: C.mint, deep: C.mintDeep },
+    { n: "4", t: "Kiểm thử", d: "Chạy thử, đối chiếu kết quả đúng", icon: "🧪", color: C.bubble, deep: C.bubbleDeep },
+  ];
+  return (
+    <Frame viewBox="0 0 640 280">
+      <Lines x={320} y={24} lines={["🛤️ Bốn bước giải một bài toán bằng chương trình"]} size={12.5} fill={C.grapeDeep} weight={700} />
+
+      {steps.map((s, i) => (
+        <g key={i}>
+          <rect x={20 + i * 155} y="50" width="135" height="140" rx="14" fill={C.white} stroke={s.color} strokeWidth="2" />
+          <rect x={20 + i * 155} y="50" width="135" height="34" rx="14" fill={s.color} fillOpacity="0.15" />
+          <Lines x={87 + i * 155} y={71} lines={[`Bước ${s.n}`]} size={10.5} fill={s.deep} weight={700} />
+          <text x={87 + i * 155} y="112" fontSize="26" textAnchor="middle">{s.icon}</text>
+          <Lines x={87 + i * 155} y={135} lines={[s.t]} size={9.5} fill={s.deep} weight={700} />
+          <Lines x={87 + i * 155} y={160} lines={s.d.split(" ").length > 3 ? [s.d.split(" ").slice(0, 3).join(" "), s.d.split(" ").slice(3).join(" ")] : [s.d]} size={8} fill={C.inkSoft} weight={500} gap={11} />
+          {i < 3 && <path d={`M${155 + i * 155},120 L${175 + i * 155},120`} stroke={C.grapeDeep} strokeWidth="2.5" markerEnd="url(#arrow)" />}
+        </g>
+      ))}
+
+      <path d="M600,190 L600,225 L20,225 L20,192" fill="none" stroke="#B91C1C" strokeWidth="2" strokeDasharray="5 4" markerEnd="url(#arrow)" />
+      <Lines x={320} y={245} lines={["Kiểm thử phát hiện sai → quay lại bước 2 hoặc 3 để sửa, không phải viết lại từ đầu"]} size={10} fill="#B91C1C" weight={700} />
+
+      <rect x="60" y="255" width="520" height="20" rx="6" fill={C.line} fillOpacity="0.3" />
+    </Frame>
+  );
+}
+
+// ── Bài 31: Hai khuôn mẫu code kinh điển — đếm theo điều kiện và tìm max ────
+function HaiKhuonMauCode() {
+  return (
+    <Frame viewBox="0 0 640 260">
+      <rect x="15" y="15" width="300" height="230" rx="16" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="15" y="15" width="300" height="34" rx="16" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={165} y={37} lines={["🔢 Khuôn mẫu: duyệt và đếm theo điều kiện"]} size={9.5} fill={C.mintDeep} weight={700} />
+
+      <rect x="40" y="58" width="250" height="80" rx="8" fill={C.ink} />
+      <text x="55" y="78" fontSize="9.5" fill="#8CF29B" fontFamily="monospace">dem = 0</text>
+      <text x="55" y="94" fontSize="9.5" fill="#8CF29B" fontFamily="monospace">for x in chi_tieu:</text>
+      <text x="70" y="110" fontSize="9.5" fill="#FBBF24" fontFamily="monospace">if x &gt; tb:</text>
+      <text x="85" y="126" fontSize="9.5" fill="#8CF29B" fontFamily="monospace">dem = dem + 1</text>
+
+      <rect x="35" y="150" width="260" height="80" rx="8" fill={C.mint} fillOpacity="0.1" />
+      <Lines x={165} y={170} lines={["Đi qua từng phần tử, hễ THOẢ điều kiện"]} size={9} fill={C.mintDeep} weight={700} />
+      <Lines x={165} y={187} lines={["thì cộng thêm 1 vào bộ đếm"]} size={9} fill={C.mintDeep} weight={600} />
+      <Lines x={165} y={210} lines={["Áp dụng: đếm ngày chi vượt mức trung bình"]} size={8.5} fill={C.inkSoft} weight={500} />
+
+      <rect x="325" y="15" width="300" height="230" rx="16" fill={C.white} stroke={C.bubble} strokeWidth="2" />
+      <rect x="325" y="15" width="300" height="34" rx="16" fill={C.bubble} fillOpacity="0.12" />
+      <Lines x={475} y={37} lines={["📈 Khuôn mẫu: tìm giá trị lớn nhất"]} size={9.5} fill={C.bubbleDeep} weight={700} />
+
+      <rect x="350" y="58" width="250" height="80" rx="8" fill={C.ink} />
+      <text x="365" y="78" fontSize="9.5" fill="#8CF29B" fontFamily="monospace">ln = chi_tieu[0]</text>
+      <text x="365" y="94" fontSize="9.5" fill="#8CF29B" fontFamily="monospace">for x in chi_tieu:</text>
+      <text x="380" y="110" fontSize="9.5" fill="#FBBF24" fontFamily="monospace">if x &gt; ln:</text>
+      <text x="395" y="126" fontSize="9.5" fill="#8CF29B" fontFamily="monospace">ln = x</text>
+
+      <rect x="345" y="150" width="260" height="80" rx="8" fill={C.bubble} fillOpacity="0.1" />
+      <Lines x={475} y={170} lines={["Khởi tạo bằng phần tử ĐẦU TIÊN, gặp"]} size={9} fill={C.bubbleDeep} weight={700} />
+      <Lines x={475} y={187} lines={["phần tử LỚN HƠN thì cập nhật ngay"]} size={9} fill={C.bubbleDeep} weight={600} />
+      <Lines x={475} y={210} lines={["Áp dụng: tìm ngày chi tiêu nhiều nhất"]} size={8.5} fill={C.inkSoft} weight={500} />
+    </Frame>
+  );
+}
+
+// ── Bài 31: Code dễ đọc và code khó đọc — cùng chạy đúng, chất lượng khác hẳn ──
+function CodeDeDocVsKhoDoc() {
+  return (
+    <Frame viewBox="0 0 640 260">
+      <rect x="15" y="15" width="300" height="230" rx="16" fill={C.white} stroke="#DC2626" strokeWidth="2" />
+      <rect x="15" y="15" width="300" height="34" rx="16" fill="#FEE2E2" />
+      <Lines x={165} y={37} lines={["😵 Khó đọc — vẫn chạy đúng, nhưng..."]} size={10} fill="#B91C1C" weight={700} />
+
+      <rect x="35" y="58" width="260" height="95" rx="8" fill={C.ink} />
+      <text x="50" y="78" fontSize="9.5" fill="#8CF29B" fontFamily="monospace">a = float(input())</text>
+      <text x="50" y="94" fontSize="9.5" fill="#8CF29B" fontFamily="monospace">b = float(input())</text>
+      <text x="50" y="110" fontSize="9.5" fill="#8CF29B" fontFamily="monospace">c = a * b</text>
+      <text x="50" y="126" fontSize="9.5" fill="#8CF29B" fontFamily="monospace">if a &gt;= 20:</text>
+      <text x="65" y="142" fontSize="9.5" fill="#8CF29B" fontFamily="monospace">c = c * 0.95</text>
+
+      <rect x="30" y="165" width="270" height="65" rx="8" fill="#FEE2E2" fillOpacity="0.6" />
+      <Lines x={165} y={185} lines={["Tên a, b, c không nói lên ý nghĩa gì,"]} size={9} fill="#B91C1C" weight={700} />
+      <Lines x={165} y={202} lines={["không lời nhắc, không chú thích"]} size={9} fill="#B91C1C" weight={600} />
+      <Lines x={165} y={219} lines={["→ người khác đọc lại rất khó hiểu"]} size={9} fill="#B91C1C" weight={600} />
+
+      <rect x="325" y="15" width="300" height="230" rx="16" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="325" y="15" width="300" height="34" rx="16" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={475} y={37} lines={["✅ Dễ đọc — cùng logic, khác chất lượng"]} size={10} fill={C.mintDeep} weight={700} />
+
+      <rect x="345" y="58" width="260" height="95" rx="8" fill={C.ink} />
+      <text x="358" y="74" fontSize="8.5" fill="#8CF29B" fontFamily="monospace">kg = float(input("Số kg: "))</text>
+      <text x="358" y="88" fontSize="8.5" fill="#8CF29B" fontFamily="monospace">gia = float(input("Đơn giá: "))</text>
+      <text x="358" y="102" fontSize="8.5" fill="#FF6B9D" fontFamily="monospace"># Tính thành tiền</text>
+      <text x="358" y="116" fontSize="8.5" fill="#8CF29B" fontFamily="monospace">tien = kg * gia</text>
+      <text x="358" y="130" fontSize="8.5" fill="#8CF29B" fontFamily="monospace">if kg &gt;= 20:  # giảm giá sỉ</text>
+      <text x="370" y="144" fontSize="8.5" fill="#8CF29B" fontFamily="monospace">tien = tien * 0.95</text>
+
+      <rect x="340" y="165" width="270" height="65" rx="8" fill={C.mint} fillOpacity="0.1" />
+      <Lines x={475} y={185} lines={["Tên biến gợi nghĩa, có lời nhắc nhập,"]} size={9} fill={C.mintDeep} weight={700} />
+      <Lines x={475} y={202} lines={["có chú thích ngắn ở chỗ cần giải thích"]} size={9} fill={C.mintDeep} weight={600} />
+      <Lines x={475} y={219} lines={["→ ai đọc lại cũng hiểu ngay"]} size={9} fill={C.mintDeep} weight={600} />
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
@@ -3724,6 +3833,9 @@ const DIAGRAMS: Record<string, () => JSX.Element> = {
   "kiem-thu-nhieu-truong-hop": KiemThuNhieuTruongHop,
   "diem-bien-va-du-lieu-khong-hop-le": DiemBienVaDuLieuKhongHopLe,
   "quy-trinh-go-loi": QuyTrinhGoLoi,
+  "quy-trinh-4-buoc-lap-trinh": QuyTrinh4BuocLapTrinh,
+  "hai-khuon-mau-code": HaiKhuonMauCode,
+  "code-de-doc-vs-kho-doc": CodeDeDocVsKhoDoc,
 };
 
 export default function Diagram({ name }: { name: string }) {
