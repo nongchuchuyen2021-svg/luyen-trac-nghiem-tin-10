@@ -1845,6 +1845,210 @@ function PhepToanPython() {
   );
 }
 
+// ── Bài 18: input() luôn trả về xâu — kể cả khi gõ toàn chữ số ──────────────
+function InputLuonLaXau() {
+  return (
+    <Frame viewBox="0 0 640 300">
+      <rect x="15" y="15" width="300" height="270" rx="16" fill={C.white} stroke={C.grape} strokeWidth="2" />
+      <rect x="15" y="15" width="300" height="36" rx="16" fill={C.grape} fillOpacity="0.12" />
+      <Lines x={165} y={38} lines={["⌨️ input() luôn trả về xâu"]} size={12} fill={C.grapeDeep} weight={700} />
+
+      <rect x="35" y="65" width="90" height="46" rx="10" fill={C.white} stroke={C.inkSoft} strokeWidth="1.5" />
+      <Lines x={80} y={93} lines={["Gõ: 3"]} size={13} fill={C.ink} weight={700} />
+
+      <path d="M130,88 L165,88" stroke={C.grapeDeep} strokeWidth="2.5" markerEnd="url(#arrow)" />
+
+      <rect x="170" y="65" width="110" height="46" rx="10" fill={C.grape} fillOpacity="0.15" stroke={C.grape} strokeWidth="1.5" />
+      <text x="225" y="93" fontSize="12" fill={C.grapeDeep} fontFamily="monospace" fontWeight={700} textAnchor="middle">
+        input()
+      </text>
+
+      <path d="M225,116 L225,140" stroke={C.grapeDeep} strokeWidth="2.5" markerEnd="url(#arrow)" />
+
+      <rect x="155" y="145" width="140" height="46" rx="23" fill={C.bubble} fillOpacity="0.18" stroke={C.bubbleDeep} strokeWidth="2" />
+      <text x="225" y="174" fontSize="16" fill={C.bubbleDeep} fontFamily="monospace" fontWeight={700} textAnchor="middle">
+        &quot;3&quot;
+      </text>
+
+      <Lines x={165} y={215} lines={["Có dấu nháy bao quanh"]} size={10.5} fill={C.bubbleDeep} weight={700} />
+      <Lines x={165} y={231} lines={["→ đây là XÂU KÍ TỰ (str)"]} size={10.5} fill={C.bubbleDeep} weight={700} />
+      <Lines x={165} y={253} lines={["chứ không phải con số 3 thật sự!"]} size={10} fill={C.inkSoft} weight={500} />
+
+      <rect x="325" y="15" width="300" height="270" rx="16" fill={C.white} stroke={C.bubble} strokeWidth="2" />
+      <rect x="325" y="15" width="300" height="36" rx="16" fill={C.bubble} fillOpacity="0.12" />
+      <Lines x={475} y={38} lines={["❌ Xâu không nhân được với xâu"]} size={12} fill={C.bubbleDeep} weight={700} />
+
+      <rect x="340" y="80" width="100" height="42" rx="10" fill={C.bubble} fillOpacity="0.15" stroke={C.bubbleDeep} strokeWidth="1.5" />
+      <text x="390" y="106" fontSize="11.5" fill={C.bubbleDeep} fontFamily="monospace" fontWeight={700} textAnchor="middle">
+        &quot;15000&quot;
+      </text>
+      <Lines x={462} y={106} lines={["×"]} size={20} fill={C.ink} weight={700} />
+      <rect x="480" y="80" width="70" height="42" rx="10" fill={C.bubble} fillOpacity="0.15" stroke={C.bubbleDeep} strokeWidth="1.5" />
+      <text x="515" y="106" fontSize="11.5" fill={C.bubbleDeep} fontFamily="monospace" fontWeight={700} textAnchor="middle">
+        &quot;3&quot;
+      </text>
+
+      <path d="M475,130 L475,155" stroke={C.bubbleDeep} strokeWidth="2.5" markerEnd="url(#arrow-bubble)" />
+
+      <rect x="380" y="160" width="190" height="60" rx="10" fill="#FEE2E2" stroke="#DC2626" strokeWidth="1.8" />
+      <Lines x={475} y={182} lines={["🚫 TypeError"]} size={13} fill="#B91C1C" weight={700} />
+      <Lines x={475} y={202} lines={["không nhân được xâu với xâu"]} size={9.5} fill="#B91C1C" weight={600} />
+
+      <Lines x={475} y={245} lines={["Muốn tính toán, phải chuyển đổi xâu"]} size={10} fill={C.inkSoft} weight={500} />
+      <Lines x={475} y={261} lines={["sang số bằng int() hoặc float() trước"]} size={10} fill={C.inkSoft} weight={500} />
+    </Frame>
+  );
+}
+
+// ── Bài 18: Máy chuyển đổi kiểu dữ liệu int() / float() ─────────────────────
+function ChuyenDoiKieu() {
+  return (
+    <Frame viewBox="0 0 640 300">
+      <Lines x={320} y={30} lines={["🔧 \"Máy\" chuyển đổi kiểu dữ liệu"]} size={13} fill={C.grapeDeep} weight={700} />
+
+      {/* Hàng 1: int() thành công */}
+      <rect x="30" y="55" width="90" height="42" rx="21" fill={C.bubble} fillOpacity="0.15" stroke={C.bubbleDeep} strokeWidth="1.5" />
+      <text x="75" y="81" fontSize="14" fill={C.bubbleDeep} fontFamily="monospace" fontWeight={700} textAnchor="middle">&quot;3&quot;</text>
+      <Lines x={75} y={112} lines={["xâu (str)"]} size={9.5} fill={C.inkSoft} weight={500} />
+
+      <path d="M128,76 L182,76" stroke={C.grapeDeep} strokeWidth="2.5" markerEnd="url(#arrow)" />
+      <rect x="188" y="55" width="90" height="42" rx="10" fill={C.grape} fillOpacity="0.18" stroke={C.grape} strokeWidth="1.5" />
+      <text x="233" y="81" fontSize="12" fill={C.grapeDeep} fontFamily="monospace" fontWeight={700} textAnchor="middle">int()</text>
+
+      <path d="M286,76 L340,76" stroke={C.grapeDeep} strokeWidth="2.5" markerEnd="url(#arrow)" />
+      <rect x="346" y="55" width="80" height="42" rx="8" fill={C.mint} fillOpacity="0.2" stroke={C.mintDeep} strokeWidth="1.5" />
+      <text x="386" y="81" fontSize="16" fill={C.mintDeep} fontWeight={700} textAnchor="middle">3</text>
+      <Lines x={386} y={112} lines={["số nguyên (int)"]} size={9.5} fill={C.inkSoft} weight={500} />
+
+      <Lines x={540} y={82} lines={["Không dấu nháy —", "giờ tính toán được!"]} size={10} fill={C.mintDeep} weight={600} gap={14} anchor="start" />
+
+      {/* Hàng 2: float() thành công */}
+      <rect x="30" y="135" width="90" height="42" rx="21" fill={C.bubble} fillOpacity="0.15" stroke={C.bubbleDeep} strokeWidth="1.5" />
+      <text x="75" y="161" fontSize="13" fill={C.bubbleDeep} fontFamily="monospace" fontWeight={700} textAnchor="middle">&quot;3.5&quot;</text>
+
+      <path d="M128,156 L182,156" stroke={C.grapeDeep} strokeWidth="2.5" markerEnd="url(#arrow)" />
+      <rect x="188" y="135" width="90" height="42" rx="10" fill={C.grape} fillOpacity="0.18" stroke={C.grape} strokeWidth="1.5" />
+      <text x="233" y="161" fontSize="11.5" fill={C.grapeDeep} fontFamily="monospace" fontWeight={700} textAnchor="middle">float()</text>
+
+      <path d="M286,156 L340,156" stroke={C.grapeDeep} strokeWidth="2.5" markerEnd="url(#arrow)" />
+      <rect x="346" y="135" width="80" height="42" rx="8" fill={C.mint} fillOpacity="0.2" stroke={C.mintDeep} strokeWidth="1.5" />
+      <text x="386" y="161" fontSize="15" fill={C.mintDeep} fontWeight={700} textAnchor="middle">3.5</text>
+      <Lines x={540} y={162} lines={["Dùng khi cần phần", "thập phân"]} size={10} fill={C.mintDeep} weight={600} gap={14} anchor="start" />
+
+      {/* Hàng 3: int() thất bại */}
+      <rect x="30" y="215" width="90" height="42" rx="21" fill={C.bubble} fillOpacity="0.15" stroke={C.bubbleDeep} strokeWidth="1.5" />
+      <text x="75" y="241" fontSize="14" fill={C.bubbleDeep} fontFamily="monospace" fontWeight={700} textAnchor="middle">&quot;ba&quot;</text>
+
+      <path d="M128,236 L182,236" stroke="#B91C1C" strokeWidth="2.5" markerEnd="url(#arrow)" />
+      <rect x="188" y="215" width="90" height="42" rx="10" fill={C.grape} fillOpacity="0.18" stroke={C.grape} strokeWidth="1.5" />
+      <text x="233" y="241" fontSize="12" fill={C.grapeDeep} fontFamily="monospace" fontWeight={700} textAnchor="middle">int()</text>
+
+      <path d="M286,236 L340,236" stroke="#B91C1C" strokeWidth="2.5" markerEnd="url(#arrow)" />
+      <rect x="346" y="215" width="150" height="42" rx="8" fill="#FEE2E2" stroke="#DC2626" strokeWidth="1.6" />
+      <Lines x={421} y={241} lines={["🚫 ValueError"]} size={12} fill="#B91C1C" weight={700} />
+
+      <Lines x={320} y={280} lines={["\"ba\" không phải chữ số nên máy không đổi được sang số nguyên"]} size={10.5} fill={C.inkSoft} weight={500} />
+    </Frame>
+  );
+}
+
+// ── Bài 18: print() với nhiều giá trị — sep và end ──────────────────────────
+function PrintNangCao() {
+  const cases = [
+    {
+      title: "Mặc định (sep = dấu cách)",
+      code: 'print(ten, "mua", so_luong, "ly")',
+      out: "Hạ mua 3 ly",
+      x: 15,
+      color: C.grape,
+      deep: C.grapeDeep,
+    },
+    {
+      title: "sep = \", \"",
+      code: 'print(mon1, mon2, mon3, sep=", ")',
+      out: "Trà sữa, Trân châu, Thạch",
+      x: 225,
+      color: C.mint,
+      deep: C.mintDeep,
+    },
+    {
+      title: "end = \"\" (nối cùng dòng)",
+      code: 'print("Tổng: ", end="")\nprint(tong, "đồng")',
+      out: "Tổng: 45000 đồng",
+      x: 435,
+      color: C.bubble,
+      deep: C.bubbleDeep,
+    },
+  ];
+
+  return (
+    <Frame viewBox="0 0 640 260">
+      {cases.map((c, i) => (
+        <g key={i}>
+          <rect x={c.x} y="15" width="190" height="225" rx="14" fill={C.white} stroke={c.color} strokeWidth="2" />
+          <rect x={c.x} y="15" width="190" height="40" rx="14" fill={c.color} fillOpacity="0.12" />
+          <Lines x={c.x + 95} y={40} lines={[c.title]} size={10.5} fill={c.deep} weight={700} />
+
+          <rect x={c.x + 10} y="65" width="170" height="55" rx="6" fill={C.ink} />
+          <text x={c.x + 95} y="87" fontSize="8.5" fill="#8CF29B" fontFamily="monospace" textAnchor="middle">
+            <tspan x={c.x + 95} dy="0">{c.code.split("\n")[0]}</tspan>
+            {c.code.split("\n")[1] && <tspan x={c.x + 95} dy="14">{c.code.split("\n")[1]}</tspan>}
+          </text>
+
+          <path d={`M${c.x + 95},130 L${c.x + 95},150`} stroke={c.deep} strokeWidth="2" markerEnd="url(#arrow)" />
+
+          <Lines x={c.x + 95} y={168} lines={["Kết quả hiển thị"]} size={9.5} fill={c.deep} weight={700} />
+          <rect x={c.x + 10} y="178" width="170" height="45" rx="8" fill={c.color} fillOpacity="0.12" stroke={c.color} strokeWidth="1.3" />
+          <Lines x={c.x + 95} y={205} lines={[c.out]} size={10.5} fill={C.ink} weight={700} />
+        </g>
+      ))}
+    </Frame>
+  );
+}
+
+// ── Bài 18: Hoá đơn trà sữa — thành phẩm cuối cùng của cả bài ───────────────
+function HoaDonTraSua() {
+  const lines = [
+    "QUÁN TRÀ SỮA 10A2",
+    "------------------------",
+    "Khách: Hạ",
+    "Trà sữa   x 3 ly",
+    "Đơn giá: 15.000 đ",
+    "------------------------",
+    "TỔNG: 45.000 đồng",
+    "",
+    "Cảm ơn quý khách! 🧋",
+  ];
+
+  return (
+    <Frame viewBox="0 0 400 340">
+      {Array.from({ length: 10 }).map((_, i) => (
+        <circle key={`l${i}`} cx="18" cy={20 + i * 32} r="4" fill={C.line} />
+      ))}
+      {Array.from({ length: 10 }).map((_, i) => (
+        <circle key={`r${i}`} cx="382" cy={20 + i * 32} r="4" fill={C.line} />
+      ))}
+
+      <rect x="35" y="10" width="330" height="320" rx="4" fill={C.white} stroke={C.inkSoft} strokeWidth="1.5" strokeDasharray="6 4" />
+
+      {lines.map((l, i) => (
+        <text
+          key={i}
+          x="200"
+          y={55 + i * 28}
+          fontSize={i === 0 ? 15 : i === 6 ? 15 : 12.5}
+          fill={i === 0 || i === 6 ? C.grapeDeep : C.ink}
+          fontWeight={i === 0 || i === 6 ? 700 : 500}
+          fontFamily="monospace"
+          textAnchor="middle"
+        >
+          {l}
+        </text>
+      ))}
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
@@ -1878,6 +2082,10 @@ const DIAGRAMS: Record<string, () => JSX.Element> = {
   "bien-va-gan": BienVaGan,
   "quy-tac-dat-ten": QuyTacDatTen,
   "phep-toan-python": PhepToanPython,
+  "input-luon-la-xau": InputLuonLaXau,
+  "chuyen-doi-kieu": ChuyenDoiKieu,
+  "print-nang-cao": PrintNangCao,
+  "hoa-don-tra-sua": HoaDonTraSua,
 };
 
 export default function Diagram({ name }: { name: string }) {
