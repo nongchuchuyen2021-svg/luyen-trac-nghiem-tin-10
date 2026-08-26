@@ -3950,6 +3950,106 @@ function BaDieuRenLuyen() {
   );
 }
 
+// ── Bài 34: Quy trình phát triển phần mềm và vai trò từng vị trí ────────────
+function QuyTrinhVaVaiTroNhom() {
+  const cols = [
+    { icon: "🗣️", stage: "Xác định yêu cầu", role: "Chuyên viên phân tích nghiệp vụ" },
+    { icon: "📐", stage: "Thiết kế", role: "Kiến trúc sư / thiết kế hệ thống" },
+    { icon: "⌨️", stage: "Lập trình", role: "Lập trình viên (developer)" },
+    { icon: "🧪", stage: "Kiểm thử", role: "Kĩ sư kiểm thử (tester)" },
+    { icon: "🚀", stage: "Triển khai & bảo trì", role: "Kĩ sư vận hành" },
+  ];
+  return (
+    <Frame viewBox="0 0 640 260">
+      <Lines x={320} y={20} lines={["🏗️ Quy trình phát triển phần mềm — mỗi công đoạn một vai trò"]} size={11.5} fill={C.grapeDeep} weight={700} />
+
+      {cols.map((c, i) => {
+        const x = 10 + i * 124;
+        return (
+          <g key={i}>
+            <rect x={x} y="42" width="112" height="60" rx="10" fill={C.white} stroke={C.grape} strokeWidth="2" />
+            <text x={x + 56} y="66" fontSize="18" textAnchor="middle">{c.icon}</text>
+            <Lines x={x + 56} y={86} lines={c.stage.split(" ").length > 2 ? [c.stage.split(" ").slice(0, 2).join(" "), c.stage.split(" ").slice(2).join(" ")] : [c.stage]} size={8} fill={C.grapeDeep} weight={700} gap={10} />
+            <path d={`M${x + 56},102 L${x + 56},128`} stroke={C.line} strokeWidth="2" />
+            <rect x={x} y="128" width="112" height="72" rx="10" fill={C.mint} fillOpacity="0.12" stroke={C.mint} strokeWidth="1.5" />
+            <Lines x={x + 56} y={155} lines={c.role.split(" ").length > 2 ? [c.role.split(" ").slice(0, 2).join(" "), c.role.split(" ").slice(2, 4).join(" "), c.role.split(" ").slice(4).join(" ")].filter(Boolean) : [c.role]} size={7.6} fill={C.mintDeep} weight={600} gap={11} />
+            {i < 4 && <path d={`M${x + 112},72 L${x + 124},72`} stroke={C.grapeDeep} strokeWidth="2" markerEnd="url(#arrow)" />}
+          </g>
+        );
+      })}
+
+      <path d="M562,200 C580,225 300,235 314,200" stroke="#B91C1C" strokeWidth="2" strokeDasharray="5 4" fill="none" markerEnd="url(#arrow)" />
+      <Lines x={438} y={232} lines={["phát sinh lỗi mới sau khi dùng thật → quay lại sửa code"]} size={9} fill="#B91C1C" weight={700} />
+    </Frame>
+  );
+}
+
+// ── Bài 34: Từ Python lớp 10 đến nghề nghiệp — tư duy mới là thứ mang theo ──
+function TuPythonDenNgheNghiep() {
+  return (
+    <Frame viewBox="0 0 640 300">
+      <Lines x={320} y={22} lines={["🧭 Ngôn ngữ có thể đổi, tư duy lập trình thì mang theo suốt sự nghiệp"]} size={11} fill={C.grapeDeep} weight={700} />
+
+      <rect x="20" y="120" width="140" height="70" rx="12" fill={C.sun} fillOpacity="0.15" stroke={C.sunDeep} strokeWidth="2" />
+      <Lines x={90} y={148} lines={["🐍 Python"]} size={12} fill={C.sunDeep} weight={700} />
+      <Lines x={90} y={168} lines={["học ở lớp 10"]} size={9} fill={C.sunDeep} weight={600} />
+
+      <path d="M160,155 L215,155" stroke={C.grapeDeep} strokeWidth="2.5" markerEnd="url(#arrow)" />
+
+      <circle cx="320" cy="155" r="82" fill={C.white} stroke={C.grape} strokeWidth="2.5" />
+      <Lines x={320} y={135} lines={["🧠 Tư duy lập trình"]} size={11} fill={C.grapeDeep} weight={700} />
+      <Lines x={320} y={155} lines={["chia nhỏ bài toán,", "kiểm thử cẩn thận"]} size={8.5} fill={C.ink} weight={500} gap={14} />
+
+      <path d="M402,130 L462,80" stroke={C.mintDeep} strokeWidth="2" markerEnd="url(#arrow)" />
+      <path d="M402,155 L462,155" stroke={C.mintDeep} strokeWidth="2" markerEnd="url(#arrow)" />
+      <path d="M402,180 L462,230" stroke={C.mintDeep} strokeWidth="2" markerEnd="url(#arrow)" />
+
+      <rect x="465" y="50" width="150" height="55" rx="10" fill={C.mint} fillOpacity="0.12" stroke={C.mint} strokeWidth="1.5" />
+      <Lines x={540} y={82} lines={["☕ Java"]} size={11} fill={C.mintDeep} weight={700} />
+
+      <rect x="465" y="127" width="150" height="55" rx="10" fill={C.mint} fillOpacity="0.12" stroke={C.mint} strokeWidth="1.5" />
+      <Lines x={540} y={159} lines={["🟨 JavaScript"]} size={11} fill={C.mintDeep} weight={700} />
+
+      <rect x="465" y="204" width="150" height="55" rx="10" fill={C.mint} fillOpacity="0.12" stroke={C.mint} strokeWidth="1.5" />
+      <Lines x={540} y={236} lines={["...và nhiều ngôn", "ngữ khác nữa"]} size={9} fill={C.mintDeep} weight={600} gap={12} />
+
+      <Lines x={320} y={285} lines={["Ngôn ngữ nào rồi cũng học được, nếu tư duy giải quyết vấn đề đã vững"]} size={9.5} fill={C.inkSoft} weight={600} />
+    </Frame>
+  );
+}
+
+// ── Bài 34: Làm việc từ xa — không cần ở thành phố lớn ──────────────────────
+function LamViecTuXa() {
+  return (
+    <Frame viewBox="0 0 640 280">
+      <Lines x={320} y={20} lines={["🌐 Nghề phần mềm chỉ cần Internet, máy tính và cái đầu"]} size={11.5} fill={C.grapeDeep} weight={700} />
+
+      <rect x="20" y="45" width="200" height="110" rx="14" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <text x="120" y="85" fontSize="26" textAnchor="middle">🏔️💻</text>
+      <Lines x={120} y={108} lines={["Bắc Kạn"]} size={11} fill={C.mintDeep} weight={700} />
+      <Lines x={120} y={128} lines={["làm việc từ xa"]} size={9} fill={C.inkSoft} weight={600} />
+
+      <path d="M225,100 C280,60 360,60 415,100" stroke={C.grapeDeep} strokeWidth="2.5" fill="none" markerEnd="url(#arrow)" />
+      <path d="M415,110 C360,150 280,150 225,110" stroke={C.grapeDeep} strokeWidth="2.5" fill="none" markerEnd="url(#arrow)" />
+      <text x="320" y="70" fontSize="20" textAnchor="middle">☁️</text>
+      <Lines x={320} y={148} lines={["họp online mỗi sáng"]} size={8.5} fill={C.grapeDeep} weight={600} />
+
+      <rect x="420" y="45" width="200" height="110" rx="14" fill={C.white} stroke={C.bubble} strokeWidth="2" />
+      <text x="520" y="85" fontSize="26" textAnchor="middle">🏢🌏</text>
+      <Lines x={520} y={108} lines={["Công ty nước ngoài"]} size={10} fill={C.bubbleDeep} weight={700} />
+      <Lines x={520} y={128} lines={["ví dụ: Nhật Bản"]} size={9} fill={C.inkSoft} weight={600} />
+
+      <rect x="20" y="180" width="290" height="85" rx="10" fill={C.mint} fillOpacity="0.1" stroke={C.mint} strokeWidth="1.5" />
+      <Lines x={165} y={202} lines={["✅ Điều thật sự cần"]} size={10} fill={C.mintDeep} weight={700} />
+      <Lines x={165} y={222} lines={["Internet ổn định, máy tính,", "tư duy tốt, tiếng Anh đọc hiểu"]} size={8.5} fill={C.ink} weight={500} gap={16} />
+
+      <rect x="330" y="180" width="290" height="85" rx="10" fill="#FEF2F2" stroke="#DC2626" strokeWidth="1.5" />
+      <Lines x={475} y={202} lines={["❌ Điều KHÔNG bắt buộc"]} size={10} fill="#B91C1C" weight={700} />
+      <Lines x={475} y={222} lines={["Sống ở thành phố lớn,", "bằng cấp thạc sĩ trở lên"]} size={8.5} fill={C.ink} weight={500} gap={16} />
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
@@ -4036,6 +4136,9 @@ const DIAGRAMS: Record<string, () => JSX.Element> = {
   "mot-ngay-cua-nha-thiet-ke": MotNgayCuaNhaThietKe,
   "tu-kien-thuc-den-cong-cu": TuKienThucDenCongCu,
   "ba-dieu-ren-luyen": BaDieuRenLuyen,
+  "quy-trinh-va-vai-tro-nhom": QuyTrinhVaVaiTroNhom,
+  "tu-python-den-nghe-nghiep": TuPythonDenNgheNghiep,
+  "lam-viec-tu-xa": LamViecTuXa,
 };
 
 export default function Diagram({ name }: { name: string }) {
