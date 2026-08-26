@@ -2630,6 +2630,216 @@ function DuyetGiaTriVsChiSo() {
   );
 }
 
+// ── Bài 23: remove() tìm theo GIÁ TRỊ — del xoá theo VỊ TRÍ ─────────────────
+function RemoveVsDel() {
+  return (
+    <Frame viewBox="0 0 640 260">
+      <rect x="15" y="15" width="300" height="230" rx="16" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="15" y="15" width="300" height="34" rx="16" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={165} y={37} lines={["🔍 remove(\"Bóng đá\") — tìm theo GIÁ TRỊ"]} size={10} fill={C.mintDeep} weight={700} />
+
+      {["Lều", "Bóng đá", "Nước", "Bánh mì"].map((it, i) => (
+        <rect
+          key={i}
+          x={35 + i * 62}
+          y="65"
+          width="55"
+          height="50"
+          rx="8"
+          fill={it === "Bóng đá" ? C.bubble : C.mint}
+          fillOpacity={it === "Bóng đá" ? 0.25 : 0.12}
+          stroke={it === "Bóng đá" ? C.bubbleDeep : C.mintDeep}
+          strokeWidth={it === "Bóng đá" ? 2.2 : 1.3}
+        />
+      ))}
+      {["Lều", "Bóng đá", "Nước", "Bánh mì"].map((it, i) => (
+        <Lines key={`t${i}`} x={62 + i * 62} y={93} lines={[it]} size={9} fill={it === "Bóng đá" ? C.bubbleDeep : C.mintDeep} weight={700} />
+      ))}
+      <Lines x={92} y={58} lines={["🔎 đi tìm..."]} size={9} fill={C.bubbleDeep} weight={700} />
+
+      <path d="M165,120 L165,145" stroke={C.mintDeep} strokeWidth="2" markerEnd="url(#arrow)" />
+      <rect x="45" y="150" width="240" height="42" rx="8" fill={C.mint} fillOpacity="0.15" stroke={C.mintDeep} strokeWidth="1.5" />
+      <Lines x={165} y={175} lines={["Xoá đúng ô chứa \"Bóng đá\", dù nó ở đâu"]} size={9.5} fill={C.mintDeep} weight={700} />
+
+      <rect x="30" y="200" width="270" height="40" rx="8" fill={C.line} fillOpacity="0.3" />
+      <Lines x={165} y={218} lines={["Không cần biết vị trí — chỉ cần biết"]} size={9} fill={C.ink} weight={600} />
+      <Lines x={165} y={232} lines={["TÊN món đồ muốn bỏ"]} size={9} fill={C.ink} weight={600} />
+
+      <rect x="325" y="15" width="300" height="230" rx="16" fill={C.white} stroke={C.bubble} strokeWidth="2" />
+      <rect x="325" y="15" width="300" height="34" rx="16" fill={C.bubble} fillOpacity="0.12" />
+      <Lines x={475} y={37} lines={["👉 del do[1] — xoá theo VỊ TRÍ"]} size={10.5} fill={C.bubbleDeep} weight={700} />
+
+      {["Lều", "Bóng đá", "Nước", "Bánh mì"].map((it, i) => (
+        <rect
+          key={i}
+          x={345 + i * 62}
+          y="65"
+          width="55"
+          height="50"
+          rx="8"
+          fill={i === 1 ? C.bubble : C.mint}
+          fillOpacity={i === 1 ? 0.25 : 0.12}
+          stroke={i === 1 ? C.bubbleDeep : C.mintDeep}
+          strokeWidth={i === 1 ? 2.2 : 1.3}
+        />
+      ))}
+      {["Lều", "Bóng đá", "Nước", "Bánh mì"].map((it, i) => (
+        <Lines key={`t${i}`} x={372 + i * 62} y={93} lines={[it]} size={9} fill={i === 1 ? C.bubbleDeep : C.mintDeep} weight={700} />
+      ))}
+      <path d="M402,55 L402,63" stroke={C.bubbleDeep} strokeWidth="2" markerEnd="url(#arrow)" />
+      <Lines x={402} y={49} lines={["👉 chỉ số 1"]} size={9} fill={C.bubbleDeep} weight={700} />
+
+      <path d="M475,120 L475,145" stroke={C.bubbleDeep} strokeWidth="2" markerEnd="url(#arrow)" />
+      <rect x="355" y="150" width="240" height="42" rx="8" fill={C.bubble} fillOpacity="0.15" stroke={C.bubbleDeep} strokeWidth="1.5" />
+      <Lines x={475} y={175} lines={["Xoá bất kì thứ gì đang ở chỉ số 1"]} size={9.5} fill={C.bubbleDeep} weight={700} />
+
+      <rect x="340" y="200" width="270" height="40" rx="8" fill={C.line} fillOpacity="0.3" />
+      <Lines x={475} y={218} lines={["Không quan tâm giá trị — chỉ cần biết"]} size={9} fill={C.ink} weight={600} />
+      <Lines x={475} y={232} lines={["VỊ TRÍ cần bỏ"]} size={9} fill={C.ink} weight={600} />
+    </Frame>
+  );
+}
+
+// ── Bài 23: sort() sắp xếp TẠI CHỖ — và cái bẫy a = a.sort() ────────────────
+function SortTaiChoVaBay() {
+  return (
+    <Frame viewBox="0 0 640 260">
+      <rect x="15" y="15" width="300" height="230" rx="16" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="15" y="15" width="300" height="34" rx="16" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={165} y={37} lines={["✅ do.sort() — sắp xếp TẠI CHỖ"]} size={11} fill={C.mintDeep} weight={700} />
+
+      {[3, 1, 2].map((n, i) => (
+        <g key={i}>
+          <rect x={50 + i * 70} y="60" width="55" height="40" rx="8" fill={C.mint} fillOpacity="0.18" stroke={C.mintDeep} strokeWidth="1.5" />
+          <Lines x={77 + i * 70} y={84} lines={[String(n)]} size={14} fill={C.mintDeep} weight={700} />
+        </g>
+      ))}
+      <path d="M165,108 L165,128" stroke={C.mintDeep} strokeWidth="2" markerEnd="url(#arrow)" />
+      {[1, 2, 3].map((n, i) => (
+        <g key={i}>
+          <rect x={50 + i * 70} y="133" width="55" height="40" rx="8" fill={C.mint} fillOpacity="0.3" stroke={C.mintDeep} strokeWidth="1.8" />
+          <Lines x={77 + i * 70} y={157} lines={[String(n)]} size={14} fill={C.mintDeep} weight={700} />
+        </g>
+      ))}
+
+      <rect x="30" y="185" width="270" height="50" rx="8" fill={C.line} fillOpacity="0.3" />
+      <Lines x={165} y={205} lines={["Danh sách GỐC bị sắp xếp lại luôn,"]} size={9.5} fill={C.ink} weight={600} />
+      <Lines x={165} y={221} lines={["không tạo danh sách mới"]} size={9.5} fill={C.ink} weight={600} />
+
+      <rect x="325" y="15" width="300" height="230" rx="16" fill={C.white} stroke="#DC2626" strokeWidth="2" />
+      <rect x="325" y="15" width="300" height="34" rx="16" fill="#FEE2E2" />
+      <Lines x={475} y={37} lines={["❌ Bẫy: do = do.sort()"]} size={11} fill="#B91C1C" weight={700} />
+
+      <rect x="355" y="60" width="240" height="34" rx="6" fill={C.ink} />
+      <text x="475" y="82" fontSize="10.5" fill="#8CF29B" fontFamily="monospace" textAnchor="middle">
+        do = do.sort()
+      </text>
+
+      <path d="M475,98 L475,118" stroke="#B91C1C" strokeWidth="2" markerEnd="url(#arrow)" />
+      <rect x="420" y="123" width="110" height="40" rx="8" fill="#FEE2E2" stroke="#DC2626" strokeWidth="1.8" />
+      <Lines x={475} y={148} lines={["None"]} size={16} fill="#B91C1C" weight={700} />
+
+      <rect x="340" y="180" width="270" height="55" rx="8" fill="#FEE2E2" fillOpacity="0.6" />
+      <Lines x={475} y={200} lines={["sort() không TRẢ VỀ danh sách mới"]} size={9.5} fill="#B91C1C" weight={700} />
+      <Lines x={475} y={216} lines={["mà trả về None — gán lại sẽ xoá sạch dữ liệu!"]} size={9} fill="#B91C1C" weight={600} />
+    </Frame>
+  );
+}
+
+// ── Bài 23: append() thêm nguyên 1 phần tử — extend() nối rời từng phần tử ──
+function AppendVsExtend() {
+  return (
+    <Frame viewBox="0 0 640 260">
+      <rect x="15" y="15" width="300" height="230" rx="16" fill={C.white} stroke={C.bubble} strokeWidth="2" />
+      <rect x="15" y="15" width="300" height="34" rx="16" fill={C.bubble} fillOpacity="0.12" />
+      <Lines x={165} y={37} lines={["📦 append([\"Đèn pin\", \"Diêm\"])"]} size={10.5} fill={C.bubbleDeep} weight={700} />
+
+      {["Lều", "Nước"].map((it, i) => (
+        <rect key={i} x={40 + i * 65} y="60" width="55" height="40" rx="8" fill={C.mint} fillOpacity="0.15" stroke={C.mintDeep} strokeWidth="1.3" />
+      ))}
+      {["Lều", "Nước"].map((it, i) => (
+        <Lines key={`t${i}`} x={67 + i * 65} y={84} lines={[it]} size={9.5} fill={C.mintDeep} weight={700} />
+      ))}
+      <rect x="175" y="60" width="110" height="40" rx="8" fill={C.bubble} fillOpacity="0.3" stroke={C.bubbleDeep} strokeWidth="2" strokeDasharray="4 3" />
+      <Lines x={230} y={78} lines={["[\"Đèn pin\","]} size={8.5} fill={C.bubbleDeep} weight={700} />
+      <Lines x={230} y={92} lines={["\"Diêm\"]"]} size={8.5} fill={C.bubbleDeep} weight={700} />
+
+      <rect x="30" y="115" width="255" height="50" rx="8" fill={C.bubble} fillOpacity="0.1" stroke={C.bubbleDeep} strokeWidth="1.3" />
+      <Lines x={157} y={135} lines={["Cả danh sách con [\"Đèn pin\", \"Diêm\"]"]} size={9.5} fill={C.bubbleDeep} weight={700} />
+      <Lines x={157} y={152} lines={["trở thành MỘT phần tử duy nhất, lồng bên trong!"]} size={9} fill={C.bubbleDeep} weight={600} />
+
+      <rect x="30" y="175" width="255" height="55" rx="8" fill={C.line} fillOpacity="0.3" />
+      <Lines x={157} y={196} lines={["❗ Danh sách giờ có 3 phần tử:"]} size={9.5} fill={C.ink} weight={700} />
+      <Lines x={157} y={212} lines={["\"Lều\", \"Nước\", [\"Đèn pin\", \"Diêm\"]"]} size={9} fill={C.ink} weight={600} />
+
+      <rect x="325" y="15" width="300" height="230" rx="16" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="325" y="15" width="300" height="34" rx="16" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={475} y={37} lines={["🧩 extend([\"Đèn pin\", \"Diêm\"])"]} size={10.5} fill={C.mintDeep} weight={700} />
+
+      {["Lều", "Nước", "Đèn pin", "Diêm"].map((it, i) => (
+        <rect
+          key={i}
+          x={345 + i * 62}
+          y="60"
+          width="55"
+          height="40"
+          rx="8"
+          fill={i < 2 ? C.mint : C.mint}
+          fillOpacity={i < 2 ? 0.15 : 0.3}
+          stroke={C.mintDeep}
+          strokeWidth={i < 2 ? 1.3 : 1.8}
+        />
+      ))}
+      {["Lều", "Nước", "Đèn pin", "Diêm"].map((it, i) => (
+        <Lines key={`t${i}`} x={372 + i * 62} y={82} lines={[it]} size={8.5} fill={C.mintDeep} weight={700} />
+      ))}
+
+      <rect x="340" y="115" width="255" height="50" rx="8" fill={C.mint} fillOpacity="0.1" stroke={C.mintDeep} strokeWidth="1.3" />
+      <Lines x={467} y={135} lines={["Từng phần tử của danh sách con được"]} size={9.5} fill={C.mintDeep} weight={700} />
+      <Lines x={467} y={152} lines={["tách rời và nối thẳng vào cuối"]} size={9} fill={C.mintDeep} weight={600} />
+
+      <rect x="340" y="175" width="255" height="55" rx="8" fill={C.line} fillOpacity="0.3" />
+      <Lines x={467} y={196} lines={["✅ Danh sách giờ có 4 phần tử:"]} size={9.5} fill={C.ink} weight={700} />
+      <Lines x={467} y={212} lines={["\"Lều\", \"Nước\", \"Đèn pin\", \"Diêm\""]} size={9} fill={C.ink} weight={600} />
+    </Frame>
+  );
+}
+
+// ── Bài 23: Tìm vị trí max TRƯỚC khi sort — sort xong chỉ số đổi ý nghĩa ────
+function ThuTuTruocSauSort() {
+  return (
+    <Frame viewBox="0 0 640 260">
+      <Lines x={320} y={26} lines={["a = [7, 2, 9, 4] — tìm chỉ số của phần tử lớn nhất"]} size={11.5} fill={C.grapeDeep} weight={700} />
+
+      <rect x="15" y="45" width="300" height="180" rx="16" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <Lines x={165} y={68} lines={["1️⃣ Tìm chỉ số TRƯỚC khi sort"]} size={10.5} fill={C.mintDeep} weight={700} />
+      {[7, 2, 9, 4].map((n, i) => (
+        <g key={i}>
+          <rect x={45 + i * 55} y="80" width="45" height="42" rx="8" fill={n === 9 ? C.mint : C.mint} fillOpacity={n === 9 ? 0.35 : 0.12} stroke={C.mintDeep} strokeWidth={n === 9 ? 2 : 1.2} />
+          <Lines x={67 + i * 55} y={105} lines={[String(n)]} size={13} fill={C.mintDeep} weight={700} />
+          <Lines x={67 + i * 55} y={135} lines={[`[${i}]`]} size={9} fill={C.inkSoft} weight={600} />
+        </g>
+      ))}
+      <rect x="35" y="150" width="245" height="60" rx="8" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={157} y={170} lines={["a.index(max(a)) → 2"]} size={10.5} fill={C.mintDeep} weight={700} />
+      <Lines x={157} y={190} lines={["✅ Đúng: giá trị lớn nhất (9) ở chỉ số 2"]} size={9.5} fill={C.mintDeep} weight={600} />
+
+      <rect x="325" y="45" width="300" height="180" rx="16" fill={C.white} stroke="#DC2626" strokeWidth="2" />
+      <Lines x={475} y={68} lines={["2️⃣ Nếu tìm SAU khi đã sort()"]} size={10.5} fill="#B91C1C" weight={700} />
+      {[2, 4, 7, 9].map((n, i) => (
+        <g key={i}>
+          <rect x={355 + i * 55} y="80" width="45" height="42" rx="8" fill={i === 2 ? "#FEE2E2" : C.line} fillOpacity={i === 2 ? 1 : 0.4} stroke={i === 2 ? "#DC2626" : C.inkSoft} strokeWidth={i === 2 ? 2 : 1.2} />
+          <Lines x={377 + i * 55} y={105} lines={[String(n)]} size={13} fill={i === 2 ? "#B91C1C" : C.ink} weight={700} />
+          <Lines x={377 + i * 55} y={135} lines={[`[${i}]`]} size={9} fill={C.inkSoft} weight={600} />
+        </g>
+      ))}
+      <rect x="345" y="150" width="245" height="60" rx="8" fill="#FEE2E2" />
+      <Lines x={467} y={170} lines={["a.index(max(a)) → 3, không phải 2!"]} size={10} fill="#B91C1C" weight={700} />
+      <Lines x={467} y={190} lines={["❌ Vị trí đã đổi vì sort xếp lại cả dãy"]} size={9.5} fill="#B91C1C" weight={600} />
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
@@ -2681,6 +2891,10 @@ const DIAGRAMS: Record<string, () => JSX.Element> = {
   "day-hop-danh-so": DayHopDanhSo,
   "gan-lai-va-append": GanLaiVaAppend,
   "duyet-gia-tri-vs-chi-so": DuyetGiaTriVsChiSo,
+  "remove-vs-del": RemoveVsDel,
+  "sort-tai-cho-va-bay": SortTaiChoVaBay,
+  "append-vs-extend": AppendVsExtend,
+  "thu-tu-truoc-sau-sort": ThuTuTruocSauSort,
 };
 
 export default function Diagram({ name }: { name: string }) {
