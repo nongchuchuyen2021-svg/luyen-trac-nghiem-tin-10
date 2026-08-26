@@ -1436,6 +1436,173 @@ function TextOnPathDiagram() {
   );
 }
 
+// ── Bài 15: Ba phép ghép hình Union / Difference / Intersection ─────────────
+function PhepGhepHinh() {
+  const ops = [
+    { name: "Union (Hợp)", key: "Ctrl++", color: C.mint, deep: C.mintDeep, x: 20, ex: "Ghép nhiều hình tròn thành đám mây" },
+    { name: "Difference (Hiệu)", key: "Ctrl+-", color: C.bubble, deep: C.bubbleDeep, x: 225, ex: "Khoét vết cắn tạo logo quả táo" },
+    { name: "Intersection (Giao)", key: "Ctrl+*", color: C.grape, deep: C.grapeDeep, x: 430, ex: "Cắt ảnh vuông gọn theo khung tròn" },
+  ];
+
+  return (
+    <Frame viewBox="0 0 640 300">
+      {ops.map((o, i) => (
+        <g key={i}>
+          <rect x={o.x} y="15" width="190" height="255" rx="14" fill={C.white} stroke={o.color} strokeWidth="2" />
+          <rect x={o.x} y="15" width="190" height="38" rx="14" fill={o.color} fillOpacity="0.12" />
+          <Lines x={o.x + 95} y={34} lines={[o.name]} size={11.5} fill={o.deep} weight={700} />
+          <Lines x={o.x + 95} y={49} lines={[`Menu Path — ${o.key}`]} size={9} fill={C.inkSoft} weight={500} />
+
+          <Lines x={o.x + 45} y={78} lines={["Trước"]} size={9.5} fill={C.inkSoft} weight={600} />
+          {i === 0 && (
+            <>
+              <circle cx={o.x + 32} cy="100" r="16" fill="none" stroke={o.color} strokeWidth="1.5" />
+              <circle cx={o.x + 58} cy="100" r="16" fill="none" stroke={o.color} strokeWidth="1.5" />
+            </>
+          )}
+          {i === 1 && (
+            <>
+              <circle cx={o.x + 40} cy="100" r="18" fill="none" stroke={o.color} strokeWidth="1.5" />
+              <circle cx={o.x + 62} cy="100" r="12" fill="none" stroke={o.color} strokeWidth="1.5" />
+            </>
+          )}
+          {i === 2 && (
+            <>
+              <circle cx={o.x + 32} cy="100" r="16" fill="none" stroke={o.color} strokeWidth="1.5" strokeDasharray="2 2" />
+              <circle cx={o.x + 58} cy="100" r="16" fill="none" stroke={o.color} strokeWidth="1.5" strokeDasharray="2 2" />
+            </>
+          )}
+
+          <path d={`M${o.x + 95},100 L${o.x + 115},100`} stroke={o.deep} strokeWidth="2" markerEnd="url(#arrow)" />
+
+          <Lines x={o.x + 145} y={78} lines={["Sau"]} size={9.5} fill={o.deep} weight={700} />
+          {i === 0 && (
+            <>
+              <circle cx={o.x + 132} cy="100" r="16" fill={o.color} fillOpacity="0.65" />
+              <circle cx={o.x + 158} cy="100" r="16" fill={o.color} fillOpacity="0.65" />
+            </>
+          )}
+          {i === 1 && (
+            <>
+              <circle cx={o.x + 140} cy="100" r="18" fill={o.color} fillOpacity="0.65" />
+              <circle cx={o.x + 162} cy="100" r="12" fill={C.white} />
+            </>
+          )}
+          {i === 2 && (
+            <ellipse cx={o.x + 145} cy="100" rx="10" ry="15" fill={o.color} fillOpacity="0.7" transform={`rotate(20 ${o.x + 145} 100)`} />
+          )}
+
+          <Lines
+            x={o.x + 14}
+            y={150}
+            lines={
+              i === 0
+                ? ["Gộp tất cả phần của các hình", "đã chọn thành một khối duy nhất"]
+                : i === 1
+                ? ["Hình dưới bị hình trên 'đục'", "mất đúng phần chồng lấn"]
+                : ["Chỉ giữ lại đúng phần", "chồng lấn chung của cả hai"]
+            }
+            size={10}
+            fill={C.inkSoft}
+            weight={500}
+            anchor="start"
+            gap={15}
+          />
+
+          <rect x={o.x + 10} y="200" width="170" height="55" rx="8" fill={C.line} fillOpacity="0.3" />
+          <Lines x={o.x + 20} y={219} lines={["💡 Ví dụ:"]} size={9.5} fill={o.deep} weight={700} anchor="start" />
+          <Lines x={o.x + 20} y={236} lines={[o.ex]} size={9.5} fill={C.ink} weight={500} anchor="start" gap={13} />
+        </g>
+      ))}
+      <Lines
+        x={320}
+        y={288}
+        lines={["Lưu ý: các phép ghép hình 'tiêu hao' hình gốc — nhân đôi (Ctrl+D) trước nếu muốn giữ lại"]}
+        size={10}
+        fill={C.inkSoft}
+        weight={500}
+      />
+    </Frame>
+  );
+}
+
+// ── Bài 15: Giữ tệp SVG gốc — xuất PNG theo đúng mục đích ────────────────────
+function XuatBanVe() {
+  return (
+    <Frame viewBox="0 0 640 300">
+      <rect x="15" y="15" width="270" height="255" rx="16" fill={C.white} stroke={C.grape} strokeWidth="2" />
+      <rect x="15" y="15" width="270" height="38" rx="16" fill={C.grape} fillOpacity="0.12" />
+      <Lines x={150} y={39} lines={["📁 Tệp gốc .svg"]} size={12.5} fill={C.grapeDeep} weight={700} />
+
+      <rect x="90" y="80" width="120" height="90" rx="10" fill={C.grape} fillOpacity="0.15" stroke={C.grape} strokeWidth="1.5" strokeDasharray="4 3" />
+      {[[90, 80], [210, 80], [210, 170], [90, 170]].map(([px, py], i) => (
+        <rect key={i} x={px - 5} y={py - 5} width="10" height="10" fill={C.grape} stroke={C.grapeDeep} strokeWidth="1.5" />
+      ))}
+      <circle cx="150" cy="125" r="22" fill={C.bubble} fillOpacity="0.6" stroke={C.bubbleDeep} strokeWidth="1.5" />
+
+      <Lines x={150} y={195} lines={["Từng đối tượng vẫn tách rời"]} size={10} fill={C.inkSoft} weight={600} />
+      <Lines x={150} y={211} lines={["— sửa lại chữ, màu, hình bất cứ lúc nào"]} size={10} fill={C.inkSoft} weight={500} />
+      <Lines x={150} y={240} lines={["✅ Luôn giữ lại tệp này để chỉnh sửa về sau"]} size={10.5} fill={C.grapeDeep} weight={700} />
+
+      <rect x="300" y="15" width="325" height="120" rx="14" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="300" y="15" width="325" height="32" rx="14" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={462} y={36} lines={["🌐 Xuất PNG nhỏ — đăng mạng xã hội"]} size={11} fill={C.mintDeep} weight={700} />
+      {Array.from({ length: 6 }).map((_, i) => (
+        <rect key={i} x={330 + i * 12} y="70" width="10" height="10" fill={C.mint} fillOpacity="0.7" />
+      ))}
+      <Lines x={462} y={110} lines={["Độ phân giải thấp, kích thước tệp nhẹ — vừa đủ hiển thị màn hình"]} size={9.5} fill={C.inkSoft} weight={500} />
+
+      <rect x="300" y="150" width="325" height="120" rx="14" fill={C.white} stroke={C.bubble} strokeWidth="2" />
+      <rect x="300" y="150" width="325" height="32" rx="14" fill={C.bubble} fillOpacity="0.12" />
+      <Lines x={462} y={171} lines={["🖨️ Xuất PNG lớn — gửi xưởng in"]} size={11} fill={C.bubbleDeep} weight={700} />
+      {Array.from({ length: 14 }).map((_, i) => (
+        <rect key={i} x={318 + i * 6} y="205" width="5" height="5" fill={C.bubble} fillOpacity="0.7" />
+      ))}
+      <Lines x={462} y={245} lines={["Độ phân giải (DPI) cao, tệp nặng hơn — cần thiết khi in khổ lớn"]} size={9.5} fill={C.inkSoft} weight={500} />
+
+      <Lines
+        x={320}
+        y={288}
+        lines={["PNG là ảnh đã 'phẳng' thành điểm ảnh — muốn sửa lại phải quay về tệp SVG nguồn"]}
+        size={10}
+        fill={C.inkSoft}
+        weight={500}
+      />
+    </Frame>
+  );
+}
+
+// ── Bài 15: Gradient tuyến tính (Linear) và toả tròn (Radial) ────────────────
+function GradientChuyenSac() {
+  return (
+    <Frame viewBox="0 0 640 260">
+      <defs>
+        <linearGradient id="g15-linear" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor={C.grape} />
+          <stop offset="100%" stopColor={C.bubble} />
+        </linearGradient>
+        <radialGradient id="g15-radial" cx="40%" cy="35%" r="65%">
+          <stop offset="0%" stopColor="#FFF3C4" />
+          <stop offset="55%" stopColor={C.sun} />
+          <stop offset="100%" stopColor={C.sunDeep} />
+        </radialGradient>
+      </defs>
+
+      <rect x="15" y="15" width="300" height="230" rx="16" fill={C.white} stroke={C.grape} strokeWidth="2" />
+      <rect x="15" y="15" width="300" height="36" rx="16" fill={C.grape} fillOpacity="0.12" />
+      <Lines x={165} y={38} lines={["📏 Gradient tuyến tính (Linear)"]} size={12} fill={C.grapeDeep} weight={700} />
+      <rect x="65" y="70" width="200" height="110" rx="12" fill="url(#g15-linear)" />
+      <Lines x={165} y={210} lines={["Màu chuyển dần theo một đường thẳng — hợp làm nền trời, banner"]} size={10} fill={C.inkSoft} weight={500} />
+
+      <rect x="325" y="15" width="300" height="230" rx="16" fill={C.white} stroke={C.sun} strokeWidth="2" />
+      <rect x="325" y="15" width="300" height="36" rx="16" fill={C.sun} fillOpacity="0.15" />
+      <Lines x={475} y={38} lines={["☀️ Gradient toả tròn (Radial)"]} size={12} fill={C.sunDeep} weight={700} />
+      <circle cx="475" cy="128" r="58" fill="url(#g15-radial)" />
+      <Lines x={475} y={210} lines={["Màu toả từ tâm ra ngoài — hợp làm mặt trời, ánh sáng, khối cầu"]} size={10} fill={C.inkSoft} weight={500} />
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
@@ -1460,6 +1627,9 @@ const DIAGRAMS: Record<string, () => JSX.Element> = {
   "duong-va-diem-neo": DuongVaDiemNeo,
   "cong-cu-node": CongCuNode,
   "text-on-path": TextOnPathDiagram,
+  "phep-ghep-hinh": PhepGhepHinh,
+  "xuat-ban-ve": XuatBanVe,
+  "gradient-chuyen-sac": GradientChuyenSac,
 };
 
 export default function Diagram({ name }: { name: string }) {
