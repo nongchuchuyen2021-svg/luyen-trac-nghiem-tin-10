@@ -922,6 +922,259 @@ function BanQuyenVsGiayPhep() {
   );
 }
 
+// ── Bài 12: Bitmap phóng to vỡ hạt vs Vector phóng to vẫn mượt ───────────────
+function BitmapVsVector() {
+  // Lưới 8x8 xấp xỉ hình tròn — "1" là ô được tô màu.
+  const pattern = [
+    "00111100",
+    "01111110",
+    "11111111",
+    "11111111",
+    "11111111",
+    "11111111",
+    "01111110",
+    "00111100",
+  ];
+
+  function grid(cx: number, cy: number, cell: number, color: string) {
+    const half = (pattern.length * cell) / 2;
+    const originX = cx - half;
+    const originY = cy - half;
+    const cells: JSX.Element[] = [];
+    pattern.forEach((row, ry) => {
+      row.split("").forEach((v, rx) => {
+        if (v === "1") {
+          cells.push(
+            <rect
+              key={`${ry}-${rx}`}
+              x={originX + rx * cell}
+              y={originY + ry * cell}
+              width={cell}
+              height={cell}
+              fill={color}
+              stroke={C.white}
+              strokeWidth={cell > 15 ? 1.5 : 0.6}
+            />
+          );
+        }
+      });
+    });
+    return cells;
+  }
+
+  function anchors(cx: number, cy: number, r: number, color: string) {
+    const pts: [number, number][] = [
+      [cx, cy - r],
+      [cx + r, cy],
+      [cx, cy + r],
+      [cx - r, cy],
+    ];
+    return pts.map(([ax, ay], i) => (
+      <circle key={i} cx={ax} cy={ay} r={r > 40 ? 5 : 3.5} fill={C.white} stroke={color} strokeWidth="2" />
+    ));
+  }
+
+  return (
+    <Frame viewBox="0 0 640 420">
+      {/* Panel Bitmap */}
+      <rect x="15" y="15" width="300" height="365" rx="16" fill={C.white} stroke={C.bubble} strokeWidth="2" />
+      <rect x="15" y="15" width="300" height="40" rx="16" fill={C.bubble} fillOpacity="0.12" />
+      <Lines x={165} y={40} lines={["🖼️ BITMAP — lưới điểm ảnh"]} size={12.5} fill={C.bubbleDeep} weight={700} />
+
+      <Lines x={165} y={78} lines={["Kích thước gốc (100%)"]} size={11} fill={C.inkSoft} weight={600} />
+      {grid(165, 126, 9, C.bubble)}
+
+      <path d="M165,178 L165,208" stroke={C.inkSoft} strokeWidth="2" markerEnd="url(#arrow-soft)" />
+      <Lines x={200} y={197} lines={["phóng to 400%"]} size={10} fill={C.inkSoft} weight={500} anchor="start" />
+
+      <Lines x={165} y={230} lines={["→ Vỡ hạt, răng cưa!"]} size={11.5} fill={C.bubbleDeep} weight={700} />
+      {grid(165, 314, 19, C.bubble)}
+
+      {/* Panel Vector */}
+      <rect x="325" y="15" width="300" height="365" rx="16" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="325" y="15" width="300" height="40" rx="16" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={475} y={40} lines={["📐 VECTOR — công thức toán học"]} size={12.5} fill={C.mintDeep} weight={700} />
+
+      <Lines x={475} y={78} lines={["Kích thước gốc (100%)"]} size={11} fill={C.inkSoft} weight={600} />
+      <circle cx="475" cy="126" r="28" fill={C.mint} fillOpacity="0.85" />
+      {anchors(475, 126, 28, C.mintDeep)}
+
+      <path d="M475,178 L475,208" stroke={C.inkSoft} strokeWidth="2" markerEnd="url(#arrow-soft)" />
+      <Lines x={510} y={197} lines={["phóng to 400%"]} size={10} fill={C.inkSoft} weight={500} anchor="start" />
+
+      <Lines x={475} y={230} lines={["→ Vẫn mượt, sắc nét!"]} size={11.5} fill={C.mintDeep} weight={700} />
+      <circle cx="475" cy="314" r="76" fill={C.mint} fillOpacity="0.85" />
+      {anchors(475, 314, 76, C.mintDeep)}
+
+      <Lines
+        x={320}
+        y={402}
+        lines={["Bitmap lưu sẵn màu từng ô điểm ảnh — Vector lưu công thức, máy vẽ lại được ở bất kì tỉ lệ nào"]}
+        size={11}
+        fill={C.inkSoft}
+        weight={500}
+      />
+    </Frame>
+  );
+}
+
+// ── Bài 12: So sánh GIMP (bitmap) và Inkscape (vector) ───────────────────────
+function GimpVsInkscape() {
+  const apps = [
+    {
+      name: "GIMP",
+      full: "GNU Image Manipulation Program",
+      icon: "🖼️",
+      color: C.bubble,
+      deep: C.bubbleDeep,
+      x: 20,
+      tag: "Trình chỉnh sửa ẢNH BITMAP",
+      desc: ["Cắt ghép, xoá phông, chỉnh màu,", "phục chế ảnh cũ, ghép nhiều lớp ảnh."],
+      like: "Giống Adobe Photoshop",
+      use: "Dùng khi: xử lí ảnh chụp, ảnh kỉ yếu",
+    },
+    {
+      name: "Inkscape",
+      full: "Trình vẽ đồ hoạ vector nguồn mở",
+      icon: "🖌️",
+      color: C.mint,
+      deep: C.mintDeep,
+      x: 330,
+      tag: "Trình vẽ đồ hoạ VECTOR",
+      desc: ["Vẽ logo, biểu tượng, sơ đồ, chữ", "nghệ thuật bằng đường nét hình học."],
+      like: "Giống Adobe Illustrator, CorelDRAW",
+      use: "Dùng khi: thiết kế logo, poster, banner",
+    },
+  ];
+
+  return (
+    <Frame viewBox="0 0 640 300">
+      {apps.map((a, i) => (
+        <g key={i}>
+          <rect x={a.x} y="15" width="290" height="255" rx="14" fill={C.white} stroke={a.color} strokeWidth="2" />
+          <rect x={a.x} y="15" width="290" height="46" rx="14" fill={a.color} fillOpacity="0.12" />
+          <Lines x={a.x + 30} y={44} lines={[a.icon]} size={22} />
+          <Lines x={a.x + 60} y={38} lines={[a.name]} size={14} fill={a.deep} weight={700} anchor="start" />
+          <Lines x={a.x + 60} y={54} lines={[a.full]} size={9.5} fill={C.inkSoft} weight={500} anchor="start" />
+
+          <rect x={a.x + 14} y="74" width="262" height="24" rx="7" fill={a.color} fillOpacity="0.1" />
+          <Lines x={a.x + 145} y={90} lines={[a.tag]} size={11} fill={a.deep} weight={700} />
+
+          <Lines
+            x={a.x + 20}
+            y={122}
+            lines={a.desc}
+            size={11}
+            fill={C.inkSoft}
+            weight={400}
+            anchor="start"
+            gap={16}
+          />
+
+          <rect x={a.x + 14} y="170" width="262" height="42" rx="8" fill={C.line} fillOpacity="0.3" />
+          <Lines x={a.x + 26} y={195} lines={["💡 " + a.like]} size={10.5} fill={a.deep} weight={700} anchor="start" />
+
+          <rect x={a.x + 14} y="220" width="262" height="38" rx="8" fill={a.color} fillOpacity="0.08" />
+          <Lines x={a.x + 26} y={244} lines={[a.use]} size={10.5} fill={C.ink} weight={600} anchor="start" />
+        </g>
+      ))}
+
+      <Lines
+        x={320}
+        y={285}
+        lines={["Cả hai đều miễn phí, mã nguồn mở — dùng đúng phần mềm cho đúng loại đồ hoạ"]}
+        size={11}
+        fill={C.inkSoft}
+        weight={500}
+      />
+    </Frame>
+  );
+}
+
+// ── Bài 12: Giao diện làm việc của Inkscape ──────────────────────────────────
+function InkscapeGiaoDien() {
+  const swatches = [C.grape, C.bubble, C.mint, C.sun, "#3B82F6", "#EF4444", "#111827", C.white, C.line, C.grapeDeep];
+
+  return (
+    <Frame viewBox="0 0 640 360">
+      {/* Cửa sổ ứng dụng */}
+      <rect x="20" y="15" width="600" height="320" rx="12" fill={C.white} stroke={C.line} strokeWidth="2" />
+      <rect x="20" y="15" width="600" height="30" rx="12" fill={C.ink} />
+      <Lines x={40} y={35} lines={["🗔  Inkscape — thiepchucmung.svg"]} size={11} fill={C.white} weight={600} anchor="start" />
+
+      {/* Thanh menu */}
+      <Lines
+        x={40}
+        y={62}
+        lines={["File   Edit   View   Object   Path   Text   Help"]}
+        size={9.5}
+        fill={C.inkSoft}
+        weight={500}
+        anchor="start"
+      />
+      <line x1="20" y1="72" x2="620" y2="72" stroke={C.line} strokeWidth="1.5" />
+
+      {/* Hộp công cụ bên trái */}
+      <rect x="20" y="72" width="46" height="238" fill={C.line} fillOpacity="0.25" />
+      {[
+        { icon: "↖", label: "Chọn" },
+        { icon: "▭", label: "" },
+        { icon: "◯", label: "" },
+        { icon: "★", label: "" },
+        { icon: "✎", label: "" },
+        { icon: "T", label: "" },
+      ].map((t, i) => (
+        <g key={i}>
+          <rect
+            x="28"
+            y={82 + i * 36}
+            width="30"
+            height="30"
+            rx="7"
+            fill={i === 0 ? C.grape : C.white}
+            fillOpacity={i === 0 ? 0.15 : 1}
+            stroke={i === 0 ? C.grape : C.line}
+            strokeWidth={i === 0 ? 2 : 1.2}
+          />
+          <Lines x={43} y={82 + i * 36 + 20} lines={[t.icon]} size={14} fill={i === 0 ? C.grapeDeep : C.inkSoft} weight={700} />
+        </g>
+      ))}
+
+      {/* Canvas trung tâm */}
+      <rect x="70" y="80" width="440" height="222" fill={C.white} stroke={C.line} strokeWidth="1.5" strokeDasharray="4 3" />
+      <Lines x={290} y={98} lines={["Canvas (trang vẽ)"]} size={10} fill={C.inkSoft} weight={600} />
+
+      {/* Bông hoa ví dụ: fill hồng, stroke đỏ */}
+      {[[-24, -8], [24, -8], [0, 20], [0, -30]].map(([dx, dy], i) => (
+        <circle key={i} cx={230 + dx} cy={175 + dy} r="20" fill={C.bubble} fillOpacity="0.55" stroke="#EF4444" strokeWidth="2.5" />
+      ))}
+      <circle cx="230" cy="175" r="12" fill={C.sun} stroke="#EF4444" strokeWidth="2" />
+      <Lines x={230} y={245} lines={["Chúc mừng 20/11 🌸"]} size={12} fill={C.ink} weight={700} />
+
+      {/* Callout Fill / Stroke */}
+      <path d="M255,160 L340,120" stroke={C.inkSoft} strokeWidth="1.3" strokeDasharray="3 2" />
+      <Lines x={342} y={116} lines={["Fill (màu tô): hồng"]} size={10} fill={C.bubbleDeep} weight={700} anchor="start" />
+      <path d="M248,195 L340,225" stroke={C.inkSoft} strokeWidth="1.3" strokeDasharray="3 2" />
+      <Lines x={342} y={229} lines={["Stroke (màu nét): đỏ"]} size={10} fill="#B91C1C" weight={700} anchor="start" />
+
+      {/* Bảng màu dưới đáy canvas */}
+      {swatches.map((s, i) => (
+        <rect key={i} x={78 + i * 25} y="288" width="21" height="12" fill={s} stroke={C.inkSoft} strokeWidth="0.6" />
+      ))}
+      <Lines x={91} y={280} lines={["Palette (bảng màu)"]} size={9.5} fill={C.inkSoft} weight={600} anchor="start" />
+
+      <Lines
+        x={320}
+        y={344}
+        lines={["Chọn công cụ ở Toolbox ➜ vẽ trên Canvas ➜ chọn màu tô/viền ở Palette ➜ lưu ra tệp .svg"]}
+        size={10.5}
+        fill={C.inkSoft}
+        weight={500}
+      />
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
@@ -937,6 +1190,9 @@ const DIAGRAMS: Record<string, () => JSX.Element> = {
   "van-hoa-va-phap-luat-mang": VanHoaVaPhapLuat,
   "quyen-tac-gia-phan-biet": QuyenTacGiaDiagram,
   "ban-quyen-vs-giay-phep": BanQuyenVsGiayPhep,
+  "bitmap-vs-vector": BitmapVsVector,
+  "gimp-vs-inkscape": GimpVsInkscape,
+  "inkscape-giao-dien": InkscapeGiaoDien,
 };
 
 export default function Diagram({ name }: { name: string }) {
