@@ -1738,11 +1738,11 @@ function BienVaGan() {
 
       <rect x="70" y="248" width="220" height="58" rx="10" fill={C.mint} fillOpacity="0.12" stroke={C.mint} strokeWidth="1.5" />
       <Lines x={180} y={268} lines={["vi = 200000"]} size={11} fill={C.mintDeep} weight={700} />
-      <Lines x={180} y={286} lines={["da_tieu = vi   → da_tieu cũng = 200000"]} size={10} fill={C.inkSoft} weight={500} />
+      <Lines x={180} y={286} lines={["ban_dau = vi   → ban_dau cũng = 200000"]} size={10} fill={C.inkSoft} weight={500} />
 
       <rect x="350" y="248" width="220" height="58" rx="10" fill={C.bubble} fillOpacity="0.12" stroke={C.bubble} strokeWidth="1.5" />
       <Lines x={460} y={268} lines={["vi = vi - 50000  → vi = 150000"]} size={10.5} fill={C.bubbleDeep} weight={700} />
-      <Lines x={460} y={286} lines={["da_tieu vẫn giữ 200000 — không đổi theo"]} size={10} fill={C.inkSoft} weight={500} />
+      <Lines x={460} y={286} lines={["ban_dau vẫn giữ 200000 — không đổi theo"]} size={10} fill={C.inkSoft} weight={500} />
     </Frame>
   );
 }

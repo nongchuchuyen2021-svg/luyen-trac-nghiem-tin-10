@@ -28,8 +28,13 @@ const theory: LessonTheory = {
           text: "Lớp 10A2 gây quỹ ủng hộ bạn khó khăn. Sơn được giao ghi sổ, quyết định viết luôn vài dòng Python để khỏi cộng nhầm: dòng đầu tạo biến quy và gán giá trị 0 (ban đầu quỹ trống); dòng thứ hai, quy = quy + 500000 sau khi cả lớp góp mỗi bạn 12,5 nghìn; dòng thứ ba, quy = quy - 200000 sau khi mua tặng phẩm. Nhìn dòng lệnh quy = quy + 500000, một bạn thắc mắc: \"quy sao lại bằng chính nó cộng thêm được?\" Sơn giải thích: đây không phải phương trình cần giải, mà là lệnh yêu cầu máy tính lấy giá trị quy đang có, cộng thêm số tiền mới, rồi cất kết quả trở lại đúng vào biến quy — giá trị cũ bị thay bởi giá trị mới, không hề mâu thuẫn gì cả.",
         },
         {
+          kind: "example",
+          title: "Tình huống: Tiền lì xì Tết và bản sao không dính líu tới nhau",
+          text: "Mùng Một Tết, bạn Vinh được mừng tuổi và lưu ngay vào biến vi = 200000. Muốn nhớ lại đúng số tiền ban đầu để cuối kì đối chiếu xem mình đã tiêu bao nhiêu, Vinh tạo thêm một biến ban_dau rồi gán ban_dau = vi — lúc này ban_dau cũng mang giá trị 200000, y hệt vi. Vài hôm sau, Vinh tiêu 50 nghìn mua sách và cập nhật vi = vi - 50000, nên vi chỉ còn 150000. Vinh ngạc nhiên khi kiểm tra lại ban_dau: nó vẫn giữ nguyên 200000, không hề bị trừ theo! Lệnh ban_dau = vi chỉ sao chép giá trị của vi tại đúng khoảnh khắc gán, chứ không tạo ra một \"sợi dây\" luôn buộc hai biến dính chặt vào nhau mãi mãi — đổi biến này về sau, biến kia vẫn đứng yên.",
+        },
+        {
           kind: "note",
-          text: "Biến là tên của vùng nhớ lưu giá trị, giá trị có thể thay đổi được. Lệnh gán dùng dấu = : tính biểu thức bên phải trước, rồi lưu kết quả vào biến bên trái. Một biến có thể được gán lại nhiều lần trong cùng chương trình. Khi sao chép giá trị của một biến sang biến khác (ví dụ b = a), hai biến trở thành độc lập — đổi biến này sau đó không làm thay đổi biến kia.",
+          text: "Biến là tên của vùng nhớ lưu giá trị, giá trị có thể thay đổi được. Lệnh gán dùng dấu = : tính biểu thức bên phải trước, rồi lưu kết quả vào biến bên trái. Một biến có thể được gán lại nhiều lần trong cùng chương trình. Khi sao chép giá trị của một biến sang biến khác (như ban_dau = vi), hai biến trở thành độc lập — đổi biến này sau đó không làm thay đổi biến kia.",
         },
         {
           kind: "check",
@@ -41,16 +46,16 @@ const theory: LessonTheory = {
         },
         {
           kind: "check",
-          q: "Cho đoạn lệnh: a = 10, sau đó b = a, sau đó a = 99. Hỏi giá trị của biến b lúc này là bao nhiêu?",
+          q: "Vinh gán vi = 200000, rồi ban_dau = vi, sau đó cập nhật vi = vi - 50000. Hỏi lúc này biến ban_dau có giá trị bao nhiêu?",
           options: [
-            "10, vì b đã sao chép giá trị của a tại thời điểm gán, không đổi theo a về sau",
-            "99, vì b luôn tự động cập nhật theo giá trị mới nhất của a",
-            "0, vì lệnh b = a không có tác dụng gì trong Python",
+            "200000, vì ban_dau đã sao chép giá trị của vi tại thời điểm gán, không đổi theo vi về sau",
+            "150000, vì ban_dau luôn tự động cập nhật theo giá trị mới nhất của vi",
+            "0, vì lệnh ban_dau = vi không có tác dụng gì trong Python",
             "Báo lỗi vì không thể gán giá trị của một biến cho biến khác",
           ],
           answer: 0,
           explain:
-            "Lệnh b = a chỉ sao chép giá trị của a (là 10) vào b tại đúng thời điểm đó. Sau đó hai biến hoàn toàn độc lập — thay đổi a không ảnh hưởng tới giá trị đã lưu trong b.",
+            "Lệnh ban_dau = vi chỉ sao chép giá trị của vi (là 200000) vào ban_dau tại đúng thời điểm đó. Sau đó hai biến hoàn toàn độc lập — thay đổi vi không ảnh hưởng tới giá trị đã lưu trong ban_dau.",
         },
       ],
     },
