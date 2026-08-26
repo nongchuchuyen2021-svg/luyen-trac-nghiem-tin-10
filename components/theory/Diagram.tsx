@@ -3329,6 +3329,122 @@ function NhieuGiaTriTraVeVaLongNhau() {
   );
 }
 
+// ── Bài 28: Biến cục bộ — sinh ra và mất đi cùng "phòng riêng" của hàm ──────
+function BienCucBoPhongRieng() {
+  return (
+    <Frame viewBox="0 0 640 260">
+      <rect x="15" y="15" width="300" height="230" rx="16" fill={C.white} stroke={C.mint} strokeWidth="2" strokeDasharray="6 4" />
+      <rect x="15" y="15" width="300" height="34" rx="16" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={165} y={37} lines={["🚪 Trong hàm dien_tich(r) — phòng riêng"]} size={9.5} fill={C.mintDeep} weight={700} />
+
+      <rect x="45" y="60" width="240" height="34" rx="6" fill={C.ink} />
+      <text x="165" y="82" fontSize="10" fill="#8CF29B" fontFamily="monospace" textAnchor="middle">
+        dt = 3.14 * r * r
+      </text>
+      <path d="M165,98 L165,118" stroke={C.mintDeep} strokeWidth="2" markerEnd="url(#arrow)" />
+      <rect x="120" y="123" width="90" height="36" rx="8" fill={C.mint} fillOpacity="0.25" stroke={C.mintDeep} strokeWidth="1.8" />
+      <Lines x={165} y={146} lines={["dt"]} size={13} fill={C.mintDeep} weight={700} />
+
+      <rect x="30" y="175" width="270" height="60" rx="8" fill={C.mint} fillOpacity="0.1" />
+      <Lines x={165} y={195} lines={["Hàm kết thúc → \"phòng\" đóng lại"]} size={9.5} fill={C.mintDeep} weight={700} />
+      <Lines x={165} y={212} lines={["— biến dt biến mất hoàn toàn,"]} size={9} fill={C.inkSoft} weight={500} />
+      <Lines x={165} y={227} lines={["không còn tồn tại ở đâu nữa"]} size={9} fill={C.inkSoft} weight={500} />
+
+      <rect x="325" y="15" width="300" height="230" rx="16" fill={C.white} stroke="#DC2626" strokeWidth="2" />
+      <rect x="325" y="15" width="300" height="34" rx="16" fill="#FEE2E2" />
+      <Lines x={475} y={37} lines={["❌ Ngoài hàm — không thấy \"phòng riêng\""]} size={9} fill="#B91C1C" weight={700} />
+
+      <rect x="355" y="60" width="240" height="34" rx="6" fill={C.ink} />
+      <text x="475" y="82" fontSize="10.5" fill="#8CF29B" fontFamily="monospace" textAnchor="middle">
+        print(dt)
+      </text>
+      <path d="M475,98 L475,118" stroke="#DC2626" strokeWidth="2" markerEnd="url(#arrow)" />
+      <rect x="415" y="123" width="120" height="40" rx="8" fill="#FEE2E2" stroke="#DC2626" strokeWidth="1.8" />
+      <Lines x={475} y={148} lines={["🚫 NameError"]} size={12} fill="#B91C1C" weight={700} />
+
+      <rect x="340" y="175" width="270" height="60" rx="8" fill="#FEE2E2" fillOpacity="0.6" />
+      <Lines x={475} y={195} lines={["dt chỉ tồn tại BÊN TRONG hàm"]} size={9.5} fill="#B91C1C" weight={700} />
+      <Lines x={475} y={212} lines={["dien_tich — ở ngoài, cái tên này"]} size={9} fill="#B91C1C" weight={600} />
+      <Lines x={475} y={227} lines={["chưa từng được định nghĩa"]} size={9} fill="#B91C1C" weight={600} />
+    </Frame>
+  );
+}
+
+// ── Bài 28: Gán trong hàm tạo biến cục bộ MỚI — không đụng tới biến toàn cục ──
+function BayCheBienToanCuc() {
+  return (
+    <Frame viewBox="0 0 640 300">
+      <rect x="220" y="10" width="200" height="34" rx="10" fill={C.grape} fillOpacity="0.15" stroke={C.grape} strokeWidth="1.8" />
+      <Lines x={320} y={32} lines={["🌍 Khu vực chung: quy = 500000"]} size={10.5} fill={C.grapeDeep} weight={700} />
+
+      <rect x="15" y="60" width="300" height="230" rx="16" fill={C.white} stroke="#DC2626" strokeWidth="2" strokeDasharray="6 4" />
+      <rect x="15" y="60" width="300" height="32" rx="16" fill="#FEE2E2" />
+      <Lines x={165} y={81} lines={["❌ Thiếu global — bị \"che\""]} size={10} fill="#B91C1C" weight={700} />
+
+      <rect x="40" y="100" width="250" height="34" rx="6" fill={C.ink} />
+      <text x="165" y="122" fontSize="9.5" fill="#8CF29B" fontFamily="monospace" textAnchor="middle">
+        quy = quy - 100000
+      </text>
+      <path d="M165,138 L165,155" stroke="#DC2626" strokeWidth="2" markerEnd="url(#arrow)" />
+      <rect x="90" y="160" width="150" height="36" rx="8" fill="#FEE2E2" stroke="#DC2626" strokeWidth="1.6" />
+      <Lines x={165} y={183} lines={["quy (cục bộ, MỚI)"]} size={9} fill="#B91C1C" weight={700} />
+
+      <path d="M165,196 L165,215" stroke="#DC2626" strokeWidth="1.5" strokeDasharray="3 2" />
+      <text x="180" y="210" fontSize="14" fill="#DC2626">🧱</text>
+      <Lines x={165} y={230} lines={["Bức tường — không liên quan gì"]} size={8.5} fill="#B91C1C" weight={600} />
+      <Lines x={165} y={244} lines={["tới quy toàn cục ở trên!"]} size={8.5} fill="#B91C1C" weight={600} />
+
+      <rect x="30" y="255" width="270" height="26" rx="6" fill="#FEE2E2" fillOpacity="0.7" />
+      <Lines x={165} y={272} lines={["Ra ngoài: quy toàn cục vẫn là 500000"]} size={9} fill="#B91C1C" weight={700} />
+
+      <rect x="325" y="60" width="300" height="230" rx="16" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="325" y="60" width="300" height="32" rx="16" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={475} y={81} lines={["✅ Có global quy — thông cửa"]} size={10} fill={C.mintDeep} weight={700} />
+
+      <rect x="350" y="100" width="250" height="34" rx="6" fill={C.ink} />
+      <text x="475" y="122" fontSize="9.5" fill="#8CF29B" fontFamily="monospace" textAnchor="middle">
+        global quy; quy -= 100000
+      </text>
+      <path d="M475,138 L475,155" stroke={C.mintDeep} strokeWidth="2" markerEnd="url(#arrow)" />
+      <path d="M475,158 L320,30" fill="none" stroke={C.mintDeep} strokeWidth="1.8" strokeDasharray="4 3" markerEnd="url(#arrow)" />
+      <Lines x={475} y={175} lines={["🚪 cửa mở thẳng tới"]} size={9} fill={C.mintDeep} weight={700} />
+      <Lines x={475} y={190} lines={["biến quy toàn cục ở trên"]} size={9} fill={C.mintDeep} weight={700} />
+
+      <rect x="340" y="255" width="270" height="26" rx="6" fill={C.mint} fillOpacity="0.15" />
+      <Lines x={475} y={272} lines={["Ra ngoài: quy toàn cục đổi thành 400000"]} size={9} fill={C.mintDeep} weight={700} />
+    </Frame>
+  );
+}
+
+// ── Bài 28: Mỗi hàm là một "phòng" độc lập — trùng tên biến vẫn an toàn ─────
+function DocLapGiuaCacHam() {
+  return (
+    <Frame viewBox="0 0 640 240">
+      <rect x="15" y="15" width="290" height="180" rx="16" fill={C.white} stroke={C.grape} strokeWidth="2" strokeDasharray="6 4" />
+      <rect x="15" y="15" width="290" height="32" rx="16" fill={C.grape} fillOpacity="0.12" />
+      <Lines x={160} y={36} lines={["🚪 Phòng của dem_chan(a)"]} size={10.5} fill={C.grapeDeep} weight={700} />
+      <rect x="120" y="70" width="80" height="60" rx="8" fill={C.grape} fillOpacity="0.2" stroke={C.grapeDeep} strokeWidth="1.8" />
+      <Lines x={160} y={95} lines={["i"]} size={22} fill={C.grapeDeep} weight={700} />
+      <Lines x={160} y={118} lines={["(biến vòng lặp)"]} size={8} fill={C.grapeDeep} weight={600} />
+      <Lines x={160} y={165} lines={["Chỉ dem_chan nhìn thấy i này"]} size={9} fill={C.inkSoft} weight={500} />
+
+      <rect x="290" y="70" width="12" height="90" fill={C.line} />
+      <text x="296" y="122" fontSize="16" textAnchor="middle">🧱</text>
+
+      <rect x="335" y="15" width="290" height="180" rx="16" fill={C.white} stroke={C.bubble} strokeWidth="2" strokeDasharray="6 4" />
+      <rect x="335" y="15" width="290" height="32" rx="16" fill={C.bubble} fillOpacity="0.12" />
+      <Lines x={480} y={36} lines={["🚪 Phòng của tinh_tong(a)"]} size={10.5} fill={C.bubbleDeep} weight={700} />
+      <rect x="440" y="70" width="80" height="60" rx="8" fill={C.bubble} fillOpacity="0.2" stroke={C.bubbleDeep} strokeWidth="1.8" />
+      <Lines x={480} y={95} lines={["i"]} size={22} fill={C.bubbleDeep} weight={700} />
+      <Lines x={480} y={118} lines={["(biến vòng lặp)"]} size={8} fill={C.bubbleDeep} weight={600} />
+      <Lines x={480} y={165} lines={["Chỉ tinh_tong nhìn thấy i này"]} size={9} fill={C.inkSoft} weight={500} />
+
+      <rect x="60" y="205" width="520" height="28" rx="8" fill={C.line} fillOpacity="0.35" />
+      <Lines x={320} y={223} lines={["Hai biến i hoàn toàn độc lập — không hề \"đụng\" nhau, dù trùng tên"]} size={10} fill={C.ink} weight={700} />
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
@@ -3397,6 +3513,9 @@ const DIAGRAMS: Record<string, () => JSX.Element> = {
   "tham-so-vs-doi-so": ThamSoVsDoiSo,
   "thu-tu-doi-so-quan-trong": ThuTuDoiSoQuanTrong,
   "nhieu-gia-tri-tra-ve-va-long-nhau": NhieuGiaTriTraVeVaLongNhau,
+  "bien-cuc-bo-phong-rieng": BienCucBoPhongRieng,
+  "bay-che-bien-toan-cuc": BayCheBienToanCuc,
+  "doc-lap-giua-cac-ham": DocLapGiuaCacHam,
 };
 
 export default function Diagram({ name }: { name: string }) {
