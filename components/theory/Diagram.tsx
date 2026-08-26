@@ -3756,6 +3756,108 @@ function CodeDeDocVsKhoDoc() {
   );
 }
 
+// ── Bài 32: Sáu mảnh ghép dựng nên một chương trình Python ──────────────────
+function BanDo6ManhGhep() {
+  const items = [
+    { icon: "🔢", t: "Biến & phép toán", d: "Lưu và tính toán dữ liệu", color: C.grape, deep: C.grapeDeep },
+    { icon: "🔀", t: "Rẽ nhánh if", d: "Quyết định theo điều kiện", color: C.sun, deep: C.sunDeep },
+    { icon: "🔁", t: "Vòng lặp for / while", d: "Lặp lại, tránh viết lại", color: C.mint, deep: C.mintDeep },
+    { icon: "📋", t: "Danh sách", d: "Gom nhiều giá trị, có chỉ số", color: C.bubble, deep: C.bubbleDeep },
+    { icon: "🔤", t: "Xâu kí tự", d: "Xử lí văn bản, bất biến", color: C.sun, deep: C.sunDeep },
+    { icon: "🧰", t: "Hàm", d: "Đóng gói việc, gọi lại nhiều lần", color: C.mint, deep: C.mintDeep },
+  ];
+  return (
+    <Frame viewBox="0 0 640 300">
+      <Lines x={320} y={22} lines={["🗺️ Sáu mảnh ghép — kết hợp lại thành một chương trình hoàn chỉnh"]} size={12} fill={C.grapeDeep} weight={700} />
+      {items.map((it, i) => {
+        const col = i % 3;
+        const row = Math.floor(i / 3);
+        const x = 20 + col * 205;
+        const y = 45 + row * 122;
+        return (
+          <g key={i}>
+            <rect x={x} y={y} width="190" height="105" rx="14" fill={C.white} stroke={it.color} strokeWidth="2" />
+            <rect x={x} y={y} width="190" height="30" rx="14" fill={it.color} fillOpacity="0.15" />
+            <text x={x + 95} y={y + 21} fontSize="15" textAnchor="middle">{it.icon} {it.t}</text>
+            <Lines x={x + 95} y={y + 55} lines={it.d.split(" ").length > 3 ? [it.d.split(" ").slice(0, 3).join(" "), it.d.split(" ").slice(3).join(" ")] : [it.d]} size={9.5} fill={it.deep} weight={600} gap={14} />
+          </g>
+        );
+      })}
+      <Lines x={320} y={288} lines={["Đề tổng hợp thường trộn 2-3 mảnh ghép trong cùng một đoạn chương trình"]} size={9.5} fill={C.inkSoft} weight={600} />
+    </Frame>
+  );
+}
+
+// ── Bài 32: Dò biến từng bước — kĩ năng đọc hiểu code ────────────────────────
+function BangDoBienTungBuoc() {
+  const rows = [
+    { i: "1", cond: "Đúng", s: "0 + 1 = 1" },
+    { i: "2", cond: "Sai", s: "giữ nguyên 1" },
+    { i: "3", cond: "Đúng", s: "1 + 3 = 4" },
+    { i: "4", cond: "Sai", s: "giữ nguyên 4" },
+    { i: "5", cond: "Đúng", s: "4 + 5 = 9" },
+  ];
+  return (
+    <Frame viewBox="0 0 640 300">
+      <Lines x={320} y={22} lines={["🔍 Dò biến từng bước với: s = 0; for i in range(1,6): if i%2==1: s = s+i"]} size={10.5} fill={C.grapeDeep} weight={700} />
+
+      <rect x="15" y="40" width="180" height="230" rx="10" fill={C.ink} />
+      <text x="30" y="65" fontSize="9.5" fill="#8CF29B" fontFamily="monospace">s = 0</text>
+      <text x="30" y="83" fontSize="9.5" fill="#8CF29B" fontFamily="monospace">for i in range(1,6):</text>
+      <text x="45" y="101" fontSize="9.5" fill="#FBBF24" fontFamily="monospace">if i % 2 == 1:</text>
+      <text x="60" y="119" fontSize="9.5" fill="#8CF29B" fontFamily="monospace">s = s + i</text>
+      <text x="30" y="140" fontSize="9.5" fill="#8CF29B" fontFamily="monospace">print(s)</text>
+      <Lines x={105} y={175} lines={["Đọc từng vòng lặp,", "hỏi: điều kiện đúng", "hay sai? s đổi thế nào?"]} size={8.5} fill={C.white} weight={500} gap={13} />
+
+      <rect x="210" y="40" width="415" height="26" rx="6" fill={C.grape} fillOpacity="0.15" />
+      <text x="230" y="58" fontSize="10" fill={C.grapeDeep} fontWeight="700">i</text>
+      <text x="330" y="58" fontSize="10" fill={C.grapeDeep} fontWeight="700">i % 2 == 1 ?</text>
+      <text x="480" y="58" fontSize="10" fill={C.grapeDeep} fontWeight="700">s sau dòng if</text>
+
+      {rows.map((r, idx) => (
+        <g key={idx}>
+          <rect x="210" y={66 + idx * 36} width="415" height="34" fill={idx % 2 === 0 ? C.white : C.bubble} fillOpacity={idx % 2 === 0 ? "1" : "0.08"} stroke={C.line} strokeWidth="1" />
+          <text x="230" y={88 + idx * 36} fontSize="10.5" fill={C.ink} fontFamily="monospace">{r.i}</text>
+          <text x="330" y={88 + idx * 36} fontSize="10.5" fill={r.cond === "Đúng" ? C.mintDeep : C.inkSoft} fontFamily="monospace">{r.cond}</text>
+          <text x="480" y={88 + idx * 36} fontSize="10.5" fill={C.ink} fontFamily="monospace">{r.s}</text>
+        </g>
+      ))}
+
+      <rect x="210" y="248" width="415" height="30" rx="6" fill={C.mint} fillOpacity="0.18" />
+      <Lines x={417} y={267} lines={["Hết vòng lặp → print(s) in ra 9"]} size={10} fill={C.mintDeep} weight={700} />
+    </Frame>
+  );
+}
+
+// ── Bài 32: Bốn bẫy kinh điển khi nhiều mảnh ghép trộn lẫn ───────────────────
+function BonBayTongHop() {
+  const traps = [
+    { icon: "📑", t: "sort() rồi append()", d1: "a=[5,1,4]; a.sort(); a.append(2)", d2: "→ [1,4,5,2] — 2 nằm CUỐI, không tự xếp lại" },
+    { icon: "🔤", t: "Xâu bất biến", d1: 's.upper() trả xâu MỚI', d2: "→ biến s gốc không hề thay đổi" },
+    { icon: "📦", t: "Biến cục bộ trong hàm", d1: "biến d khai báo trong hàm", d2: "→ dùng ngoài hàm là lỗi, đã hết phạm vi" },
+    { icon: "🚫", t: "Thiếu đối số bắt buộc", d1: "gọi hàm thiếu tham số", d2: "→ Python báo lỗi TypeError, không tự đoán" },
+  ];
+  return (
+    <Frame viewBox="0 0 640 300">
+      <Lines x={320} y={20} lines={["⚠️ Bẫy tổng hợp — khi hai mảnh ghép gặp nhau, dễ đoán nhầm"]} size={11} fill="#B91C1C" weight={700} />
+      {traps.map((tr, i) => {
+        const col = i % 2;
+        const row = Math.floor(i / 2);
+        const x = 20 + col * 310;
+        const y = 40 + row * 125;
+        return (
+          <g key={i}>
+            <rect x={x} y={y} width="295" height="110" rx="12" fill="#FEF2F2" stroke="#DC2626" strokeWidth="1.5" />
+            <text x={x + 16} y={y + 26} fontSize="13" fontWeight="700" fill="#B91C1C">{tr.icon} {tr.t}</text>
+            <text x={x + 16} y={y + 52} fontSize="9" fill={C.ink} fontFamily="monospace">{tr.d1}</text>
+            <Lines x={x + 148} y={y + 80} lines={tr.d2.length > 34 ? [tr.d2.slice(0, 34), tr.d2.slice(34)] : [tr.d2]} size={9} fill="#B91C1C" weight={600} gap={13} />
+          </g>
+        );
+      })}
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
@@ -3836,6 +3938,9 @@ const DIAGRAMS: Record<string, () => JSX.Element> = {
   "quy-trinh-4-buoc-lap-trinh": QuyTrinh4BuocLapTrinh,
   "hai-khuon-mau-code": HaiKhuonMauCode,
   "code-de-doc-vs-kho-doc": CodeDeDocVsKhoDoc,
+  "ban-do-6-manh-ghep": BanDo6ManhGhep,
+  "bang-do-bien-tung-buoc": BangDoBienTungBuoc,
+  "bon-bay-tong-hop": BonBayTongHop,
 };
 
 export default function Diagram({ name }: { name: string }) {
