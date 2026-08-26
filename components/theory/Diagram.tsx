@@ -3543,6 +3543,110 @@ function LoiLogicDenSaiDich() {
   );
 }
 
+// ── Bài 30: Một lần chạy đúng chưa đủ — phải thử qua nhiều "cung đường" ─────
+function KiemThuNhieuTruongHop() {
+  const cases = [
+    { icon: "🛣️", label: "Đường thường", note: "diem = 7,0 → \"Khá\"", color: C.mint, deep: C.mintDeep },
+    { icon: "⛰️", label: "Đúng ranh giới", note: "diem = 8,0 → \"Giỏi\"?", color: C.sun, deep: C.sunDeep },
+    { icon: "🚧", label: "Ngoài phạm vi", note: "diem = 11 → hợp lệ?", color: C.bubble, deep: C.bubbleDeep },
+  ];
+  return (
+    <Frame viewBox="0 0 640 260">
+      <Lines x={320} y={26} lines={["Chỉ chạy thử ĐÚNG MỘT trường hợp không đủ để khẳng định chương trình đúng"]} size={11} fill={C.grapeDeep} weight={700} />
+
+      {cases.map((c, i) => (
+        <g key={i}>
+          <rect x={20 + i * 205} y="50" width="185" height="150" rx="14" fill={C.white} stroke={c.color} strokeWidth="2" />
+          <rect x={20 + i * 205} y="50" width="185" height="36" rx="14" fill={c.color} fillOpacity="0.15" />
+          <Lines x={112 + i * 205} y={73} lines={[c.label]} size={11} fill={c.deep} weight={700} />
+          <text x={112 + i * 205} y={125} fontSize="34" textAnchor="middle">{c.icon}</text>
+          <rect x={35 + i * 205} y="150" width="155" height="36" rx="8" fill={c.color} fillOpacity="0.12" />
+          <Lines x={112 + i * 205} y={172} lines={[c.note]} size={9.5} fill={c.deep} weight={700} />
+        </g>
+      ))}
+
+      <rect x="60" y="215" width="520" height="35" rx="8" fill={C.line} fillOpacity="0.35" />
+      <Lines x={320} y={237} lines={["Xe chạy êm trên đường thường không có nghĩa là chạy tốt trên MỌI cung đường"]} size={10} fill={C.ink} weight={700} />
+    </Frame>
+  );
+}
+
+// ── Bài 30: Điểm biên và dữ liệu không hợp lệ — nơi lỗi hay ẩn náu ──────────
+function DiemBienVaDuLieuKhongHopLe() {
+  const points = [
+    { v: "-2", x: 55, ok: false },
+    { v: "0", x: 130, ok: true },
+    { v: "5,0", x: 230, ok: true, bien: true },
+    { v: "6,5", x: 330, ok: true, bien: true },
+    { v: "8,0", x: 430, ok: true, bien: true },
+    { v: "10", x: 530, ok: true },
+    { v: "11", x: 600, ok: false },
+  ];
+  return (
+    <Frame viewBox="0 0 640 220">
+      <Lines x={320} y={24} lines={["Thang điểm 0–10: kiểm thử đúng tại các RANH GIỚI và cả giá trị NGOÀI phạm vi"]} size={10.5} fill={C.grapeDeep} weight={700} />
+
+      <line x1="40" y1="120" x2="620" y2="120" stroke={C.inkSoft} strokeWidth="2" />
+      {points.map((p, i) => (
+        <g key={i}>
+          <circle
+            cx={p.x}
+            cy="120"
+            r={p.bien ? 12 : 9}
+            fill={p.ok ? (p.bien ? C.sun : C.mint) : "#FEE2E2"}
+            fillOpacity={p.ok ? 0.7 : 1}
+            stroke={p.ok ? (p.bien ? C.sunDeep : C.mintDeep) : "#DC2626"}
+            strokeWidth="2"
+          />
+          <Lines x={p.x} y={125} lines={[p.v]} size={9} fill={p.ok ? C.ink : "#B91C1C"} weight={700} />
+          <Lines x={p.x} y={p.bien ? 150 : 145} lines={[p.bien ? "biên!" : p.ok ? "" : "❌ không hợp lệ"]} size={8} fill={p.ok ? C.sunDeep : "#B91C1C"} weight={700} />
+        </g>
+      ))}
+
+      <rect x="60" y="170" width="520" height="42" rx="10" fill={C.line} fillOpacity="0.35" />
+      <Lines x={320} y={188} lines={["Lỗi hay nằm ở dấu >= hay > tại ranh giới, và ở dữ liệu vượt ngoài 0–10"]} size={10} fill={C.ink} weight={700} />
+      <Lines x={320} y={203} lines={["Kiểm thử đúng những điểm này mới thực sự yên tâm"]} size={9} fill={C.inkSoft} weight={500} />
+    </Frame>
+  );
+}
+
+// ── Bài 30: Quy trình gỡ lỗi có phương pháp — một vòng lặp không bỏ sót ─────
+function QuyTrinhGoLoi() {
+  const steps = [
+    { n: "1", t: "Khoanh vùng nghi vấn", icon: "🔍" },
+    { n: "2", t: "In giá trị biến ra xem", icon: "🖨️" },
+    { n: "3", t: "Tìm đúng nguyên nhân", icon: "💡" },
+    { n: "4", t: "Sửa lại chỗ sai", icon: "🔧" },
+    { n: "5", t: "Thử lại TOÀN BỘ", icon: "✅" },
+  ];
+  return (
+    <Frame viewBox="0 0 640 280">
+      <Lines x={320} y={26} lines={["🔁 Quy trình gỡ lỗi — một vòng khép kín, không dừng ở bước 4"]} size={12} fill={C.grapeDeep} weight={700} />
+
+      {steps.map((s, i) => {
+        const cx = 90 + i * 115;
+        return (
+          <g key={i}>
+            <circle cx={cx} cy="110" r="38" fill={C.grape} fillOpacity="0.12" stroke={C.grapeDeep} strokeWidth="2" />
+            <text x={cx} y="102" fontSize="20" textAnchor="middle">{s.icon}</text>
+            <Lines x={cx} y={128} lines={[`Bước ${s.n}`]} size={9} fill={C.grapeDeep} weight={700} />
+            {i < 4 && <path d={`M${cx + 40},110 L${cx + 75},110`} stroke={C.grapeDeep} strokeWidth="2.5" markerEnd="url(#arrow)" />}
+          </g>
+        );
+      })}
+      {steps.map((s, i) => (
+        <Lines key={`t${i}`} x={90 + i * 115} y={168} lines={s.t.split(" ").length > 2 ? [s.t.split(" ").slice(0, 2).join(" "), s.t.split(" ").slice(2).join(" ")] : [s.t]} size={9} fill={C.ink} weight={600} />
+      ))}
+
+      <path d="M550,148 L550,210 L90,210 L90,150" fill="none" stroke="#B91C1C" strokeWidth="2" strokeDasharray="5 4" markerEnd="url(#arrow)" />
+      <Lines x={320} y={225} lines={["Nếu vẫn còn sai ở bộ thử nào đó → quay lại bước 1, KHÔNG bỏ cuộc giữa chừng"]} size={10} fill="#B91C1C" weight={700} />
+
+      <rect x="60" y="240" width="520" height="30" rx="8" fill={C.line} fillOpacity="0.35" />
+      <Lines x={320} y={259} lines={["Bước 5 luôn chạy lại TẤT CẢ bộ thử — sửa chỗ này có thể làm hỏng chỗ khác"]} size={9.5} fill={C.ink} weight={700} />
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
@@ -3617,6 +3721,9 @@ const DIAGRAMS: Record<string, () => JSX.Element> = {
   "loi-cu-phap-khong-chay": LoiCuPhapKhongChay,
   "loi-ngoai-le-dung-giua-chung": LoiNgoaiLeDungGiuaChuong,
   "loi-logic-den-sai-dich": LoiLogicDenSaiDich,
+  "kiem-thu-nhieu-truong-hop": KiemThuNhieuTruongHop,
+  "diem-bien-va-du-lieu-khong-hop-le": DiemBienVaDuLieuKhongHopLe,
+  "quy-trinh-go-loi": QuyTrinhGoLoi,
 };
 
 export default function Diagram({ name }: { name: string }) {
