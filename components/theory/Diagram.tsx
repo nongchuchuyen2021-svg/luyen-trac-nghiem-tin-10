@@ -3106,6 +3106,107 @@ function ChuanHoaDuLieu() {
   );
 }
 
+// ── Bài 26: def chỉ VIẾT công thức — gọi hàm mới thực sự THỰC THI ───────────
+function DinhNghiaVsGoiHam() {
+  return (
+    <Frame viewBox="0 0 640 260">
+      <rect x="15" y="15" width="300" height="230" rx="16" fill={C.white} stroke={C.grape} strokeWidth="2" />
+      <rect x="15" y="15" width="300" height="34" rx="16" fill={C.grape} fillOpacity="0.12" />
+      <Lines x={165} y={37} lines={["📜 def tinh_tien(...): — chỉ VIẾT công thức"]} size={9.5} fill={C.grapeDeep} weight={700} />
+
+      <rect x="45" y="60" width="240" height="90" rx="10" fill={C.white} stroke={C.grape} strokeWidth="1.5" strokeDasharray="4 3" />
+      <text x="60" y="82" fontSize="10" fill={C.grapeDeep} fontFamily="monospace">def tinh_tien(sl, dg):</text>
+      <text x="75" y="100" fontSize="10" fill={C.grapeDeep} fontFamily="monospace">return sl * dg</text>
+      <Lines x={165} y={130} lines={["📋 Một tấm \"công thức\" treo sẵn"]} size={9.5} fill={C.inkSoft} weight={600} />
+
+      <rect x="45" y="160" width="240" height="65" rx="8" fill={C.line} fillOpacity="0.3" />
+      <Lines x={165} y={182} lines={["Chưa hề tính toán gì cả —"]} size={9.5} fill={C.ink} weight={700} />
+      <Lines x={165} y={198} lines={["chỉ đang \"đăng kí\" tên và các bước"]} size={9.5} fill={C.ink} weight={600} />
+      <Lines x={165} y={213} lines={["làm để dành, chờ khi nào cần"]} size={9.5} fill={C.ink} weight={600} />
+
+      <rect x="325" y="15" width="300" height="230" rx="16" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="325" y="15" width="300" height="34" rx="16" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={475} y={37} lines={["🍳 tinh_tien(3, 5000) — GỌI mới THỰC THI"]} size={9.5} fill={C.mintDeep} weight={700} />
+
+      <rect x="360" y="60" width="230" height="42" rx="8" fill={C.ink} />
+      <text x="475" y="86" fontSize="10.5" fill="#8CF29B" fontFamily="monospace" textAnchor="middle">
+        tinh_tien(3, 5000)
+      </text>
+      <path d="M475,102 L475,122" stroke={C.mintDeep} strokeWidth="2.5" markerEnd="url(#arrow)" />
+      <rect x="425" y="127" width="100" height="40" rx="8" fill={C.mint} fillOpacity="0.25" stroke={C.mintDeep} strokeWidth="1.8" />
+      <Lines x={475} y={152} lines={["15000"]} size={14} fill={C.mintDeep} weight={700} />
+
+      <rect x="345" y="180" width="260" height="50" rx="8" fill={C.mint} fillOpacity="0.1" />
+      <Lines x={475} y={200} lines={["Đúng lúc này thân hàm mới thực sự"]} size={9.5} fill={C.mintDeep} weight={700} />
+      <Lines x={475} y={216} lines={["chạy: sl × dg = 3 × 5000 = 15000"]} size={9.5} fill={C.mintDeep} weight={600} />
+    </Frame>
+  );
+}
+
+// ── Bài 26: print() chỉ hiện lên màn hình — return đưa giá trị VỀ để dùng tiếp ──
+function ReturnVsPrint() {
+  return (
+    <Frame viewBox="0 0 640 260">
+      <rect x="15" y="15" width="300" height="230" rx="16" fill={C.white} stroke={C.bubble} strokeWidth="2" />
+      <rect x="15" y="15" width="300" height="34" rx="16" fill={C.bubble} fillOpacity="0.12" />
+      <Lines x={165} y={37} lines={["🖨️ print(x * 2) — CHỈ hiện lên màn hình"]} size={9.5} fill={C.bubbleDeep} weight={700} />
+
+      <rect x="45" y="62" width="240" height="40" rx="8" fill={C.ink} />
+      <text x="165" y="86" fontSize="10.5" fill="#8CF29B" fontFamily="monospace" textAnchor="middle">
+        def cach1(x): print(x * 2)
+      </text>
+      <path d="M165,106 L165,126" stroke={C.bubbleDeep} strokeWidth="2" markerEnd="url(#arrow)" />
+      <rect x="120" y="131" width="90" height="36" rx="18" fill={C.bubble} fillOpacity="0.2" stroke={C.bubbleDeep} strokeWidth="1.5" />
+      <Lines x={165} y={153} lines={["📺 màn hình"]} size={9.5} fill={C.bubbleDeep} weight={700} />
+      <Lines x={165} y={180} lines={["Điểm DỪNG — giá trị hiện ra rồi"]} size={9.5} fill="#B91C1C" weight={700} />
+      <Lines x={165} y={196} lines={["biến mất, không lấy lại được"]} size={9.5} fill="#B91C1C" weight={600} />
+
+      <rect x="45" y="205" width="240" height="30" rx="6" fill="#FEE2E2" />
+      <Lines x={165} y={224} lines={["kq = cach1(5) → kq nhận None!"]} size={9.5} fill="#B91C1C" weight={700} />
+
+      <rect x="325" y="15" width="300" height="230" rx="16" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="325" y="15" width="300" height="34" rx="16" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={475} y={37} lines={["↩️ return x * 2 — đưa giá trị VỀ"]} size={10} fill={C.mintDeep} weight={700} />
+
+      <rect x="355" y="62" width="240" height="40" rx="8" fill={C.ink} />
+      <text x="475" y="86" fontSize="10.5" fill="#8CF29B" fontFamily="monospace" textAnchor="middle">
+        def cach2(x): return x * 2
+      </text>
+      <path d="M475,106 L475,126" stroke={C.mintDeep} strokeWidth="2" markerEnd="url(#arrow)" />
+      <rect x="430" y="131" width="90" height="36" rx="8" fill={C.mint} fillOpacity="0.25" stroke={C.mintDeep} strokeWidth="1.8" />
+      <Lines x={475} y={153} lines={["kq = 10"]} size={11} fill={C.mintDeep} weight={700} />
+
+      <Lines x={475} y={180} lines={["Giá trị bay THẲNG về nơi gọi —"]} size={9.5} fill={C.mintDeep} weight={700} />
+      <Lines x={475} y={196} lines={["dùng tiếp được trong biểu thức khác"]} size={9.5} fill={C.mintDeep} weight={600} />
+
+      <rect x="355" y="205" width="240" height="30" rx="6" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={475} y={224} lines={["print(kq + 10) → in ra 20 ✅"]} size={9.5} fill={C.mintDeep} weight={700} />
+    </Frame>
+  );
+}
+
+// ── Bài 26: return kết thúc hàm ngay — lệnh phía sau không bao giờ chạy ─────
+function ReturnKetThucHam() {
+  return (
+    <Frame viewBox="0 0 640 240">
+      <Lines x={320} y={26} lines={["def binh_phuong(x): — lệnh nào sau return sẽ KHÔNG BAO GIỜ chạy"]} size={11.5} fill={C.grapeDeep} weight={700} />
+
+      <rect x="120" y="50" width="400" height="46" rx="8" fill={C.ink} />
+      <text x="140" y="78" fontSize="11" fill="#8CF29B" fontFamily="monospace">return x * x</text>
+      <Lines x={480} y={78} lines={["← 🛑 hàm DỪNG ở đây, trả 25 về ngay"]} size={9.5} fill={C.mintDeep} weight={700} anchor="start" />
+
+      <path d="M320,96 L320,116" stroke="#B91C1C" strokeWidth="2.5" strokeDasharray="4 3" />
+      <rect x="120" y="120" width="400" height="46" rx="8" fill="#FEE2E2" fillOpacity="0.6" />
+      <text x="140" y="148" fontSize="11" fill="#B91C1C" fontFamily="monospace" opacity="0.5">print(&quot;Tính xong&quot;)</text>
+      <Lines x={480} y={148} lines={["← ❌ không bao giờ được thực hiện"]} size={9.5} fill="#B91C1C" weight={700} anchor="start" />
+
+      <rect x="120" y="180" width="400" height="45" rx="10" fill={C.line} fillOpacity="0.35" />
+      <Lines x={320} y={200} lines={["print(binh_phuong(5)) chỉ in ra 25 — dòng \"Tính xong\""]} size={10} fill={C.ink} weight={700} />
+      <Lines x={320} y={216} lines={["là \"code chết\", muốn chạy phải đặt TRƯỚC return"]} size={9.5} fill={C.inkSoft} weight={500} />
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
@@ -3168,6 +3269,9 @@ const DIAGRAMS: Record<string, () => JSX.Element> = {
   "split-va-join": SplitVaJoin,
   "strip-chi-hai-dau": StripChiHaiDau,
   "chuan-hoa-du-lieu": ChuanHoaDuLieu,
+  "dinh-nghia-vs-goi-ham": DinhNghiaVsGoiHam,
+  "return-vs-print": ReturnVsPrint,
+  "return-ket-thuc-ham": ReturnKetThucHam,
 };
 
 export default function Diagram({ name }: { name: string }) {
