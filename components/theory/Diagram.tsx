@@ -1710,6 +1710,141 @@ function PrintVaBieuThuc() {
   );
 }
 
+// ── Bài 17: Biến thay đổi giá trị theo lệnh gán — không phải phương trình ────
+function BienVaGan() {
+  const steps = [
+    { label: "Trước", val: "0", x: 20 },
+    { label: "Sau tong = tong + 5200", val: "5200", x: 235 },
+    { label: "Sau tong = tong + 6800", val: "12000", x: 450 },
+  ];
+
+  return (
+    <Frame viewBox="0 0 640 320">
+      <Lines x={320} y={30} lines={["📦 Biến \"tong\" đổi giá trị qua từng lệnh gán"]} size={13} fill={C.grapeDeep} weight={700} />
+
+      {steps.map((s, i) => (
+        <g key={i}>
+          <rect x={s.x} y="55" width="170" height="95" rx="12" fill={C.white} stroke={C.grape} strokeWidth="2" />
+          <rect x={s.x} y="55" width="170" height="28" rx="12" fill={C.grape} fillOpacity="0.12" />
+          <Lines x={s.x + 85} y={73} lines={["tong"]} size={11} fill={C.grapeDeep} weight={700} />
+          <Lines x={s.x + 85} y={115} lines={[s.val]} size={22} fill={C.ink} weight={700} />
+          <Lines x={s.x + 85} y={168} lines={[s.label]} size={9.5} fill={C.inkSoft} weight={600} />
+          {i < 2 && <path d={`M${s.x + 175},100 L${s.x + 210},100`} stroke={C.grapeDeep} strokeWidth="2.5" markerEnd="url(#arrow)" />}
+        </g>
+      ))}
+
+      <Lines x={320} y={205} lines={["Dấu = không phải \"bằng nhau\" như toán học — máy tính giá trị VẾ PHẢI trước,"]} size={11} fill={C.inkSoft} weight={500} />
+      <Lines x={320} y={222} lines={["rồi mới lưu KẾT QUẢ vào biến ở vế trái"]} size={11} fill={C.inkSoft} weight={500} />
+
+      <rect x="70" y="248" width="220" height="58" rx="10" fill={C.mint} fillOpacity="0.12" stroke={C.mint} strokeWidth="1.5" />
+      <Lines x={180} y={268} lines={["vi = 200000"]} size={11} fill={C.mintDeep} weight={700} />
+      <Lines x={180} y={286} lines={["da_tieu = vi   → da_tieu cũng = 200000"]} size={10} fill={C.inkSoft} weight={500} />
+
+      <rect x="350" y="248" width="220" height="58" rx="10" fill={C.bubble} fillOpacity="0.12" stroke={C.bubble} strokeWidth="1.5" />
+      <Lines x={460} y={268} lines={["vi = vi - 50000  → vi = 150000"]} size={10.5} fill={C.bubbleDeep} weight={700} />
+      <Lines x={460} y={286} lines={["da_tieu vẫn giữ 200000 — không đổi theo"]} size={10} fill={C.inkSoft} weight={500} />
+    </Frame>
+  );
+}
+
+// ── Bài 17: Quy tắc đặt tên biến & gán đồng thời / hoán đổi giá trị ─────────
+function QuyTacDatTen() {
+  const valid = ["diem_toan", "tong", "banKinh2"];
+  const invalid = [
+    { name: "2diem", why: "bắt đầu bằng chữ số" },
+    { name: '"diem toan"', why: "chứa dấu cách" },
+    { name: "class", why: "trùng từ khoá Python" },
+  ];
+
+  return (
+    <Frame viewBox="0 0 640 300">
+      <rect x="15" y="15" width="300" height="180" rx="16" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="15" y="15" width="300" height="34" rx="16" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={165} y={37} lines={["✅ Tên biến hợp lệ"]} size={12.5} fill={C.mintDeep} weight={700} />
+      {valid.map((v, i) => (
+        <g key={i}>
+          <rect x="35" y={60 + i * 42} width="260" height="32" rx="8" fill={C.mint} fillOpacity="0.1" />
+          <text x="50" y={81 + i * 42} fontSize="12" fill={C.ink} fontFamily="monospace" fontWeight={600}>
+            {v}
+          </text>
+        </g>
+      ))}
+
+      <rect x="325" y="15" width="300" height="180" rx="16" fill={C.white} stroke={C.bubble} strokeWidth="2" />
+      <rect x="325" y="15" width="300" height="34" rx="16" fill={C.bubble} fillOpacity="0.12" />
+      <Lines x={475} y={37} lines={["❌ Tên biến KHÔNG hợp lệ"]} size={12.5} fill={C.bubbleDeep} weight={700} />
+      {invalid.map((v, i) => (
+        <g key={i}>
+          <rect x="345" y={60 + i * 42} width="260" height="32" rx="8" fill={C.bubble} fillOpacity="0.1" />
+          <text x="360" y={81 + i * 42} fontSize="12" fill={C.ink} fontFamily="monospace" fontWeight={600}>
+            {v.name}
+          </text>
+          <text x="480" y={81 + i * 42} fontSize="9.5" fill={C.bubbleDeep} fontWeight={600} textAnchor="end">
+            {v.why}
+          </text>
+        </g>
+      ))}
+
+      <rect x="70" y="215" width="500" height="70" rx="12" fill={C.grape} fillOpacity="0.08" stroke={C.grape} strokeWidth="1.5" />
+      <Lines x={320} y={238} lines={["🔄 Hoán đổi giá trị chỉ trong một dòng: a, b = b, a"]} size={12} fill={C.grapeDeep} weight={700} />
+      <text x="180" y="266" fontSize="12" fill={C.ink} fontFamily="monospace" textAnchor="middle">a = 3, b = 7</text>
+      <path d="M280,260 L360,260" stroke={C.grapeDeep} strokeWidth="2.5" markerEnd="url(#arrow)" />
+      <text x="460" y="266" fontSize="12" fill={C.ink} fontFamily="monospace" textAnchor="middle">a = 7, b = 3</text>
+    </Frame>
+  );
+}
+
+// ── Bài 17: Bảy phép toán số học và độ ưu tiên trong Python ─────────────────
+function PhepToanPython() {
+  const ops = [
+    { sym: "+", name: "Cộng", ex: "5 + 3", res: "8" },
+    { sym: "-", name: "Trừ", ex: "5 - 3", res: "2" },
+    { sym: "*", name: "Nhân", ex: "5 * 3", res: "15" },
+    { sym: "/", name: "Chia (số thực)", ex: "5 / 2", res: "2.5" },
+    { sym: "//", name: "Chia lấy nguyên", ex: "5 // 2", res: "2" },
+    { sym: "%", name: "Chia lấy dư", ex: "5 % 2", res: "1" },
+    { sym: "**", name: "Luỹ thừa", ex: "2 ** 3", res: "8" },
+  ];
+  const grains = [1, 2, 4, 8, 16, 32, 64];
+
+  return (
+    <Frame viewBox="0 0 640 340">
+      {ops.map((o, i) => {
+        const col = i % 4;
+        const row = Math.floor(i / 4);
+        const x = 20 + col * 155;
+        const y = 15 + row * 100;
+        return (
+          <g key={i}>
+            <rect x={x} y={y} width="145" height="88" rx="10" fill={C.white} stroke={C.grape} strokeWidth="1.5" />
+            <rect x={x} y={y} width="145" height="28" rx="10" fill={C.grape} fillOpacity="0.12" />
+            <text x={x + 72} y={y + 20} fontSize="13" fill={C.grapeDeep} fontWeight={700} textAnchor="middle" fontFamily="monospace">
+              {o.sym}  {o.name}
+            </text>
+            <text x={x + 72} y={y + 48} fontSize="11" fill={C.inkSoft} textAnchor="middle" fontFamily="monospace">
+              {o.ex}
+            </text>
+            <text x={x + 72} y={y + 72} fontSize="15" fill={C.ink} fontWeight={700} textAnchor="middle">
+              = {o.res}
+            </text>
+          </g>
+        );
+      })}
+
+      <Lines x={320} y={232} lines={["Độ ưu tiên: ** trước → * / // % → + - sau cùng (giống toán học, dùng ngoặc để đổi thứ tự)"]} size={10.5} fill={C.inkSoft} weight={600} />
+
+      <Lines x={320} y={258} lines={["🌾 Luỹ thừa lớn nhanh khủng khiếp: mỗi ô bàn cờ nhân đôi hạt gạo ô trước (2ⁿ)"]} size={11} fill={C.grapeDeep} weight={700} />
+      {grains.map((g, i) => (
+        <g key={i}>
+          <rect x={70 + i * 72} y={330 - g} width="46" height={g} fill={C.sun} fillOpacity="0.8" />
+          <Lines x={93 + i * 72} y={330 - g - 8} lines={[String(g)]} size={10} fill={C.sunDeep} weight={700} />
+          <Lines x={93 + i * 72} y={338} lines={[`ô ${i + 1}`]} size={9} fill={C.inkSoft} weight={500} />
+        </g>
+      ))}
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
@@ -1740,6 +1875,9 @@ const DIAGRAMS: Record<string, () => JSX.Element> = {
   "ngon-ngu-may-vs-bac-cao": NgonNguMayVsBacCao,
   "moi-truong-python": MoiTruongPython,
   "print-va-bieu-thuc": PrintVaBieuThuc,
+  "bien-va-gan": BienVaGan,
+  "quy-tac-dat-ten": QuyTacDatTen,
+  "phep-toan-python": PhepToanPython,
 };
 
 export default function Diagram({ name }: { name: string }) {
