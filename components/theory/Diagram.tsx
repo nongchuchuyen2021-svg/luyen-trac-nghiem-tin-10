@@ -1175,6 +1175,154 @@ function InkscapeGiaoDien() {
   );
 }
 
+// ── Bài 13: Bốn công cụ vẽ hình cơ bản trong Inkscape ────────────────────────
+function CongCuVeHinh() {
+  const tools = [
+    { name: "Rectangle", key: "R", color: C.grape, deep: C.grapeDeep, x: 12, desc: ["Vẽ hình chữ nhật.", "Giữ Ctrl → hình vuông."], ex: "Khung ảnh, banner nền" },
+    { name: "Ellipse", key: "E", color: C.bubble, deep: C.bubbleDeep, x: 169, desc: ["Vẽ hình elip.", "Giữ Ctrl → hình tròn."], ex: "Mặt trăng, huy hiệu tròn" },
+    { name: "Star/Polygon", key: "*", color: C.sun, deep: C.sunDeep, x: 326, desc: ["Vẽ sao/đa giác đều.", "Đổi số cánh trên thanh thuộc tính."], ex: "Ngôi sao, huy hiệu trang trí" },
+    { name: "Bezier", key: "B", color: C.mint, deep: C.mintDeep, x: 483, desc: ["Vẽ đường/hình tự do.", "Nháy từng điểm neo rồi nối lại."], ex: "Đường quỹ đạo, chữ kí" },
+  ];
+
+  return (
+    <Frame viewBox="0 0 640 300">
+      {tools.map((t, i) => {
+        const cx = t.x + 72.5;
+        return (
+          <g key={i}>
+            <rect x={t.x} y="15" width="145" height="255" rx="14" fill={C.white} stroke={t.color} strokeWidth="2" />
+            <rect x={t.x} y="15" width="145" height="36" rx="14" fill={t.color} fillOpacity="0.12" />
+            <Lines x={cx} y={38} lines={[t.name]} size={11.5} fill={t.deep} weight={700} />
+            <circle cx={t.x + 20} cy="97" r="13" fill={t.color} fillOpacity="0.15" stroke={t.color} strokeWidth="1.2" />
+            <Lines x={t.x + 20} y={101} lines={[t.key]} size={12} fill={t.deep} weight={700} />
+
+            {/* Hình xem trước từng công cụ */}
+            {i === 0 && <rect x={cx - 24} y="80" width="48" height="34" rx="4" fill={t.color} fillOpacity="0.7" />}
+            {i === 1 && <ellipse cx={cx} cy="97" rx="26" ry="17" fill={t.color} fillOpacity="0.7" />}
+            {i === 2 && (
+              <polygon
+                points="0,-22 5,-7 21,-7 9,3 13,18 0,9 -13,18 -9,3 -21,-7 -5,-7"
+                transform={`translate(${cx},97)`}
+                fill={t.color}
+                fillOpacity="0.75"
+              />
+            )}
+            {i === 3 && (
+              <path
+                d={`M${cx - 26},108 C${cx - 14},76 ${cx + 14},118 ${cx + 26},86`}
+                fill="none"
+                stroke={t.color}
+                strokeWidth="3"
+                strokeLinecap="round"
+              />
+            )}
+
+            <Lines
+              x={t.x + 14}
+              y={140}
+              lines={t.desc}
+              size={10}
+              fill={C.inkSoft}
+              weight={500}
+              anchor="start"
+              gap={15}
+            />
+
+            <rect x={t.x + 10} y="215" width="125" height="42" rx="8" fill={C.line} fillOpacity="0.3" />
+            <Lines x={t.x + 20} y={233} lines={["💡 Ví dụ:"]} size={9.5} fill={t.deep} weight={700} anchor="start" />
+            <Lines x={t.x + 20} y={248} lines={[t.ex]} size={9.5} fill={C.ink} weight={500} anchor="start" />
+          </g>
+        );
+      })}
+      <Lines
+        x={320}
+        y={286}
+        lines={["Gõ đúng phím tắt (R, E, B…) để chọn nhanh công cụ mà không cần rời tay khỏi bàn phím"]}
+        size={10.5}
+        fill={C.inkSoft}
+        weight={500}
+      />
+    </Frame>
+  );
+}
+
+// ── Bài 13: Thứ tự xếp lớp (Z-order) và kết quả hiển thị ────────────────────
+function ThuTuXepLop() {
+  return (
+    <Frame viewBox="0 0 640 340">
+      {/* Panel trái: chồng lớp */}
+      <rect x="15" y="15" width="300" height="310" rx="16" fill={C.white} stroke={C.grape} strokeWidth="2" />
+      <rect x="15" y="15" width="300" height="38" rx="16" fill={C.grape} fillOpacity="0.12" />
+      <Lines x={165} y={39} lines={["🗂️ Thứ tự xếp lớp (Z-order)"]} size={12.5} fill={C.grapeDeep} weight={700} />
+
+      <rect x="70" y="228" width="180" height="48" rx="10" fill={C.line} fillOpacity="0.6" stroke={C.inkSoft} strokeWidth="1.2" />
+      <Lines x={160} y={247} lines={["Lớp 1 — Nền"]} size={11} fill={C.ink} weight={700} />
+      <Lines x={160} y={263} lines={["(vẽ đầu tiên, dưới cùng)"]} size={9} fill={C.inkSoft} weight={500} />
+
+      <rect x="90" y="184" width="180" height="48" rx="10" fill={C.bubble} fillOpacity="0.18" stroke={C.bubbleDeep} strokeWidth="1.2" />
+      <Lines x={180} y={203} lines={["Lớp 2 — Hoa trang trí"]} size={11} fill={C.bubbleDeep} weight={700} />
+      <Lines x={180} y={219} lines={["(vẽ sau, nằm giữa)"]} size={9} fill={C.inkSoft} weight={500} />
+
+      <rect x="110" y="140" width="180" height="48" rx="10" fill={C.mint} fillOpacity="0.2" stroke={C.mintDeep} strokeWidth="1.2" />
+      <Lines x={200} y={159} lines={["Lớp 3 — Chữ"]} size={11} fill={C.mintDeep} weight={700} />
+      <Lines x={200} y={175} lines={["(vẽ sau cùng, trên hết)"]} size={9} fill={C.inkSoft} weight={500} />
+
+      <Lines x={165} y={298} lines={["Home = Lower to Bottom · End = Raise to Top"]} size={10} fill={C.inkSoft} weight={600} />
+      <Lines x={165} y={314} lines={["Page Up / Page Down: nhích lên / xuống 1 bậc"]} size={10} fill={C.inkSoft} weight={600} />
+
+      {/* Panel phải: kết quả hiển thị */}
+      <rect x="325" y="15" width="300" height="310" rx="16" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="325" y="15" width="300" height="38" rx="16" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={475} y={39} lines={["👁️ Kết quả trên Canvas"]} size={12.5} fill={C.mintDeep} weight={700} />
+
+      <rect x="355" y="68" width="240" height="200" rx="14" fill={C.grape} fillOpacity="0.15" stroke={C.grape} strokeWidth="1.5" />
+      {[[-22, -6], [22, -6], [0, 18], [0, -28]].map(([dx, dy], i) => (
+        <circle key={i} cx={475 + dx} cy={162 + dy} r="18" fill={C.bubble} fillOpacity="0.6" stroke={C.bubbleDeep} strokeWidth="2" />
+      ))}
+      <circle cx="475" cy="162" r="10" fill={C.sun} stroke={C.bubbleDeep} strokeWidth="1.5" />
+      <Lines x={475} y={240} lines={["Chúc mừng 20/11 🌸"]} size={13} fill={C.ink} weight={700} />
+
+      <Lines x={475} y={290} lines={["Nền dưới cùng → Hoa ở giữa → Chữ trên hết mới đọc được"]} size={10} fill={C.inkSoft} weight={500} />
+      <Lines x={475} y={306} lines={["Vẽ sau mặc định nằm trên — đổi lại được bằng Raise/Lower"]} size={10} fill={C.inkSoft} weight={500} />
+    </Frame>
+  );
+}
+
+// ── Bài 13: Align & Distribute — trước và sau khi căn chỉnh ─────────────────
+function AlignDistribute() {
+  const before: [number, number][] = [[25, 70], [70, 118], [160, 45], [190, 138], [255, 95]];
+  const after: [number, number][] = [[25, 100], [88, 100], [151, 100], [214, 100], [277, 100]];
+  const colors = [C.grape, C.bubble, C.mint, C.sun, "#3B82F6"];
+
+  return (
+    <Frame viewBox="0 0 640 300">
+      {/* Trước */}
+      <rect x="15" y="15" width="290" height="255" rx="16" fill={C.white} stroke={C.bubble} strokeWidth="2" />
+      <rect x="15" y="15" width="290" height="36" rx="16" fill={C.bubble} fillOpacity="0.12" />
+      <Lines x={160} y={38} lines={["😵 Trước: lệch lạc, thưa mau"]} size={12} fill={C.bubbleDeep} weight={700} />
+      {before.map(([bx, by], i) => (
+        <rect key={i} x={30 + bx} y={30 + by} width="34" height="30" rx="6" fill={colors[i]} fillOpacity="0.7" />
+      ))}
+      <Lines x={160} y={252} lines={["Căn bằng mắt: cái cao cái thấp, khoảng cách không đều"]} size={10} fill={C.inkSoft} weight={500} />
+
+      {/* Mũi tên giữa */}
+      <path d="M312,142 L328,142" stroke={C.grape} strokeWidth="3" markerEnd="url(#arrow)" />
+      <Lines x={320} y={125} lines={["Align &"]} size={10} fill={C.grapeDeep} weight={700} />
+      <Lines x={320} y={165} lines={["Distribute"]} size={10} fill={C.grapeDeep} weight={700} />
+
+      {/* Sau */}
+      <rect x="335" y="15" width="290" height="255" rx="16" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="335" y="15" width="290" height="36" rx="16" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={480} y={38} lines={["✨ Sau: thẳng hàng, đều khoảng"]} size={12} fill={C.mintDeep} weight={700} />
+      {after.map(([ax, ay], i) => (
+        <rect key={i} x={350 + ax} y={30 + ay} width="34" height="30" rx="6" fill={colors[i]} fillOpacity="0.7" />
+      ))}
+      <line x1="365" y1="145" x2="605" y2="145" stroke={C.mint} strokeWidth="1" strokeDasharray="3 3" />
+      <Lines x={480} y={252} lines={["Align: cùng một mép trên · Distribute: khoảng cách bằng nhau"]} size={10} fill={C.inkSoft} weight={500} />
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
@@ -1193,6 +1341,9 @@ const DIAGRAMS: Record<string, () => JSX.Element> = {
   "bitmap-vs-vector": BitmapVsVector,
   "gimp-vs-inkscape": GimpVsInkscape,
   "inkscape-giao-dien": InkscapeGiaoDien,
+  "cong-cu-ve-hinh-inkscape": CongCuVeHinh,
+  "thu-tu-xep-lop": ThuTuXepLop,
+  "align-distribute": AlignDistribute,
 };
 
 export default function Diagram({ name }: { name: string }) {
