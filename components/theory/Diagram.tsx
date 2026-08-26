@@ -2497,6 +2497,139 @@ function GapGiayToiNguong() {
   );
 }
 
+// ── Bài 22: Danh sách là dãy ô đánh số — chỉ số bắt đầu từ 0 ────────────────
+function DayHopDanhSo() {
+  const items = ["Lều", "Bóng đá", "Nước", "Bánh mì"];
+  return (
+    <Frame viewBox="0 0 640 260">
+      <Lines x={320} y={26} lines={["do_da_ngoai = [\"Lều\", \"Bóng đá\", \"Nước\", \"Bánh mì\"]"]} size={11.5} fill={C.grapeDeep} weight={700} />
+
+      {items.map((it, i) => (
+        <g key={i}>
+          <rect x={70 + i * 130} y="55" width="110" height="70" rx="10" fill={C.grape} fillOpacity="0.15" stroke={C.grape} strokeWidth="2" />
+          <Lines x={125 + i * 130} y={96} lines={[it]} size={12} fill={C.grapeDeep} weight={700} />
+        </g>
+      ))}
+
+      {items.map((_, i) => (
+        <g key={`idx${i}`}>
+          <circle cx={125 + i * 130} cy="150" r="16" fill={C.mint} fillOpacity="0.25" stroke={C.mintDeep} strokeWidth="1.8" />
+          <Lines x={125 + i * 130} y={155} lines={[String(i)]} size={13} fill={C.mintDeep} weight={700} />
+        </g>
+      ))}
+      <Lines x={320} y={183} lines={["👆 chỉ số (index) — LUÔN bắt đầu từ 0"]} size={10.5} fill={C.mintDeep} weight={700} />
+
+      {items.map((_, i) => (
+        <Lines key={`ord${i}`} x={125 + i * 130} y={210} lines={[`đồ thứ ${i + 1}`]} size={9.5} fill={C.inkSoft} weight={500} />
+      ))}
+      <Lines x={320} y={236} lines={["😵 Cách nói tự nhiên \"thứ mấy\" (bắt đầu từ 1) lệch với chỉ số 1 đơn vị!"]} size={10} fill="#B91C1C" weight={700} />
+    </Frame>
+  );
+}
+
+// ── Bài 22: append() thêm vào cuối — gán chỉ số sửa đúng một ô ──────────────
+function GanLaiVaAppend() {
+  return (
+    <Frame viewBox="0 0 640 260">
+      <rect x="15" y="15" width="300" height="230" rx="16" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="15" y="15" width="300" height="34" rx="16" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={165} y={37} lines={["➕ append(): thêm vào CUỐI"]} size={11.5} fill={C.mintDeep} weight={700} />
+
+      {["Lều", "Bóng", "Nước"].map((it, i) => (
+        <rect key={i} x={35 + i * 62} y="65" width="55" height="55" rx="8" fill={C.mint} fillOpacity="0.15" stroke={C.mintDeep} strokeWidth="1.5" />
+      ))}
+      {["Lều", "Bóng", "Nước"].map((it, i) => (
+        <Lines key={`t${i}`} x={62 + i * 62} y={97} lines={[it]} size={10} fill={C.mintDeep} weight={700} />
+      ))}
+      <path d="M225,92 L245,92" stroke={C.mintDeep} strokeWidth="2.5" markerEnd="url(#arrow)" />
+      <rect x="222" y="65" width="55" height="55" rx="8" fill={C.sun} fillOpacity="0.25" stroke={C.sunDeep} strokeWidth="2" strokeDasharray="4 3" />
+      <Lines x={250} y={97} lines={["Áo mưa"]} size={9.5} fill={C.sunDeep} weight={700} />
+      <Lines x={165} y={143} lines={["do.append(\"Áo mưa\")"]} size={10.5} fill={C.ink} weight={600} />
+      <Lines x={165} y={162} lines={["Danh sách dài thêm 1 ô ở cuối"]} size={9.5} fill={C.inkSoft} weight={500} />
+
+      <rect x="30" y="190" width="270" height="45" rx="8" fill={C.line} fillOpacity="0.3" />
+      <Lines x={165} y={210} lines={["Không cần biết vị trí — luôn"]} size={9.5} fill={C.ink} weight={600} />
+      <Lines x={165} y={225} lines={["chèn vào ngay sau ô cuối cùng"]} size={9.5} fill={C.ink} weight={600} />
+
+      <rect x="325" y="15" width="300" height="230" rx="16" fill={C.white} stroke={C.bubble} strokeWidth="2" />
+      <rect x="325" y="15" width="300" height="34" rx="16" fill={C.bubble} fillOpacity="0.12" />
+      <Lines x={475} y={37} lines={["✏️ do[2] = ...: SỬA đúng một ô"]} size={11.5} fill={C.bubbleDeep} weight={700} />
+
+      {["Lều", "Bóng", "Nước"].map((it, i) => (
+        <rect
+          key={i}
+          x={345 + i * 62}
+          y="65"
+          width="55"
+          height="55"
+          rx="8"
+          fill={i === 2 ? C.bubble : C.bubble}
+          fillOpacity={i === 2 ? 0.3 : 0.12}
+          stroke={i === 2 ? C.bubbleDeep : C.bubbleDeep}
+          strokeWidth={i === 2 ? 2.5 : 1.3}
+        />
+      ))}
+      {["Lều", "Bóng", "Nước suối"].map((it, i) => (
+        <Lines key={`t${i}`} x={372 + i * 62} y={97} lines={[it]} size={i === 2 ? 8.5 : 10} fill={C.bubbleDeep} weight={700} />
+      ))}
+      <path d="M532,60 L532,45 L500,45" fill="none" stroke={C.bubbleDeep} strokeWidth="1.5" markerEnd="url(#arrow)" />
+      <Lines x={475} y={143} lines={["do[2] = \"Nước suối\""]} size={10.5} fill={C.ink} weight={600} />
+      <Lines x={475} y={162} lines={["Chỉ đúng ô chỉ số 2 bị đổi"]} size={9.5} fill={C.inkSoft} weight={500} />
+
+      <rect x="340" y="190" width="270" height="45" rx="8" fill={C.line} fillOpacity="0.3" />
+      <Lines x={475} y={210} lines={["Danh sách SỬA ĐƯỢC từng phần tử"]} size={9.5} fill={C.ink} weight={600} />
+      <Lines x={475} y={225} lines={["(khác với xâu kí tự — không sửa được)"]} size={9.5} fill={C.ink} weight={600} />
+    </Frame>
+  );
+}
+
+// ── Bài 22: Duyệt lấy GIÁ TRỊ (for x in a) và duyệt lấy VỊ TRÍ (range(len)) ──
+function DuyetGiaTriVsChiSo() {
+  return (
+    <Frame viewBox="0 0 640 260">
+      <rect x="15" y="15" width="300" height="230" rx="16" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="15" y="15" width="300" height="34" rx="16" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={165} y={37} lines={["for x in do: — chỉ cần GIÁ TRỊ"]} size={10.5} fill={C.mintDeep} weight={700} />
+
+      {["Lều", "Bóng", "Nước"].map((it, i) => (
+        <g key={i}>
+          <rect x={35 + i * 82} y="60" width="70" height="42" rx="8" fill={C.mint} fillOpacity="0.18" stroke={C.mintDeep} strokeWidth="1.5" />
+          <Lines x={70 + i * 82} y={85} lines={[it]} size={10.5} fill={C.mintDeep} weight={700} />
+          {i < 2 && <path d={`M${105 + i * 82},81 L${117 + i * 82},81`} stroke={C.mintDeep} strokeWidth="2" markerEnd="url(#arrow)" />}
+        </g>
+      ))}
+
+      <rect x="35" y="120" width="245" height="50" rx="8" fill={C.ink} />
+      <text x="47" y="140" fontSize="10" fill="#8CF29B" fontFamily="monospace">for x in do:</text>
+      <text x="60" y="158" fontSize="10" fill="#8CF29B" fontFamily="monospace">print(x)</text>
+
+      <rect x="30" y="185" width="255" height="50" rx="8" fill={C.line} fillOpacity="0.3" />
+      <Lines x={157} y={204} lines={["Dùng khi chỉ cần đọc nội dung,"]} size={9.5} fill={C.ink} weight={600} />
+      <Lines x={157} y={220} lines={["không cần biết đang ở ô số mấy"]} size={9.5} fill={C.ink} weight={600} />
+
+      <rect x="325" y="15" width="300" height="230" rx="16" fill={C.white} stroke={C.bubble} strokeWidth="2" />
+      <rect x="325" y="15" width="300" height="34" rx="16" fill={C.bubble} fillOpacity="0.12" />
+      <Lines x={475} y={37} lines={["for i in range(len(do)): — cần CẢ VỊ TRÍ"]} size={9.5} fill={C.bubbleDeep} weight={700} />
+
+      {["Lều", "Bóng", "Nước"].map((it, i) => (
+        <g key={i}>
+          <rect x={345 + i * 82} y="60" width="70" height="42" rx="8" fill={C.bubble} fillOpacity="0.18" stroke={C.bubbleDeep} strokeWidth="1.5" />
+          <Lines x={380 + i * 82} y={78} lines={[`i=${i}`]} size={9} fill={C.bubbleDeep} weight={700} />
+          <Lines x={380 + i * 82} y={94} lines={[it]} size={9.5} fill={C.bubbleDeep} weight={700} />
+        </g>
+      ))}
+
+      <rect x="345" y="120" width="255" height="50" rx="8" fill={C.ink} />
+      <text x="357" y="140" fontSize="9.5" fill="#8CF29B" fontFamily="monospace">for i in range(len(do)):</text>
+      <text x="370" y="158" fontSize="9.5" fill="#8CF29B" fontFamily="monospace">print(i + 1, do[i])</text>
+
+      <rect x="340" y="185" width="255" height="50" rx="8" fill={C.line} fillOpacity="0.3" />
+      <Lines x={467} y={204} lines={["Dùng khi cần đánh số thứ tự,"]} size={9.5} fill={C.ink} weight={600} />
+      <Lines x={467} y={220} lines={["so sánh vị trí, hoặc SỬA phần tử"]} size={9.5} fill={C.ink} weight={600} />
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
@@ -2545,6 +2678,9 @@ const DIAGRAMS: Record<string, () => JSX.Element> = {
   "while-kiem-tra-truoc": WhileKiemTraTruoc,
   "bay-lap-vo-han": BayLapVoHan,
   "gap-giay-toi-nguong": GapGiayToiNguong,
+  "day-hop-danh-so": DayHopDanhSo,
+  "gan-lai-va-append": GanLaiVaAppend,
+  "duyet-gia-tri-vs-chi-so": DuyetGiaTriVsChiSo,
 };
 
 export default function Diagram({ name }: { name: string }) {
