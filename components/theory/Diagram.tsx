@@ -1603,6 +1603,113 @@ function GradientChuyenSac() {
   );
 }
 
+// ── Bài 16: Ngôn ngữ máy và ngôn ngữ lập trình bậc cao ───────────────────────
+function NgonNguMayVsBacCao() {
+  const bits =
+    "01001000 01100101 01101100 01101100 01101111 00100000 01010111 01101111 01110010 01101100 01100100";
+
+  return (
+    <Frame viewBox="0 0 640 260">
+      <rect x="15" y="15" width="270" height="230" rx="16" fill={C.white} stroke={C.inkSoft} strokeWidth="2" />
+      <rect x="15" y="15" width="270" height="38" rx="16" fill={C.inkSoft} fillOpacity="0.15" />
+      <Lines x={150} y={39} lines={["⚙️ Ngôn ngữ máy"]} size={12.5} fill={C.ink} weight={700} />
+
+      <rect x="35" y="70" width="230" height="90" rx="8" fill={C.ink} />
+      <text x="150" y="105" fontSize="9" fill="#8CF29B" fontWeight={600} textAnchor="middle" fontFamily="monospace">
+        <tspan x="150" dy="0">{bits.slice(0, 36)}</tspan>
+        <tspan x="150" dy="16">{bits.slice(36, 72)}</tspan>
+        <tspan x="150" dy="16">{bits.slice(72)}</tspan>
+      </text>
+      <Lines x={150} y={190} lines={["Dãy bit 0/1 — bộ xử lí (CPU)"]} size={10} fill={C.inkSoft} weight={600} />
+      <Lines x={150} y={206} lines={["thực hiện được trực tiếp"]} size={10} fill={C.inkSoft} weight={600} />
+      <Lines x={150} y={226} lines={["Con người rất khó viết, khó đọc"]} size={9.5} fill={C.inkSoft} weight={500} />
+
+      <path d="M292,130 L348,130" stroke={C.grapeDeep} strokeWidth="2.5" markerEnd="url(#arrow)" />
+      <Lines x={320} y={112} lines={["🔁 Trình dịch /"]} size={9.5} fill={C.grapeDeep} weight={700} />
+      <Lines x={320} y={150} lines={["Thông dịch"]} size={9.5} fill={C.grapeDeep} weight={700} />
+
+      <rect x="355" y="15" width="270" height="230" rx="16" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="355" y="15" width="270" height="38" rx="16" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={490} y={39} lines={["🐍 Ngôn ngữ bậc cao (Python)"]} size={12.5} fill={C.mintDeep} weight={700} />
+
+      <rect x="375" y="70" width="230" height="90" rx="8" fill={C.ink} />
+      <text x="490" y="120" fontSize="13" fill="#8CF29B" fontWeight={600} textAnchor="middle" fontFamily="monospace">
+        print(&quot;Hello World&quot;)
+      </text>
+      <Lines x={490} y={190} lines={["Câu lệnh gần ngôn ngữ tự nhiên"]} size={10} fill={C.inkSoft} weight={600} />
+      <Lines x={490} y={206} lines={["Con người viết và đọc dễ dàng"]} size={10} fill={C.inkSoft} weight={600} />
+      <Lines x={490} y={226} lines={["Không phụ thuộc loại máy cụ thể"]} size={9.5} fill={C.inkSoft} weight={500} />
+    </Frame>
+  );
+}
+
+// ── Bài 16: Ba môi trường lập trình Python phổ biến ──────────────────────────
+function MoiTruongPython() {
+  const envs = [
+    { name: "IDLE", color: C.grape, deep: C.grapeDeep, x: 20, desc: ["Đi kèm sẵn khi cài Python.", "Vừa gõ tương tác vừa soạn tệp."], who: "Bắt đầu học, thử lệnh nhanh" },
+    { name: "Thonny", color: C.mint, deep: C.mintDeep, x: 225, desc: ["Giao diện đơn giản, có khung", "biến số trực quan khi debug."], who: "Học sinh mới làm quen" },
+    { name: "PyCharm / VS Code", color: C.bubble, deep: C.bubbleDeep, x: 430, desc: ["Nhiều tiện ích mạnh: gợi ý code,", "quản lí dự án nhiều tệp."], who: "Dự án lớn, chuyên nghiệp" },
+  ];
+
+  return (
+    <Frame viewBox="0 0 640 300">
+      {envs.map((e, i) => (
+        <g key={i}>
+          <rect x={e.x} y="15" width="190" height="205" rx="14" fill={C.white} stroke={e.color} strokeWidth="2" />
+          <rect x={e.x} y="15" width="190" height="38" rx="14" fill={e.color} fillOpacity="0.12" />
+          <Lines x={e.x + 95} y={39} lines={[e.name]} size={12} fill={e.deep} weight={700} />
+
+          <Lines x={e.x + 14} y={72} lines={e.desc} size={10} fill={C.inkSoft} weight={500} anchor="start" gap={16} />
+
+          <rect x={e.x + 10} y="150" width="170" height="55" rx="8" fill={C.line} fillOpacity="0.3" />
+          <Lines x={e.x + 20} y={169} lines={["👤 Phù hợp:"]} size={9.5} fill={e.deep} weight={700} anchor="start" />
+          <Lines x={e.x + 20} y={186} lines={[e.who]} size={9.5} fill={C.ink} weight={500} anchor="start" gap={13} />
+        </g>
+      ))}
+
+      <rect x="120" y="235" width="400" height="50" rx="10" fill={C.ink} />
+      <text x="140" y="266" fontSize="13" fill="#8CF29B" fontFamily="monospace" textAnchor="start">
+        &gt;&gt;&gt; chương_trình.py
+      </text>
+      <Lines x={320} y={297} lines={["Dấu nhắc >>> chạy lệnh ngay; chương trình dài lưu trong tệp .py"]} size={10} fill={C.inkSoft} weight={500} />
+    </Frame>
+  );
+}
+
+// ── Bài 16: print() với xâu kí tự và biểu thức số học ───────────────────────
+function PrintVaBieuThuc() {
+  const cases = [
+    { code: 'print("5 + 3")', out: "5 + 3", note: "Xâu kí tự — in nguyên văn", x: 15, color: C.bubble, deep: C.bubbleDeep },
+    { code: "print(5 + 3)", out: "8", note: "Biểu thức số học — tính rồi in", x: 225, color: C.mint, deep: C.mintDeep },
+    { code: "print(10 / 4)", out: "2.5", note: "Phép / luôn trả số thực", x: 435, color: C.grape, deep: C.grapeDeep },
+  ];
+
+  return (
+    <Frame viewBox="0 0 640 260">
+      {cases.map((c, i) => (
+        <g key={i}>
+          <rect x={c.x} y="15" width="190" height="225" rx="14" fill={C.white} stroke={c.color} strokeWidth="2" />
+          <rect x={c.x} y="15" width="190" height="34" rx="14" fill={c.color} fillOpacity="0.12" />
+          <Lines x={c.x + 95} y={37} lines={["Lệnh gõ vào"]} size={10.5} fill={c.deep} weight={700} />
+
+          <rect x={c.x + 14} y="58" width="162" height="34" rx="6" fill={C.ink} />
+          <text x={c.x + 95} y="80" fontSize="10.5" fill="#8CF29B" fontFamily="monospace" textAnchor="middle">
+            {c.code}
+          </text>
+
+          <path d={`M${c.x + 95},100 L${c.x + 95},122`} stroke={c.deep} strokeWidth="2" markerEnd="url(#arrow)" />
+
+          <Lines x={c.x + 95} y={140} lines={["Kết quả hiển thị"]} size={10.5} fill={c.deep} weight={700} />
+          <rect x={c.x + 30} y="150" width="130" height="40" rx="8" fill={c.color} fillOpacity="0.15" stroke={c.color} strokeWidth="1.5" />
+          <Lines x={c.x + 95} y={175} lines={[c.out]} size={15} fill={c.deep} weight={700} />
+
+          <Lines x={c.x + 95} y={212} lines={[c.note]} size={9.5} fill={C.inkSoft} weight={500} />
+        </g>
+      ))}
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
@@ -1630,6 +1737,9 @@ const DIAGRAMS: Record<string, () => JSX.Element> = {
   "phep-ghep-hinh": PhepGhepHinh,
   "xuat-ban-ve": XuatBanVe,
   "gradient-chuyen-sac": GradientChuyenSac,
+  "ngon-ngu-may-vs-bac-cao": NgonNguMayVsBacCao,
+  "moi-truong-python": MoiTruongPython,
+  "print-va-bieu-thuc": PrintVaBieuThuc,
 };
 
 export default function Diagram({ name }: { name: string }) {
