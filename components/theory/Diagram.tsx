@@ -1323,6 +1323,119 @@ function AlignDistribute() {
   );
 }
 
+// ── Bài 14: Điểm neo Góc (Corner) và Trơn (Smooth) trên một Path ─────────────
+function DuongVaDiemNeo() {
+  return (
+    <Frame viewBox="0 0 640 300">
+      {/* Panel Corner */}
+      <rect x="15" y="15" width="300" height="255" rx="16" fill={C.white} stroke={C.bubble} strokeWidth="2" />
+      <rect x="15" y="15" width="300" height="38" rx="16" fill={C.bubble} fillOpacity="0.12" />
+      <Lines x={165} y={39} lines={["📐 Điểm neo GÓC (Corner)"]} size={12.5} fill={C.bubbleDeep} weight={700} />
+
+      <path d="M60,220 L165,90 L270,220" fill="none" stroke={C.inkSoft} strokeWidth="2.5" />
+      <circle cx="60" cy="220" r="5" fill={C.white} stroke={C.bubbleDeep} strokeWidth="2" />
+      <circle cx="270" cy="220" r="5" fill={C.white} stroke={C.bubbleDeep} strokeWidth="2" />
+      <rect x="159" y="84" width="12" height="12" fill={C.bubble} stroke={C.bubbleDeep} strokeWidth="1.5" />
+      <Lines x={165} y={70} lines={["nút góc: gãy khúc rõ rệt"]} size={10} fill={C.bubbleDeep} weight={700} />
+      <Lines x={165} y={244} lines={["Hai đoạn hai bên nút độc lập, không cần thẳng hàng"]} size={10} fill={C.inkSoft} weight={500} />
+
+      {/* Panel Smooth */}
+      <rect x="325" y="15" width="300" height="255" rx="16" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="325" y="15" width="300" height="38" rx="16" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={475} y={39} lines={["🌊 Điểm neo TRƠN (Smooth)"]} size={12.5} fill={C.mintDeep} weight={700} />
+
+      <path d="M370,220 C420,90 530,90 580,220" fill="none" stroke={C.inkSoft} strokeWidth="2.5" />
+      <line x1="410" y1="112" x2="540" y2="112" stroke={C.mintDeep} strokeWidth="1.3" strokeDasharray="3 2" />
+      <circle cx="370" cy="220" r="5" fill={C.white} stroke={C.mintDeep} strokeWidth="2" />
+      <circle cx="580" cy="220" r="5" fill={C.white} stroke={C.mintDeep} strokeWidth="2" />
+      <circle cx="475" cy="112" r="6" fill={C.mint} stroke={C.mintDeep} strokeWidth="2" />
+      <circle cx="410" cy="112" r="3.5" fill={C.white} stroke={C.mintDeep} strokeWidth="1.5" />
+      <circle cx="540" cy="112" r="3.5" fill={C.white} stroke={C.mintDeep} strokeWidth="1.5" />
+      <Lines x={475} y={95} lines={["nút trơn: 2 tay nắm thẳng hàng"]} size={10} fill={C.mintDeep} weight={700} />
+      <Lines x={475} y={244} lines={["Kéo một tay nắm, đường cong đổi mượt cả hai phía"]} size={10} fill={C.inkSoft} weight={500} />
+    </Frame>
+  );
+}
+
+// ── Bài 14: Object to Path và công cụ Node nắn hình ──────────────────────────
+function CongCuNode() {
+  return (
+    <Frame viewBox="0 0 640 320">
+      {/* Panel: Object to Path */}
+      <rect x="15" y="15" width="300" height="275" rx="16" fill={C.white} stroke={C.grape} strokeWidth="2" />
+      <rect x="15" y="15" width="300" height="38" rx="16" fill={C.grape} fillOpacity="0.12" />
+      <Lines x={165} y={39} lines={["🔁 Object to Path"]} size={12.5} fill={C.grapeDeep} weight={700} />
+
+      <rect x="55" y="90" width="110" height="90" rx="6" fill={C.grape} fillOpacity="0.15" stroke={C.grape} strokeWidth="1.5" />
+      <Lines x={110} y={200} lines={["Hình cơ bản", "(chỉ chỉnh qua tham số)"]} size={9.5} fill={C.inkSoft} weight={500} gap={13} />
+
+      <path d="M180,135 L210,135" stroke={C.grapeDeep} strokeWidth="2.5" markerEnd="url(#arrow)" />
+
+      <rect x="220" y="90" width="80" height="90" rx="6" fill={C.white} stroke={C.grape} strokeWidth="1.5" strokeDasharray="3 2" />
+      {[[220, 90], [300, 90], [300, 180], [220, 180]].map(([px, py], i) => (
+        <rect key={i} x={px - 5} y={py - 5} width="10" height="10" fill={C.grape} stroke={C.grapeDeep} strokeWidth="1.5" />
+      ))}
+      <Lines x={260} y={200} lines={["Path — 4 điểm neo", "kéo tự do từng nút"]} size={9.5} fill={C.grapeDeep} weight={600} gap={13} />
+
+      <Lines x={165} y={265} lines={["Muốn nắn từng góc riêng lẻ, phải chuyển hình cơ bản thành path trước"]} size={10} fill={C.inkSoft} weight={500} />
+
+      {/* Panel: Node tool nắn hình lá cây */}
+      <rect x="325" y="15" width="300" height="275" rx="16" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="325" y="15" width="300" height="38" rx="16" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={475} y={39} lines={["🍃 Công cụ Node nắn hình"]} size={12.5} fill={C.mintDeep} weight={700} />
+
+      <Lines x={400} y={70} lines={["Trước: cạnh thẳng"]} size={10} fill={C.inkSoft} weight={600} />
+      <polygon points="400,140 380,95 415,75 440,100 420,135" fill={C.mint} fillOpacity="0.35" stroke={C.mintDeep} strokeWidth="1.5" />
+
+      <path d="M455,105 L480,105" stroke={C.mintDeep} strokeWidth="2.5" markerEnd="url(#arrow)" />
+
+      <Lines x={555} y={70} lines={["Sau: mềm mại tự nhiên"]} size={10} fill={C.mintDeep} weight={700} />
+      <path
+        d="M555,140 C535,120 540,85 565,72 C585,62 600,85 590,105 C605,120 585,140 555,140 Z"
+        fill={C.mint}
+        fillOpacity="0.55"
+        stroke={C.mintDeep}
+        strokeWidth="1.8"
+      />
+
+      <Lines x={475} y={190} lines={["Kéo điểm neo và tay nắm bằng công cụ Node để bo cong từng cạnh"]} size={10} fill={C.inkSoft} weight={500} />
+      <Lines x={475} y={265} lines={["Mọi hình phức tạp đều bắt đầu từ một hình đơn giản rồi tinh chỉnh dần"]} size={10} fill={C.inkSoft} weight={500} />
+    </Frame>
+  );
+}
+
+// ── Bài 14: Văn bản thẳng và Text on Path (chữ chạy theo đường) ─────────────
+function TextOnPathDiagram() {
+  return (
+    <Frame viewBox="0 0 640 300">
+      {/* Panel: text thẳng */}
+      <rect x="15" y="15" width="300" height="255" rx="16" fill={C.white} stroke={C.grape} strokeWidth="2" />
+      <rect x="15" y="15" width="300" height="38" rx="16" fill={C.grape} fillOpacity="0.12" />
+      <Lines x={165} y={39} lines={["🔤 Văn bản thông thường"]} size={12.5} fill={C.grapeDeep} weight={700} />
+
+      <line x1="55" y1="150" x2="275" y2="150" stroke={C.line} strokeWidth="1.5" strokeDasharray="3 3" />
+      <Lines x={165} y={150} lines={["MẦM XANH"]} size={26} fill={C.grapeDeep} weight={700} />
+      <Lines x={165} y={230} lines={["Chữ nằm thẳng trên một đường cơ sở nằm ngang"]} size={10} fill={C.inkSoft} weight={500} />
+
+      {/* Panel: Text on Path */}
+      <rect x="325" y="15" width="300" height="255" rx="16" fill={C.white} stroke={C.mint} strokeWidth="2" />
+      <rect x="325" y="15" width="300" height="38" rx="16" fill={C.mint} fillOpacity="0.12" />
+      <Lines x={475} y={39} lines={["🌈 Text on Path"]} size={12.5} fill={C.mintDeep} weight={700} />
+
+      <defs>
+        <path id="curve14" d="M355,220 C400,90 550,90 595,220" />
+      </defs>
+      <path d="M355,220 C400,90 550,90 595,220" fill="none" stroke={C.line} strokeWidth="1.5" strokeDasharray="3 3" />
+      <text fontSize="15" fill={C.mintDeep} fontWeight={700}>
+        <textPath href="#curve14" startOffset="50%" textAnchor="middle">
+          Tập san chào mừng 26/3
+        </textPath>
+      </text>
+      <Lines x={475} y={245} lines={["Chọn chữ + đường ➜ Text ➜ Put on Path — chữ uốn theo hình dạng đường"]} size={10} fill={C.inkSoft} weight={500} />
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
@@ -1344,6 +1457,9 @@ const DIAGRAMS: Record<string, () => JSX.Element> = {
   "cong-cu-ve-hinh-inkscape": CongCuVeHinh,
   "thu-tu-xep-lop": ThuTuXepLop,
   "align-distribute": AlignDistribute,
+  "duong-va-diem-neo": DuongVaDiemNeo,
+  "cong-cu-node": CongCuNode,
+  "text-on-path": TextOnPathDiagram,
 };
 
 export default function Diagram({ name }: { name: string }) {

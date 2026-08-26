@@ -10,6 +10,7 @@ import bai10 from "@/data/theory/bai-10";
 import bai11 from "@/data/theory/bai-11";
 import bai12 from "@/data/theory/bai-12";
 import bai13 from "@/data/theory/bai-13";
+import bai14 from "@/data/theory/bai-14";
 
 export const THEORY_BANK: Record<string, LessonTheory> = {
   "bai-01": bai01,
@@ -21,6 +22,7 @@ export const THEORY_BANK: Record<string, LessonTheory> = {
   "bai-11": bai11,
   "bai-12": bai12,
   "bai-13": bai13,
+  "bai-14": bai14,
 };
 
 export function getTheory(lessonId: string): LessonTheory | null {
