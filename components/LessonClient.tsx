@@ -2,14 +2,15 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import type { EssayQuestion, LessonTheory, Question, TFQuestion } from "@/lib/types";
+import type { EssayQuestion, LessonTheory, Question, SortGame, TFQuestion } from "@/lib/types";
 import { getLessonProgress } from "@/lib/progress";
 import QuizClient from "@/components/QuizClient";
 import TrueFalseQuiz from "@/components/TrueFalseQuiz";
 import EssayViewer from "@/components/EssayViewer";
 import TheoryViewer from "@/components/TheoryViewer";
+import SortGameClient from "@/components/SortGame";
 
-type Mode = "menu" | "mcq" | "tf" | "essay" | "theory" | "sgk";
+type Mode = "menu" | "mcq" | "tf" | "essay" | "theory" | "sgk" | "game";
 
 export default function LessonClient({
   lessonId,
@@ -20,6 +21,7 @@ export default function LessonClient({
   essay,
   theory,
   sgkUrl,
+  game,
 }: {
   lessonId: string;
   lessonTitle: string;
@@ -29,15 +31,18 @@ export default function LessonClient({
   essay: EssayQuestion[];
   theory: LessonTheory | null;
   sgkUrl?: string | null;
+  game?: SortGame | null;
 }) {
   const [mode, setMode] = useState<Mode>("menu");
   const [bestMcq, setBestMcq] = useState<number | null>(null);
   const [bestTf, setBestTf] = useState<number | null>(null);
+  const [bestGame, setBestGame] = useState<number | null>(null);
 
   useEffect(() => {
     if (mode === "menu") {
       setBestMcq(getLessonProgress(lessonId)?.best ?? null);
       setBestTf(getLessonProgress(`${lessonId}:ds`)?.best ?? null);
+      setBestGame(getLessonProgress(`${lessonId}:game`)?.best ?? null);
     }
   }, [mode, lessonId]);
 
@@ -99,6 +104,10 @@ export default function LessonClient({
     );
   }
 
+  if (mode === "game" && game) {
+    return <SortGameClient lessonId={lessonId} game={game} onBack={() => setMode("menu")} />;
+  }
+
   if (mode === "essay") {
     return (
       <main className="playground min-h-screen pb-16">
@@ -120,6 +129,18 @@ export default function LessonClient({
             name: "Lý thuyết",
             desc: `~${theory.minutes} phút đọc · tóm tắt kiến thức bài học kèm hình minh hoạ`,
             best: null,
+            enabled: true,
+          },
+        ]
+      : []),
+    ...(game
+      ? [
+          {
+            key: "game" as Mode,
+            emoji: "🎮",
+            name: "Game kéo-thả",
+            desc: `${game.title} · ${game.items.length} thẻ · kéo hoặc bấm để phân loại`,
+            best: bestGame,
             enabled: true,
           },
         ]

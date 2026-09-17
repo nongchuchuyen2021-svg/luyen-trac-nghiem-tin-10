@@ -45,6 +45,26 @@ export type Lesson = {
   available: boolean; // false = chưa có câu hỏi, hiện mờ trên trang chủ
 };
 
+// Một thẻ trong game kéo-thả phân loại 2 nhóm (đúng/sai, có/không,...)
+export type SortGameItem = {
+  id: string;
+  emoji: string;
+  label: string;
+  isMatch: boolean; // true = thuộc nhóm bên phải (label "match"), false = nhóm bên trái
+  explain: string;
+};
+
+// Cấu hình 1 game kéo-thả phân loại gắn với 1 bài học
+export type SortGame = {
+  title: string; // vd "Thiết bị nào là thông minh?"
+  instructions: string; // hướng dẫn ngắn hiển thị đầu game
+  matchLabel: string; // nhãn khay bên phải, vd "Thông minh"
+  matchEmoji: string;
+  noMatchLabel: string; // nhãn khay bên trái, vd "Không phải"
+  noMatchEmoji: string;
+  items: SortGameItem[];
+};
+
 export type Topic = {
   id: string;
   name: string;
