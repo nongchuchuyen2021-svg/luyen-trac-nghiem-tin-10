@@ -14,7 +14,7 @@ function shuffle<T>(arr: T[]): T[] {
 }
 
 const SWIPE_THRESHOLD = 90; // px kéo ngang tối thiểu để tính là 1 lượt trả lời
-const PROGRESS_KEY_SUFFIX = ":game";
+// Moi game trong cung 1 bai co progress key rieng theo game.id
 
 export default function SortGame({
   lessonId,
@@ -41,7 +41,7 @@ export default function SortGame({
 
   useEffect(() => {
     setDeck(shuffle(game.items));
-    setBest(getLessonProgress(`${lessonId}${PROGRESS_KEY_SUFFIX}`)?.best ?? null);
+    setBest(getLessonProgress(`${lessonId}:game:${game.id}`)?.best ?? null);
   }, [game, lessonId]);
 
   const item = deck[current];
@@ -61,7 +61,7 @@ export default function SortGame({
 
   function next() {
     if (current + 1 >= deck.length) {
-      saveAttempt(`${lessonId}${PROGRESS_KEY_SUFFIX}`, scorePercent);
+      saveAttempt(`${lessonId}:game:${game.id}`, scorePercent);
       setFinished(true);
     } else {
       setCurrent((c) => c + 1);
@@ -78,7 +78,7 @@ export default function SortGame({
     setWrongItems([]);
     setFinished(false);
     setDragX(0);
-    setBest(getLessonProgress(`${lessonId}${PROGRESS_KEY_SUFFIX}`)?.best ?? null);
+    setBest(getLessonProgress(`${lessonId}:game:${game.id}`)?.best ?? null);
   }
 
   // ── Kéo thẻ bằng Pointer Events (dùng chung cho chuột & cảm ứng) ──
@@ -211,7 +211,7 @@ export default function SortGame({
             </p>
           </div>
           <h1 className="mt-3 font-display text-lg font-semibold leading-snug text-ink">
-            🎮 {game.title}
+            {game.emoji} {game.title}
           </h1>
           <p className="mt-1 text-sm leading-relaxed text-ink-soft">{game.instructions}</p>
           <div className="mt-3 h-2 overflow-hidden rounded-full bg-ink/5">

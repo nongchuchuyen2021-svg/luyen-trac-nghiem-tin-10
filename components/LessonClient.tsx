@@ -2,15 +2,16 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import type { EssayQuestion, LessonTheory, Question, SortGame, TFQuestion } from "@/lib/types";
+import type { EssayQuestion, LessonGame, LessonReview, LessonTheory, Question, TFQuestion } from "@/lib/types";
 import { getLessonProgress } from "@/lib/progress";
 import QuizClient from "@/components/QuizClient";
 import TrueFalseQuiz from "@/components/TrueFalseQuiz";
 import EssayViewer from "@/components/EssayViewer";
 import TheoryViewer from "@/components/TheoryViewer";
-import SortGameClient from "@/components/SortGame";
+import GameHub from "@/components/GameHub";
+import ReviewViewer from "@/components/ReviewViewer";
 
-type Mode = "menu" | "mcq" | "tf" | "essay" | "theory" | "sgk" | "game";
+type Mode = "menu" | "mcq" | "tf" | "essay" | "theory" | "sgk" | "games" | "review";
 
 export default function LessonClient({
   lessonId,
@@ -21,7 +22,8 @@ export default function LessonClient({
   essay,
   theory,
   sgkUrl,
-  game,
+  games,
+  review,
 }: {
   lessonId: string;
   lessonTitle: string;
@@ -31,18 +33,17 @@ export default function LessonClient({
   essay: EssayQuestion[];
   theory: LessonTheory | null;
   sgkUrl?: string | null;
-  game?: SortGame | null;
+  games?: LessonGame[];
+  review?: LessonReview | null;
 }) {
   const [mode, setMode] = useState<Mode>("menu");
   const [bestMcq, setBestMcq] = useState<number | null>(null);
   const [bestTf, setBestTf] = useState<number | null>(null);
-  const [bestGame, setBestGame] = useState<number | null>(null);
 
   useEffect(() => {
     if (mode === "menu") {
       setBestMcq(getLessonProgress(lessonId)?.best ?? null);
       setBestTf(getLessonProgress(`${lessonId}:ds`)?.best ?? null);
-      setBestGame(getLessonProgress(`${lessonId}:game`)?.best ?? null);
     }
   }, [mode, lessonId]);
 
@@ -104,8 +105,12 @@ export default function LessonClient({
     );
   }
 
-  if (mode === "game" && game) {
-    return <SortGameClient lessonId={lessonId} game={game} onBack={() => setMode("menu")} />;
+  if (mode === "games" && games && games.length > 0) {
+    return <GameHub lessonId={lessonId} games={games} onBack={() => setMode("menu")} />;
+  }
+
+  if (mode === "review" && review) {
+    return <ReviewViewer lessonTitle={lessonTitle} review={review} onBack={() => setMode("menu")} />;
   }
 
   if (mode === "essay") {
@@ -133,14 +138,17 @@ export default function LessonClient({
           },
         ]
       : []),
-    ...(game
+    ...(games && games.length > 0
       ? [
           {
-            key: "game" as Mode,
+            key: "games" as Mode,
             emoji: "🎮",
-            name: "Game kéo-thả",
-            desc: `${game.title} · ${game.items.length} thẻ · kéo hoặc bấm để phân loại`,
-            best: bestGame,
+            name: games.length === 1 ? games[0].title : "Trung tâm Game",
+            desc:
+              games.length === 1
+                ? `${games[0].items.length} thẻ · kéo hoặc chạm để chơi`
+                : `${games.length} trò chơi ôn bài · kéo hoặc chạm để chơi`,
+            best: null,
             enabled: true,
           },
         ]
@@ -181,6 +189,18 @@ export default function LessonClient({
       best: null,
       enabled: essay.length > 0,
     },
+    ...(review
+      ? [
+          {
+            key: "review" as Mode,
+            emoji: "📋",
+            name: "Ôn tập tổng kết",
+            desc: "Thẻ ghi nhớ, lỗi hay gặp, mẹo nhớ nhanh trước khi kiểm tra",
+            best: null,
+            enabled: true,
+          },
+        ]
+      : []),
   ];
 
   return (

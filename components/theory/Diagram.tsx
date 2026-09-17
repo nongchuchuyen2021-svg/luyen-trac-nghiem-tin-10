@@ -197,6 +197,53 @@ function IoTKetNoi() {
   );
 }
 
+// ── Bài 2: Dòng thời gian 4 cuộc cách mạng công nghiệp ──────────────────────
+function CMCNDongThoiGian() {
+  const stops = [
+    { icon: "🚂", era: "Cuối TK XVIII – đầu TK XIX", title: "CMCN 1", desc: ["Động cơ hơi nước", "Thủ công → cơ giới"], color: C.sun, deep: C.sunDeep },
+    { icon: "⚡", era: "Cuối TK XIX – đầu TK XX", title: "CMCN 2", desc: ["Điện năng phổ biến", "Dây chuyền sản xuất"], color: C.bubble, deep: C.bubbleDeep },
+    { icon: "💻", era: "Cuối TK XX – đầu TK XXI", title: "CMCN 3", desc: ["Máy tính hỗ trợ", "hoạt động trí tuệ"], color: C.mint, deep: C.mintDeep },
+    { icon: "🌐", era: "Đầu TK XXI (đang diễn ra)", title: "CMCN 4", desc: ["IoT, AI, Cloud, Big Data", "Kết hợp thực – ảo"], color: C.grape, deep: C.grapeDeep },
+  ];
+  const boxW = 140;
+  const gap = 20;
+  const startX = 20;
+  const cy = 130;
+
+  return (
+    <Frame viewBox="0 0 640 260">
+      <rect x="10" y="10" width="620" height="240" rx="16" fill={C.grape} fillOpacity="0.04" stroke={C.line} strokeWidth="1.5" />
+      <Lines x={320} y={32} lines={["4 cuộc Cách mạng công nghiệp"]} size={15} fill={C.ink} weight={700} />
+
+      {/* Đường trục thời gian nối các mốc */}
+      <line x1={startX + boxW / 2} y1={cy} x2={startX + 3 * (boxW + gap) + boxW / 2} y2={cy} stroke={C.line} strokeWidth="3" />
+      {stops.slice(0, -1).map((_, i) => {
+        const x1 = startX + i * (boxW + gap) + boxW;
+        const x2 = x1 + gap;
+        return <line key={i} x1={x1} y1={cy} x2={x2} y2={cy} stroke={C.grape} strokeWidth="2.5" markerEnd="url(#arrow)" />;
+      })}
+
+      {stops.map((s, i) => {
+        const x = startX + i * (boxW + gap);
+        return (
+          <g key={i}>
+            <circle cx={x + boxW / 2} cy={cy} r="7" fill={s.color} stroke={C.white} strokeWidth="2" />
+            <rect x={x} y={cy - 95} width={boxW} height="78" rx="14" fill={C.white} stroke={s.color} strokeWidth="2" />
+            <Lines x={x + boxW / 2} y={cy - 70} lines={[s.icon]} size={22} />
+            <Lines x={x + boxW / 2} y={cy - 46} lines={[s.title]} size={13} fill={s.deep} weight={700} />
+            <Lines x={x + boxW / 2} y={cy - 28} lines={s.desc} size={10} fill={C.inkSoft} weight={500} gap={13} />
+            <rect x={x} y={cy + 22} width={boxW} height="44" rx="10" fill={s.color} fillOpacity="0.08" />
+            <Lines x={x + boxW / 2} y={cy + 40} lines={[s.era.split(" – ")[0]]} size={9.5} fill={s.deep} weight={600} gap={12} />
+            <Lines x={x + boxW / 2} y={cy + 54} lines={[s.era.includes(" – ") ? "– " + s.era.split(" – ")[1] : ""]} size={9.5} fill={s.deep} weight={600} gap={12} />
+          </g>
+        );
+      })}
+
+      <Lines x={320} y={244} lines={["Mỗi cuộc cách mạng đều gắn với một bước tiến công nghệ mang tính đột phá"]} size={11.5} fill={C.inkSoft} weight={500} />
+    </Frame>
+  );
+}
+
 // ── Bài 7: Các nút bấm và màn hình chính của điện thoại thông minh (Hình 7.4, 7.5) ──
 function ManHinhDienThoai() {
   const px = 60, py = 20, pw = 150, ph = 300;
@@ -4054,6 +4101,7 @@ const DIAGRAMS: Record<string, () => JSX.Element> = {
   "qua-trinh-xu-li-thong-tin": QuaTrinhXuLiThongTin,
   "don-vi-luu-tru": DonViLuuTru,
   "iot-ket-noi-thiet-bi": IoTKetNoi,
+  "cmcn-dong-thoi-gian": CMCNDongThoiGian,
   "man-hinh-dien-thoai-thong-minh": ManHinhDienThoai,
   "lan-qua-internet": LanQuaInternet,
   "nguy-co-khong-gian-mang": NguyCoKhongGianMang,

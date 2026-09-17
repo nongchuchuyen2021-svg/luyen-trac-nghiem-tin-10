@@ -1,11 +1,14 @@
-import type { SortGame } from "@/lib/types";
+import type { LessonGame, SortGame, TimelineGame } from "@/lib/types";
 
 // Game kéo-thả: phân loại thiết bị thông minh (Bài 2, mục 1).
 // Định nghĩa SGK: thiết bị thông minh = hoạt động TỰ CHỦ theo phần mềm cài sẵn
 // VÀ tự động KẾT NỐI/TRAO ĐỔI DỮ LIỆU với thiết bị khác qua mạng không dây.
 // Thiếu 1 trong 2 điều kiện đó thì KHÔNG phải thiết bị thông minh.
-const game: SortGame = {
+const sortGame: SortGame = {
+  kind: "sort",
+  id: "thiet-bi-thong-minh",
   title: "Thiết bị nào là thông minh?",
+  emoji: "📱",
   instructions:
     "Kéo (hoặc bấm nút) từng thẻ sang đúng khay: thiết bị vừa hoạt động tự chủ vừa tự động kết nối trao đổi dữ liệu với thiết bị khác mới là THÔNG MINH.",
   matchLabel: "Thông minh",
@@ -128,4 +131,55 @@ const game: SortGame = {
   ],
 };
 
-export default game;
+// Game sắp xếp dòng thời gian: 5 thành tựu phát triển của Tin học (Bài 2, mục 4).
+// Thứ tự trong mảng dưới đây CHÍNH LÀ thứ tự thời gian đúng — game sẽ tự xáo
+// ngẫu nhiên khi hiển thị và so sánh lại với thứ tự này lúc chấm điểm.
+const timelineGame: TimelineGame = {
+  kind: "timeline",
+  id: "thanh-tuu-tin-hoc",
+  title: "Dòng thời gian Tin học",
+  emoji: "🕓",
+  instructions:
+    "Kéo (hoặc chạm chọn rồi đặt) 5 thành tựu sau vào đúng 5 ô theo thứ tự thời gian, từ SỚM NHẤT đến GẦN ĐÂY NHẤT.",
+  items: [
+    {
+      id: "fortran",
+      emoji: "📝",
+      label: "FORTRAN ra đời — ngôn ngữ lập trình bậc cao đầu tiên",
+      year: "1957",
+      explain: "Giúp người lập trình chỉ cần thể hiện cách giải quyết vấn đề, không cần biết đến mã máy.",
+    },
+    {
+      id: "os360",
+      emoji: "🖥️",
+      label: "OS/360 ra đời — hệ điều hành đầu tiên",
+      year: "1964",
+      explain: "Chạy trên máy IBM/360, mở đường cho các hệ điều hành hiện đại như Windows, macOS, Android, iOS.",
+    },
+    {
+      id: "hqtcsdl",
+      emoji: "🗄️",
+      label: "Hệ quản trị cơ sở dữ liệu đầu tiên xuất hiện",
+      year: "Cuối 1960s",
+      explain: "Mở đầu giai đoạn phát triển mạnh của các HQT CSDL sau 1970 như DB2, Oracle, MySQL.",
+    },
+    {
+      id: "tcpip",
+      emoji: "🌐",
+      label: "Giao thức TCP/IP được áp dụng",
+      year: "1983",
+      explain: "Giúp kết nối các mạng máy tính riêng lẻ thành Internet toàn cầu như ngày nay.",
+    },
+    {
+      id: "www",
+      emoji: "🕸️",
+      label: "World Wide Web (WWW) ra đời",
+      year: "1992",
+      explain: "Tạo ra phương tiện truy cập Internet dễ dàng, nhất quán, giúp Internet được phổ cập rộng rãi.",
+    },
+  ],
+};
+
+const games: LessonGame[] = [sortGame, timelineGame];
+
+export default games;

@@ -74,6 +74,11 @@ const theory: LessonTheory = {
           text: "Một số thiết bị thông minh hiện nay còn được tích hợp thêm khả năng \"bắt chước\" một vài hành vi hay cách tư duy của con người — như người máy hiểu và giao tiếp bằng ngôn ngữ tự nhiên, xe tự hành có thể dự đoán khả năng va chạm để tránh tai nạn. Khả năng \"bắt chước\" đó, nói riêng ở thiết bị thông minh và nói chung ở máy móc, được gọi là **trí tuệ nhân tạo (AI — Artificial Intelligence)**.",
         },
         {
+          kind: "figure",
+          diagram: "cmcn-dong-thoi-gian",
+          caption: "Dòng thời gian 4 cuộc cách mạng công nghiệp",
+        },
+        {
           kind: "steps",
           items: [
             {
