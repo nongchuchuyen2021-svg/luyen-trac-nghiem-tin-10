@@ -78,7 +78,7 @@ const theory: LessonTheory = {
         {
           kind: "example",
           title: "Tình huống: Lời chào riêng và viền trang trí cho thẻ tên",
-          text: "Vy muốn in lời chào cá nhân hoá cho từng bạn: ghép \"Xin chào, \" với tên rồi thêm dấu chấm than. Lần đầu Vy quên mất dấu cách trong xâu \"Xin chào,\", kết quả in ra dính hẳn thành \"Xin chào,Vy!\" xấu ơi là xấu — sửa lại thành \"Xin chào, \" (có thêm khoảng trắng cuối) mới đúng ý. Để trang trí viền thẻ tên, Vy dùng \"-\" nhân với 20 để có ngay một dòng gạch ngang dài mà không cần gõ tay từng dấu. Cuối cùng, muốn lấy 2 chữ cái đầu tên lớp \"10A2\" làm kí hiệu viết tắt, Vy dùng lát cắt lop[0:3] — nhớ đúng quy tắc chỉ số 3 sẽ KHÔNG được lấy vào.",
+          text: "Vy muốn in lời chào cá nhân hoá cho từng bạn: ghép \"Xin chào, \" với tên rồi thêm dấu chấm than. Lần đầu Vy quên mất dấu cách trong xâu \"Xin chào,\", kết quả in ra dính hẳn thành \"Xin chào,Vy!\" xấu ơi là xấu — sửa lại thành \"Xin chào, \" (có thêm khoảng trắng cuối) mới đúng ý. Để trang trí viền thẻ tên, Vy dùng \"-\" nhân với 20 để có ngay một dòng gạch ngang dài mà không cần gõ tay từng dấu. Cuối cùng, muốn lấy 3 kí tự đầu tên lớp \"10A2\" làm kí hiệu viết tắt, Vy dùng lát cắt lop[0:3] — nhớ đúng quy tắc chỉ số 3 sẽ KHÔNG được lấy vào.",
         },
         {
           kind: "code",

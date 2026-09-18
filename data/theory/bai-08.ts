@@ -143,7 +143,7 @@ const theory: LessonTheory = {
             {
               emoji: "🗄️",
               title: "IaaS — hạ tầng như dịch vụ",
-              text: "Infrastructure as a Service: cho thuê phần cứng như máy chủ, thiết bị lưu trữ qua Internet. Ví dụ: lưu trữ thông tin trên Dropbox, Google Drive.",
+              text: "Infrastructure as a Service: cho thuê máy chủ ảo, thiết bị lưu trữ thô qua Internet để người dùng tự cài hệ điều hành và phần mềm lên đó. Ví dụ: thuê máy chủ ảo trên Amazon Web Services, Microsoft Azure.",
             },
           ],
         },
@@ -157,15 +157,15 @@ const theory: LessonTheory = {
         },
         {
           kind: "note",
-          text: "Điện toán đám mây được định nghĩa là việc phân phối các tài nguyên công nghệ thông tin theo nhu cầu qua Internet với chính sách thanh toán theo mức sử dụng. **SaaS, PaaS, IaaS** là các loại hình dịch vụ chủ yếu của điện toán đám mây.",
+          text: "Điện toán đám mây được định nghĩa là việc phân phối các tài nguyên công nghệ thông tin theo nhu cầu qua Internet với chính sách thanh toán theo mức sử dụng. **SaaS, PaaS, IaaS** là các loại hình dịch vụ chủ yếu của điện toán đám mây. Riêng dịch vụ lưu trữ tệp quen thuộc như Dropbox, Google Drive chỉ đơn giản là gửi tệp lên máy chủ để truy cập từ mọi thiết bị — khác với IaaS là việc thuê hẳn một máy chủ ảo trống để tự cài đặt hệ điều hành và phần mềm lên đó.",
         },
         {
           kind: "check",
-          q: "Bạn An lưu ảnh trên dịch vụ Dropbox thay vì mua thêm ổ cứng. An đang thuê loại tài nguyên nào của điện toán đám mây?",
-          options: ["IaaS — hạ tầng lưu trữ", "SaaS — phần mềm ứng dụng", "PaaS — nền tảng phát triển", "Không phải dịch vụ đám mây"],
+          q: "Một công ty thuê máy chủ ảo trên Amazon Web Services rồi tự cài hệ điều hành và phần mềm riêng lên đó để chạy website. Công ty đang thuê loại tài nguyên nào của điện toán đám mây?",
+          options: ["IaaS — hạ tầng như dịch vụ", "SaaS — phần mềm như dịch vụ", "PaaS — nền tảng như dịch vụ", "Không phải dịch vụ đám mây"],
           answer: 0,
           explain:
-            "Dropbox cho thuê không gian lưu trữ (phần cứng) qua Internet — đây là ví dụ của IaaS (Infrastructure as a Service, hạ tầng như dịch vụ).",
+            "Công ty chỉ thuê phần cứng ảo (máy chủ, thiết bị lưu trữ) rồi tự cài mọi thứ lên trên — đây đúng là IaaS (Infrastructure as a Service, hạ tầng như dịch vụ).",
         },
         {
           kind: "check",
