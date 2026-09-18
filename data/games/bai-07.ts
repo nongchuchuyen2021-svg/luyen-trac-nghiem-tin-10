@@ -1,4 +1,4 @@
-import type { LessonGame, SortGame } from "@/lib/types";
+import type { LessonGame, MatchGame, SortGame } from "@/lib/types";
 
 // Game 1: Phân loại "Trợ thủ số cá nhân" (PDA) — Bài 7, mục 1.
 // Định nghĩa SGK: PDA (Personal Digital Assistant — Trợ thủ số CÁ NHÂN) là
@@ -203,6 +203,67 @@ const sortGameApps: SortGame = {
   ],
 };
 
-const games: LessonGame[] = [sortGamePDA, sortGameApps];
+// Game 3: Lật thẻ ghép đôi — nút bấm, màn hình và quản lí tệp trên điện thoại
+// thông minh (Bài 7, mục 2 và 4) — phần lý thuyết chưa được 2 game trên khai thác.
+const matchGamePhone: MatchGame = {
+  kind: "match",
+  id: "ghep-doi-man-hinh-tep",
+  title: "Lật thẻ ghép đôi: Màn hình & Quản lí tệp",
+  emoji: "🃏",
+  instructions:
+    "Chạm để lật 2 thẻ bất kì. Khớp đúng cặp (thuật ngữ ↔ mô tả) thì thẻ được giữ nguyên; sai thì hai thẻ úp lại. Ghép đủ tất cả các cặp với càng ít lượt lật càng được điểm cao!",
+  pairs: [
+    {
+      id: "nut-khoa",
+      emoji: "🔘",
+      term: "Nút khoá (Power)",
+      clue: "Dùng để bật máy hoặc tắt/mở màn hình",
+    },
+    {
+      id: "nut-quay-lai",
+      emoji: "◀️",
+      term: "Nút Quay lại (Back)",
+      clue: "Đưa màn hình trở về trang vừa xem trước đó",
+    },
+    {
+      id: "nut-tong-quan",
+      emoji: "🗂️",
+      term: "Nút Tổng quan (Overview)",
+      clue: "Hiện danh sách tất cả ứng dụng đang chạy",
+    },
+    {
+      id: "thanh-trang-thai",
+      emoji: "🔔",
+      term: "Thanh trạng thái",
+      clue: "Hiển thị tình trạng kết nối, giờ hiện tại, % pin còn lại",
+    },
+    {
+      id: "thanh-truy-cap-nhanh",
+      emoji: "⭐",
+      term: "Thanh truy cập nhanh",
+      clue: "Chứa ứng dụng hay dùng, lặp lại ở mọi trang màn hình chính",
+    },
+    {
+      id: "ung-dung-quan-li-tep",
+      emoji: "🗃️",
+      term: "Ứng dụng quản lí tệp (File Manager)",
+      clue: "Mở, sao chép, di chuyển, chia sẻ, xoá tệp trên điện thoại",
+    },
+    {
+      id: "thu-muc-dcim",
+      emoji: "📸",
+      term: "Thư mục DCIM → Camera",
+      clue: "Nơi lưu ảnh vừa chụp bằng camera của máy",
+    },
+    {
+      id: "cham-giu-tep",
+      emoji: "🤏",
+      term: "Chạm và giữ lâu vào một tệp",
+      clue: "Hiện các nút Di chuyển, Sao chép, Chia sẻ, Xoá",
+    },
+  ],
+};
+
+const games: LessonGame[] = [sortGamePDA, sortGameApps, matchGamePhone];
 
 export default games;

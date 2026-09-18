@@ -1,4 +1,4 @@
-import type { LessonGame, SortGame } from "@/lib/types";
+import type { LessonGame, MatchGame, SortGame } from "@/lib/types";
 
 // Game 1: Phân loại đặc điểm thuộc về "LAN" hay "Internet" — Bài 8, mục 1.
 const sortGameLan: SortGame = {
@@ -172,6 +172,67 @@ const sortGameCloud: SortGame = {
   ],
 };
 
-const games: LessonGame[] = [sortGameLan, sortGameCloud];
+// Game 3: Lật thẻ ghép đôi — 3 loại dịch vụ đám mây, thiết bị mạng và vai trò
+// Internet (Bài 8, mục 1-4) — đào sâu hơn phần 2 game phân loại ở trên.
+const matchGameCloud: MatchGame = {
+  kind: "match",
+  id: "ghep-doi-mang-dam-may",
+  title: "Lật thẻ ghép đôi: Mạng & Đám mây",
+  emoji: "🃏",
+  instructions:
+    "Chạm để lật 2 thẻ bất kì. Khớp đúng cặp (thuật ngữ ↔ mô tả) thì thẻ được giữ nguyên; sai thì hai thẻ úp lại. Ghép đủ tất cả các cặp với càng ít lượt lật càng được điểm cao!",
+  pairs: [
+    {
+      id: "saas",
+      emoji: "🧩",
+      term: "SaaS — phần mềm như dịch vụ",
+      clue: "Thuê phần mềm dùng ngay, ví dụ Google Docs, Zoom",
+    },
+    {
+      id: "paas",
+      emoji: "🏗️",
+      term: "PaaS — nền tảng như dịch vụ",
+      clue: "Thuê nền tảng làm công cụ để tạo ra sản phẩm khác, ví dụ bản đồ số Google",
+    },
+    {
+      id: "iaas",
+      emoji: "🗄️",
+      term: "IaaS — hạ tầng như dịch vụ",
+      clue: "Thuê máy chủ ảo trống rồi tự cài hệ điều hành, phần mềm lên đó",
+    },
+    {
+      id: "switch-hub",
+      emoji: "🔌",
+      term: "Switch / Hub",
+      clue: "Chỉ chuyển tiếp dữ liệu trong nội bộ mạng LAN",
+    },
+    {
+      id: "router",
+      emoji: "🔀",
+      term: "Router (bộ định tuyến)",
+      clue: "Gửi dữ liệu ra ngoài LAN khi đích đến không nằm trong mạng đó",
+    },
+    {
+      id: "vai-tro-giao-duc",
+      emoji: "📚",
+      term: "Vai trò giáo dục của Internet",
+      clue: "Học trực tuyến mọi lúc, mọi nơi qua các nền tảng học từ xa",
+    },
+    {
+      id: "vai-tro-giao-tiep",
+      emoji: "💬",
+      term: "Vai trò giao tiếp cộng đồng",
+      clue: "Kết nối, chia sẻ thông tin, nhận phản hồi ngay mà không cần gặp trực tiếp",
+    },
+    {
+      id: "iot-tiet-kiem",
+      emoji: "💰",
+      term: "Lợi ích tiết kiệm chi phí của IoT",
+      clue: "Công tơ điện tự động gửi chỉ số, không cần nhân viên đến từng nhà ghi",
+    },
+  ],
+};
+
+const games: LessonGame[] = [sortGameLan, sortGameCloud, matchGameCloud];
 
 export default games;
