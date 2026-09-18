@@ -68,6 +68,27 @@ export type SortGame = {
   items: SortGameItem[];
 };
 
+// Một thẻ trong game phân loại 3 nhóm — vd "SaaS, PaaS hay IaaS?"
+export type Sort3Item = {
+  id: string;
+  emoji: string;
+  label: string;
+  group: 0 | 1 | 2; // chỉ số nhóm đúng trong mảng groups của Sort3Game
+  explain: string;
+};
+
+// Game chọn 1 trong 3 nhóm cho mỗi thẻ (khi 2 nhóm không đủ diễn tả nội dung,
+// vd 3 loại hình dịch vụ đám mây SaaS/PaaS/IaaS) — chạm nút nhóm để trả lời.
+export type Sort3Game = {
+  kind: "sort3";
+  id: string;
+  title: string;
+  emoji: string;
+  instructions: string;
+  groups: [{ label: string; emoji: string }, { label: string; emoji: string }, { label: string; emoji: string }];
+  items: Sort3Item[];
+};
+
 // Một mốc trong game sắp xếp dòng thời gian — thứ tự đúng chính là thứ tự
 // xuất hiện trong mảng `items` của TimelineGame (không cần trường "order" riêng).
 export type TimelineItem = {
@@ -108,7 +129,7 @@ export type MatchGame = {
   pairs: MatchPair[];
 };
 
-export type LessonGame = SortGame | TimelineGame | MatchGame;
+export type LessonGame = SortGame | TimelineGame | MatchGame | Sort3Game;
 
 export type Topic = {
   id: string;

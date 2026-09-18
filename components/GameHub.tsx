@@ -6,6 +6,7 @@ import { getLessonProgress } from "@/lib/progress";
 import SortGameClient from "@/components/SortGame";
 import TimelineGameClient from "@/components/TimelineGame";
 import MatchGameClient from "@/components/MatchGame";
+import Sort3GameClient from "@/components/Sort3Game";
 
 export default function GameHub({
   lessonId,
@@ -38,7 +39,10 @@ export default function GameHub({
     if (active.kind === "timeline") {
       return <TimelineGameClient lessonId={lessonId} game={active} onBack={handleBack} />;
     }
-    return <MatchGameClient lessonId={lessonId} game={active} onBack={handleBack} />;
+    if (active.kind === "match") {
+      return <MatchGameClient lessonId={lessonId} game={active} onBack={handleBack} />;
+    }
+    return <Sort3GameClient lessonId={lessonId} game={active} onBack={handleBack} />;
   }
 
   return (
@@ -62,7 +66,9 @@ export default function GameHub({
                 ? `${g.items.length} thẻ · kéo hoặc bấm để phân loại`
                 : g.kind === "timeline"
                   ? `${g.items.length} mốc · kéo hoặc chạm để sắp xếp`
-                  : `${g.pairs.length} cặp · lật thẻ tìm đúng cặp`;
+                  : g.kind === "match"
+                    ? `${g.pairs.length} cặp · lật thẻ tìm đúng cặp`
+                    : `${g.items.length} thẻ · chọn đúng 1 trong 3 nhóm`;
             const best = bestByGame[g.id] ?? null;
             return (
               <button
