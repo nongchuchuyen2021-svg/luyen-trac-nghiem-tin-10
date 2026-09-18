@@ -1,4 +1,4 @@
-import type { LessonGame, MatchGame, SortGame } from "@/lib/types";
+import type { LessonGame, SortGame } from "@/lib/types";
 
 // Game 1: Phân loại "Trợ thủ số cá nhân" (PDA) — Bài 7, mục 1.
 // Định nghĩa SGK: PDA (Personal Digital Assistant — Trợ thủ số CÁ NHÂN) là
@@ -203,67 +203,98 @@ const sortGameApps: SortGame = {
   ],
 };
 
-// Game 3: Lật thẻ ghép đôi — nút bấm, màn hình và quản lí tệp trên điện thoại
-// thông minh (Bài 7, mục 2 và 4) — phần lý thuyết chưa được 2 game trên khai thác.
-const matchGamePhone: MatchGame = {
-  kind: "match",
-  id: "ghep-doi-man-hinh-tep",
-  title: "Lật thẻ ghép đôi: Màn hình & Quản lí tệp",
-  emoji: "🃏",
+// Game 3: Phân loại "Nút vật lí hay thành phần ảo?" — Bài 7, mục 2. SGK nêu:
+// nút khoá/âm lượng là nút bấm CỨNG ở thân máy; còn thanh trạng thái, biểu
+// tượng ứng dụng, thanh truy cập nhanh, thanh điều hướng (Back, Overview) đều
+// là thành phần hiển thị NGAY TRÊN MÀN HÌNH — hầu hết Android không còn nút
+// Home vật lí, thay bằng thanh điều hướng ảo.
+const sortGameButtons: SortGame = {
+  kind: "sort",
+  id: "nut-vat-li-hay-ao",
+  title: "Nút vật lí hay thành phần ảo?",
+  emoji: "🔘",
   instructions:
-    "Chạm để lật 2 thẻ bất kì. Khớp đúng cặp (thuật ngữ ↔ mô tả) thì thẻ được giữ nguyên; sai thì hai thẻ úp lại. Ghép đủ tất cả các cặp với càng ít lượt lật càng được điểm cao!",
-  pairs: [
+    "Kéo (hoặc bấm nút) từng thẻ sang đúng khay: đây là NÚT BẤM VẬT LÍ (bấm cứng ở thân máy) hay THÀNH PHẦN ẢO hiển thị ngay trên màn hình?",
+  matchLabel: "Thành phần ảo",
+  matchEmoji: "📲",
+  noMatchLabel: "Nút vật lí",
+  noMatchEmoji: "🔘",
+  items: [
     {
       id: "nut-khoa",
       emoji: "🔘",
-      term: "Nút khoá (Power)",
-      clue: "Dùng để bật máy hoặc tắt/mở màn hình",
+      label: "Nút khoá (Power)",
+      isMatch: false,
+      explain: "Nút bấm cứng ở thân máy, dùng để bật máy hoặc tắt/mở màn hình.",
     },
     {
-      id: "nut-quay-lai",
-      emoji: "◀️",
-      term: "Nút Quay lại (Back)",
-      clue: "Đưa màn hình trở về trang vừa xem trước đó",
+      id: "nut-tang-am-luong",
+      emoji: "🔊",
+      label: "Nút tăng âm lượng",
+      isMatch: false,
+      explain: "Nút bấm cứng ở cạnh máy, không phải thành phần hiển thị trên màn hình.",
     },
     {
-      id: "nut-tong-quan",
-      emoji: "🗂️",
-      term: "Nút Tổng quan (Overview)",
-      clue: "Hiện danh sách tất cả ứng dụng đang chạy",
+      id: "nut-giam-am-luong",
+      emoji: "🔉",
+      label: "Nút giảm âm lượng",
+      isMatch: false,
+      explain: "Cùng là nút bấm cứng vật lí như nút tăng âm lượng, đặt ở cạnh thân máy.",
+    },
+    {
+      id: "nut-home-vat-li-cu",
+      emoji: "⭕",
+      label: "Nút Home vật lí trên điện thoại đời cũ",
+      isMatch: false,
+      explain:
+        "Là nút bấm cứng có thật trên các máy đời cũ — SGK nêu rõ hầu hết điện thoại Android hiện nay không còn nút Home vật lí, thay bằng thanh điều hướng ảo.",
     },
     {
       id: "thanh-trang-thai",
       emoji: "🔔",
-      term: "Thanh trạng thái",
-      clue: "Hiển thị tình trạng kết nối, giờ hiện tại, % pin còn lại",
+      label: "Thanh trạng thái",
+      isMatch: true,
+      explain: "Hiển thị ngay trên đỉnh màn hình (giờ, pin, kết nối) — là thành phần ảo, không phải nút bấm.",
+    },
+    {
+      id: "bieu-tuong-ung-dung",
+      emoji: "🧩",
+      label: "Biểu tượng ứng dụng (icon) trên màn hình chính",
+      isMatch: true,
+      explain: "Icon hiển thị trên màn hình, chạm vào để mở ứng dụng — thành phần ảo trên màn hình.",
     },
     {
       id: "thanh-truy-cap-nhanh",
       emoji: "⭐",
-      term: "Thanh truy cập nhanh",
-      clue: "Chứa ứng dụng hay dùng, lặp lại ở mọi trang màn hình chính",
+      label: "Thanh truy cập nhanh",
+      isMatch: true,
+      explain: "Dải icon lặp lại ở mọi trang màn hình chính — hiển thị trên màn hình, không phải nút cứng.",
     },
     {
-      id: "ung-dung-quan-li-tep",
-      emoji: "🗃️",
-      term: "Ứng dụng quản lí tệp (File Manager)",
-      clue: "Mở, sao chép, di chuyển, chia sẻ, xoá tệp trên điện thoại",
+      id: "nut-quay-lai",
+      emoji: "◀️",
+      label: "Nút Quay lại (Back)",
+      isMatch: true,
+      explain: "Là nút ảo nằm trên thanh điều hướng hiển thị trên màn hình, không phải nút bấm vật lí.",
     },
     {
-      id: "thu-muc-dcim",
-      emoji: "📸",
-      term: "Thư mục DCIM → Camera",
-      clue: "Nơi lưu ảnh vừa chụp bằng camera của máy",
+      id: "nut-tong-quan",
+      emoji: "🗂️",
+      label: "Nút Tổng quan (Overview)",
+      isMatch: true,
+      explain: "Cùng là nút ảo trên thanh điều hướng như nút Quay lại — hiện danh sách ứng dụng đang chạy.",
     },
     {
-      id: "cham-giu-tep",
-      emoji: "🤏",
-      term: "Chạm và giữ lâu vào một tệp",
-      clue: "Hiện các nút Di chuyển, Sao chép, Chia sẻ, Xoá",
+      id: "thanh-dieu-huong",
+      emoji: "🧭",
+      label: "Thanh điều hướng (navigation bar)",
+      isMatch: true,
+      explain:
+        "Cả thanh điều hướng ở đáy màn hình đều là thành phần ảo — thay thế cho nút Home vật lí trên các máy Android hiện nay.",
     },
   ],
 };
 
-const games: LessonGame[] = [sortGamePDA, sortGameApps, matchGamePhone];
+const games: LessonGame[] = [sortGamePDA, sortGameApps, sortGameButtons];
 
 export default games;

@@ -109,27 +109,7 @@ export type TimelineGame = {
   items: TimelineItem[]; // đã đúng thứ tự thời gian sẵn trong data — game sẽ tự xáo khi chơi
 };
 
-// Một cặp trong game lật thẻ ghép đôi: 1 thẻ thuật ngữ + 1 thẻ mô tả khớp nhau.
-// Game sẽ tạo 2 thẻ (term, clue) cho mỗi cặp, trộn chung rồi lật để tìm đúng cặp.
-export type MatchPair = {
-  id: string;
-  emoji: string;
-  term: string; // thẻ thuật ngữ ngắn gọn
-  clue: string; // thẻ mô tả/định nghĩa/ví dụ khớp với term
-};
-
-// Game lật thẻ ghép đôi (kiểu "trò chơi trí nhớ"): 2×N thẻ úp, lật 2 thẻ mỗi
-// lượt để tìm đúng cặp thuật ngữ ↔ mô tả, càng ít lượt lật điểm càng cao.
-export type MatchGame = {
-  kind: "match";
-  id: string;
-  title: string;
-  emoji: string;
-  instructions: string;
-  pairs: MatchPair[];
-};
-
-export type LessonGame = SortGame | TimelineGame | MatchGame | Sort3Game;
+export type LessonGame = SortGame | TimelineGame | Sort3Game;
 
 export type Topic = {
   id: string;
