@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Bài 1. Thông tin và xử lí thông tin</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/simple.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Baloo+2:wght@600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Custom Theme Colors matched to luyen-trac-nghiem-tin-10 */
+    :root {
+      --ink: #1E2438;
+      --ink-soft: #4A5370;
+      --grape: #7C3AED;
+      --grape-deep: #5B21B6;
+      --bubble: #EC4899;
+      --bubble-deep: #C8156E;
+      --mint: #10B981;
+      --mint-deep: #0A7753;
+      --sun: #F59E0B;
+      --sun-deep: #915E06;
+      --tomato: #EF4444;
+      --tomato-deep: #B91C1C;
+      --bg-cream: #FDF9F0;
+    }
+    
+    body { background-color: var(--bg-cream); }
+    
+    .reveal {
+      font-family: "Inter", sans-serif;
+      color: var(--ink);
+    }
+    
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: "Baloo 2", sans-serif;
+      color: var(--ink);
+      text-transform: none;
+      font-weight: 700;
+    }
+    
+    .reveal h1 { font-size: 2.0em; margin-bottom: 10px; }
+    .reveal h2 { font-size: 1.5em; margin-bottom: 25px; }
+    
+    .reveal p, .reveal li {
+      font-size: 0.95em;
+      line-height: 1.6;
+      color: var(--ink-soft);
+    }
+    
+    .reveal strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+    
+    /* Utilities */
+    .text-grape { color: var(--grape-deep); }
+    .text-bubble { color: var(--bubble-deep); }
+    .text-mint { color: var(--mint-deep); }
+    .text-sun { color: var(--sun-deep); }
+    
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+    
+    /* Cards */
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+      border: 1px solid rgba(0,0,0,0.05);
+      text-align: left;
+    }
+    .card-grape { border-left: 6px solid var(--grape); background: rgba(124, 58, 237, 0.04); }
+    .card-bubble { border-left: 6px solid var(--bubble); background: rgba(236, 72, 153, 0.04); }
+    .card-mint { border-left: 6px solid var(--mint); background: rgba(16, 185, 129, 0.04); }
+    .card-sun { border-left: 6px solid var(--sun); background: rgba(245, 158, 11, 0.04); }
+    .card-tomato { border-left: 6px solid var(--tomato); background: rgba(239, 68, 68, 0.04); }
+    
+    .card h3 { font-size: 1.1em; margin-top: 0; margin-bottom: 12px; }
+    .card-grape h3 { color: var(--grape-deep); }
+    .card-bubble h3 { color: var(--bubble-deep); }
+    .card-mint h3 { color: var(--mint-deep); }
+    .card-sun h3 { color: var(--sun-deep); }
+    
+    /* Lists */
+    .list-style-none { list-style: none; padding: 0; margin: 0; }
+    .list-style-none li { position: relative; padding-left: 24px; margin-bottom: 12px; }
+    .list-style-none li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--grape);
+      font-weight: bold;
+    }
+    .card-bubble .list-style-none li::before { color: var(--bubble); }
+    .card-mint .list-style-none li::before { color: var(--mint); }
+    
+    /* Table */
+    .table-units {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+    .table-units th {
+      background: rgba(124, 58, 237, 0.1);
+      color: var(--grape-deep);
+      font-family: "Baloo 2", sans-serif;
+      padding: 12px;
+      font-size: 1.0em;
+    }
+    .table-units td { padding: 12px; border-bottom: 1px solid rgba(0,0,0,0.05); }
+    .table-units tr:last-child td { border-bottom: none; }
+    
+    .emoji-icon { font-size: 1.8em; margin-bottom: 8px; display: block; }
+
+    /* Interactive Images */
+    .img-fluid {
+      max-width: 100%;
+      max-height: 400px;
+      object-fit: contain;
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      border: 4px solid white;
+    }
+    .question-box {
+      background: #FFFBEB;
+      border: 2px dashed #F59E0B;
+      padding: 15px;
+      border-radius: 12px;
+      font-weight: bold;
+      color: #915E06;
+      margin-top: 15px;
+      text-align: center;
+    }
+    .answer-box {
+      background: #ECFDF5;
+      border-left: 6px solid #10B981;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 15px;
+      color: #0A7753;
+      font-weight: bold;
+    }
+
+    /* Adjust slide vertical alignment */
+    .reveal .slides {
+      text-align: left;
+    }
+    .reveal h2 { text-align: center; }
+    .reveal h1 { text-align: center; }
+    .reveal>div>p { text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      
+      <!-- Slide 1: Bìa -->
+      <section>
+        <h1 class="text-grape">Bài 1. Thông tin và xử lí thông tin</h1>
+        <p class="fragment fade-up" style="text-align: center;">Chủ đề 1: Máy tính và xã hội tri thức</p>
+        
+        <div class="fragment fade-up card card-mint" style="margin-top: 25px;">
+          <h3>🎯 Mục tiêu bài học</h3>
+          <ul class="list-style-none">
+            <li>Phân biệt được <strong>thông tin</strong> và <strong>dữ liệu</strong>.</li>
+            <li>Hiểu được <strong>quá trình xử lí thông tin</strong> bằng máy tính.</li>
+            <li>Nắm được các <strong>đơn vị đo lượng dữ liệu</strong>.</li>
+            <li>Thấy được ưu điểm vượt trội của <strong>thiết bị số</strong>.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Slide 1.5: Khởi động (Câu hỏi) -->
+      <section data-auto-animate>
+        <h2 data-id="title-kd">Hoạt động Khởi động</h2>
+        <div class="grid-2">
+          <div>
+            <img data-id="img-kd" src="../images/context_37c.png" class="img-fluid" alt="Hai ngữ cảnh của 37 độ">
+          </div>
+          <div>
+            <div>
+              <p style="text-align: left;">Chúng ta thu nhận được cùng một dữ liệu là con số <strong>37°C</strong>.</p>
+              <ul class="list-style-none" style="text-align: left; font-size: 0.9em;">
+                <li style="margin-bottom: 10px;">Trường hợp 1: Từ một <strong>trạm thời tiết</strong> ngoài trời.</li>
+                <li>Trường hợp 2: Từ một chiếc <strong>cặp nhiệt độ</strong> cơ thể.</li>
+              </ul>
+            </div>
+            
+            <div class="question-box fragment fade-up" style="margin-top: 25px;">
+              🤔 Theo các em, dữ liệu này mang lại "Thông tin" gì trong từng trường hợp?
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 1.6: Khởi động (Đáp án) -->
+      <section data-auto-animate>
+        <h2 data-id="title-kd">Hoạt động Khởi động</h2>
+        <div class="grid-2">
+          <div>
+            <img data-id="img-kd" src="../images/context_37c.png" class="img-fluid" alt="Hai ngữ cảnh của 37 độ">
+          </div>
+          <div>
+            <div class="answer-box">
+              ✅ <strong>Trường hợp 1:</strong> Thông tin là "Hôm nay trời rất nóng".<br><br>
+              ✅ <strong>Trường hợp 2:</strong> Thông tin là "Cơ thể bình thường, không bị sốt".
+            </div>
+            <p class="fragment fade-up" style="text-align: left; margin-top: 25px; font-style: italic; color: var(--ink-soft); border-left: 4px solid var(--sun); padding-left: 15px;">
+              👉 Cùng một <strong>dữ liệu</strong> (37°C), nhưng khi đặt trong các <strong>ngữ cảnh</strong> khác nhau sẽ đem lại cho chúng ta <strong>những thông tin khác nhau</strong>.
+            </p>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Slide 2: Thông tin & Dữ liệu -->
+      <section>
+        <h2>💡 Thông tin và Dữ liệu</h2>
+        <div class="card card-sun fragment fade-up">
+          <h3>Thông tin là gì?</h3>
+          <p><strong>Thông tin</strong> là tất cả những gì mang lại cho chúng ta hiểu biết. Thông tin gắn với quá trình nhận thức — máy tính không tự nhận thức được mà chỉ là công cụ hỗ trợ.</p>
+        </div>
+        
+        <!-- Slide 4: Máy tính nhìn thế giới thế nào -->
+        <section>
+          <h2>Máy tính nhìn thế giới thế nào?</h2>
+          <div class="card card-sun fragment fade-up">
+            <p style="font-size: 1.1em; line-height: 1.6;">Máy tính <strong>không hiểu trực tiếp</strong> thế giới tự nhiên.</p>
+            <p style="font-size: 1.1em; line-height: 1.6;">Mọi âm thanh, hình ảnh, văn bản đều phải được <strong>số hoá</strong> (biến thành dãy số 0 và 1) để máy tính có thể xử lí được.</p>
+          </div>
+        </section>
+  
+        <!-- ================= HOẠT ĐỘNG 1 ================= -->
+        <section data-auto-animate>
+          <h2 data-id="title-hd1" class="text-bubble">Hoạt động 1: Có thể đồng nhất thông tin với dữ liệu không?</h2>
+          <div class="question-box" style="text-align: left; padding: 20px;">
+            🤔 Có các ý kiến sau về dữ liệu của một bài giảng Ngữ Văn:
+          </div>
+          <div class="grid-3" style="margin-top: 20px; gap: 15px;">
+            <div class="card card-grape fragment fade-up">
+              <h3 style="margin-bottom: 10px;">👧 An</h3>
+              <p style="font-size: 0.9em;">Bài ghi trong vở của em là dữ liệu.</p>
+            </div>
+            <div class="card card-mint fragment fade-up">
+              <h3 style="margin-bottom: 10px;">👦 Minh</h3>
+              <p style="font-size: 0.9em;">Tệp bài soạn Word của cô giáo là dữ liệu.</p>
+            </div>
+            <div class="card card-sun fragment fade-up">
+              <h3 style="margin-bottom: 10px;">🧑 Khoa</h3>
+              <p style="font-size: 0.9em;">Tệp video ghi lại tiết giảng là dữ liệu.</p>
+            </div>
+          </div>
+          <p class="fragment fade-up" style="margin-top: 25px; font-weight: bold; color: var(--ink);">Theo em bạn nào nói đúng?</p>
+        </section>
+  
+        <section data-auto-animate>
+          <h2 data-id="title-hd1" class="text-bubble">Hoạt động 1: Có thể đồng nhất thông tin với dữ liệu không?</h2>
+          <div class="answer-box">
+            ✅ <strong>Cả 3 bạn đều nói đúng!</strong>
+          </div>
+          <p style="margin-top: 20px; font-size: 1.1em; text-align: left; padding: 15px; border-left: 4px solid var(--mint-deep); background: rgba(16, 185, 129, 0.1); border-radius: 8px;">
+            👉 Cùng một <strong>thông tin</strong> (bài giảng môn Ngữ Văn) có thể được thể hiện bằng <strong>nhiều loại dữ liệu khác nhau</strong> (chữ viết tay, tệp văn bản số, tệp video số).
+          </p>
+        </section>
+  
+        <div class="card card-grape fragment fade-up" style="margin-top: 20px;">
+          <h3>Dữ liệu là gì?</h3>
+          <p>Trong tin học, <strong>dữ liệu</strong> là thông tin đã được số hoá (đưa vào máy tính).<br>👉 Trong máy tính, xử lí thông tin chính là <strong>xử lí dữ liệu</strong>.</p>
+        </div>
+      </section>
+      
+      <!-- Sơ đồ Quá trình xử lý thông tin -->
+      <section>
+        <h2>Quá trình xử lí thông tin bằng máy tính</h2>
+        <svg viewBox="0 0 640 200" class="h-auto w-full" style="max-width: 900px; margin: 0 auto; display: block;">
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M0,0 L10,5 L0,10 z" fill="#7C3AED" />
+            </marker>
+          </defs>
+          <rect x="10" y="10" width="620" height="180" rx="16" fill="#7C3AED" fill-opacity="0.05" stroke="#E4D9F9" stroke-width="1.5" />
+          
+          <g class="fragment fade-right" data-fragment-index="1">
+            <rect x="40" y="55" width="140" height="90" rx="14" fill="#FFFFFF" stroke="#7C3AED" stroke-width="2" />
+            <text x="110" y="85" font-size="14" fill="#5B21B6" font-weight="600" text-anchor="middle">
+              <tspan x="110" dy="0">📥</tspan>
+              <tspan x="110" dy="18">Tiếp nhận</tspan>
+              <tspan x="110" dy="18">dữ liệu</tspan>
+            </text>
+          </g>
+          <g class="fragment fade-right" data-fragment-index="2">
+            <line x1="185" y1="100" x2="230" y2="100" stroke="#7C3AED" stroke-width="2" marker-end="url(#arrow)" />
+            <text x="207" y="82" font-size="12" fill="#4A5370" font-weight="700" text-anchor="middle">B1</text>
+          </g>
+          
+          <g class="fragment fade-right" data-fragment-index="3">
+            <rect x="240" y="55" width="140" height="90" rx="14" fill="#7C3AED" fill-opacity="0.12" stroke="#7C3AED" stroke-width="2" />
+            <text x="310" y="85" font-size="14" fill="#5B21B6" font-weight="600" text-anchor="middle">
+              <tspan x="310" dy="0">⚙️</tspan>
+              <tspan x="310" dy="18">Xử lí</tspan>
+              <tspan x="310" dy="18">dữ liệu</tspan>
+            </text>
+          </g>
+          <g class="fragment fade-right" data-fragment-index="4">
+            <line x1="385" y1="100" x2="430" y2="100" stroke="#7C3AED" stroke-width="2" marker-end="url(#arrow)" />
+            <text x="407" y="82" font-size="12" fill="#4A5370" font-weight="700" text-anchor="middle">B2</text>
+          </g>
+          
+          <g class="fragment fade-right" data-fragment-index="5">
+            <rect x="440" y="55" width="160" height="90" rx="14" fill="#FFFFFF" stroke="#10B981" stroke-width="2" />
+            <text x="520" y="85" font-size="14" fill="#0A7753" font-weight="600" text-anchor="middle">
+              <tspan x="520" dy="0">📤</tspan>
+              <tspan x="520" dy="18">Đưa ra</tspan>
+              <tspan x="520" dy="18">kết quả</tspan>
+            </text>
+          </g>
+        </svg>
+      </section>
+
+      <!-- Slide Tương tác 1 -->
+      <section>
+        <h2>Tương tác: Nhận biết thông tin</h2>
+        <div class="question-box fragment fade-up">
+          🤔 Con người tiếp nhận thông tin từ thế giới bên ngoài qua những giác quan nào?
+        </div>
+        <div class="grid-3 fragment fade-up" style="margin-top: 25px;">
+          <div class="card card-sun" style="text-align: center;"><span class="emoji-icon">👀</span><strong>Thị giác</strong><br><small>Hình ảnh, màu sắc</small></div>
+          <div class="card card-grape" style="text-align: center;"><span class="emoji-icon">👂</span><strong>Thính giác</strong><br><small>Âm thanh</small></div>
+          <div class="card card-mint" style="text-align: center;"><span class="emoji-icon">✋</span><strong>Xúc giác, Khứu giác, Vị giác</strong></div>
+        </div>
+      </section>
+
+      <!-- Slide Tương tác 2 -->
+      <section>
+        <h2>Máy tính "nhìn" thế giới thế nào?</h2>
+        <div class="question-box fragment fade-up" style="border-color: var(--bubble); background: #FDF2F8; color: var(--bubble-deep);">
+          🤔 Còn máy tính (thiết bị số) "tiếp nhận" thông tin qua đâu?
+        </div>
+        <div class="card card-bubble fragment fade-up" style="margin-top: 25px; text-align: center;">
+          <span class="emoji-icon">⌨️ 🖱️ 📷 🎤</span>
+          <p style="color: var(--bubble-deep); font-weight: bold; font-size: 1.2em;">👉 Bàn phím, chuột, camera, micro, cảm biến...</p>
+        </div>
+      </section>
+
+      <!-- So sánh -->
+      <section>
+        <h2>Phân biệt Thông tin & Dữ liệu</h2>
+        <div class="grid-2">
+          <div class="card card-bubble fragment fade-up">
+            <h3>🧠 Thông tin</h3>
+            <ul class="list-style-none" style="font-size: 0.9em;">
+              <li class="fragment fade-up">Là <strong>ý nghĩa</strong>, mang lại hiểu biết.</li>
+              <li class="fragment fade-up">Có tính <strong>toàn vẹn</strong>: thiếu dữ liệu có thể làm thông tin sai lệch.</li>
+              <li class="fragment fade-up">Một thông tin có thể được thể hiện bởi <strong>nhiều loại dữ liệu</strong>.</li>
+            </ul>
+          </div>
+          <div class="card card-grape fragment fade-up">
+            <h3>💾 Dữ liệu</h3>
+            <ul class="list-style-none" style="font-size: 0.9em;">
+              <li class="fragment fade-up">Là yếu tố <strong>thể hiện, xác định</strong> thông tin.</li>
+              <li class="fragment fade-up"><strong>Độc lập tương đối</strong>: một dữ liệu có thể mang nhiều thông tin khác nhau.</li>
+              <li class="fragment fade-up">Nhiều bộ dữ liệu khác nhau có thể đưa đến <strong>cùng một thông tin</strong>.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 3: Đơn vị lưu trữ -->
+      <section>
+        <h2>📏 Đơn vị lưu trữ dữ liệu</h2>
+        <p class="fragment fade-up" style="margin-bottom: 25px;"><strong>Bit</strong> (binary digit) là đơn vị nhỏ nhất, chỉ nhận giá trị 0 hoặc 1.</p>
+        <p class="fragment fade-up">Phần lớn máy tính sử dụng <strong>byte (8 bit)</strong> làm đơn vị đo lượng dữ liệu.</p>
+      </section>
+      
+      <section>
+        <h2>Bảng Đơn vị lưu trữ</h2>
+        <table class="table-units fragment fade-up" style="max-width: 900px; margin: 0 auto; font-size: 0.9em;">
+          <thead>
+            <tr>
+              <th>Đơn vị</th>
+              <th>Kí hiệu</th>
+              <th>Lượng dữ liệu</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="fragment fade-up">
+              <td>bit</td>
+              <td style="color: var(--bubble-deep); font-weight: bold;">bit</td>
+              <td>1 bit</td>
+            </tr>
+            <tr class="fragment fade-up" style="background: rgba(124, 58, 237, 0.05)">
+              <td>Byte</td>
+              <td style="color: var(--bubble-deep); font-weight: bold;">B</td>
+              <td>8 bit</td>
+            </tr>
+            <tr class="fragment fade-up">
+              <td>Kilobyte</td>
+              <td style="color: var(--bubble-deep); font-weight: bold;">KB</td>
+              <td>2¹⁰ B = 1 024 B</td>
+            </tr>
+            <tr class="fragment fade-up" style="background: rgba(124, 58, 237, 0.05)">
+              <td>Megabyte</td>
+              <td style="color: var(--bubble-deep); font-weight: bold;">MB</td>
+              <td>2¹⁰ KB</td>
+            </tr>
+            <tr class="fragment fade-up">
+              <td>Gigabyte</td>
+              <td style="color: var(--bubble-deep); font-weight: bold;">GB</td>
+              <td>2¹⁰ MB</td>
+            </tr>
+            <tr class="fragment fade-up" style="background: rgba(124, 58, 237, 0.05)">
+              <td>Terabyte</td>
+              <td style="color: var(--bubble-deep); font-weight: bold;">TB</td>
+              <td>2¹⁰ GB</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="fragment fade-up" style="margin-top: 15px; font-weight: bold; color: var(--sun-deep); text-align: center;">Mỗi đơn vị hơn kém nhau 2¹⁰ = 1 024 lần</p>
+      </section>
+
+      <!-- Slide Mở rộng KB vs KiB -->
+      <section>
+        <h2 class="text-sun">Mở rộng: KB hay KiB?</h2>
+        <div class="card card-sun fragment fade-up" style="margin-top: 20px;">
+          <h3 style="margin-bottom: 10px;">Tại sao USB 16GB cắm vào máy tính chỉ còn 14.9GB?</h3>
+          <ul class="list-style-none" style="font-size: 0.95em; line-height: 1.6;">
+            <li class="fragment fade-up">Theo chuẩn quốc tế (IEC), đơn vị <strong>Kilo, Mega, Giga</strong> là bội số của 1 000 (1 KB = 1 000 B).</li>
+            <li class="fragment fade-up">Để chỉ bội số của 1 024, người ta dùng chuẩn nhị phân <strong>Kibi, Mebi, Gibi</strong> (1 KiB = 1 024 B).</li>
+            <li class="fragment fade-up">Trong các bài tập SGK và thi cử hiện tại, chúng ta vẫn tạm dùng quy ước cũ (KB = 1 024 B).</li>
+          </ul>
+          <div class="fragment fade-up" style="margin-top: 20px; padding: 15px; background: rgba(245, 158, 11, 0.1); border-left: 4px solid var(--sun); border-radius: 8px; font-style: italic; color: var(--ink-soft); font-size: 0.9em;">
+            👉 Thực tế: Nhà sản xuất USB dùng chuẩn 1 000 (USB 16GB = 16 tỉ byte). Nhưng Windows lại chia cho 1 024, nên hệ thống sẽ báo dung lượng là: 16 000 000 000 ÷ (1024³) ≈ 14.9 GiB.
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide Thư tay vs Email 1 -->
+      <section>
+        <h2>Truyền thông tin: Xưa và Nay</h2>
+        <div class="grid-2">
+          <div>
+            <img src="../images/letter_vs_email.png" class="img-fluid fragment fade-up" alt="Thư tay vs Thư điện tử">
+          </div>
+          <div>
+            <div class="card card-bubble fragment fade-up">
+              <h3 style="margin-bottom: 5px;">📜 Thư tay (Truyền thống)</h3>
+              <p style="font-size: 0.85em;">Tốn nhiều ngày để chuyển phát, dễ thất lạc, mang được ít dữ liệu (vài tờ giấy).</p>
+            </div>
+            <div class="card card-mint fragment fade-up" style="margin-top: 15px;">
+              <h3 style="margin-bottom: 5px;">📧 Thư điện tử (Thiết bị số)</h3>
+              <p style="font-size: 0.85em;">Truyền đi gần như tức thời, đính kèm được nhiều hình ảnh, video (dữ liệu lớn).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide Thư tay vs Email 2 -->
+      <section>
+        <h2>Sự thay đổi kì diệu</h2>
+        <div class="question-box fragment fade-up" style="font-size: 1.2em; padding: 25px;">
+          🤔 Theo các em, điều gì đã tạo ra sự khác biệt khổng lồ này?
+        </div>
+        <div class="answer-box fragment fade-up" style="font-size: 1.5em; text-align: center; padding: 30px; margin-top: 30px;">
+          👉 Sức mạnh của <strong>Thiết bị số</strong>
+        </div>
+      </section>
+
+      <!-- ================= HOẠT ĐỘNG 2 ================= -->
+      <section data-auto-animate>
+        <h2 data-id="title-hd2">Hoạt động 2: Nhận biết thiết bị số</h2>
+        <p style="text-align: left; margin-bottom: 20px;">Trong các thiết bị dưới đây, thiết bị nào là thiết bị số?</p>
+        <div class="grid-3" style="font-size: 1em; gap: 15px;">
+          <div class="card fragment fade-up">⌚ Đồng hồ cơ</div>
+          <div class="card fragment fade-up">🌬️ Quạt điện cơ</div>
+          <div class="card fragment fade-up">📡 Bộ thu phát Wifi</div>
+          <div class="card fragment fade-up">💾 Thẻ nhớ</div>
+          <div class="card fragment fade-up">💻 Máy tính xách tay</div>
+        </div>
+      </section>
+
+      <section data-auto-animate>
+        <h2 data-id="title-hd2">Hoạt động 2: Nhận biết thiết bị số</h2>
+        <div class="grid-3" style="font-size: 1em; gap: 15px;">
+          <div class="card card-tomato">⌚ Đồng hồ cơ<br><span style="font-size: 0.8em; font-weight: normal; color: var(--ink-soft);">(Không phải)</span></div>
+          <div class="card card-tomato">🌬️ Quạt điện cơ<br><span style="font-size: 0.8em; font-weight: normal; color: var(--ink-soft);">(Không phải)</span></div>
+          <div class="card card-mint">📡 Bộ thu phát Wifi<br><span style="font-size: 0.8em; font-weight: normal; color: var(--ink-soft);">(Là Thiết bị số)</span></div>
+          <div class="card card-mint">💾 Thẻ nhớ<br><span style="font-size: 0.8em; font-weight: normal; color: var(--ink-soft);">(Là Thiết bị số)</span></div>
+          <div class="card card-mint">💻 Máy tính xách tay<br><span style="font-size: 0.8em; font-weight: normal; color: var(--ink-soft);">(Là Thiết bị số)</span></div>
+        </div>
+        <div class="answer-box fragment fade-up" style="margin-top: 25px; text-align: left;">
+          ✅ <strong>Thiết bị số</strong> là các thiết bị làm việc với thông tin số (lưu trữ, truyền dữ liệu, xử lí thông tin số). Đồng hồ cơ và quạt điện cơ không làm việc với thông tin số.
+        </div>
+      </section>
+
+      <!-- Slide 4: Thiết bị số (Khái niệm) -->
+      <section>
+        <h2>📱 Thiết bị số là gì?</h2>
+        <div class="grid-2">
+          <div>
+            <p class="fragment fade-up" style="text-align: left; font-size: 1.1em; line-height: 1.8;">Các thiết bị làm việc với thông tin số (lưu trữ, truyền dữ liệu, xử lí) được gọi là <strong>thiết bị số</strong>.</p>
+            <p class="fragment fade-up" style="text-align: left; color: var(--ink-soft); margin-top: 20px;">Ví dụ: Điện thoại thông minh, máy tính xách tay, đồng hồ thông minh, máy ảnh kĩ thuật số...</p>
+          </div>
+          <div>
+            <img src="../images/digital_devices.png" class="img-fluid fragment fade-left" alt="Các thiết bị số">
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 4: Thiết bị số (Ưu điểm) -->
+      <section>
+        <h2>Ưu điểm của Thiết bị số</h2>
+        <div class="grid-3" style="margin-top: 30px;">
+          <div class="card card-grape fragment fade-up" style="padding: 20px;">
+            <span class="emoji-icon" style="font-size: 2em; text-align: center;">💾</span>
+            <h3 style="text-align: center; margin-bottom: 10px;">Lưu trữ</h3>
+            <p style="font-size: 0.9em; line-height: 1.5; text-align: center; margin:0;">Dung lượng khổng lồ trong thiết bị nhỏ gọn, tìm kiếm siêu tốc.</p>
+          </div>
+          <div class="card card-sun fragment fade-up" style="padding: 20px;">
+            <span class="emoji-icon" style="font-size: 2em; text-align: center;">⚡</span>
+            <h3 style="text-align: center; margin-bottom: 10px;">Xử lí</h3>
+            <p style="font-size: 0.9em; line-height: 1.5; text-align: center; margin:0;">Tốc độ hàng tỉ phép tính mỗi giây, độ chính xác tuyệt đối.</p>
+          </div>
+          <div class="card card-mint fragment fade-up" style="padding: 20px;">
+            <span class="emoji-icon" style="font-size: 2em; text-align: center;">🌐</span>
+            <h3 style="text-align: center; margin-bottom: 10px;">Truyền thông</h3>
+            <p style="font-size: 0.9em; line-height: 1.5; text-align: center; margin:0;">Tốc độ truyền tin lớn (vài chục Mb/s), gần như tức thời.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= LUYỆN TẬP ================= -->
+      <section>
+        <h2 class="text-bubble">🎯 Luyện tập</h2>
+        <div class="question-box" style="text-align: left; padding: 20px;">
+          🤔 Câu 1: Phát biểu nào sau đây mô tả đúng mối quan hệ giữa thông tin và dữ liệu?
+        </div>
+        <ul class="list-style-none" style="margin-top: 20px;">
+          <li class="card fragment fade-up" style="padding: 15px; margin-bottom: 10px;">A. Thông tin là ý nghĩa, dữ liệu là hình thức thể hiện thông tin đó.</li>
+          <li class="card fragment fade-up" style="padding: 15px; margin-bottom: 10px;">B. Dữ liệu là ý nghĩa, thông tin là các con số ghi lại trong máy tính.</li>
+          <li class="card fragment fade-up" style="padding: 15px; margin-bottom: 10px;">C. Thông tin và dữ liệu hoàn toàn đồng nhất.</li>
+          <li class="card fragment fade-up" style="padding: 15px; margin-bottom: 10px;">D. Thông tin chỉ tồn tại bên trong máy tính, dữ liệu chỉ ở ngoài đời.</li>
+        </ul>
+      </section>
+
+      <section data-auto-animate>
+        <h2 data-id="title-lt">🎯 Luyện tập</h2>
+        <div class="question-box" style="text-align: left; padding: 20px;">
+          🤔 Câu 1: Phát biểu nào sau đây mô tả đúng mối quan hệ giữa thông tin và dữ liệu?
+        </div>
+        <div class="answer-box" style="margin-top: 30px; font-size: 1.2em;">
+          ✅ <strong>Đáp án A</strong><br>
+          <span style="font-size: 0.8em; color: var(--ink-soft);">Thông tin là ý nghĩa mà con người hiểu được; dữ liệu là dạng thể hiện (số hoá) của thông tin để máy tính xử lí.</span>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="text-bubble">🎯 Luyện tập</h2>
+        <div class="question-box" style="text-align: left; padding: 20px;">
+          🤔 Câu 2: 1 KB bằng bao nhiêu byte?
+        </div>
+        <div class="grid-2" style="margin-top: 25px;">
+          <div class="card fragment fade-up" style="text-align: center; font-weight: bold; padding: 15px;">A. 1 024 byte (2¹⁰)</div>
+          <div class="card fragment fade-up" style="text-align: center; font-weight: bold; padding: 15px;">B. 1 000 byte (10³)</div>
+          <div class="card fragment fade-up" style="text-align: center; font-weight: bold; padding: 15px;">C. 8 byte (2³)</div>
+          <div class="card fragment fade-up" style="text-align: center; font-weight: bold; padding: 15px;">D. 512 byte (2⁹)</div>
+        </div>
+      </section>
+      
+      <section data-auto-animate>
+        <h2 data-id="title-lt">🎯 Luyện tập</h2>
+        <div class="question-box" style="text-align: left; padding: 20px;">
+          🤔 Câu 2: 1 KB bằng bao nhiêu byte?
+        </div>
+        <div class="answer-box" style="margin-top: 30px; font-size: 1.2em;">
+          ✅ <strong>Đáp án A</strong><br>
+          <span style="font-size: 0.8em; color: var(--ink-soft);">Theo quy ước trong tin học, 1 KB = 2¹⁰ byte = 1 024 byte. Các bậc tiếp theo (MB, GB, TB) đều nhân 1 024.</span>
+        </div>
+      </section>
+
+      <!-- ================= VẬN DỤNG ================= -->
+      <section data-auto-animate>
+        <h2 data-id="title-vd" class="text-sun">🚀 Vận dụng thực tế</h2>
+        <div class="card card-sun" style="padding: 25px; margin-top: 20px;">
+          <h3 style="margin-bottom: 10px;">Tình huống:</h3>
+          <p style="font-size: 1.1em; line-height: 1.6;">Em có một thẻ nhớ điện thoại với dung lượng <strong>16 GB</strong>. Trung bình mỗi bức ảnh chụp bằng điện thoại có dung lượng khoảng <strong>4 MB</strong>.</p>
+          <p style="font-size: 1.1em; line-height: 1.6; font-weight: bold; color: var(--sun-deep); margin-top: 15px;">Hỏi thẻ nhớ này có thể lưu trữ được tối đa khoảng bao nhiêu bức ảnh?</p>
+        </div>
+      </section>
+
+      <section data-auto-animate>
+        <h2 data-id="title-vd" class="text-sun">🚀 Vận dụng thực tế</h2>
+        <div class="card card-sun" style="padding: 25px; margin-top: 20px;">
+          <h3 style="margin-bottom: 10px;">Tình huống:</h3>
+          <p style="font-size: 1.1em; line-height: 1.6;">Em có một thẻ nhớ điện thoại với dung lượng <strong>16 GB</strong>. Trung bình mỗi bức ảnh chụp bằng điện thoại có dung lượng khoảng <strong>4 MB</strong>.</p>
+          <p style="font-size: 1.1em; line-height: 1.6; font-weight: bold; color: var(--sun-deep); margin-top: 15px;">Hỏi thẻ nhớ này có thể lưu trữ được tối đa khoảng bao nhiêu bức ảnh?</p>
+        </div>
+        <div class="answer-box" style="margin-top: 20px;">
+          <strong>✅ Bài giải:</strong>
+          <ul style="margin-top: 10px; margin-left: 20px;">
+            <li>Đổi đơn vị GB ra MB: <br>16 GB = 16 × 1024 = <strong>16 384 MB</strong>.</li>
+            <li style="margin-top: 10px;">Số lượng ảnh thẻ nhớ lưu được: <br>16 384 ÷ 4 = <strong>4 096</strong> (bức ảnh).</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Slide 5: Tổng kết -->
+      <section>
+        <h2 class="text-mint">🎒 Ghi nhớ nhanh cả bài</h2>
+        <div class="card card-mint fragment fade-up">
+          <ul class="list-style-none" style="font-size: 0.95em;">
+            <li class="fragment fade-up"><strong>Thông tin</strong> là ý nghĩa; <strong>dữ liệu</strong> là dạng thể hiện để máy tính xử lí. Hai khái niệm độc lập tương đối.</li>
+            <li class="fragment fade-up">Quá trình xử lí: <strong>Tiếp nhận</strong> → <strong>Xử lí</strong> → <strong>Đưa ra kết quả</strong>.</li>
+            <li class="fragment fade-up"><strong>Bit</strong> là đơn vị nhỏ nhất. <strong>1 B = 8 bit</strong>. Các đơn vị KB, MB, GB, TB hơn kém nhau <strong>1 024 lần</strong>.</li>
+            <li class="fragment fade-up"><strong>Thiết bị số</strong> có ưu điểm vượt trội về lưu trữ, xử lí và truyền thông tốc độ cao.</li>
+          </ul>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      width: 1280,
+      height: 720,
+      margin: 0.05,
+      transition: 'slide',
+      center: false,
+      slideNumber: true,
+      controlsLayout: 'edges',
+    });
+  </script>
+</body>
+</html>

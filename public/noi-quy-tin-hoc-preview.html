@@ -1,0 +1,567 @@
+<title>Nội Quy Phòng Tin Học</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --ink:#1E2530;
+    --ink-soft:#3B4453;
+    --paper:#F7F7F2;
+    --paper-tint:#EFEEE7;
+    --line:#DBDACF;
+    --amber:#B87F26;
+    --amber-tint:#F1E1C3;
+    --teal:#2A6E6C;
+    --teal-tint:#DAEAE6;
+    --danger:#AE3E30;
+    --danger-tint:#F4DCD6;
+    --desk:#14181F;
+  }
+
+  *{ box-sizing:border-box; }
+
+  body{
+    margin:0;
+    background:var(--desk);
+    background-image:
+      radial-gradient(circle at 50% -10%, #232b38 0%, var(--desk) 60%);
+    color:var(--ink);
+    font-family:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+    display:flex;
+    justify-content:center;
+    padding:40px 16px 56px;
+  }
+
+  .poster{
+    width:100%;
+    max-width:860px;
+    background:var(--paper);
+    border-radius:3px;
+    box-shadow:0 30px 60px -24px rgba(0,0,0,.55), 0 10px 24px -12px rgba(0,0,0,.4);
+    overflow:hidden;
+  }
+
+  /* ---------- MASTHEAD ---------- */
+  .masthead{
+    position:relative;
+    background:var(--ink);
+    color:#EDEEEC;
+    padding:26px 34px 22px;
+    background-image:
+      radial-gradient(circle at 22px 22px, rgba(184,127,38,.35) 1.4px, transparent 1.6px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,.055) 0 1px, transparent 1px 44px),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.055) 0 1px, transparent 1px 44px);
+    background-size:44px 44px, 44px 44px, 44px 44px;
+  }
+  .mast-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:12px;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:10.5px;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:#B7BEC9;
+    border-bottom:1px solid rgba(255,255,255,.14);
+    padding-bottom:12px;
+    margin-bottom:16px;
+    flex-wrap:wrap;
+  }
+  .mast-row strong{ color:#EDEEEC; font-weight:600; }
+
+  h1{
+    margin:0 0 6px;
+    font-family:"IBM Plex Sans Condensed", "IBM Plex Sans", sans-serif;
+    font-weight:700;
+    font-size:clamp(26px,3.6vw,36px);
+    line-height:1.08;
+    letter-spacing:.005em;
+    text-wrap:balance;
+  }
+  .subtitle-en{
+    margin:0 0 14px;
+    font-style:italic;
+    font-weight:400;
+    font-size:14.5px;
+    color:#C7CCD4;
+  }
+  .tagline{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:11px;
+    letter-spacing:.1em;
+    color:#E7C083;
+    border:1px solid rgba(231,192,131,.4);
+    padding:6px 12px;
+    border-radius:3px;
+    margin-bottom:16px;
+  }
+  .legal{
+    font-size:12px;
+    line-height:1.55;
+    color:#AEB4BE;
+    max-width:62ch;
+  }
+  .legal em{ color:#CBD0D8; font-style:italic; }
+
+  /* ---------- CARD GRID ---------- */
+  .cards{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px 18px;
+    padding:34px 34px 8px;
+  }
+  .card{
+    position:relative;
+    background:#FFFFFE;
+    border:1px solid var(--line);
+    border-radius:2px;
+    padding:22px 18px 18px;
+    margin-top:14px;
+  }
+  .idx{
+    position:absolute;
+    top:-13px; left:16px;
+    font-family:"IBM Plex Mono", monospace;
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:.04em;
+    color:#fff;
+    background:var(--accent);
+    padding:4px 9px 3px;
+    border-radius:3px 3px 0 0;
+  }
+  .icon-tab{
+    position:absolute;
+    top:-13px; right:16px;
+    width:28px; height:28px;
+    background:var(--accent-tint);
+    color:var(--accent);
+    border-radius:3px 3px 0 0;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .icon-tab svg{ width:17px; height:17px; }
+
+  .card--amber{ --accent:var(--amber); --accent-tint:var(--amber-tint); }
+  .card--teal{ --accent:var(--teal); --accent-tint:var(--teal-tint); }
+  .card--danger{ --accent:var(--danger); --accent-tint:var(--danger-tint); }
+  .card{ border-top:3px solid var(--accent); }
+
+  .vi{
+    margin:0 0 2px;
+    font-size:16.5px;
+    font-weight:700;
+    color:var(--ink);
+    text-wrap:balance;
+  }
+  .en-h{
+    margin:0 0 10px;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:10px;
+    font-weight:600;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:var(--accent);
+  }
+  .rules{
+    margin:0 0 10px;
+    padding:0;
+    list-style:none;
+  }
+  .rules li{
+    position:relative;
+    padding-left:14px;
+    font-size:13px;
+    line-height:1.52;
+    color:var(--ink-soft);
+    margin-bottom:6px;
+  }
+  .rules li::before{
+    content:"";
+    position:absolute;
+    left:0; top:7px;
+    width:5px; height:5px;
+    background:var(--accent);
+    border-radius:1px;
+  }
+  .en-body{
+    margin:10px 0 0;
+    padding-top:10px;
+    border-top:1px dashed var(--line);
+    font-size:11.5px;
+    font-style:italic;
+    line-height:1.5;
+    color:#69707F;
+  }
+
+  /* ---------- FLOW BAR ---------- */
+  .flow-wrap{ padding:12px 34px 0; }
+  .flow{
+    background:var(--ink);
+    color:#EDEEEC;
+    border-radius:3px;
+    padding:13px 18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:9px;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:11.5px;
+    font-weight:600;
+    letter-spacing:.05em;
+    text-align:center;
+  }
+  .flow .chev{ color:#E7C083; font-weight:400; }
+  .flow .final{ color:#E7C083; }
+  .flow-en{
+    text-align:center;
+    font-size:10px;
+    font-style:italic;
+    color:#8A93A0;
+    margin-top:7px;
+    letter-spacing:.02em;
+  }
+
+  /* ---------- TWO COLUMN FOOTER ---------- */
+  .split{
+    display:grid;
+    grid-template-columns:1.15fr 1fr;
+    gap:18px;
+    padding:22px 34px 0;
+  }
+  .panel{
+    border:1px solid var(--line);
+    border-radius:2px;
+    padding:16px 18px 18px;
+    background:#FFFFFE;
+  }
+  .panel h4{
+    margin:0 0 3px;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:var(--ink);
+  }
+  .panel .h-en{
+    font-size:9.5px;
+    font-style:italic;
+    color:#9096A1;
+    margin-bottom:12px;
+  }
+
+  .tiers{ display:flex; flex-direction:column; gap:0; }
+  .tier{
+    display:flex;
+    gap:12px;
+    padding:9px 0;
+    border-top:1px solid var(--line);
+  }
+  .tier:first-child{ border-top:none; }
+  .tier .num{
+    flex:none;
+    width:22px; height:22px;
+    border-radius:50%;
+    background:var(--paper-tint);
+    border:1px solid var(--line);
+    font-family:"IBM Plex Mono", monospace;
+    font-size:11px;
+    font-weight:700;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--ink-soft);
+  }
+  .tier strong{ display:block; font-size:12.5px; margin-bottom:1px; }
+  .tier span{ display:block; font-size:11.5px; color:#6B7280; line-height:1.42; }
+  .tier em{ display:block; font-size:10px; font-style:italic; color:#9096A1; margin-top:2px; }
+
+  .chips{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .chip{
+    display:flex; align-items:flex-start; gap:8px;
+    background:var(--paper-tint);
+    border-radius:2px;
+    padding:9px 10px;
+  }
+  .chip svg{ width:15px; height:15px; flex:none; margin-top:1px; color:var(--teal); }
+  .chip span{ font-size:11px; line-height:1.38; color:var(--ink-soft); }
+
+  /* ---------- EMERGENCY ---------- */
+  .emergency{
+    margin:18px 34px 0;
+    border:1.5px solid var(--danger);
+    background:var(--danger-tint);
+    border-radius:2px;
+    padding:14px 18px;
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+  }
+  .emergency svg{ width:24px; height:24px; flex:none; color:var(--danger); margin-top:1px; }
+  .emergency strong{
+    display:block;
+    font-size:12.5px;
+    letter-spacing:.03em;
+    color:var(--danger);
+    margin-bottom:3px;
+  }
+  .emergency p{ margin:0 0 4px; font-size:12.5px; line-height:1.48; color:var(--ink); }
+  .emergency p.en{ margin:0; font-size:11px; font-style:italic; color:#7A4A42; }
+
+  /* ---------- TAGLINE BAR ---------- */
+  .quote{
+    margin:26px 0 0;
+    background:var(--ink);
+    color:#EDEEEC;
+    text-align:center;
+    padding:18px 20px 16px;
+  }
+  .quote .vi-q{
+    font-family:"IBM Plex Sans Condensed", sans-serif;
+    font-weight:700;
+    font-size:15px;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+  }
+  .quote .en-q{
+    margin-top:4px;
+    font-size:11px;
+    font-style:italic;
+    color:#9AA2AF;
+  }
+
+  /* ---------- SIGN-OFF ---------- */
+  .signoff{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:10px;
+    padding:16px 34px;
+    font-size:11.5px;
+    color:var(--ink-soft);
+    font-family:"IBM Plex Mono", monospace;
+    border-top:1px solid var(--line);
+  }
+  .footnote{
+    text-align:center;
+    font-size:10.5px;
+    color:#8A93A0;
+    padding:0 34px 24px;
+    line-height:1.5;
+  }
+
+  @media (max-width:620px){
+    .cards{ grid-template-columns:1fr; }
+    .split{ grid-template-columns:1fr; }
+    .chips{ grid-template-columns:1fr; }
+  }
+
+  @media print{
+    @page{ size:A3 portrait; margin:9mm; }
+    body{ background:#fff; padding:0; }
+    .poster{ box-shadow:none; max-width:none; width:100%; }
+    .card, .panel, .emergency{ break-inside:avoid; }
+  }
+</style>
+
+<div class="poster">
+
+  <header class="masthead">
+    <div class="mast-row">
+      <span>Sở GD&amp;ĐT Thái Nguyên · <strong>Trường THPT Na Rì</strong> · Tổ Toán – Tin</span>
+      <span>Tài liệu nội bộ · <strong>Năm học 2026–2027</strong></span>
+    </div>
+    <h1>Nội quy phòng thực hành Tin học</h1>
+    <p class="subtitle-en">Computer Lab Regulations &amp; Digital Safety</p>
+    <span class="tagline">AN TOÀN — KỶ LUẬT — SÁNG TẠO · SAFETY — DISCIPLINE — INNOVATION</span>
+    <p class="legal">Căn cứ Điều lệ trường trung học (Thông tư 32/2020/TT-BGDĐT) và nội quy quản lý cơ sở vật chất của Trường THPT Na Rì. <em>Pursuant to the School Charter (Circular 32/2020/TT-BGDĐT) and Na Rì High School's facility regulations.</em></p>
+  </header>
+
+  <section class="cards">
+
+    <article class="card card--amber">
+      <span class="idx">01</span>
+      <span class="icon-tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V4.6c0-.4.3-.7.7-.8L14 2v19"/><path d="M14 21h6"/><path d="M4 21h4"/><path d="M11.1 12.1v.2" stroke-width="2.4"/><path d="M17.5 9l3 3-3 3"/></svg>
+      </span>
+      <h3 class="vi">Vào phòng &amp; chỗ ngồi</h3>
+      <p class="en-h">Entry &amp; Seating</p>
+      <ul class="rules">
+        <li>Chỉ vào phòng khi có giáo viên và được phép; xếp hàng trật tự khi ra, vào.</li>
+        <li>Ngồi đúng vị trí máy được phân công theo danh sách, không tự ý đổi chỗ.</li>
+        <li>Không tự ý rời phòng khi chưa được giáo viên cho phép.</li>
+      </ul>
+      <p class="en-body">Enter only with the teacher present and with permission, in an orderly line. Sit at your assigned computer — do not switch seats or leave without permission.</p>
+    </article>
+
+    <article class="card card--amber">
+      <span class="idx">02</span>
+      <span class="icon-tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>
+      </span>
+      <h3 class="vi">Nề nếp &amp; vệ sinh</h3>
+      <p class="en-h">Discipline &amp; Hygiene</p>
+      <ul class="rules">
+        <li>Giữ phòng sạch sẽ, ngăn nắp; không mang đồ ăn, thức uống, không đi giày dép vào phòng.</li>
+        <li>Giữ trật tự; không chạy nhảy, đùa nghịch, nói chuyện lớn tiếng trong giờ thực hành.</li>
+        <li>Thực hiện đúng nội dung, nhiệm vụ và thời gian theo hướng dẫn của giáo viên.</li>
+      </ul>
+      <p class="en-body">Keep the room clean and tidy — no food, drinks, or shoes inside. Stay quiet and on task, following the teacher's content and timing exactly.</p>
+    </article>
+
+    <article class="card card--teal">
+      <span class="idx">03</span>
+      <span class="icon-tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="13" height="9" rx="1.2"/><path d="M6.5 17h5"/><path d="M9 13v4"/><path d="M17 8.5c2 0 2 2 0 2s-2 2 0 2"/><circle cx="20.4" cy="12.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+      </span>
+      <h3 class="vi">Thiết bị &amp; dây nối</h3>
+      <p class="en-h">Hardware &amp; Cabling</p>
+      <ul class="rules">
+        <li>Không tự ý di chuyển, tháo lắp hoặc sửa chữa máy tính, bàn ghế, thiết bị.</li>
+        <li>Không tự ý cắm, rút dây nguồn, dây mạng, cáp kết nối; không cắm thêm sạc, quạt vào ổ điện phòng máy.</li>
+        <li>Chỉ bật máy khi được yêu cầu; sử dụng điện tiết kiệm.</li>
+      </ul>
+      <p class="en-body">Do not move, disassemble, or repair computers or furniture. Do not plug or unplug cables, or add chargers and fans to the lab's outlets. Power on only when instructed.</p>
+    </article>
+
+    <article class="card card--teal">
+      <span class="idx">04</span>
+      <span class="icon-tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8l7 2.6v6c0 5-3 8.4-7 9.8-4-1.4-7-4.8-7-9.8v-6z"/><rect x="9.3" y="11" width="5.4" height="4.4" rx="1"/><path d="M10.3 11V9.6a1.7 1.7 0 013.4 0V11"/></svg>
+      </span>
+      <h3 class="vi">Phần mềm &amp; dữ liệu</h3>
+      <p class="en-h">Software &amp; Data</p>
+      <ul class="rules">
+        <li>Không cài đặt, gỡ phần mềm hoặc đổi cấu hình, mật khẩu, hình nền khi chưa được phép.</li>
+        <li>Không xem, sao chép, sửa hoặc xoá dữ liệu, bài làm của người khác.</li>
+        <li>Không dùng chung tài khoản, chia sẻ mật khẩu; không chơi game, mạng xã hội trong giờ học.</li>
+        <li>Không tải hoặc cài tệp không rõ nguồn gốc từ Internet hoặc USB.</li>
+      </ul>
+      <p class="en-body">Do not install software or change settings without permission. Never view, copy, or delete another student's data. No shared accounts, games, or social media — and never run unverified files from the internet or a USB drive.</p>
+    </article>
+
+    <article class="card card--danger">
+      <span class="idx">05</span>
+      <span class="icon-tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l10 18H2z"/><path d="M13 8.5l-3.4 4.8h3l-1.3 3.7 4-5.2h-2.8z" fill="currentColor" stroke="none"/></svg>
+      </span>
+      <h3 class="vi">An toàn điện</h3>
+      <p class="en-h">Electrical Safety</p>
+      <ul class="rules">
+        <li>Không chạm thiết bị điện khi tay ướt; không để nước, chất lỏng gần máy tính và ổ điện.</li>
+        <li>Nắm vị trí cầu dao tổng và bình chữa cháy của phòng trước khi thực hành.</li>
+        <li>Phát hiện dấu hiệu bất thường — mùi khét, máy treo, màn hình chớp tắt — dừng ngay và báo giáo viên.</li>
+      </ul>
+      <p class="en-body">Never touch electrical equipment with wet hands; keep liquids away from computers and outlets. Know the breaker and extinguisher location. If anything seems wrong, stop and alert the teacher immediately.</p>
+    </article>
+
+    <article class="card card--amber">
+      <span class="idx">06</span>
+      <span class="icon-tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v7"/><path d="M17.5 6.5a8 8 0 11-11 0"/></svg>
+      </span>
+      <h3 class="vi">Kết thúc buổi học</h3>
+      <p class="en-h">Ending the Session</p>
+      <ul class="rules">
+        <li>Lưu bài đúng quy định, đăng xuất tài khoản, đóng chương trình trước khi tắt máy.</li>
+        <li>Tắt máy đúng quy trình; sắp xếp bàn phím, chuột, ghế và thiết bị về đúng vị trí.</li>
+        <li>Chịu trách nhiệm với thiết bị được giao; làm hỏng hoặc mất phải bồi thường theo quy định.</li>
+      </ul>
+      <p class="en-body">Save your work, sign out, and close programs before shutting down properly. Tidy your station. You are responsible for your assigned equipment — damage or loss is compensated per school policy.</p>
+    </article>
+
+  </section>
+
+  <div class="flow-wrap">
+    <div class="flow">
+      <span>MỌI SỰ CỐ THIẾT BỊ</span><span class="chev">→</span>
+      <span>DỪNG SỬ DỤNG</span><span class="chev">→</span>
+      <span>BÁO GIÁO VIÊN</span><span class="chev">→</span>
+      <span class="final">KHÔNG TỰ Ý SỬA CHỮA</span>
+    </div>
+    <p class="flow-en">ANY EQUIPMENT ISSUE → STOP USING IT → REPORT TO THE TEACHER → NEVER REPAIR IT YOURSELF</p>
+  </div>
+
+  <div class="split">
+    <div class="panel">
+      <h4>Xử lý vi phạm</h4>
+      <p class="h-en">Handling Violations</p>
+      <div class="tiers">
+        <div class="tier">
+          <span class="num">1</span>
+          <div>
+            <strong>Vi phạm lần đầu</strong>
+            <span>Nhắc nhở trực tiếp, ghi nhận vào sổ theo dõi nề nếp.</span>
+            <em>First violation — a direct reminder, logged in the record.</em>
+          </div>
+        </div>
+        <div class="tier">
+          <span class="num">2</span>
+          <div>
+            <strong>Vi phạm lần hai</strong>
+            <span>Thông báo giáo viên chủ nhiệm và phụ huynh học sinh.</span>
+            <em>Second violation — homeroom teacher and parents notified.</em>
+          </div>
+        </div>
+        <div class="tier">
+          <span class="num">3</span>
+          <div>
+            <strong>Vi phạm nghiêm trọng / tái phạm</strong>
+            <span>Xử lý theo Thông tư 32/2020/TT-BGDĐT và nội quy nhà trường; bồi thường thiệt hại nếu có.</span>
+            <em>Serious or repeated — handled per Circular 32/2020/TT-BGDĐT; damages compensated.</em>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h4>Ghi nhớ</h4>
+      <p class="h-en">Remember</p>
+      <div class="chips">
+        <div class="chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6"/></svg>
+          <span>Đúng quy trình, đúng hướng dẫn</span>
+        </div>
+        <div class="chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="1.6"/><path d="M3 9h18"/></svg>
+          <span>Bảo quản máy móc, tài sản chung</span>
+        </div>
+        <div class="chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 8l8 8M16 8l-8 8"/></svg>
+          <span>Không chia sẻ, xoá dữ liệu tuỳ tiện</span>
+        </div>
+        <div class="chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg>
+          <span>Cẩn trọng điện, xử lý sự cố đúng cách</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="emergency">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l10 18H2z"/><path d="M12 9.5v5"/><circle cx="12" cy="17" r=".9" fill="currentColor" stroke="none"/></svg>
+    <div>
+      <strong>SỰ CỐ CHÁY, NỔ, CHẬP ĐIỆN · FIRE OR ELECTRICAL EMERGENCY</strong>
+      <p>Ngắt cầu dao tổng, dùng bình chữa cháy CO2 — <strong>tuyệt đối không dùng nước</strong>. Báo ngay giáo viên và rời phòng theo hướng dẫn.</p>
+      <p class="en">Cut the main breaker, use a CO2 extinguisher — never use water. Alert the teacher immediately and evacuate as instructed.</p>
+    </div>
+  </div>
+
+  <div class="quote">
+    <div class="vi-q">Tư duy số · Kỷ luật máy trạm · Chinh phục công nghệ</div>
+    <div class="en-q">Digital Mindset · Workstation Discipline · Mastering Technology</div>
+  </div>
+
+  <div class="signoff">
+    <span>Giáo viên phụ trách: ……………………………</span>
+    <span>Na Rì, ngày ….. tháng ….. năm 2026</span>
+    <span>Hiệu trưởng (Ký, đóng dấu)</span>
+  </div>
+  <p class="footnote">Nội quy có hiệu lực kể từ ngày ban hành — đề nghị học sinh nghiêm túc thực hiện.<br>In effect from the date of issue — students are required to strictly comply.</p>
+
+</div>
