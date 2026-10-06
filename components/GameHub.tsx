@@ -6,6 +6,8 @@ import { getLessonProgress } from "@/lib/progress";
 import SortGameClient from "@/components/SortGame";
 import TimelineGameClient from "@/components/TimelineGame";
 import Sort3GameClient from "@/components/Sort3Game";
+import CyberArenaGame from "@/components/CyberArenaGame";
+import SearchGameClient from "@/components/SearchGame";
 
 export default function GameHub({
   lessonId,
@@ -23,20 +25,28 @@ export default function GameHub({
     if (active) return;
     const map: Record<string, number | null> = {};
     for (const g of games) {
-      map[g.id] = getLessonProgress(`${lessonId}:game:${g.id}`)?.best ?? null;
+      if (g.kind === "arena") {
+        map[g.id] = getLessonProgress(`${lessonId}:arena:${g.id}`)?.best ?? null;
+      } else {
+        map[g.id] = getLessonProgress(`${lessonId}:game:${g.id}`)?.best ?? null;
+      }
     }
     setBestByGame(map);
   }, [active, games, lessonId]);
 
   if (active) {
-    // Nếu bài chỉ có đúng 1 game thì màn chọn game không hiện — "Quay lại" đi
-    // thẳng ra ngoài luôn. Nếu có nhiều game thì "Quay lại" về màn chọn trước.
     const handleBack = games.length === 1 ? onBack : () => setActive(null);
     if (active.kind === "sort") {
       return <SortGameClient lessonId={lessonId} game={active} onBack={handleBack} />;
     }
     if (active.kind === "timeline") {
       return <TimelineGameClient lessonId={lessonId} game={active} onBack={handleBack} />;
+    }
+    if (active.kind === "arena") {
+      return <CyberArenaGame lessonId={lessonId} game={active} onBack={handleBack} />;
+    }
+    if (active.kind === "search") {
+      return <SearchGameClient lessonId={lessonId} game={active} onBack={handleBack} />;
     }
     return <Sort3GameClient lessonId={lessonId} game={active} onBack={handleBack} />;
   }
@@ -52,18 +62,102 @@ export default function GameHub({
             ← Quay lại
           </button>
         )}
-        <h1 className="mt-5 font-display text-xl font-bold text-ink">🎮 Trung tâm Game</h1>
-        <p className="mt-1 text-sm text-ink-soft">Chọn 1 trò để ôn bài theo kiểu vừa học vừa chơi.</p>
+        <div className="mt-5 flex items-center justify-between">
+          <div>
+            <h1 className="font-display text-2xl font-bold text-ink">🎮 Trung tâm Game & Thử thách</h1>
+            <p className="mt-1 text-sm text-ink-soft">Chọn trò chơi để vừa học vừa ôn luyện kiến thức bài học.</p>
+          </div>
+        </div>
 
-        <div className="mt-6 space-y-3">
+        <div className="mt-6 space-y-3.5">
           {games.map((g) => {
+            const isArena = g.kind === "arena";
+            const isSearch = g.kind === "search";
             const desc =
               g.kind === "sort"
                 ? `${g.items.length} thẻ · kéo hoặc bấm để phân loại`
                 : g.kind === "timeline"
                   ? `${g.items.length} mốc · kéo hoặc chạm để sắp xếp`
-                  : `${g.items.length} thẻ · chọn đúng 1 trong 3 nhóm`;
+                  : g.kind === "arena"
+                    ? `${g.waves.length} đợt tấn công · Tường lửa 100 HP · Diệt trùm ${g.bossName}`
+                    : g.kind === "search"
+                      ? `${g.challenges.length} thử thách · ghép toán tử site:, filetype:, \"\", -`
+                      : `${g.items.length} thẻ · chọn đúng 1 trong 3 nhóm`;
+
             const best = bestByGame[g.id] ?? null;
+
+            if (isArena) {
+              return (
+                <button
+                  key={g.id}
+                  onClick={() => setActive(g)}
+                  className="group relative flex w-full items-center gap-4 overflow-hidden rounded-3xl border border-purple-500/40 bg-gradient-to-r from-slate-950 via-purple-950 to-slate-900 p-5 text-left text-white shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-purple-400 hover:shadow-2xl hover:shadow-purple-900/40"
+                >
+                  <div className="absolute -right-12 -top-12 h-36 w-36 rounded-full bg-purple-600/20 blur-2xl transition group-hover:bg-purple-600/30" />
+                  <span className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-purple-500/30 bg-purple-900/40 text-3xl shadow-inner">
+                    {g.emoji}
+                  </span>
+                  <span className="relative min-w-0 flex-1">
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-purple-400/40 bg-purple-500/20 px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-purple-300">
+                      <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-purple-400" />
+                      ĐẤU TRƯỜNG ĐẶC BIỆT
+                    </span>
+                    <span className="mt-1 block font-display text-lg font-bold text-white group-hover:text-purple-200">
+                      {g.title}
+                    </span>
+                    <span className="mt-0.5 block text-xs leading-relaxed text-slate-300">
+                      {desc}
+                    </span>
+                  </span>
+                  {best !== null ? (
+                    <span className="relative shrink-0 rounded-full border border-amber-500/30 bg-amber-500/20 px-3 py-1 font-mono text-xs font-bold text-amber-300">
+                      🏆 {best}đ
+                    </span>
+                  ) : (
+                    <span className="relative shrink-0 rounded-full border border-purple-500/30 bg-purple-500/20 px-3 py-1 font-mono text-xs font-bold text-purple-300 transition group-hover:scale-105">
+                      VÀO ĐẤU ⚔️
+                    </span>
+                  )}
+                </button>
+              );
+            }
+
+            if (isSearch) {
+              return (
+                <button
+                  key={g.id}
+                  onClick={() => setActive(g)}
+                  className="group relative flex w-full items-center gap-4 overflow-hidden rounded-3xl border border-blue-500/30 bg-gradient-to-r from-blue-950 via-slate-900 to-indigo-950 p-5 text-left text-white shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-blue-400 hover:shadow-2xl hover:shadow-blue-900/40"
+                >
+                  <div className="absolute -right-12 -top-12 h-36 w-36 rounded-full bg-blue-600/20 blur-2xl transition group-hover:bg-blue-600/30" />
+                  <span className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-blue-500/30 bg-blue-900/40 text-3xl shadow-inner">
+                    {g.emoji}
+                  </span>
+                  <span className="relative min-w-0 flex-1">
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-400/40 bg-blue-500/20 px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-blue-300">
+                      <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-blue-400" />
+                      THỢ SĂN TÌM KIẾM GOOGLE
+                    </span>
+                    <span className="mt-1 block font-display text-lg font-bold text-white group-hover:text-blue-200">
+                      {g.title}
+                    </span>
+                    <span className="mt-0.5 block text-xs leading-relaxed text-slate-300">
+                      {desc}
+                    </span>
+                  </span>
+                  {best !== null ? (
+                    <span className="relative shrink-0 rounded-full border border-mint/30 bg-mint/20 px-3 py-1 font-mono text-xs font-bold text-mint">
+                      ⭐ {best}%
+                    </span>
+                  ) : (
+                    <span className="relative shrink-0 rounded-full border border-blue-500/30 bg-blue-500/20 px-3 py-1 font-mono text-xs font-bold text-blue-300 transition group-hover:scale-105">
+                      BẮT ĐẦU 🔍
+                    </span>
+                  )}
+                </button>
+              );
+            }
+
             return (
               <button
                 key={g.id}
@@ -87,7 +181,9 @@ export default function GameHub({
                     {best}%
                   </span>
                 )}
-                <span className="shrink-0 text-ink-soft/40 transition group-hover:translate-x-0.5 group-hover:text-grape">→</span>
+                <span className="shrink-0 text-ink-soft/40 transition group-hover:translate-x-0.5 group-hover:text-grape">
+                  →
+                </span>
               </button>
             );
           })}

@@ -109,7 +109,75 @@ export type TimelineGame = {
   items: TimelineItem[]; // đã đúng thứ tự thời gian sẵn trong data — game sẽ tự xáo khi chơi
 };
 
-export type LessonGame = SortGame | TimelineGame | Sort3Game;
+// Thẻ đe doạ trong Đấu trường An ninh mạng (Cyber Defense Arena)
+export type ArenaThreat = {
+  id: string;
+  threatType: "Phishing" | "Virus" | "Worm" | "Trojan" | "Ransomware" | "Spyware" | "Cyberbullying";
+  threatName: string;
+  threatEmoji: string;
+  attackerTag: string; // Tên hacker / danh tính mã độc
+  situation: string; // Tình huống tấn công chi tiết
+  q: string; // Câu hỏi phản công / phòng vệ
+  options: string[]; // 4 lựa chọn xử lý
+  answer: number; // Chỉ số phương án đúng (0-3)
+  explain: string; // Giải thích phân tích an ninh chuẩn SGK Tin 10
+  damage: number; // Sát thương lên Firewall nếu chọn sai (vd: 20-30)
+  score: number; // Điểm nhận được khi hóa giải thành công
+};
+
+// Đợt tấn công trong Đấu trường
+export type ArenaWave = {
+  id: string;
+  waveNumber: number;
+  name: string;
+  subtitle: string;
+  emoji: string;
+  isBossWave?: boolean;
+  threats: ArenaThreat[];
+};
+
+// Game Đấu trường An ninh mạng: chế độ phòng thủ sống còn kết hợp diệt Boss hacker
+export type ArenaGame = {
+  kind: "arena";
+  id: string;
+  title: string;
+  emoji: string;
+  instructions: string;
+  bossName: string;
+  bossEmoji: string;
+  bossHp: number;
+  waves: ArenaWave[];
+};
+
+// Một thử thách trong Game Thợ săn tìm kiếm Google (Bài 10)
+export type SearchChallenge = {
+  id: string;
+  title: string;
+  scenario: string; // Tình huống / nhiệm vụ tìm kiếm
+  targetSnippet: string; // Tóm tắt mục tiêu cần tìm
+  correctTokens: string[]; // Các mảnh ghép đúng bắt buộc
+  distractorTokens: string[]; // Các mảnh ghép bẫy / sai cú pháp
+  simulatedResult: {
+    url: string;
+    breadcrumb: string;
+    title: string;
+    snippet: string;
+    fileBadge?: string; // [PDF], [PPTX], [DOCX], [XLSX]
+  };
+  explain: string; // Lời giải thích kiến thức SGK Bài 10
+};
+
+// Game Thợ săn tìm kiếm Google (Ghép mảnh toán tử tìm kiếm nâng cao)
+export type SearchGame = {
+  kind: "search";
+  id: string;
+  title: string;
+  emoji: string;
+  instructions: string;
+  challenges: SearchChallenge[];
+};
+
+export type LessonGame = SortGame | TimelineGame | Sort3Game | ArenaGame | SearchGame;
 
 export type Topic = {
   id: string;
@@ -131,6 +199,9 @@ export type LessonCounts = {
   tf: number;
   essay: number;
   theory: boolean;
+  games?: number;
+  hasArena?: boolean;
+  hasSearch?: boolean;
 };
 
 // ─── Lý thuyết tự học ────────────────────────────────────────────────────────
