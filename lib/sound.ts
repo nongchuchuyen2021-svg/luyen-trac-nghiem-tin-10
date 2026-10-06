@@ -274,6 +274,45 @@ class SoundSynthesizer {
     osc.start(now);
     osc.stop(now + 0.04);
   }
+
+  // 11. Búa Thẩm phán gõ (Gavel strike - Tòa án số)
+  gavel() {
+    if (!this.enabled) return;
+    const ctx = this.getContext();
+    if (!ctx) return;
+    const now = ctx.currentTime;
+
+    // Tiếng gõ 1
+    const osc1 = ctx.createOscillator();
+    const gain1 = ctx.createGain();
+    osc1.type = "triangle";
+    osc1.frequency.setValueAtTime(180, now);
+    osc1.frequency.exponentialRampToValueAtTime(60, now + 0.08);
+
+    gain1.gain.setValueAtTime(0.35, now);
+    gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+
+    osc1.connect(gain1);
+    gain1.connect(ctx.destination);
+    osc1.start(now);
+    osc1.stop(now + 0.12);
+
+    // Tiếng gõ 2 (đanh hơn, sau 0.15s)
+    const t2 = now + 0.14;
+    const osc2 = ctx.createOscillator();
+    const gain2 = ctx.createGain();
+    osc2.type = "triangle";
+    osc2.frequency.setValueAtTime(220, t2);
+    osc2.frequency.exponentialRampToValueAtTime(70, t2 + 0.1);
+
+    gain2.gain.setValueAtTime(0.4, t2);
+    gain2.gain.exponentialRampToValueAtTime(0.001, t2 + 0.16);
+
+    osc2.connect(gain2);
+    gain2.connect(ctx.destination);
+    osc2.start(t2);
+    osc2.stop(t2 + 0.16);
+  }
 }
 
 export const sound = new SoundSynthesizer();

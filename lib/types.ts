@@ -177,7 +177,38 @@ export type SearchGame = {
   challenges: SearchChallenge[];
 };
 
-export type LessonGame = SortGame | TimelineGame | Sort3Game | ArenaGame | SearchGame;
+// Một vụ án trong Tòa án Số (Bài 11)
+export type CourtOption = {
+  id: string;
+  verdict: string; // Tuyên án: vd "Vi phạm quyền nhân thân", "Hợp pháp - Sử dụng tài nguyên mở"...
+  subVerdict?: string; // Chi tiết chế tài / hình thức xử lý
+  isCorrect: boolean;
+  explain: string; // Căn cứ pháp lý SGK Tin 10
+};
+
+export type CourtCase = {
+  id: string;
+  caseNumber: string; // Vụ án số 01, 02...
+  title: string;
+  category: "Đạo đức & Văn hoá số" | "Quyền tác giả - Nhân thân" | "Quyền tác giả - Tài sản" | "Quy định pháp luật mạng";
+  defendant: string; // Đối tượng bị xét xử
+  situation: string; // Diễn biến tình huống
+  evidence: string; // Bằng chứng thu thập được
+  charge: string; // Hành vi bị tố giác
+  options: CourtOption[];
+  statute: string; // Căn cứ điều luật SGK Tin 10
+};
+
+export type CourtGame = {
+  kind: "court";
+  id: string;
+  title: string;
+  emoji: string;
+  instructions: string;
+  cases: CourtCase[];
+};
+
+export type LessonGame = SortGame | TimelineGame | Sort3Game | ArenaGame | SearchGame | CourtGame;
 
 export type Topic = {
   id: string;
@@ -202,6 +233,7 @@ export type LessonCounts = {
   games?: number;
   hasArena?: boolean;
   hasSearch?: boolean;
+  hasCourt?: boolean;
 };
 
 // ─── Lý thuyết tự học ────────────────────────────────────────────────────────

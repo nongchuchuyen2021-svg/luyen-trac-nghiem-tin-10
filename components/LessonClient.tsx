@@ -146,21 +146,27 @@ export default function LessonClient({
               ? "⚔️"
               : games.some((g) => g.kind === "search")
                 ? "🔍"
-                : "🎮",
+                : games.some((g) => g.kind === "court")
+                  ? "⚖️"
+                  : "🎮",
             name: games.some((g) => g.kind === "arena")
               ? "Đấu trường Game & Phòng vệ"
               : games.some((g) => g.kind === "search")
                 ? "Thợ săn Tìm kiếm & Game"
-                : games.length === 1
-                  ? games[0].title
-                  : "Trung tâm Game",
+                : games.some((g) => g.kind === "court")
+                  ? "Tòa án Số & Bản quyền"
+                  : games.length === 1
+                    ? games[0].title
+                    : "Trung tâm Game",
             desc: games.some((g) => g.kind === "arena")
               ? `${games.length} trò chơi · Có ĐẤU TRƯỜNG diệt Boss hacker & phòng thủ Tường lửa!`
               : games.some((g) => g.kind === "search")
                 ? `${games.length} trò chơi · Lắp ráp toán tử Google & phân loại tài nguyên số`
-                : games.length === 1
-                  ? `${(games[0] as any).items?.length ?? 10} thẻ · kéo hoặc chạm để chơi`
-                  : `${games.length} trò chơi ôn bài · kéo hoặc chạm để chơi`,
+                : games.some((g) => g.kind === "court")
+                  ? `${games.length} trò chơi · Thẩm phán tuyên án vụ án số & phân loại quyền tác giả`
+                  : games.length === 1
+                    ? `${(games[0] as any).items?.length ?? 10} thẻ · kéo hoặc chạm để chơi`
+                    : `${games.length} trò chơi ôn bài · kéo hoặc chạm để chơi`,
             best: null,
             enabled: true,
           },

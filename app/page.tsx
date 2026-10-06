@@ -20,6 +20,7 @@ export default function HomePage() {
         games: games.length,
         hasArena: games.some((g) => g.kind === "arena"),
         hasSearch: games.some((g) => g.kind === "search"),
+        hasCourt: games.some((g) => g.kind === "court"),
       };
     }
   }

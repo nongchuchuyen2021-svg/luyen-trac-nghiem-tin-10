@@ -8,6 +8,7 @@ import TimelineGameClient from "@/components/TimelineGame";
 import Sort3GameClient from "@/components/Sort3Game";
 import CyberArenaGame from "@/components/CyberArenaGame";
 import SearchGameClient from "@/components/SearchGame";
+import CourtGameClient from "@/components/CourtGame";
 
 export default function GameHub({
   lessonId,
@@ -48,6 +49,9 @@ export default function GameHub({
     if (active.kind === "search") {
       return <SearchGameClient lessonId={lessonId} game={active} onBack={handleBack} />;
     }
+    if (active.kind === "court") {
+      return <CourtGameClient lessonId={lessonId} game={active} onBack={handleBack} />;
+    }
     return <Sort3GameClient lessonId={lessonId} game={active} onBack={handleBack} />;
   }
 
@@ -73,6 +77,7 @@ export default function GameHub({
           {games.map((g) => {
             const isArena = g.kind === "arena";
             const isSearch = g.kind === "search";
+            const isCourt = g.kind === "court";
             const desc =
               g.kind === "sort"
                 ? `${g.items.length} thẻ · kéo hoặc bấm để phân loại`
@@ -82,7 +87,9 @@ export default function GameHub({
                     ? `${g.waves.length} đợt tấn công · Tường lửa 100 HP · Diệt trùm ${g.bossName}`
                     : g.kind === "search"
                       ? `${g.challenges.length} thử thách · ghép toán tử site:, filetype:, \"\", -`
-                      : `${g.items.length} thẻ · chọn đúng 1 trong 3 nhóm`;
+                      : g.kind === "court"
+                        ? `${g.cases.length} vụ án · Thẩm phán gõ búa tuyên án theo SGK & Luật SHTT`
+                        : `${g.items.length} thẻ · chọn đúng 1 trong 3 nhóm`;
 
             const best = bestByGame[g.id] ?? null;
 
@@ -152,6 +159,42 @@ export default function GameHub({
                   ) : (
                     <span className="relative shrink-0 rounded-full border border-blue-500/30 bg-blue-500/20 px-3 py-1 font-mono text-xs font-bold text-blue-300 transition group-hover:scale-105">
                       BẮT ĐẦU 🔍
+                    </span>
+                  )}
+                </button>
+              );
+            }
+
+            if (isCourt) {
+              return (
+                <button
+                  key={g.id}
+                  onClick={() => setActive(g)}
+                  className="group relative flex w-full items-center gap-4 overflow-hidden rounded-3xl border border-amber-500/40 bg-gradient-to-r from-slate-950 via-stone-900 to-amber-950/70 p-5 text-left text-white shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-amber-400 hover:shadow-2xl hover:shadow-amber-900/40"
+                >
+                  <div className="absolute -right-12 -top-12 h-36 w-36 rounded-full bg-amber-600/20 blur-2xl transition group-hover:bg-amber-600/30" />
+                  <span className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-amber-500/30 bg-amber-900/40 text-3xl shadow-inner">
+                    {g.emoji}
+                  </span>
+                  <span className="relative min-w-0 flex-1">
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/40 bg-amber-500/20 px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-amber-300">
+                      <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-400" />
+                      TÒA ÁN CÔNG LÝ SỐ
+                    </span>
+                    <span className="mt-1 block font-display text-lg font-bold text-white group-hover:text-amber-200">
+                      {g.title}
+                    </span>
+                    <span className="mt-0.5 block text-xs leading-relaxed text-slate-300">
+                      {desc}
+                    </span>
+                  </span>
+                  {best !== null ? (
+                    <span className="relative shrink-0 rounded-full border border-amber-500/30 bg-amber-500/20 px-3 py-1 font-mono text-xs font-bold text-amber-300">
+                      ⚖️ {best}%
+                    </span>
+                  ) : (
+                    <span className="relative shrink-0 rounded-full border border-amber-500/30 bg-amber-500/20 px-3 py-1 font-mono text-xs font-bold text-amber-300 transition group-hover:scale-105">
+                      XÉT XỬ ⚖️
                     </span>
                   )}
                 </button>
