@@ -208,7 +208,63 @@ export type CourtGame = {
   cases: CourtCase[];
 };
 
-export type LessonGame = SortGame | TimelineGame | Sort3Game | ArenaGame | SearchGame | CourtGame;
+// =====================================================================
+// GAME: KỸ SƯ ĐIỀU PHỐI MẠNG & ĐIỆN TOÁN ĐÁM MÂY (BÀI 8)
+// =====================================================================
+export type NetworkTopologyNode = {
+  id: string;
+  name: string;
+  emoji: string;
+  ip?: string;
+  role: "pc" | "phone" | "printer" | "switch" | "router" | "modem" | "internet" | "server" | "sensor";
+  x: number; // Tỉ lệ % trên trục ngang (0-100)
+  y: number; // Tỉ lệ % trên trục dọc (0-100)
+};
+
+export type NetworkTopologyLink = {
+  from: string;
+  to: string;
+  type: "ethernet" | "wifi" | "fiber";
+  label?: string;
+};
+
+export type NetworkMission = {
+  id: string;
+  missionNumber: number;
+  badge: string; // Vd: "Mạng LAN", "Định tuyến Internet", "Chẩn đoán sự cố", "Đám mây SaaS/PaaS/IaaS", "Hệ thống IoT"
+  title: string;
+  scenario: string; // Tình huống thực tế chi tiết
+  taskQuestion: string; // Câu hỏi tác chiến của Kỹ sư trưởng
+  diagram?: {
+    nodes: NetworkTopologyNode[];
+    links: NetworkTopologyLink[];
+    activePacket?: {
+      sourceId: string;
+      targetId: string;
+      packetLabel: string;
+      correctPath: string[]; // danh sách các node ID theo thứ tự đường đi đúng
+    };
+  };
+  options: {
+    id: string;
+    text: string;
+    detail?: string;
+    isCorrect: boolean;
+    explain: string;
+  }[];
+  practicalTip?: string;
+};
+
+export type NetworkGame = {
+  kind: "network";
+  id: string;
+  title: string;
+  emoji: string;
+  instructions: string;
+  missions: NetworkMission[];
+};
+
+export type LessonGame = SortGame | TimelineGame | Sort3Game | ArenaGame | SearchGame | CourtGame | NetworkGame;
 
 export type Topic = {
   id: string;
@@ -234,6 +290,7 @@ export type LessonCounts = {
   hasArena?: boolean;
   hasSearch?: boolean;
   hasCourt?: boolean;
+  hasNetwork?: boolean;
 };
 
 // ─── Lý thuyết tự học ────────────────────────────────────────────────────────

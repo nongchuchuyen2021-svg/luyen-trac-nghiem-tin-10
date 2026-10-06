@@ -21,6 +21,7 @@ export default function HomePage() {
         hasArena: games.some((g) => g.kind === "arena"),
         hasSearch: games.some((g) => g.kind === "search"),
         hasCourt: games.some((g) => g.kind === "court"),
+        hasNetwork: games.some((g) => g.kind === "network"),
       };
     }
   }
