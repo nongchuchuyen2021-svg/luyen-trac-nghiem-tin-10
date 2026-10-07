@@ -5,6 +5,15 @@ import type { CourtCase, CourtGame, CourtOption } from "@/lib/types";
 import { getLessonProgress, saveAttempt } from "@/lib/progress";
 import { sound } from "@/lib/sound";
 
+function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 export default function CourtGameClient({
   lessonId,
   game,
@@ -14,7 +23,33 @@ export default function CourtGameClient({
   game: CourtGame;
   onBack?: () => void;
 }) {
-  const cases = game.cases;
+  const [shuffledCases, setShuffledCases] = useState<CourtCase[]>(() =>
+    game.cases.map((c) => ({
+      ...c,
+      options: shuffle(c.options),
+    }))
+  );
+
+  const setupCases = () => {
+    setShuffledCases(
+      game.cases.map((c) => ({
+        ...c,
+        options: shuffle(c.options),
+      }))
+    );
+    setCurrentIdx(0);
+    setSelectedOption(null);
+    setIsJudged(false);
+    setCorrectCount(0);
+    setStreak(0);
+    setIsFinished(false);
+  };
+
+  useEffect(() => {
+    setupCases();
+  }, [game]);
+
+  const cases = shuffledCases;
   const total = cases.length;
 
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -29,7 +64,7 @@ export default function CourtGameClient({
   const [isFinished, setIsFinished] = useState(false);
   const [bestScore, setBestScore] = useState<number | null>(null);
 
-  const currentCase: CourtCase = cases[currentIdx];
+  const currentCase: CourtCase = cases[currentIdx] ?? game.cases[0];
 
   // Khởi tạo điểm cao
   useEffect(() => {
@@ -91,12 +126,7 @@ export default function CourtGameClient({
   // Xét xử lại từ đầu
   const handleRestart = () => {
     sound.click();
-    setCurrentIdx(0);
-    setSelectedOption(null);
-    setIsJudged(false);
-    setCorrectCount(0);
-    setStreak(0);
-    setIsFinished(false);
+    setupCases();
   };
 
   // Màn hình Tổng kết phiên toà

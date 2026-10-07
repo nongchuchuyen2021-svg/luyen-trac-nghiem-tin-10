@@ -24,7 +24,7 @@ export default function Sort3Game({
 }) {
   const progressKey = `${lessonId}:game:${game.id}`;
 
-  const [deck, setDeck] = useState<Sort3Item[]>([]);
+  const [deck, setDeck] = useState<Sort3Item[]>(() => shuffle(game.items));
   const [current, setCurrent] = useState(0);
   const [answered, setAnswered] = useState<null | { picked: 0 | 1 | 2; correct: boolean }>(null);
   const [correctCount, setCorrectCount] = useState(0);

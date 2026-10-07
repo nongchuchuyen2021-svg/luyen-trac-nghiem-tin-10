@@ -12,6 +12,31 @@ interface PowerUpState {
   active: boolean;
 }
 
+function shuffleThreat(t: ArenaThreat): ArenaThreat {
+  const indices = t.options.map((_, i) => i);
+  for (let i = indices.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [indices[i], indices[j]] = [indices[j], indices[i]];
+  }
+  return {
+    ...t,
+    options: indices.map((i) => t.options[i]),
+    answer: indices.indexOf(t.answer),
+  };
+}
+
+function buildPreparedThreats(game: ArenaGame) {
+  const list: ArenaThreat[] = [];
+  const wMap: number[] = [];
+  game.waves.forEach((w, wIdx) => {
+    w.threats.forEach((t) => {
+      list.push(shuffleThreat(t));
+      wMap.push(wIdx);
+    });
+  });
+  return { list, wMap };
+}
+
 export default function CyberArenaGame({
   lessonId,
   game,
@@ -21,24 +46,18 @@ export default function CyberArenaGame({
   game: ArenaGame;
   onBack?: () => void;
 }) {
-  // Toàn bộ câu hỏi được gộp theo đợt
-  const allThreats = useRef<ArenaThreat[]>([]);
-  const threatWaveMap = useRef<number[]>([]);
+  const [preparedThreats, setPreparedThreats] = useState(() => buildPreparedThreats(game));
 
-  if (allThreats.current.length === 0) {
-    const list: ArenaThreat[] = [];
-    const wMap: number[] = [];
-    game.waves.forEach((w, wIdx) => {
-      w.threats.forEach((t) => {
-        list.push(t);
-        wMap.push(wIdx);
-      });
-    });
-    allThreats.current = list;
-    threatWaveMap.current = wMap;
-  }
+  const setupThreats = () => {
+    setPreparedThreats(buildPreparedThreats(game));
+  };
 
-  const totalThreats = allThreats.current.length;
+  useEffect(() => {
+    setupThreats();
+  }, [game]);
+
+  const currentThreatList = preparedThreats.list;
+  const totalThreats = currentThreatList.length;
 
   // Game state
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -78,8 +97,8 @@ export default function CyberArenaGame({
   const [bestScore, setBestScore] = useState<number | null>(null);
   const [screenShake, setScreenShake] = useState(false);
 
-  const currentThreat = allThreats.current[currentIdx];
-  const currentWaveIdx = threatWaveMap.current[currentIdx] ?? 0;
+  const currentThreat = currentThreatList[currentIdx];
+  const currentWaveIdx = preparedThreats.wMap[currentIdx] ?? 0;
   const currentWave = game.waves[currentWaveIdx] ?? game.waves[0];
 
   // Khởi tạo điểm cao
@@ -283,6 +302,7 @@ export default function CyberArenaGame({
 
   // Khởi động lại trận
   function handleRestart() {
+    setupThreats();
     setCurrentIdx(0);
     setFirewallHp(100);
     setBossHp(game.bossHp);

@@ -5,6 +5,15 @@ import type { NetworkGame, NetworkMission, NetworkTopologyNode } from "@/lib/typ
 import { saveAttempt } from "@/lib/progress";
 import { sound } from "@/lib/sound";
 
+function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 export default function NetworkGameClient({
   lessonId,
   game,
@@ -14,6 +23,12 @@ export default function NetworkGameClient({
   game: NetworkGame;
   onBack?: () => void;
 }) {
+  const [missions, setMissions] = useState<NetworkMission[]>(() =>
+    game.missions.map((m) => ({
+      ...m,
+      options: shuffle(m.options),
+    }))
+  );
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
   const [isConfirmed, setIsConfirmed] = useState(false);
@@ -24,8 +39,17 @@ export default function NetworkGameClient({
   const [animatingPacket, setAnimatingPacket] = useState(false);
   const [activePacketStep, setActivePacketStep] = useState<number>(0);
 
-  const mission = game.missions[currentIndex];
-  const totalMissions = game.missions.length;
+  useEffect(() => {
+    setMissions(
+      game.missions.map((m) => ({
+        ...m,
+        options: shuffle(m.options),
+      }))
+    );
+  }, [game]);
+
+  const mission = missions[currentIndex] ?? game.missions[0];
+  const totalMissions = missions.length || game.missions.length;
 
   // Cập nhật âm thanh
   useEffect(() => {
@@ -106,6 +130,12 @@ export default function NetworkGameClient({
 
   const handleRestart = () => {
     sound.click();
+    setMissions(
+      game.missions.map((m) => ({
+        ...m,
+        options: shuffle(m.options),
+      }))
+    );
     setCurrentIndex(0);
     setSelectedOptionId(null);
     setIsConfirmed(false);
@@ -380,7 +410,7 @@ export default function NetworkGameClient({
 
               {/* CÁC PHƯƠNG ÁN LỰA CHỌN */}
               <div className="mt-4 space-y-2.5">
-                {mission.options.map((opt) => {
+                {mission.options.map((opt, optIdx) => {
                   const isSelected = selectedOptionId === opt.id;
                   let styleClass = "border-slate-700/80 bg-slate-900/50 hover:border-sky-500/50 hover:bg-slate-800/60 text-slate-200";
 
@@ -404,7 +434,7 @@ export default function NetworkGameClient({
                       className={`w-full rounded-xl border p-3.5 text-left transition-all ${styleClass} flex items-start gap-3`}
                     >
                       <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-current text-xs font-mono font-bold">
-                        {isConfirmed && opt.isCorrect ? "✓" : isConfirmed && isSelected ? "✗" : opt.id.toUpperCase()}
+                        {isConfirmed && opt.isCorrect ? "✓" : isConfirmed && isSelected ? "✗" : String.fromCharCode(65 + optIdx)}
                       </div>
                       <div className="min-w-0 flex-1">
                         <div className="text-sm font-medium leading-snug">{opt.text}</div>

@@ -25,7 +25,7 @@ export default function SortGame({
   game: SortGame;
   onBack?: () => void;
 }) {
-  const [deck, setDeck] = useState<SortGameItem[]>([]);
+  const [deck, setDeck] = useState<SortGameItem[]>(() => shuffle(game.items));
   const [current, setCurrent] = useState(0);
   const [answered, setAnswered] = useState<null | { picked: boolean; correct: boolean }>(null);
   const [correctCount, setCorrectCount] = useState(0);
