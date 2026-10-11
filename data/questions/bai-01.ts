@@ -6,12 +6,12 @@ const questions: Question[] = [
     id: "b1-01",
     q: "Thông tin là gì?",
     options: [
-      "Những gì đem lại hiểu biết cho con người về thế giới và về chính mình",
-      "Những con số và chữ viết đã được ghi lại và lưu trữ trong máy tính",
       "Tất cả những gì con người nhìn thấy và nghe được ở xung quanh",
       "Các tín hiệu điện được truyền đi giữa những bộ phận của máy tính",
+      "Những con số và chữ viết đã được ghi lại và lưu trữ trong máy tính",
+      "Những gì đem lại hiểu biết cho con người về thế giới và về chính mình",
     ],
-    answer: 0,
+    answer: 3,
     explain:
       "Thông tin là những gì đem lại hiểu biết cho con người về thế giới xung quanh và về chính bản thân mình.",
   },
@@ -20,9 +20,9 @@ const questions: Question[] = [
     q: "Dữ liệu là gì?",
     options: [
       "Thông tin đã được ghi lại, số hoá để máy tính có thể xử lí được",
-      "Mọi hiểu biết mà con người thu nhận được về thế giới xung quanh",
-      "Tập hợp các chương trình được cài đặt sẵn trong máy tính",
       "Kết quả mà máy tính đưa ra màn hình sau khi tính toán xong",
+      "Tập hợp các chương trình được cài đặt sẵn trong máy tính",
+      "Mọi hiểu biết mà con người thu nhận được về thế giới xung quanh",
     ],
     answer: 0,
     explain:
@@ -44,23 +44,23 @@ const questions: Question[] = [
   {
     id: "b1-04",
     q: "Đơn vị nhỏ nhất để biểu diễn thông tin trong máy tính là gì?",
-    options: ["Bit", "Byte", "KB", "Kí tự"],
-    answer: 0,
+    options: ["Kí tự", "KB", "Bit", "Byte"],
+    answer: 2,
     explain:
       "Bit (binary digit) là đơn vị nhỏ nhất, chỉ nhận một trong hai giá trị 0 hoặc 1.",
   },
   {
     id: "b1-05",
     q: "1 byte bằng bao nhiêu bit?",
-    options: ["8 bit", "10 bit", "16 bit", "1024 bit"],
-    answer: 0,
+    options: ["16 bit", "1024 bit", "10 bit", "8 bit"],
+    answer: 3,
     explain: "1 byte = 8 bit. Đây là đơn vị cơ bản để đo lượng dữ liệu.",
   },
   {
     id: "b1-06",
     q: "1 KB (kilobyte) bằng bao nhiêu byte?",
-    options: ["1024 byte", "1000 byte", "8 byte", "512 byte"],
-    answer: 0,
+    options: ["8 byte", "1000 byte", "1024 byte", "512 byte"],
+    answer: 2,
     explain:
       "Theo quy ước trong tin học, 1 KB = 2¹⁰ byte = 1024 byte (các đơn vị tiếp theo MB, GB, TB cũng nhân 1024).",
   },
@@ -68,12 +68,12 @@ const questions: Question[] = [
     id: "b1-07",
     q: "Sắp xếp các đơn vị đo dữ liệu theo thứ tự TĂNG dần:",
     options: [
-      "B → KB → MB → GB → TB",
-      "B → MB → KB → GB → TB",
-      "KB → B → MB → TB → GB",
       "B → KB → GB → MB → TB",
+      "B → MB → KB → GB → TB",
+      "B → KB → MB → GB → TB",
+      "KB → B → MB → TB → GB",
     ],
-    answer: 0,
+    answer: 2,
     explain: "Thứ tự tăng dần: Byte → KB → MB → GB → TB, mỗi bậc gấp 1024 lần bậc trước.",
   },
   {
@@ -81,9 +81,9 @@ const questions: Question[] = [
     q: "Phát biểu nào ĐÚNG khi phân biệt thông tin và dữ liệu?",
     options: [
       "Thông tin là ý nghĩa, còn dữ liệu là hình thức ghi lại thông tin đó",
+      "Thông tin chỉ có trong máy tính, còn dữ liệu chỉ có ở ngoài đời thực",
       "Dữ liệu là ý nghĩa, còn thông tin là các con số cụ thể ghi trong máy",
       "Thông tin và dữ liệu là hai tên gọi khác nhau của cùng một khái niệm",
-      "Thông tin chỉ có trong máy tính, còn dữ liệu chỉ có ở ngoài đời thực",
     ],
     answer: 0,
     explain:
@@ -92,28 +92,28 @@ const questions: Question[] = [
   {
     id: "b1-09",
     q: "Thiết bị nào sau đây thực hiện chức năng TIẾP NHẬN thông tin cho máy tính?",
-    options: ["Bàn phím", "Màn hình", "Loa", "Máy in"],
-    answer: 0,
+    options: ["Màn hình", "Bàn phím", "Loa", "Máy in"],
+    answer: 1,
     explain:
       "Bàn phím (cùng chuột, máy quét, micro, camera...) là thiết bị vào. Màn hình, loa, máy in là thiết bị ra.",
   },
   {
     id: "b1-10",
     q: "Một thẻ nhớ 64 GB chứa được khoảng bao nhiêu tệp ảnh, nếu mỗi ảnh trung bình 4 MB?",
-    options: ["Khoảng 16 000 ảnh", "Khoảng 1 600 ảnh", "Khoảng 160 000 ảnh", "Khoảng 640 ảnh"],
-    answer: 0,
+    options: ["Khoảng 640 ảnh", "Khoảng 1 600 ảnh", "Khoảng 16 000 ảnh", "Khoảng 160 000 ảnh"],
+    answer: 2,
     explain: "64 GB = 64 × 1024 MB ≈ 65 536 MB; 65 536 ÷ 4 ≈ 16 384 ảnh, tức khoảng 16 000 ảnh.",
   },
   {
     id: "b1-11",
     q: "Xử lí thông tin trong máy tính thực chất là xử lí cái gì?",
     options: [
+      "Tín hiệu tương tự (analog)",
       "Dữ liệu ở dạng các dãy bit",
       "Chữ viết và hình ảnh nguyên bản",
       "Sóng âm thanh",
-      "Tín hiệu tương tự (analog)",
     ],
-    answer: 0,
+    answer: 1,
     explain:
       "Mọi thông tin đưa vào máy tính đều được số hoá thành dãy bit; máy tính xử lí các dãy bit đó.",
   },
@@ -121,12 +121,12 @@ const questions: Question[] = [
     id: "b1-12",
     q: "Hoạt động nào sau đây KHÔNG phải là xử lí thông tin?",
     options: [
-      "Chiếc bàn gỗ nằm im trong phòng học",
-      "Học sinh làm bài kiểm tra từ đề bài của giáo viên",
-      "Máy tính chấm điểm bài trắc nghiệm",
       "Trọng tài quan sát trận đấu và đưa ra quyết định",
+      "Học sinh làm bài kiểm tra từ đề bài của giáo viên",
+      "Chiếc bàn gỗ nằm im trong phòng học",
+      "Máy tính chấm điểm bài trắc nghiệm",
     ],
-    answer: 0,
+    answer: 2,
     explain:
       "Xử lí thông tin cần có tiếp nhận thông tin và tạo ra kết quả. Vật vô tri không tiếp nhận, không xử lí thông tin.",
   },

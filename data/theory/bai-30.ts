@@ -35,12 +35,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Vì sao bài thi của bạn Vừ chạy đúng với ví dụ mẫu trong đề nhưng vẫn chỉ đạt 6 trên 10 bộ dữ liệu chấm điểm?",
           options: [
-            "Vì chạy đúng với một bộ dữ liệu (ví dụ mẫu) không chứng minh được chương trình đúng với mọi bộ dữ liệu khác",
             "Vì ban giám khảo đã cố tình chấm sai để đánh trượt một số thí sinh",
-            "Vì ví dụ mẫu trong đề bài vốn dĩ chứa một đáp án không chính xác",
+            "Vì chạy đúng với một bộ dữ liệu (ví dụ mẫu) không chứng minh được chương trình đúng với mọi bộ dữ liệu khác",
             "Vì chương trình của Vừ mắc lỗi cú pháp nên không chạy được với bộ dữ liệu nào cả",
+            "Vì ví dụ mẫu trong đề bài vốn dĩ chứa một đáp án không chính xác",
           ],
-          answer: 0,
+          answer: 1,
           explain:
             "Kiểm thử với một bộ dữ liệu chỉ cho biết chương trình đúng với đúng trường hợp đó. Muốn tin cậy hơn, phải kiểm thử với nhiều bộ dữ liệu khác nhau — đó chính xác là lí do ban giám khảo dùng tới mười bộ dữ liệu bí mật thay vì chỉ một ví dụ mẫu.",
         },
@@ -48,12 +48,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Một bộ dữ liệu kiểm thử (test case) cần có những thành phần nào?",
           options: [
-            "Dữ liệu vào cụ thể và kết quả ra mong đợi tương ứng với dữ liệu đó",
-            "Chỉ cần dữ liệu vào, kết quả ra thế nào cũng được coi là đúng",
             "Tên người viết chương trình và thời gian chạy thử chương trình đó",
             "Số dòng mã nguồn và danh sách các biến chương trình đã sử dụng",
+            "Dữ liệu vào cụ thể và kết quả ra mong đợi tương ứng với dữ liệu đó",
+            "Chỉ cần dữ liệu vào, kết quả ra thế nào cũng được coi là đúng",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "Không biết trước đáp án đúng thì không có gì để đối chiếu với kết quả chương trình in ra — vì vậy mỗi bộ kiểm thử luôn phải có cả dữ liệu vào lẫn kết quả mong đợi tương ứng.",
         },
@@ -88,12 +88,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Vì sao nhóm bạn Lử đặc biệt chú trọng kiểm thử tại đúng các giá trị 8,0 và 7,9 (thay vì chỉ thử một số ở giữa mỗi khoảng như 7,0)?",
           options: [
-            "Vì lỗi nhầm lẫn giữa phép so sánh >= và > thường lộ ra rõ nhất đúng tại ranh giới giữa hai mức xếp loại",
             "Vì số 8,0 và 7,9 là hai con số bất kì được chọn ngẫu nhiên, không có lí do đặc biệt gì",
-            "Vì Python chỉ chấp nhận kiểm thử với các số có đúng một chữ số thập phân",
             "Vì hai giá trị này chắc chắn sẽ luôn cho ra cùng một kết quả xếp loại như nhau",
+            "Vì Python chỉ chấp nhận kiểm thử với các số có đúng một chữ số thập phân",
+            "Vì lỗi nhầm lẫn giữa phép so sánh >= và > thường lộ ra rõ nhất đúng tại ranh giới giữa hai mức xếp loại",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "Nếu chương trình viết nhầm điều kiện diem > 8 thay vì diem >= 8, lỗi này sẽ không lộ ra khi thử với 7,0 hay 9,0, mà chỉ lộ đúng khi thử với 8,0 — giá trị nằm ngay tại ranh giới. Đây là lí do dữ liệu biên đặc biệt quan trọng khi kiểm thử.",
         },
@@ -102,9 +102,9 @@ const theory: LessonTheory = {
           q: "Việc nhóm Lử thử thêm các giá trị như −2 và 11 cho chương trình xếp loại điểm (thang 0–10) nhằm mục đích gì?",
           options: [
             "Kiểm tra xem chương trình có phát hiện và xử lí đúng những dữ liệu nằm ngoài phạm vi hợp lệ hay không",
-            "Kiểm tra xem chương trình có chạy nhanh hơn khi gặp số âm hay số lớn hơn 10 hay không",
-            "Kiểm tra xem Python có tự động làm tròn các giá trị đó về đúng thang điểm 0–10 hay không",
             "Đây chỉ là hai con số được chọn cho vui, không phục vụ mục đích kiểm thử nào cả",
+            "Kiểm tra xem Python có tự động làm tròn các giá trị đó về đúng thang điểm 0–10 hay không",
+            "Kiểm tra xem chương trình có chạy nhanh hơn khi gặp số âm hay số lớn hơn 10 hay không",
           ],
           answer: 0,
           explain:
@@ -150,12 +150,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Sau khi sửa xong lỗi lệch một đơn vị của bạn Sếnh, tại sao nên chạy lại TOÀN BỘ các bộ kiểm thử chứ không chỉ chạy lại đúng trường hợp n = 5 vừa phát hiện lỗi?",
           options: [
-            "Vì việc sửa lỗi có thể vô tình làm ảnh hưởng tới những trường hợp khác vốn đang chạy đúng, cần kiểm tra lại toàn diện",
-            "Vì Python yêu cầu bắt buộc phải chạy lại toàn bộ chương trình sau mỗi lần sửa mã nguồn",
             "Vì chạy lại một trường hợp duy nhất sẽ khiến chương trình báo lỗi cú pháp",
             "Vì bộ kiểm thử n = 5 không còn giá trị sử dụng sau khi lỗi đã được sửa xong",
+            "Vì việc sửa lỗi có thể vô tình làm ảnh hưởng tới những trường hợp khác vốn đang chạy đúng, cần kiểm tra lại toàn diện",
+            "Vì Python yêu cầu bắt buộc phải chạy lại toàn bộ chương trình sau mỗi lần sửa mã nguồn",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "Sửa một chỗ trong mã nguồn hoàn toàn có thể vô tình gây ảnh hưởng tới những phần khác của chương trình. Chỉ kiểm tra lại đúng bộ dữ liệu vừa gây lỗi không đảm bảo các trường hợp khác vẫn chạy đúng — vì vậy nguyên tắc an toàn là luôn thử lại toàn bộ các bộ kiểm thử đã có.",
         },
@@ -163,12 +163,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Kĩ thuật đơn giản và phổ biến nhất để theo dõi giá trị của một biến tại một vị trí nghi ngờ trong chương trình là gì?",
           options: [
-            "Chèn tạm một lệnh print để in giá trị biến đó ra màn hình ngay tại vị trí nghi ngờ",
-            "Xoá hẳn biến đó đi rồi xem chương trình có còn báo lỗi hay không",
             "Đổi tên biến đó thành một cái tên ngắn hơn để dễ theo dõi bằng mắt",
+            "Xoá hẳn biến đó đi rồi xem chương trình có còn báo lỗi hay không",
             "Viết lại toàn bộ chương trình bằng một thuật toán hoàn toàn khác",
+            "Chèn tạm một lệnh print để in giá trị biến đó ra màn hình ngay tại vị trí nghi ngờ",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "Chèn một lệnh print tạm thời ngay tại vị trí nghi ngờ để in ra giá trị hiện tại của biến là kĩ thuật gỡ lỗi đơn giản, nhanh chóng và rất hiệu quả — sau khi tìm ra và sửa xong lỗi, nhớ xoá các lệnh print tạm thời này đi.",
         },

@@ -39,8 +39,8 @@ const theory: LessonTheory = {
         {
           kind: "check",
           q: "Với dk = \"An, Bình, Chi\", lệnh dk.find(\"Khang\") trả về giá trị gì?",
-          options: ["-1", "0", "Báo lỗi ValueError giống hệt danh sách", "Xâu rỗng \"\""],
-          answer: 0,
+          options: ["0", "-1", "Xâu rỗng \"\"", "Báo lỗi ValueError giống hệt danh sách"],
+          answer: 1,
           explain:
             "find() không tìm thấy \"Khang\" trong xâu dk nên trả về -1, một giá trị số bình thường — chương trình không hề dừng lại hay báo lỗi.",
         },
@@ -48,12 +48,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Vì sao Vy chọn dùng find() trên xâu thay vì index() trên danh sách để kiểm tra một cái tên có tồn tại hay không mà không cần viết thêm lệnh xử lí lỗi?",
           options: [
-            "Vì find() trả về -1 một cách an toàn khi không tìm thấy, còn index() sẽ làm chương trình dừng lại vì lỗi",
-            "Vì find() chạy nhanh hơn index() trên mọi loại dữ liệu",
             "Vì index() chỉ hoạt động được với danh sách toàn số, không hoạt động với tên người",
             "Vì find() và index() thực chất hoàn toàn giống nhau, chọn cái nào cũng được",
+            "Vì find() trả về -1 một cách an toàn khi không tìm thấy, còn index() sẽ làm chương trình dừng lại vì lỗi",
+            "Vì find() chạy nhanh hơn index() trên mọi loại dữ liệu",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "Điểm khác biệt cốt lõi là cách xử lí khi không tìm thấy: find() trả về -1 (chương trình chạy tiếp), còn index() ném ra lỗi ValueError khiến chương trình dừng đột ngột nếu không được bọc thêm xử lí ngoại lệ.",
         },
@@ -96,8 +96,8 @@ const theory: LessonTheory = {
         {
           kind: "check",
           q: "Lệnh \"em rat yeu truong em\".split() (không truyền tham số) trả về danh sách có bao nhiêu phần tử?",
-          options: ["5", "4", "1", "20"],
-          answer: 0,
+          options: ["20", "4", "1", "5"],
+          answer: 3,
           explain:
             "split() không tham số mặc định tách theo khoảng trắng. Câu \"em rat yeu truong em\" có 5 từ cách nhau bởi dấu cách, nên kết quả là danh sách 5 phần tử.",
         },
@@ -106,9 +106,9 @@ const theory: LessonTheory = {
           q: "Sau khi có ds = [\"An\", \"Bình\", \"Chi\"], lệnh nào ghép danh sách này thành xâu \"An-Bình-Chi\"?",
           options: [
             '"-".join(ds)',
-            "ds.join(\"-\")",
-            '"-".split(ds)',
             "ds.split(\"-\")",
+            '"-".split(ds)',
+            "ds.join(\"-\")",
           ],
           answer: 0,
           explain:
@@ -155,12 +155,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Với s = \"  Vy   Anh  \", sau khi gọi s.strip(), khoảng trắng THỪA ở giữa hai chữ \"Vy\" và \"Anh\" có bị ảnh hưởng không?",
           options: [
-            "Không, strip() chỉ cắt khoảng trắng ở hai đầu xâu, khoảng trắng ở giữa vẫn giữ nguyên",
-            "Có, strip() cắt hết mọi khoảng trắng thừa trong toàn bộ xâu, kể cả ở giữa",
             "Có, nhưng chỉ cắt bớt một nửa số khoảng trắng thừa ở giữa",
             "Không xác định được nếu không biết chính xác xâu có bao nhiêu khoảng trắng",
+            "Không, strip() chỉ cắt khoảng trắng ở hai đầu xâu, khoảng trắng ở giữa vẫn giữ nguyên",
+            "Có, strip() cắt hết mọi khoảng trắng thừa trong toàn bộ xâu, kể cả ở giữa",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "strip() chỉ có tác dụng với khoảng trắng nằm ở đầu và cuối xâu. Khoảng trắng thừa ở giữa các từ hoàn toàn không bị ảnh hưởng — muốn dọn cả những chỗ đó phải dùng replace() hoặc kết hợp với split()/join().",
         },
@@ -168,12 +168,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Sau lệnh ten.replace(\" \", \"_\") (không gán lại kết quả cho ten), biến ten gốc có thay đổi không?",
           options: [
-            "Không, vì replace() chỉ trả về một xâu mới, không sửa trực tiếp biến ten gốc",
+            "Không xác định được nếu thiếu thông tin về nội dung ban đầu của ten",
             "Có, vì replace() luôn tự động cập nhật biến gốc giống như append() của danh sách",
             "Có, nhưng chỉ khi xâu ten có độ dài lớn hơn 10 kí tự",
-            "Không xác định được nếu thiếu thông tin về nội dung ban đầu của ten",
+            "Không, vì replace() chỉ trả về một xâu mới, không sửa trực tiếp biến ten gốc",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "Xâu là kiểu bất biến nên replace() không thể sửa trực tiếp biến gốc — nó chỉ tạo ra và trả về một xâu mới đã thay thế. Nếu không gán lại (ten = ten.replace(...)), biến ten vẫn giữ nguyên giá trị cũ, không hề thay đổi.",
         },

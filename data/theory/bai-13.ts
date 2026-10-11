@@ -45,20 +45,20 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Muốn vẽ một hình vuông chuẩn xác (bốn cạnh bằng nhau tuyệt đối) trong Inkscape, em thao tác thế nào?",
           options: [
-            "Chọn công cụ Rectangle, giữ phím Ctrl trong lúc kéo chuột",
             "Chọn công cụ Ellipse, kéo chuột mà không giữ phím nào",
-            "Chọn công cụ Bezier rồi nối 4 điểm neo bất kì trên canvas",
+            "Chọn công cụ Rectangle, giữ phím Ctrl trong lúc kéo chuột",
             "Chọn công cụ Star/Polygon rồi đặt số cánh bằng 4",
+            "Chọn công cụ Bezier rồi nối 4 điểm neo bất kì trên canvas",
           ],
-          answer: 0,
+          answer: 1,
           explain:
             "Rectangle vẽ hình chữ nhật; giữ Ctrl trong lúc kéo khoá tỉ lệ 1:1 nên chữ nhật trở thành hình vuông chuẩn. Ellipse tạo hình tròn/elip chứ không phải hình vuông; Bezier và Star/Polygon không phải công cụ chuẩn để vẽ hình vuông.",
         },
         {
           kind: "check",
           q: "Công cụ nào phù hợp nhất để vẽ một đường quỹ đạo cong lượn tự do của ngôi sao chổi trên poster?",
-          options: ["Bezier", "Rectangle", "Ellipse", "Star/Polygon"],
-          answer: 0,
+          options: ["Star/Polygon", "Rectangle", "Bezier", "Ellipse"],
+          answer: 2,
           explain:
             "Bezier cho phép đặt từng điểm neo dọc theo đường bay mong muốn, tạo ra đường cong tự do bất kì hình dạng — Rectangle, Ellipse và Star/Polygon chỉ vẽ được các hình có sẵn khuôn dạng cố định.",
         },
@@ -106,12 +106,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Sau khi vẽ xong logo, bạn Đông vẽ thêm hình nền to phủ kín trang khiến logo bị che mất hoàn toàn. Cách xử lí nhanh và đúng nhất là gì?",
           options: [
-            "Chọn hình nền, nhấn phím End (Lower to Bottom) để đưa nó xuống dưới cùng",
             "Xoá hình nền rồi vẽ lại nền trước, vẽ logo sau",
-            "Chọn logo rồi xoá bỏ vì nó không còn hiển thị được nữa",
             "Phóng to logo lên gấp nhiều lần cho nó hiện ra trên nền",
+            "Chọn logo rồi xoá bỏ vì nó không còn hiển thị được nữa",
+            "Chọn hình nền, nhấn phím End (Lower to Bottom) để đưa nó xuống dưới cùng",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "Vấn đề chỉ là thứ tự xếp lớp chứ không phải kích thước hay nội dung. Chọn hình nền và đưa nó xuống dưới cùng (End / Lower to Bottom) là cách nhanh nhất, không cần vẽ lại bất cứ thứ gì.",
         },
@@ -120,9 +120,9 @@ const theory: LessonTheory = {
           q: "Phím tắt Ctrl+D trong Inkscape dùng để làm gì?",
           options: [
             "Nhân đôi (Duplicate) đối tượng đang chọn ngay tại chỗ",
-            "Nhóm nhiều đối tượng đang chọn lại thành một khối",
             "Xoá hẳn đối tượng đang chọn khỏi trang vẽ",
             "Đưa đối tượng đang chọn lên hẳn trên cùng",
+            "Nhóm nhiều đối tượng đang chọn lại thành một khối",
           ],
           answer: 0,
           explain:
@@ -188,12 +188,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Muốn 5 khung thông tin thẳng hàng và cách đều nhau thật chuẩn xác thay vì kéo bằng mắt, em nên dùng chức năng nào?",
           options: [
-            "Align & Distribute (Căn chỉnh và phân bố)",
             "Fill & Stroke (Màu tô và màu nét)",
             "Object Properties (Thuộc tính đối tượng)",
+            "Align & Distribute (Căn chỉnh và phân bố)",
             "Bezier (Công cụ vẽ đường tự do)",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "Align & Distribute căn các đối tượng theo một chuẩn chung (trái/phải/giữa/trên/dưới) và chia đều khoảng cách giữa chúng — chính xác tuyệt đối theo toạ độ, vượt xa khả năng căn bằng mắt.",
         },
@@ -201,20 +201,20 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Sau khi đã nhóm (Group) một bông hoa gồm 4 cánh và 1 nhuỵ thành một khối, muốn sửa lại riêng màu của một cánh hoa, em cần làm gì trước tiên?",
           options: [
-            "Tách nhóm bằng Ungroup (Ctrl+Shift+G) để chọn riêng từng cánh hoa",
-            "Xoá cả bông hoa và vẽ lại từ đầu",
             "Nhân đôi cả nhóm bằng Ctrl+D rồi sửa bản sao",
             "Không thể sửa được nữa vì nhóm đã bị khoá vĩnh viễn",
+            "Xoá cả bông hoa và vẽ lại từ đầu",
+            "Tách nhóm bằng Ungroup (Ctrl+Shift+G) để chọn riêng từng cánh hoa",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "Group chỉ gộp tạm để thao tác đồng bộ, không hề khoá cứng — Ungroup (Ctrl+Shift+G) tách nhóm trở lại các đối tượng rời để chỉnh sửa riêng từng phần bất cứ lúc nào.",
         },
         {
           kind: "check",
           q: "Thuộc tính nào cho phép làm một hình trở nên trong suốt một phần, nhìn xuyên thấy được lớp phía dưới nó?",
-          options: ["Opacity (độ mờ)", "Stroke (màu nét)", "Canvas (trang vẽ)", "Align (căn chỉnh)"],
-          answer: 0,
+          options: ["Canvas (trang vẽ)", "Opacity (độ mờ)", "Stroke (màu nét)", "Align (căn chỉnh)"],
+          answer: 1,
           explain:
             "Opacity 100% là đặc hoàn toàn; giảm phần trăm Opacity sẽ khiến đối tượng mờ dần, nhìn xuyên qua được — Stroke chỉ liên quan tới màu viền, không liên quan tới độ trong suốt.",
         },

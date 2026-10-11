@@ -40,12 +40,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Nếu Vy chỉ viết phần định nghĩa def tinh_tien(so_luong, don_gia): return so_luong * don_gia mà không gọi hàm này ở đâu cả, điều gì xảy ra khi chạy chương trình?",
           options: [
-            "Không có phép tính nào được thực hiện, vì định nghĩa hàm chỉ đăng kí công thức chứ chưa chạy nó",
-            "Python tự động gọi hàm này một lần với giá trị mặc định ngay khi chương trình chạy",
             "Chương trình báo lỗi vì định nghĩa hàm mà không gọi là không hợp lệ",
+            "Không có phép tính nào được thực hiện, vì định nghĩa hàm chỉ đăng kí công thức chứ chưa chạy nó",
             "Thân hàm chạy lặp lại liên tục cho đến khi chương trình kết thúc",
+            "Python tự động gọi hàm này một lần với giá trị mặc định ngay khi chương trình chạy",
           ],
-          answer: 0,
+          answer: 1,
           explain:
             "def chỉ tạo ra (định nghĩa) hàm, giống như viết sẵn một công thức — nó không tự động thực thi bất cứ điều gì. Thân hàm chỉ chạy khi có một lệnh gọi hàm rõ ràng ở đâu đó trong chương trình.",
         },
@@ -53,12 +53,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Trong ba hàm print(), len(), int() và ba hàm tinh_tien(), chao_hoi(), ve_hinh(), nhóm nào là hàm CÓ SẴN của Python?",
           options: [
-            "print(), len(), int() — vì đây là các hàm chuẩn đã được xây dựng sẵn trong Python",
-            "tinh_tien(), chao_hoi(), ve_hinh() — vì tên hàm bằng tiếng Việt luôn là hàm có sẵn",
-            "Cả sáu hàm trên đều là hàm có sẵn, không cần định nghĩa trước khi dùng",
             "Không hàm nào trong Python là có sẵn, mọi hàm đều phải tự định nghĩa bằng def",
+            "tinh_tien(), chao_hoi(), ve_hinh() — vì tên hàm bằng tiếng Việt luôn là hàm có sẵn",
+            "print(), len(), int() — vì đây là các hàm chuẩn đã được xây dựng sẵn trong Python",
+            "Cả sáu hàm trên đều là hàm có sẵn, không cần định nghĩa trước khi dùng",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "print(), len(), int() là các hàm chuẩn (built-in) có sẵn trong Python, dùng được ngay không cần định nghĩa. Các hàm như tinh_tien(), chao_hoi(), ve_hinh() là hàm do người lập trình tự viết bằng def, phải định nghĩa trước khi gọi.",
         },
@@ -98,12 +98,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Vì sao khi gán kq = cach1(5) với cach1 chỉ dùng print(x * 2) mà không có return, biến kq lại nhận giá trị None?",
           options: [
-            "Vì hàm không có lệnh return nào, nên Python tự động cho hàm trả về None theo mặc định",
             "Vì print() luôn trả về giá trị None bất kể có return hay không trong hàm",
             "Vì biến kq đã bị đặt sai kiểu dữ liệu trước khi gọi hàm",
             "Vì số 5 truyền vào không hợp lệ với hàm cach1",
+            "Vì hàm không có lệnh return nào, nên Python tự động cho hàm trả về None theo mặc định",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "print(x * 2) chỉ hiển thị kết quả lên màn hình chứ không hề có lệnh return nào để đưa giá trị về nơi gọi. Khi một hàm thiếu return, Python mặc định coi như hàm đó trả về None — đó là lí do kq nhận được None thay vì con số mong đợi.",
         },
@@ -112,9 +112,9 @@ const theory: LessonTheory = {
           q: "Muốn viết một hàm để dùng kết quả của nó cho một phép tính khác ngay sau đó (ví dụ cộng thêm 10), nên dùng return hay print bên trong hàm?",
           options: [
             "return, vì giá trị được trả về nơi gọi và có thể tiếp tục sử dụng trong biểu thức khác",
-            "print, vì giá trị hiển thị ra màn hình sẽ tự động được máy tính nhớ lại để dùng tiếp",
-            "Dùng cách nào cũng được vì print và return luôn cho kết quả giống hệt nhau",
             "Phải dùng cả hai lệnh cùng lúc thì kết quả mới sử dụng tiếp được",
+            "Dùng cách nào cũng được vì print và return luôn cho kết quả giống hệt nhau",
+            "print, vì giá trị hiển thị ra màn hình sẽ tự động được máy tính nhớ lại để dùng tiếp",
           ],
           answer: 0,
           explain:
@@ -156,12 +156,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Vì sao dòng print(\"Tính xong\") đặt ngay sau return x * x trong hàm binh_phuong không bao giờ được in ra?",
           options: [
-            "Vì return kết thúc hàm ngay lập tức, nên mọi lệnh phía sau nó trong cùng thân hàm không còn cơ hội chạy",
             "Vì Python coi đây là lỗi cú pháp nên tự động xoá dòng lệnh đó khi chạy",
             "Vì hàm binh_phuong chỉ được phép có tối đa một lệnh in duy nhất",
+            "Vì return kết thúc hàm ngay lập tức, nên mọi lệnh phía sau nó trong cùng thân hàm không còn cơ hội chạy",
             "Vì lệnh print chỉ hoạt động được khi đặt trước mọi lệnh return trong toàn bộ chương trình",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "Ngay khi thực hiện đến return, hàm lập tức kết thúc và trả giá trị về nơi gọi — không có cơ chế nào cho phép chạy tiếp các lệnh còn lại phía sau trong cùng thân hàm, dù không hề có lỗi cú pháp nào ở đây.",
         },
@@ -169,12 +169,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Muốn hàm binh_phuong vừa in ra dòng \"Tính xong\" vừa trả về đúng kết quả bình phương, Vy nên sắp xếp lại thứ tự các lệnh như thế nào?",
           options: [
-            "Đặt print(\"Tính xong\") lên TRƯỚC lệnh return x * x",
+            "Viết cả hai lệnh trên cùng một dòng, cách nhau bởi dấu phẩy",
             "Giữ nguyên thứ tự cũ vì thứ tự lệnh trong hàm không ảnh hưởng gì tới kết quả",
             "Xoá hẳn lệnh return đi thì print mới có cơ hội chạy được",
-            "Viết cả hai lệnh trên cùng một dòng, cách nhau bởi dấu phẩy",
+            "Đặt print(\"Tính xong\") lên TRƯỚC lệnh return x * x",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "Chỉ những lệnh đứng TRƯỚC return mới chắc chắn được thực hiện, vì return sẽ kết thúc hàm ngay khi chạy tới. Đặt print(\"Tính xong\") lên trước return x * x sẽ đảm bảo dòng thông báo được in ra trước khi hàm kết thúc và trả kết quả.",
         },

@@ -35,12 +35,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Vì sao bạn Phong không thể ra lệnh trực tiếp cho robot bằng cách gõ tay các dãy bit 0 và 1?",
           options: [
-            "Vì cách đó cực kì khó viết, dễ nhầm lẫn và mất rất nhiều thời gian dù CPU hiểu được trực tiếp",
-            "Vì bộ xử lí của robot không bao giờ hiểu được ngôn ngữ máy dạng bit 0 và 1",
             "Vì ngôn ngữ máy chỉ dùng được cho máy tính để bàn, không dùng được cho robot",
+            "Vì cách đó cực kì khó viết, dễ nhầm lẫn và mất rất nhiều thời gian dù CPU hiểu được trực tiếp",
             "Vì gõ dãy bit 0 và 1 là hành vi bị cấm khi lập trình cho các thiết bị điện tử",
+            "Vì bộ xử lí của robot không bao giờ hiểu được ngôn ngữ máy dạng bit 0 và 1",
           ],
-          answer: 0,
+          answer: 1,
           explain:
             "CPU hoàn toàn hiểu và thực hiện trực tiếp ngôn ngữ máy — vấn đề là con người viết tay quá khó khăn, dễ sai và tốn thời gian. Đó chính là lí do ngôn ngữ lập trình bậc cao ra đời.",
         },
@@ -48,12 +48,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Chương trình viết bằng ngôn ngữ lập trình bậc cao như Python cần trải qua bước nào trước khi CPU thực hiện được?",
           options: [
-            "Được một chương trình dịch (biên dịch hoặc thông dịch) chuyển đổi sang ngôn ngữ máy",
-            "Được in ra giấy rồi quét lại thành ảnh để CPU đọc trực tiếp từ ảnh đó",
             "Không cần bước nào cả vì CPU tự động hiểu mọi ngôn ngữ lập trình bậc cao",
+            "Được in ra giấy rồi quét lại thành ảnh để CPU đọc trực tiếp từ ảnh đó",
+            "Được một chương trình dịch (biên dịch hoặc thông dịch) chuyển đổi sang ngôn ngữ máy",
             "Được dịch sang một ngôn ngữ bậc cao khác trước khi CPU thực hiện",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "CPU chỉ thực hiện trực tiếp được ngôn ngữ máy. Chương trình dịch (compiler) hoặc chương trình thông dịch (interpreter) đảm nhiệm việc chuyển đổi từ ngôn ngữ bậc cao sang ngôn ngữ máy.",
         },
@@ -98,12 +98,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Python thực hiện chương trình theo cơ chế nào?",
           options: [
-            "Thông dịch — dịch và chạy ngay từng câu lệnh, không cần biên dịch trọn bộ trước",
             "Biên dịch toàn bộ chương trình thành tệp thực thi rồi mới chạy được",
             "Không cần dịch gì cả vì CPU hiểu trực tiếp cú pháp của Python",
             "Chuyển đổi toàn bộ chương trình thành hình ảnh trước khi hiển thị kết quả",
+            "Thông dịch — dịch và chạy ngay từng câu lệnh, không cần biên dịch trọn bộ trước",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "Python là ngôn ngữ thông dịch: từng câu lệnh được dịch và thực hiện ngay, khác với các ngôn ngữ biên dịch như C++ phải dịch trọn bộ thành tệp chạy trước khi thực thi.",
         },
@@ -112,9 +112,9 @@ const theory: LessonTheory = {
           q: "Bạn Kiều muốn hướng dẫn em họ lớp 6 làm quen lập trình lần đầu, nên chọn môi trường Python nào là hợp lí nhất?",
           options: [
             "Thonny, vì giao diện đơn giản, trực quan, dễ theo dõi từng bước chạy",
-            "Visual Studio Code, vì có nhiều tiện ích chuyên nghiệp phức tạp nhất",
-            "PyCharm, vì đây là môi trường duy nhất chạy được ngôn ngữ Python",
             "Không cần cài môi trường nào, vì Python tự động chạy trên máy in",
+            "PyCharm, vì đây là môi trường duy nhất chạy được ngôn ngữ Python",
+            "Visual Studio Code, vì có nhiều tiện ích chuyên nghiệp phức tạp nhất",
           ],
           answer: 0,
           explain:
@@ -155,20 +155,20 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Vì sao lệnh print(\"8 + 9 + 7\") của bạn My chỉ in ra đúng dòng chữ 8 + 9 + 7 mà không tính ra kết quả 24?",
           options: [
+            "Vì My đã quên không cài đặt thư viện tính toán cần thiết trước khi chạy chương trình",
+            "Vì lệnh print() chỉ nhận được tối đa hai số hạng trong một lần gọi",
             "Vì nội dung được đặt trong cặp dấu nháy nên Python coi đó là xâu kí tự, in nguyên văn chứ không tính toán",
             "Vì Python không có khả năng cộng được từ ba số trở lên trong cùng một biểu thức",
-            "Vì lệnh print() chỉ nhận được tối đa hai số hạng trong một lần gọi",
-            "Vì My đã quên không cài đặt thư viện tính toán cần thiết trước khi chạy chương trình",
             ],
-          answer: 0,
+          answer: 2,
           explain:
             "Bất cứ nội dung nào đặt trong cặp dấu nháy đều được Python hiểu là xâu kí tự cố định, in ra y nguyên. Muốn Python tính toán, biểu thức số học phải được viết mà không có dấu nháy bao quanh.",
         },
         {
           kind: "check",
           q: "Kết quả của lệnh print(8 / 4) trong Python là gì?",
-          options: ["2.0", "2", '"8/4"', "Báo lỗi vì 8 chia hết cho 4"],
-          answer: 0,
+          options: ["Báo lỗi vì 8 chia hết cho 4", '"8/4"', "2", "2.0"],
+          answer: 3,
           explain:
             "Phép chia / trong Python luôn trả về kiểu số thực, kể cả khi phép chia là chia hết — nên kết quả là 2.0 chứ không phải số nguyên 2. Muốn lấy phần nguyên phải dùng phép // .",
         },

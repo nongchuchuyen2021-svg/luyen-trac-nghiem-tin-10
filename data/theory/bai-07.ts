@@ -38,8 +38,8 @@ const theory: LessonTheory = {
         {
           kind: "check",
           q: "Kết nối nào sau đây KHÔNG phải là kết nối phổ biến trên các PDA hiện nay?",
-          options: ["Hồng ngoại", "Wifi", "Bluetooth", "USB"],
-          answer: 0,
+          options: ["Wifi", "Hồng ngoại", "USB", "Bluetooth"],
+          answer: 1,
           explain:
             "SGK liệt kê các cổng/kết nối phổ biến của PDA hiện nay là USB, thẻ nhớ, bluetooth, wifi. Hồng ngoại là công nghệ kết nối cũ, không còn phổ biến trên thiết bị hiện nay.",
         },
@@ -73,8 +73,8 @@ const theory: LessonTheory = {
         {
           kind: "check",
           q: "Trên điện thoại thông minh dùng hệ điều hành Android, nút nào dùng để hiện danh sách tất cả các ứng dụng đang chạy?",
-          options: ["Nút Tổng quan (Overview)", "Nút Quay lại (Back)", "Nút tăng âm lượng", "Nút khoá màn hình"],
-          answer: 0,
+          options: ["Nút khoá màn hình", "Nút Quay lại (Back)", "Nút Tổng quan (Overview)", "Nút tăng âm lượng"],
+          answer: 2,
           explain:
             "Thanh điều hướng có hai nút ảo quan trọng: nút Quay lại (Back) để trở về màn hình trước, và nút Tổng quan (Overview) để hiện danh sách tất cả các ứng dụng đang chạy.",
         },
@@ -108,8 +108,8 @@ const theory: LessonTheory = {
         {
           kind: "check",
           q: "Ứng dụng nào sau đây thường được dùng để tham gia học trực tuyến với thầy/cô giáo?",
-          options: ["Zoom hoặc Google Meet", "Ứng dụng Máy tính (Calculator)", "Ứng dụng Lịch (Calendar)", "Ứng dụng Chợ phần mềm"],
-          answer: 0,
+          options: ["Ứng dụng Chợ phần mềm", "Ứng dụng Lịch (Calendar)", "Ứng dụng Máy tính (Calculator)", "Zoom hoặc Google Meet"],
+          answer: 3,
           explain:
             "Zoom, MS Teams, Google Meet,… là các ứng dụng hỗ trợ học tập trực tuyến, được cài thêm từ chợ phần mềm để tham gia các buổi học do thầy/cô giáo thiết lập.",
         },
@@ -157,8 +157,8 @@ const theory: LessonTheory = {
           options: [
             "Chạm và giữ lâu một chút vào tệp đó",
             "Chạm nhẹ một lần rồi bỏ tay ngay",
-            "Lắc điện thoại thật mạnh",
             "Tắt nguồn rồi bật lại điện thoại",
+            "Lắc điện thoại thật mạnh",
           ],
           answer: 0,
           explain:
@@ -168,12 +168,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Theo em, điện thoại thông minh khác với điện thoại thường ở điểm nào?",
           options: [
-            "Có thể cài phần mềm ứng dụng, truy cập Internet, hiển thị dữ liệu đa phương tiện",
-            "Chỉ khác nhau ở kiểu dáng và màu sắc bên ngoài, còn lại hoàn toàn giống nhau",
-            "Điện thoại thường luôn có nhiều chức năng hơn hẳn điện thoại thông minh",
             "Chỉ khác nhau về giá bán ra thị trường, không khác gì về chức năng sử dụng",
+            "Chỉ khác nhau ở kiểu dáng và màu sắc bên ngoài, còn lại hoàn toàn giống nhau",
+            "Có thể cài phần mềm ứng dụng, truy cập Internet, hiển thị dữ liệu đa phương tiện",
+            "Điện thoại thường luôn có nhiều chức năng hơn hẳn điện thoại thông minh",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "SGK nêu: điện thoại thông minh khác điện thoại thường ở khả năng thực hiện tính toán phức tạp, cài đặt phần mềm ứng dụng để truy cập Internet và hiển thị dữ liệu đa phương tiện — tức là có các tính năng \"thông minh\" hơn nhờ hệ điều hành.",
         },

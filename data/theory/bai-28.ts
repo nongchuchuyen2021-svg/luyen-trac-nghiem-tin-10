@@ -40,12 +40,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Vì sao lệnh print(dt) đặt ngay sau lời gọi dien_tich(5) lại báo lỗi NameError, dù dt vừa được tạo ra trong hàm?",
           options: [
+            "Vì lệnh print chỉ hoạt động được với các biến toàn cục, không hoạt động với số thực",
             "Vì dt là biến cục bộ, chỉ tồn tại bên trong hàm dien_tich và đã bị huỷ ngay khi hàm kết thúc",
             "Vì tên biến dt là một từ khoá đặc biệt của Python, không được phép dùng làm tên biến",
             "Vì hàm dien_tich chưa được định nghĩa đúng cú pháp nên biến dt không sinh ra được",
-            "Vì lệnh print chỉ hoạt động được với các biến toàn cục, không hoạt động với số thực",
           ],
-          answer: 0,
+          answer: 1,
           explain:
             "dt được tạo bên trong thân hàm nên là biến cục bộ — nó chỉ \"sống\" trong phạm vi căn phòng riêng của hàm dien_tich. Ngay khi hàm chạy xong, biến này bị huỷ, nên bên ngoài hàm, cái tên dt hoàn toàn chưa được định nghĩa.",
         },
@@ -53,12 +53,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Muốn sử dụng được kết quả tính diện tích bên ngoài hàm dien_tich, Vy nên làm gì?",
           options: [
-            "Dùng return để trả kết quả về, rồi gán vào một biến ở nơi gọi hàm, ví dụ kq = dien_tich(5)",
             "In biến dt ngay bên trong hàm là đủ, không cần làm gì thêm ở bên ngoài",
-            "Đặt tên biến dt bằng chữ in hoa để nó tự động trở thành biến toàn cục",
             "Gọi lại hàm dien_tich thêm một lần nữa ngay trước lệnh print(dt)",
+            "Dùng return để trả kết quả về, rồi gán vào một biến ở nơi gọi hàm, ví dụ kq = dien_tich(5)",
+            "Đặt tên biến dt bằng chữ in hoa để nó tự động trở thành biến toàn cục",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "Cách duy nhất để đưa một giá trị tính được bên trong hàm ra sử dụng ở nơi khác là dùng return, rồi gán kết quả đó cho một biến tại nơi gọi hàm — biến cục bộ dt vẫn sẽ bị huỷ như bình thường, nhưng giá trị của nó đã được \"mang ra ngoài\" trước khi điều đó xảy ra.",
         },
@@ -98,19 +98,19 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Vì sao sau khi gọi hàm chi_tieu_sai(100000) (không có global), biến quy toàn cục vẫn giữ nguyên giá trị 500000?",
           options: [
-            "Vì lệnh quy = quy - so_tien bên trong hàm đã tạo ra một biến quy cục bộ mới, hoàn toàn tách biệt với biến quy toàn cục",
-            "Vì hàm chi_tieu_sai chưa từng được gọi nên chưa có phép tính nào xảy ra",
             "Vì Python không cho phép trừ một số ra khỏi biến toàn cục trong bất kì trường hợp nào",
+            "Vì hàm chi_tieu_sai chưa từng được gọi nên chưa có phép tính nào xảy ra",
             "Vì tham số so_tien đã bị truyền sai giá trị khi gọi hàm",
+            "Vì lệnh quy = quy - so_tien bên trong hàm đã tạo ra một biến quy cục bộ mới, hoàn toàn tách biệt với biến quy toàn cục",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "Khi thấy lệnh gán cho quy bên trong thân hàm mà không có khai báo global, Python mặc định coi đó là một biến cục bộ mới — nó chỉ tồn tại trong phạm vi hàm và hoàn toàn không liên quan tới biến quy toàn cục ở ngoài, nên biến toàn cục không hề bị thay đổi.",
         },
         {
           kind: "check",
           q: "Muốn một lệnh gán bên trong hàm thực sự làm thay đổi giá trị của biến toàn cục, cần thêm khai báo nào ở đầu thân hàm?",
-          options: ["global tên_biến", "local tên_biến", "public tên_biến", "static tên_biến"],
+          options: ["global tên_biến", "public tên_biến", "static tên_biến", "local tên_biến"],
           answer: 0,
           explain:
             "Từ khoá global báo cho Python biết: biến được gán trong hàm chính là biến toàn cục đã có, không phải tạo biến cục bộ mới. Python không có các từ khoá local, public hay static như một số ngôn ngữ lập trình khác.",
@@ -160,12 +160,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Hai hàm dem_chan(a) và tinh_tong(a) đều dùng biến i làm biến đếm trong vòng lặp for. Điều gì xảy ra khi ghép cả hai hàm vào cùng một chương trình?",
           options: [
+            "Python tự động đổi tên biến i ở hàm được định nghĩa sau thành một tên khác",
+            "Hai hàm sẽ dùng chung đúng một giá trị i, gây ra kết quả sai",
             "Không có xung đột gì cả, vì biến i trong mỗi hàm là biến cục bộ độc lập, chỉ tồn tại trong phòng riêng của hàm đó",
             "Chương trình báo lỗi trùng tên biến ngay khi định nghĩa hàm thứ hai",
-            "Hai hàm sẽ dùng chung đúng một giá trị i, gây ra kết quả sai",
-            "Python tự động đổi tên biến i ở hàm được định nghĩa sau thành một tên khác",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "Biến i trong dem_chan và biến i trong tinh_tong là hai biến cục bộ hoàn toàn tách biệt, mỗi hàm có phạm vi riêng của mình — trùng tên hoàn toàn không gây ra bất kì xung đột nào.",
         },
@@ -173,12 +173,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Với hàm tang(n): n = n + 1; return n, sau khi thực hiện a = 7 rồi tang(a) (không gán lại kết quả), giá trị của a lúc này là bao nhiêu?",
           options: [
-            "7, vì hàm chỉ thay đổi bản sao cục bộ n, không làm thay đổi biến a ở bên ngoài",
             "8, vì hàm đã cộng thêm 1 trực tiếp vào biến a truyền vào",
             "None, vì lời gọi tang(a) không được gán cho biến nào",
             "Chương trình báo lỗi vì hàm có return mà không được sử dụng kết quả",
+            "7, vì hàm chỉ thay đổi bản sao cục bộ n, không làm thay đổi biến a ở bên ngoài",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "Khi gọi tang(a), giá trị của a được sao chép vào tham số cục bộ n. Lệnh n = n + 1 chỉ thay đổi bản sao n bên trong hàm; biến a ở bên ngoài hoàn toàn không bị ảnh hưởng. Muốn a thực sự tăng thêm 1, phải viết a = tang(a) để gán lại giá trị hàm trả về.",
         },

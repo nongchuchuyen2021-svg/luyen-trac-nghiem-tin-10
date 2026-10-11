@@ -40,12 +40,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Với danh sách [\"Lều\", \"Bóng đá\", \"Nước\", \"Bánh mì\"], lệnh nào xoá đúng phần tử \"Bóng đá\" mà không cần biết nó đang ở chỉ số mấy?",
           options: [
-            "do_da_ngoai.remove(\"Bóng đá\")",
             "del do_da_ngoai[\"Bóng đá\"]",
+            "do_da_ngoai.remove(\"Bóng đá\")",
             "do_da_ngoai.remove(1)",
             "del do_da_ngoai(1)",
           ],
-          answer: 0,
+          answer: 1,
           explain:
             "remove(x) tìm và xoá phần tử theo đúng giá trị x, không cần quan tâm vị trí. del a[i] mới cần chỉ số, và chỉ số phải là số nguyên trong ngoặc vuông, không phải giá trị trong ngoặc tròn.",
         },
@@ -53,12 +53,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Nếu Vy lỡ gõ do_da_ngoai.remove(0) trên danh sách toàn tên món đồ (không có phần tử nào mang giá trị số 0), điều gì xảy ra?",
           options: [
-            "Chương trình báo lỗi ValueError vì không tìm thấy phần tử nào có giá trị bằng 0",
-            "Chương trình tự động xoá phần tử ở chỉ số 0, giống hệt lệnh del",
             "Chương trình bỏ qua lệnh này mà không báo lỗi gì cả",
             "Chương trình xoá toàn bộ danh sách vì 0 là giá trị đặc biệt",
+            "Chương trình báo lỗi ValueError vì không tìm thấy phần tử nào có giá trị bằng 0",
+            "Chương trình tự động xoá phần tử ở chỉ số 0, giống hệt lệnh del",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "remove(0) đi tìm phần tử có GIÁ TRỊ bằng số 0 trong danh sách. Vì danh sách toàn chứa tên món đồ (xâu kí tự), không có phần tử nào bằng số 0, nên Python báo lỗi ValueError — hoàn toàn khác với del a[0] vốn xoá theo chỉ số.",
         },
@@ -98,12 +98,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Vì sao sau khi Vy gõ do_da_ngoai = do_da_ngoai.sort(), biến do_da_ngoai lại chỉ còn giá trị None?",
           options: [
-            "Vì sort() không trả về danh sách nào cả (trả về None), nên phép gán lại đã ghi đè None lên do_da_ngoai",
             "Vì Python xoá sạch danh sách mỗi khi gặp lệnh sắp xếp bất kì",
-            "Vì tên biến do_da_ngoai đã bị trùng với một từ khoá của Python",
             "Vì danh sách chứa xâu kí tự nên không sắp xếp bảng chữ cái được",
+            "Vì tên biến do_da_ngoai đã bị trùng với một từ khoá của Python",
+            "Vì sort() không trả về danh sách nào cả (trả về None), nên phép gán lại đã ghi đè None lên do_da_ngoai",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "sort() thực hiện sắp xếp ngay trên danh sách gốc và trả về None (không trả về danh sách). Khi gán do_da_ngoai = do_da_ngoai.sort(), Python lấy giá trị None đó gán đè lên do_da_ngoai, làm mất luôn danh sách đã được sắp xếp đúng ngay trước đó.",
         },
@@ -165,12 +165,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Vy gõ do_da_ngoai.append([\"Đèn pin\", \"Diêm\"]) thay vì extend(). Kết quả danh sách sẽ như thế nào?",
           options: [
-            "Có thêm đúng MỘT phần tử mới là cả danh sách con [\"Đèn pin\", \"Diêm\"] lồng bên trong",
-            "Có thêm đúng HAI phần tử mới là \"Đèn pin\" và \"Diêm\" tách rời như mong muốn",
             "Chương trình báo lỗi vì append không nhận danh sách làm đối số",
+            "Có thêm đúng HAI phần tử mới là \"Đèn pin\" và \"Diêm\" tách rời như mong muốn",
+            "Có thêm đúng MỘT phần tử mới là cả danh sách con [\"Đèn pin\", \"Diêm\"] lồng bên trong",
             "Danh sách gốc bị xoá sạch và chỉ còn lại hai món đồ mới",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "append() luôn thêm nguyên đối số của nó làm MỘT phần tử duy nhất, dù đối số đó là một danh sách con — tạo ra danh sách lồng nhau. Muốn tách rời từng phần tử, phải dùng extend() thay vì append().",
         },
@@ -178,12 +178,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Với a = [7, 2, 9, 4], nếu tìm vi_tri = a.index(max(a)) TRƯỚC khi gọi a.sort(), sau đó sort() xong thì vi_tri có còn trỏ đúng tới vị trí của giá trị lớn nhất (9) trong danh sách đã sắp xếp không?",
           options: [
-            "Không, vì sort() đã xáo trộn lại vị trí các phần tử — vi_tri vẫn giữ giá trị cũ (2), không tự động cập nhật",
-            "Có, vì Python luôn tự động cập nhật mọi biến chỉ số sau khi sắp xếp danh sách",
             "Không xác định được nếu thiếu thông tin về kiểu dữ liệu của các phần tử",
             "Có, nhưng chỉ đúng khi danh sách có ít hơn 5 phần tử",
+            "Có, vì Python luôn tự động cập nhật mọi biến chỉ số sau khi sắp xếp danh sách",
+            "Không, vì sort() đã xáo trộn lại vị trí các phần tử — vi_tri vẫn giữ giá trị cũ (2), không tự động cập nhật",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "vi_tri là một biến số bình thường, được gán giá trị 2 tại thời điểm gọi index() — nó không hề \"theo dõi\" phần tử đó. Sau khi sort() sắp xếp lại toàn bộ vị trí, vi_tri vẫn giữ nguyên số 2 cũ, nhưng vị trí 2 trong danh sách mới lại chứa một giá trị khác (7, không phải 9).",
         },

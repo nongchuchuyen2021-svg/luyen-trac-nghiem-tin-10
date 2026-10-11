@@ -56,12 +56,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Muốn vẽ một đoạn cong mượt bằng công cụ Bezier (thay vì đoạn thẳng gãy khúc), em thao tác thế nào?",
           options: [
-            "Nháy chuột rồi kéo rê để kéo ra tay nắm điều khiển độ cong",
-            "Nháy chuột một lần duy nhất rồi buông tay ngay lập tức",
             "Giữ phím Ctrl trong lúc nháy chuột đặt điểm neo",
+            "Nháy chuột rồi kéo rê để kéo ra tay nắm điều khiển độ cong",
             "Nháy đúp chuột liên tục thật nhanh vào cùng một vị trí",
+            "Nháy chuột một lần duy nhất rồi buông tay ngay lập tức",
           ],
-          answer: 0,
+          answer: 1,
           explain:
             "Nháy rồi kéo rê sẽ kéo ra tay nắm (handle) điều khiển hướng và độ cong của đoạn Bezier. Chỉ nháy một lần và buông tay tạo ra điểm neo góc, nối bằng đoạn thẳng.",
         },
@@ -69,12 +69,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Sự khác biệt cơ bản giữa điểm neo Góc (Corner) và điểm neo Trơn (Smooth) là gì?",
           options: [
-            "Điểm neo Trơn có hai tay nắm thẳng hàng nên đường cong liền mạch; điểm neo Góc cho phép hai đoạn gãy khúc độc lập",
-            "Điểm neo Trơn chỉ dùng được cho đoạn thẳng, điểm neo Góc chỉ dùng cho đoạn cong",
             "Điểm neo Góc luôn nằm ở giữa đường, điểm neo Trơn luôn nằm ở hai đầu đường",
             "Hai loại điểm neo hoàn toàn giống nhau, chỉ khác tên gọi trong phần mềm",
+            "Điểm neo Trơn có hai tay nắm thẳng hàng nên đường cong liền mạch; điểm neo Góc cho phép hai đoạn gãy khúc độc lập",
+            "Điểm neo Trơn chỉ dùng được cho đoạn thẳng, điểm neo Góc chỉ dùng cho đoạn cong",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "Tại nút Trơn, hai tay nắm thẳng hàng khiến đường cong đi qua mượt mà liên tục; tại nút Góc, hai đoạn hai bên độc lập nên tạo ra được chỗ gãy, đỉnh nhọn.",
         },
@@ -119,12 +119,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Muốn nắn tự do từng góc của một hình chữ nhật đã vẽ (thay vì chỉ chỉnh độ rộng, độ cao, độ bo góc), em cần làm gì trước tiên?",
           options: [
-            "Chuyển hình chữ nhật thành path bằng lệnh Object to Path, sau đó dùng công cụ Node",
-            "Xoá hình chữ nhật rồi vẽ lại bằng công cụ Bezier ngay từ đầu",
             "Nhóm (Group) hình chữ nhật với một hình khác rồi mới chỉnh được",
             "Tăng độ dày nét viền (stroke) của hình chữ nhật lên mức tối đa",
+            "Xoá hình chữ nhật rồi vẽ lại bằng công cụ Bezier ngay từ đầu",
+            "Chuyển hình chữ nhật thành path bằng lệnh Object to Path, sau đó dùng công cụ Node",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "Hình cơ bản chỉ có tham số giới hạn (rộng, cao, bo góc). Object to Path chuyển nó thành một path có điểm neo thật sự, từ đó công cụ Node mới kéo tự do được từng điểm.",
         },
@@ -133,9 +133,9 @@ const theory: LessonTheory = {
           q: "Trong ví dụ chiếc lá của bạn Việt, thao tác nào đã biến khối đa giác cứng nhắc thành hình mềm mại tự nhiên?",
           options: [
             "Dùng công cụ Node kéo tay nắm ở các điểm neo để bo cong từng cạnh",
-            "Tô lại màu xanh đậm hơn cho khối đa giác ban đầu",
             "Phóng to khối đa giác lên gấp đôi kích thước ban đầu",
             "Xoay khối đa giác đi một góc 45 độ so với ban đầu",
+            "Tô lại màu xanh đậm hơn cho khối đa giác ban đầu",
           ],
           answer: 0,
           explain:
@@ -197,12 +197,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Muốn áp dụng hiệu ứng Text on Path cho một dòng chữ, em cần chuẩn bị những gì trước khi vào lệnh Put on Path?",
           options: [
-            "Một đối tượng văn bản và một đường dẫn (path) đã vẽ sẵn, rồi chọn cả hai cùng lúc",
-            "Chỉ cần một đối tượng văn bản, phần mềm sẽ tự vẽ đường dẫn tương ứng",
             "Chỉ cần một đường dẫn, phần mềm sẽ tự sinh ra nội dung chữ ngẫu nhiên",
+            "Chỉ cần một đối tượng văn bản, phần mềm sẽ tự vẽ đường dẫn tương ứng",
+            "Một đối tượng văn bản và một đường dẫn (path) đã vẽ sẵn, rồi chọn cả hai cùng lúc",
             "Nhóm (Group) dòng chữ với chính nó hai lần trước khi áp dụng lệnh",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "Text on Path cần đúng hai đối tượng: văn bản cần uốn cong và đường dẫn quy định hình dạng uốn — chọn cả hai rồi mới áp lệnh Text ➜ Put on Path.",
         },
@@ -210,12 +210,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Vì sao khi phóng to tiêu đề \"ĐẶC SAN MÙA XUÂN\" lên gấp năm lần, dòng chữ vẫn sắc nét không hề vỡ?",
           options: [
-            "Vì văn bản trong phần mềm vector là đối tượng vector, được vẽ lại bằng công thức ở mọi kích cỡ",
-            "Vì phần mềm tự động chụp ảnh màn hình ở độ phân giải cao trước khi phóng to",
             "Vì cỡ chữ ban đầu Nga chọn đã rất lớn nên phóng to thêm không ảnh hưởng",
+            "Vì phần mềm tự động chụp ảnh màn hình ở độ phân giải cao trước khi phóng to",
             "Vì dòng chữ đã được chuyển thành định dạng JPG trước khi đặt lên trang bìa",
+            "Vì văn bản trong phần mềm vector là đối tượng vector, được vẽ lại bằng công thức ở mọi kích cỡ",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "Giống mọi đối tượng vector khác, chữ được mô tả bằng công thức hình học chứ không phải lưới điểm ảnh cố định, nên phóng to ở bất kì tỉ lệ nào cũng được vẽ lại sắc nét.",
         },

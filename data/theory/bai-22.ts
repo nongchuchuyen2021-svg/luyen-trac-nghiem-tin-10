@@ -39,16 +39,16 @@ const theory: LessonTheory = {
         {
           kind: "check",
           q: "Với danh sách do_da_ngoai = [\"Lều\", \"Bóng đá\", \"Nước\", \"Bánh mì\"], muốn lấy đúng \"đồ thứ ba\" (Nước), em viết lệnh nào?",
-          options: ["do_da_ngoai[2]", "do_da_ngoai[3]", "do_da_ngoai[1]", "do_da_ngoai[4]"],
-          answer: 0,
+          options: ["do_da_ngoai[4]", "do_da_ngoai[2]", "do_da_ngoai[1]", "do_da_ngoai[3]"],
+          answer: 1,
           explain:
             "Chỉ số bắt đầu từ 0, nên đồ thứ nhất là chỉ số 0, đồ thứ hai là chỉ số 1, đồ thứ ba là chỉ số 2 — luôn lệch 1 đơn vị so với cách đếm \"thứ mấy\" thông thường.",
         },
         {
           kind: "check",
           q: "Danh sách do_da_ngoai ở trên có 4 phần tử. Chỉ số của phần tử CUỐI CÙNG trong danh sách này là bao nhiêu?",
-          options: ["3", "4", "0", "5"],
-          answer: 0,
+          options: ["0", "5", "3", "4"],
+          answer: 2,
           explain:
             "Danh sách có 4 phần tử thì chỉ số hợp lệ chạy từ 0 đến 3 (tức len−1 = 4−1 = 3). Gọi do_da_ngoai[4] sẽ vượt phạm vi và gây lỗi IndexError.",
         },
@@ -88,12 +88,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Sau khi Vy thực hiện do_da_ngoai.append(\"Áo mưa\"), điều gì xảy ra với danh sách?",
           options: [
-            "\"Áo mưa\" được thêm vào cuối danh sách, các phần tử cũ giữ nguyên vị trí",
-            "\"Áo mưa\" được chèn vào đầu danh sách, đẩy các phần tử cũ lùi lại",
-            "Toàn bộ danh sách bị xoá và chỉ còn lại đúng \"Áo mưa\"",
             "Chương trình báo lỗi vì danh sách đã đủ 4 phần tử từ trước",
+            "Toàn bộ danh sách bị xoá và chỉ còn lại đúng \"Áo mưa\"",
+            "\"Áo mưa\" được chèn vào đầu danh sách, đẩy các phần tử cũ lùi lại",
+            "\"Áo mưa\" được thêm vào cuối danh sách, các phần tử cũ giữ nguyên vị trí",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "append() luôn thêm phần tử mới vào cuối danh sách hiện có, không làm thay đổi vị trí hay giá trị của các phần tử đã tồn tại trước đó.",
         },
@@ -102,9 +102,9 @@ const theory: LessonTheory = {
           q: "Vì sao có thể sửa được một phần tử của danh sách bằng lệnh gán như do_da_ngoai[2] = \"Nước suối\", nhưng lại không sửa được một kí tự trong một xâu bằng cách tương tự?",
           options: [
             "Vì danh sách là kiểu dữ liệu thay đổi được (mutable), còn xâu kí tự là kiểu bất biến (immutable)",
-            "Vì danh sách chỉ chứa được số, còn xâu chỉ chứa được chữ nên quy tắc khác nhau",
             "Vì lệnh gán chỉ số chỉ hoạt động với danh sách có đúng 4 phần tử trở lên",
             "Vì xâu kí tự trong Python không có chỉ số nên không truy cập được từng kí tự",
+            "Vì danh sách chỉ chứa được số, còn xâu chỉ chứa được chữ nên quy tắc khác nhau",
           ],
           answer: 0,
           explain:
@@ -150,20 +150,20 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Vy muốn in danh sách đồ dùng kèm số thứ tự quen thuộc bắt đầu từ 1 (thay vì từ 0). Vy nên dùng cách duyệt nào?",
           options: [
-            "for i in range(len(do_da_ngoai)): rồi in i + 1 cùng do_da_ngoai[i]",
             "for x in do_da_ngoai: rồi in trực tiếp x mà không cần biến chỉ số nào khác",
             "Không cách nào trong hai cách trên in được số thứ tự mong muốn",
+            "for i in range(len(do_da_ngoai)): rồi in i + 1 cùng do_da_ngoai[i]",
             "Chỉ cần in len(do_da_ngoai) một lần duy nhất trước toàn bộ danh sách",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "Duyệt theo for x in a chỉ cho giá trị, không có thông tin về vị trí. Duyệt theo for i in range(len(a)) cho chỉ số i, từ đó tính i + 1 để có số thứ tự quen thuộc bắt đầu từ 1, đồng thời vẫn lấy được giá trị qua a[i].",
         },
         {
           kind: "check",
           q: "Cho diem = [7, 8, 5, 9]. Biểu thức 9 in diem sẽ trả về giá trị gì?",
-          options: ["True", "False", "9", "3"],
-          answer: 0,
+          options: ["9", "False", "3", "True"],
+          answer: 3,
           explain:
             "Toán tử in kiểm tra xem một giá trị có xuất hiện trong danh sách hay không. Vì 9 là một phần tử của diem, biểu thức trả về True.",
         },

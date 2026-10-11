@@ -40,20 +40,20 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Khi Hạ nhân trực tiếp hai giá trị lấy từ input() mà chưa chuyển kiểu, chương trình báo lỗi gì?",
           options: [
-            "TypeError, vì Python không định nghĩa phép nhân giữa hai xâu kí tự với nhau",
-            "ValueError, vì hai xâu đó chứa toàn chữ số nên không hợp lệ",
-            "SyntaxError, vì Hạ viết sai cú pháp của câu lệnh",
             "Không lỗi gì cả, chương trình vẫn tính đúng ra kết quả như hai con số",
+            "TypeError, vì Python không định nghĩa phép nhân giữa hai xâu kí tự với nhau",
+            "SyntaxError, vì Hạ viết sai cú pháp của câu lệnh",
+            "ValueError, vì hai xâu đó chứa toàn chữ số nên không hợp lệ",
           ],
-          answer: 0,
+          answer: 1,
           explain:
             "Cả gia và so_luong đều là xâu kí tự do input() trả về. Python không có phép nhân giữa hai xâu với nhau (chỉ có phép nhân giữa một xâu và một số nguyên để lặp lại xâu đó), nên chương trình dừng lại với lỗi TypeError ngay khi chạy tới dòng tính tổng.",
         },
         {
           kind: "check",
           q: "Dù người dùng gõ đúng con số 15000 vào ô đơn giá, biến gia trong chương trình của Hạ thực chất thuộc kiểu dữ liệu nào?",
-          options: ["Xâu kí tự (str)", "Số nguyên (int)", "Số thực (float)", "Lôgic (bool)"],
-          answer: 0,
+          options: ["Số nguyên (int)", "Lôgic (bool)", "Xâu kí tự (str)", "Số thực (float)"],
+          answer: 2,
           explain:
             "input() luôn trả về kiểu str bất kể nội dung gõ vào là gì. Muốn có kiểu số nguyên hay số thực, phải chủ động chuyển đổi bằng int() hoặc float().",
         },
@@ -93,19 +93,19 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Sau khi Hạ đã sửa chương trình đúng chuẩn, một vị khách nghịch gõ chữ \"ba\" vào ô số lượng thay vì con số. Điều gì xảy ra?",
           options: [
-            "Chương trình dừng lại và báo lỗi vì int() không chuyển được xâu \"ba\" thành số",
+            "Chương trình chạy hoàn toàn bình thường và in ra tổng tiền là 0 đồng",
             "Chương trình tự hiểu \"ba\" nghĩa là số 3 rồi tính tổng tiền bình thường",
             "Chương trình bỏ qua giá trị sai và coi số lượng bằng 0",
-            "Chương trình chạy hoàn toàn bình thường và in ra tổng tiền là 0 đồng",
+            "Chương trình dừng lại và báo lỗi vì int() không chuyển được xâu \"ba\" thành số",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "int() chỉ chuyển đổi được các xâu biểu diễn đúng chữ số. Gặp một xâu chứa chữ cái như \"ba\", nó không có cách nào suy luận ra con số tương ứng nên chương trình dừng lại với lỗi ngay khi chạy tới dòng đó.",
         },
         {
           kind: "check",
           q: "Nếu Hạ muốn cho khách nhập thêm phần trăm giảm giá có thể lẻ (ví dụ 10.5%), Hạ nên dùng hàm chuyển đổi kiểu nào cho hợp lí nhất?",
-          options: ["float()", "int()", "str()", "print()"],
+          options: ["float()", "int()", "print()", "str()"],
           answer: 0,
           explain:
             "float() chuyển xâu thành số thực, lưu được cả phần thập phân như 10.5 — trong khi int() chỉ giữ được số nguyên và sẽ làm mất phần lẻ đó.",
@@ -151,12 +151,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Lệnh print(ten, \"mua\", so_luong, \"ly\") khi KHÔNG truyền tham số sep sẽ tự động ngăn cách các giá trị bằng gì?",
           options: [
-            "Một dấu cách (khoảng trắng)",
-            "Một dấu phẩy",
             "Không có gì, các giá trị dính liền nhau",
+            "Một dấu phẩy",
+            "Một dấu cách (khoảng trắng)",
             "Một dấu chấm phẩy",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "Giá trị mặc định của tham số sep trong print() là một dấu cách. Muốn đổi thành kí tự khác, phải truyền rõ sep=\"...\" khi gọi lệnh.",
         },
@@ -164,20 +164,20 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Muốn hai lệnh print liên tiếp in kết quả trên CÙNG một dòng thay vì tự động xuống dòng, Hạ cần truyền tham số nào cho lệnh print phía trước?",
           options: [
-            "end, ví dụ đặt bằng một xâu rỗng",
             "sep, ví dụ đặt bằng một xâu rỗng",
             "input, để nhận thêm dữ liệu trước khi in",
             "str, để chuyển giá trị in ra thành xâu",
+            "end, ví dụ đặt bằng một xâu rỗng",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "Tham số end quy định kí tự kết thúc của lệnh print, mặc định là kí tự xuống dòng. Đặt end thành xâu rỗng khiến lệnh print tiếp theo được nối ngay vào cuối dòng hiện tại thay vì bắt đầu một dòng mới.",
         },
         {
           kind: "check",
           q: "Trong hoá đơn cuối cùng của Hạ, danh sách các món gọi thêm được in cách nhau bởi dấu phẩy nhờ tham số nào của print()?",
-          options: ["sep", "end", "int", "input"],
-          answer: 0,
+          options: ["end", "sep", "input", "int"],
+          answer: 1,
           explain:
             "sep quy định kí tự chèn giữa các giá trị được liệt kê trong cùng một lệnh print — đặt sep thành dấu phẩy và khoảng trắng cho ra đúng danh sách món ngăn cách như hoá đơn thật.",
         },

@@ -54,8 +54,8 @@ const theory: LessonTheory = {
         {
           kind: "check",
           q: "Thiết bị nào dùng để kết nối các mạng LAN với nhau, gửi dữ liệu ra ngoài LAN khi đích đến không nằm trong mạng đó?",
-          options: ["Router (bộ định tuyến)", "Switch (bộ chuyển mạch)", "Hub (bộ chia)", "Máy in"],
-          answer: 0,
+          options: ["Máy in", "Router (bộ định tuyến)", "Hub (bộ chia)", "Switch (bộ chuyển mạch)"],
+          answer: 1,
           explain:
             "Router hoạt động theo nguyên lí: khi phát hiện dữ liệu gửi cho thiết bị không có trong LAN thì gửi dữ liệu đó ra qua cổng Internet. Switch/Hub chỉ chuyển tiếp dữ liệu trong nội bộ LAN.",
         },
@@ -63,12 +63,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Phát biểu nào sau đây đúng về quyền sở hữu của Internet?",
           options: [
-            "Internet không có chủ sở hữu, chỉ có vài tổ chức phi lợi nhuận điều phối tài nguyên",
-            "Internet thuộc quyền sở hữu riêng của duy nhất một quốc gia trên toàn thế giới",
             "Internet thuộc sở hữu của công ty đầu tiên đã phát minh ra World Wide Web",
             "Mỗi mạng LAN khi kết nối vào Internet sẽ tự động trở thành đồng sở hữu Internet",
+            "Internet không có chủ sở hữu, chỉ có vài tổ chức phi lợi nhuận điều phối tài nguyên",
+            "Internet thuộc quyền sở hữu riêng của duy nhất một quốc gia trên toàn thế giới",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "SGK nêu: Internet không của riêng ai, không có cơ quan quản lí tập trung nào, nhưng có một vài tổ chức phi lợi nhuận quốc tế điều phối tài nguyên (như địa chỉ, tên miền) và tiêu chuẩn hoá nền tảng kĩ thuật.",
         },
@@ -108,8 +108,8 @@ const theory: LessonTheory = {
         {
           kind: "check",
           q: "Việc học sinh tham gia một khoá học trực tuyến để có thể học từ xa vào bất cứ lúc nào, ở bất cứ đâu thể hiện vai trò nào của Internet?",
-          options: ["Vai trò trong giáo dục", "Vai trò trong giao tiếp cộng đồng", "Vai trò của điện toán đám mây", "Vai trò của kết nối vạn vật (IoT)"],
-          answer: 0,
+          options: ["Vai trò của kết nối vạn vật (IoT)", "Vai trò trong giao tiếp cộng đồng", "Vai trò của điện toán đám mây", "Vai trò trong giáo dục"],
+          answer: 3,
           explain:
             "Các nền tảng học trực tuyến giúp người học học từ xa mọi lúc, mọi nơi — đây chính là vai trò của Internet trong giáo dục.",
         },
@@ -162,7 +162,7 @@ const theory: LessonTheory = {
         {
           kind: "check",
           q: "Một công ty thuê máy chủ ảo trên Amazon Web Services rồi tự cài hệ điều hành và phần mềm riêng lên đó để chạy website. Công ty đang thuê loại tài nguyên nào của điện toán đám mây?",
-          options: ["IaaS — hạ tầng như dịch vụ", "SaaS — phần mềm như dịch vụ", "PaaS — nền tảng như dịch vụ", "Không phải dịch vụ đám mây"],
+          options: ["IaaS — hạ tầng như dịch vụ", "Không phải dịch vụ đám mây", "PaaS — nền tảng như dịch vụ", "SaaS — phần mềm như dịch vụ"],
           answer: 0,
           explain:
             "Công ty chỉ thuê phần cứng ảo (máy chủ, thiết bị lưu trữ) rồi tự cài mọi thứ lên trên — đây đúng là IaaS (Infrastructure as a Service, hạ tầng như dịch vụ).",
@@ -170,8 +170,8 @@ const theory: LessonTheory = {
         {
           kind: "check",
           q: "Lợi ích nào của dịch vụ đám mây thể hiện qua việc người dùng chỉ cần trả tiền đúng theo mức mình sử dụng, không phải tự đầu tư toàn bộ hạ tầng?",
-          options: ["Kinh tế hơn", "Chất lượng cao", "Tính mềm dẻo và độ sẵn sàng cao", "Không có lợi ích nào phù hợp"],
-          answer: 0,
+          options: ["Chất lượng cao", "Không có lợi ích nào phù hợp", "Kinh tế hơn", "Tính mềm dẻo và độ sẵn sàng cao"],
+          answer: 2,
           explain:
             "Vì tài nguyên đám mây được chia sẻ cho nhiều người dùng nên được phân tải hợp lí, tránh lãng phí, và người dùng chỉ trả tiền theo mức sử dụng thực tế — đây là lợi ích kinh tế hơn.",
         },
@@ -211,12 +211,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Trong một mạng IoT, các thiết bị thông minh nhất thiết chỉ được phép kết nối với nhau qua Internet, đúng hay sai?",
           options: [
-            "Sai — IoT là hệ liên mạng, có thể kết nối qua nhiều hạ tầng mạng khác nhau",
-            "Đúng — IoT chỉ hoạt động khi mọi thiết bị cùng kết nối trực tiếp vào Internet",
-            "Đúng — nếu không qua Internet thì không còn gọi là thiết bị thông minh nữa",
             "Sai — IoT hoàn toàn không cần bất kì kết nối mạng nào giữa các thiết bị",
+            "Đúng — nếu không qua Internet thì không còn gọi là thiết bị thông minh nữa",
+            "Đúng — IoT chỉ hoạt động khi mọi thiết bị cùng kết nối trực tiếp vào Internet",
+            "Sai — IoT là hệ liên mạng, có thể kết nối qua nhiều hạ tầng mạng khác nhau",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "SGK đặt câu hỏi gợi mở: trong một mạng IoT, có nhất thiết là các thiết bị thông minh chỉ nối với nhau qua Internet hay không? Trên thực tế, IoT là hệ liên mạng, các thiết bị có thể kết nối qua nhiều loại hạ tầng mạng khác nhau (wifi cục bộ, bluetooth,…) chứ không bắt buộc mọi kết nối đều trực tiếp qua Internet.",
         },
@@ -224,12 +224,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Việc công tơ điện tử tự động đọc chỉ số điện và gửi về trung tâm dữ liệu qua Internet, thay vì nhân viên điện lực phải đến từng nhà ghi chép, thể hiện rõ nhất lợi ích nào của IoT?",
           options: [
+            "Cung cấp dữ liệu tức thời cho các hệ thống thời gian thực",
             "Tiết kiệm chi phí do giảm bớt lao động thu thập thông tin thủ công",
             "Làm việc được ở những nơi con người không thể nào tới được",
-            "Cung cấp dữ liệu tức thời cho các hệ thống thời gian thực",
             "Giúp thiết bị tự bắt chước hành vi và cách tư duy của con người",
           ],
-          answer: 0,
+          answer: 1,
           explain:
             "Công tơ điện tử tự động đọc và gửi chỉ số qua Internet giúp giảm bớt lao động thu thập thông tin mang tính thủ công (nhân viên đi đọc từng nhà) — đúng là lợi ích tiết kiệm chi phí của IoT.",
         },

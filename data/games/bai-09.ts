@@ -32,12 +32,12 @@ const arenaGameCyberDefense: ArenaGame = {
             "Tối muộn, em nhận được tin nhắn Facebook từ tài khoản một bạn cùng lớp: 'Cậu ơi tớ kẹt tiền đóng học phí gấp, chuyển giúp tớ 500k vào số tài khoản lạ này nhé, mai lên lớp tớ gửi lại liền!'. Cách xưng hô rất giống thường ngày.",
           q: "Hành động tác chiến phòng vệ nào sau đây là CHUẨN XÁC và AN TOÀN NHẤT?",
           options: [
-            "Gọi điện thoại trực tiếp hoặc gặp mặt bạn đó để xác minh trước khi làm bất cứ việc gì",
-            "Chuyển ngay 500k vì tài khoản đó có tên và ảnh đại diện đúng là bạn mình",
-            "Nhắn tin hỏi lại trên chính cửa sổ chat đó: 'Có thật là cậu không?'",
             "Chụp ảnh thẻ ngân hàng và gửi mã OTP cho bạn tự vào rút tiền",
+            "Nhắn tin hỏi lại trên chính cửa sổ chat đó: 'Có thật là cậu không?'",
+            "Chuyển ngay 500k vì tài khoản đó có tên và ảnh đại diện đúng là bạn mình",
+            "Gọi điện thoại trực tiếp hoặc gặp mặt bạn đó để xác minh trước khi làm bất cứ việc gì",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "Kẻ xấu khi chiếm đoạt tài khoản sẽ đọc tin nhắn cũ để bắt chước văn phong. Cách xác minh an toàn duy nhất theo SGK là dùng một kênh liên lạc độc lập (gọi điện thoại trực tiếp qua số sim hoặc gặp mặt ngoài đời).",
           damage: 25,
@@ -85,12 +85,12 @@ const arenaGameCyberDefense: ArenaGame = {
             "Một tệp bài tập 'TinHoc10_OnTap.docx' được tải từ diễn đàn lạ về máy. Khi mở file ra, Word hiện cảnh báo mã Macro yêu cầu bấm 'Enable Content'. Người dùng bấm cho phép, khiến mã độc lập tức gắn lén vào toàn bộ tệp văn bản khác trong máy tính.",
           q: "Đặc điểm bản chất nào chứng minh đây là một VIRUS máy tính chứ không phải Worm?",
           options: [
+            "Tự động quét cổng mạng LAN để lây sang máy tính khác trong trường học",
             "Bắt buộc phải ký sinh gắn vào một tệp chủ và chỉ lây lan khi người dùng mở tệp đó",
             "Là một phần mềm hoàn chỉnh độc lập tự gửi thư qua mạng Internet mà không cần tệp chủ",
-            "Tự động quét cổng mạng LAN để lây sang máy tính khác trong trường học",
             "Tự động mã hoá toàn bộ ổ cứng và đòi tiền chuộc bằng tiền ảo Bitcoin",
           ],
-          answer: 0,
+          answer: 1,
           explain:
             "Theo định nghĩa SGK Tin 10: Virus không phải phần mềm hoàn chỉnh, nó là đoạn mã ký sinh bắt buộc phải gắn vào tệp chủ và chỉ phát tác lây lan khi tệp chủ được người dùng kích hoạt/mở ra.",
           damage: 30,
@@ -107,9 +107,9 @@ const arenaGameCyberDefense: ArenaGame = {
           q: "Tại sao Sâu máy tính (Worm) lại có tốc độ lây lan khủng khiếp như vậy?",
           options: [
             "Vì Worm là phần mềm hoàn chỉnh độc lập, có khả năng tự nhân bản và tự lây lan qua mạng mà không cần người dùng thao tác",
+            "Vì Worm chỉ hoạt động trên mạng Wifi điện thoại di động chứ không lây được qua dây mạng",
             "Vì Worm bắt buộc phải chờ người dùng bấm gửi từng email thì mới lây được",
             "Vì Worm chỉ là một đoạn mã nhỏ ký sinh trong file văn bản Microsoft Word",
-            "Vì Worm chỉ hoạt động trên mạng Wifi điện thoại di động chứ không lây được qua dây mạng",
           ],
           answer: 0,
           explain:
@@ -138,12 +138,12 @@ const arenaGameCyberDefense: ArenaGame = {
             "Một học sinh tải bản 'Game Bắn Súng Crack Miễn Phí Full Tiền' từ trang web lậu. Khi cài đặt xong, game vẫn chơi được bình thường nhưng máy tính bắt đầu chạy quạt tản nhiệt hết công suất và liên tục gửi dữ liệu lạ ra máy chủ nước ngoài.",
           q: "Cơ chế hoạt động đặc trưng của Trojan (Ngựa thành Troa) là gì?",
           options: [
+            "Là phần mềm diệt virus chính hãng của Microsoft phát hành",
             "Nguỵ trang dưới vỏ bọc phần mềm hữu ích để lừa người dùng tự tay tải về và cài đặt vào máy",
             "Tự lây lan qua cáp mạng mà người dùng không hề tải hay bấm cài đặt gì",
             "Gắn đoạn mã ký sinh vào tệp hệ điều hành và xóa sạch thùng rác Recycle Bin",
-            "Là phần mềm diệt virus chính hãng của Microsoft phát hành",
           ],
-          answer: 0,
+          answer: 1,
           explain:
             "Lấy cảm hứng từ điển tích con ngựa gỗ thành Troa: Trojan giả danh phần mềm hấp dẫn/hữu ích (game crack, bộ gõ lậu, tool hack) để dụ dỗ người dùng tự mở cửa rước kẻ địch vào hệ thống.",
           damage: 30,
@@ -160,9 +160,9 @@ const arenaGameCyberDefense: ArenaGame = {
           q: "Loại phần mềm gián điệp chuyên ghi lại thao tác gõ phím này có tên gọi là gì?",
           options: [
             "Keylogger (thuộc nhóm Spyware - phần mềm gián điệp)",
+            "Router chuyển tiếp dữ liệu Internet",
             "Firewall (Tường lửa mạng)",
             "Windows Defender Antivirus",
-            "Router chuyển tiếp dữ liệu Internet",
           ],
           answer: 0,
           explain:
@@ -191,12 +191,12 @@ const arenaGameCyberDefense: ArenaGame = {
             "Toàn bộ tài liệu văn bản, bảng điểm và ảnh kỷ yếu trên máy tính bất ngờ bị đổi đuôi thành '.locked' và không thể mở được. Màn hình hiện thông báo đỏ rực: 'Muốn giải mã dữ liệu, hãy gửi 300 USD bằng Bitcoin vào ví sau trong 48h!'.",
           q: "Biện pháp phòng ngừa CĂN BẢN và HIỆU QUẢ NHẤT để không bao giờ sợ Ransomware tống tiền là gì?",
           options: [
-            "Thường xuyên sao lưu (Backup) dữ liệu quan trọng lên đám mây hoặc ổ cứng ngoài độc lập",
             "Chuyển ngay tiền chuộc Bitcoin cho hacker theo đúng hẹn",
-            "Tải thêm các phần mềm crack trôi nổi trên mạng về để tự sửa",
             "Tắt hoàn toàn tính năng cập nhật Windows Update để tránh lỗi hệ điều hành",
+            "Tải thêm các phần mềm crack trôi nổi trên mạng về để tự sửa",
+            "Thường xuyên sao lưu (Backup) dữ liệu quan trọng lên đám mây hoặc ổ cứng ngoài độc lập",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "Nếu luôn có bản sao lưu (Backup) an toàn trên Cloud hoặc ổ cứng rời, khi bị dính Ransomware em chỉ cần xóa sạch cài lại máy và khôi phục dữ liệu mà không sợ mất mát và không cần trả tiền chuộc cho tội phạm mạng.",
           damage: 35,
@@ -212,12 +212,12 @@ const arenaGameCyberDefense: ArenaGame = {
             "Tại một quán cà phê, em thấy có sóng Wifi miễn phí tên 'Wifi_MienPhi_KhongMatKhau'. Khi kết nối vào, một trang web yêu cầu em nhập tài khoản mật khẩu Facebook để 'xác thực vào mạng'.",
           q: "Nguy cơ tiềm ẩn nguy hiểm khi sử dụng Wifi công cộng không mật khẩu là gì?",
           options: [
-            "Kẻ xấu có thể dựng trạm phát sóng giả mạo để nghe lén và đánh cắp dữ liệu truyền đi (Man-in-the-middle)",
             "Điện thoại sẽ bị hư hỏng màn hình cảm ứng vật lý ngay lập tức",
-            "Mạng Wifi công cộng không thể truyền được dữ liệu hình ảnh và âm thanh",
+            "Kẻ xấu có thể dựng trạm phát sóng giả mạo để nghe lén và đánh cắp dữ liệu truyền đi (Man-in-the-middle)",
             "Wifi công cộng chỉ sử dụng được vào ban đêm chứ ban ngày không hoạt động",
+            "Mạng Wifi công cộng không thể truyền được dữ liệu hình ảnh và âm thanh",
           ],
-          answer: 0,
+          answer: 1,
           explain:
             "Wifi công cộng không mã hóa bảo vệ cho phép kẻ xấu nghe lén gói tin hoặc tạo trang đăng nhập giả mạo để câu mật khẩu. Tuyệt đối không giao dịch ngân hàng hay đăng nhập tài khoản nhạy cảm trên Wifi công cộng lạ.",
           damage: 30,
@@ -245,12 +245,12 @@ const arenaGameCyberDefense: ArenaGame = {
             "Trùm hacker sử dụng công nghệ trí tuệ nhân tạo ghép khuôn mặt và giọng nói của học sinh (Deepfake) vào một video nhạy cảm bịa đặt, sau đó nhắn tin đe dọa tung lên mạng nếu không chuyển tiền hoặc làm theo các yêu cầu sai trái.",
           q: "Học sinh THPT cần làm gì ngay lập tức khi trở thành nạn nhân của bắt nạt và tống tiền trên mạng?",
           options: [
-            "Bình tĩnh chụp lại bằng chứng, tuyệt đối không làm theo yêu cầu, chia sẻ ngay với cha mẹ, thầy cô và báo công an",
-            "Âm thầm gom tiền nộp chuộc một mình vì sợ người khác chê cười",
-            "Lên mạng chửi bới, thách thức và tranh cãi gay gắt với kẻ bắt nạt",
             "Xóa sạch toàn bộ tin nhắn để không ai biết mình bị dọa",
+            "Lên mạng chửi bới, thách thức và tranh cãi gay gắt với kẻ bắt nạt",
+            "Âm thầm gom tiền nộp chuộc một mình vì sợ người khác chê cười",
+            "Bình tĩnh chụp lại bằng chứng, tuyệt đối không làm theo yêu cầu, chia sẻ ngay với cha mẹ, thầy cô và báo công an",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "Theo bài học SGK: Khi bị đe dọa, bắt nạt trên mạng (Cyberbullying), tuyệt đối không im lặng thỏa hiệp hay tranh cãi; phải lưu lại chứng cứ (chụp màn hình) và tâm sự ngay với cha mẹ, thầy cô, nhà trường hoặc cơ quan chức năng để được bảo vệ kịp thời.",
           damage: 40,
@@ -267,9 +267,9 @@ const arenaGameCyberDefense: ArenaGame = {
           q: "Bộ ba nguyên tắc bảo vệ máy tính TOÀN DIỆN nhất theo SGK Tin học 10 là gì?",
           options: [
             "Bật Windows Defender & Tường lửa + Thường xuyên cập nhật hệ điều hành + Dùng mật khẩu mạnh kèm xác thực 2 bước (2FA)",
+            "Chỉ cần đặt mật khẩu 6 số ngày sinh nhật là đã tuyệt đối an toàn",
             "Cài đặt nhiều phần mềm diệt virus lậu cùng lúc để chúng bổ trợ cho nhau",
             "Tắt hoàn toàn kết nối Internet của trường học vĩnh viễn",
-            "Chỉ cần đặt mật khẩu 6 số ngày sinh nhật là đã tuyệt đối an toàn",
           ],
           answer: 0,
           explain:

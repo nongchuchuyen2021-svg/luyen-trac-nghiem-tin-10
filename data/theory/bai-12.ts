@@ -58,12 +58,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Vì sao một bức ảnh chụp bằng điện thoại khi phóng to quá lớn lại bị vỡ hạt, còn một logo vẽ bằng Inkscape thì không?",
           options: [
-            "Vì ảnh chụp là bitmap lưu màu từng pixel cố định, còn logo vector được máy vẽ lại bằng công thức toán học ở mọi kích cỡ",
-            "Vì ảnh chụp có dung lượng nhỏ hơn nên chất lượng kém hơn logo vector có dung lượng lớn",
-            "Vì điện thoại chụp ảnh với độ phân giải thấp hơn màn hình máy tính dùng để vẽ logo",
             "Vì logo vector thực chất cũng là ảnh bitmap nhưng được nén lại trước khi lưu",
+            "Vì ảnh chụp là bitmap lưu màu từng pixel cố định, còn logo vector được máy vẽ lại bằng công thức toán học ở mọi kích cỡ",
+            "Vì điện thoại chụp ảnh với độ phân giải thấp hơn màn hình máy tính dùng để vẽ logo",
+            "Vì ảnh chụp có dung lượng nhỏ hơn nên chất lượng kém hơn logo vector có dung lượng lớn",
           ],
-          answer: 0,
+          answer: 1,
           explain:
             "Bitmap lưu cố định số lượng điểm ảnh nên phóng to vượt quá số điểm đó sẽ lộ từng ô vuông (vỡ hạt); vector lưu công thức nên ở bất kì tỉ lệ nào máy cũng vẽ lại đường nét mượt mà, không phụ thuộc số điểm ảnh.",
         },
@@ -71,12 +71,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Trường hợp nào sau đây NÊN chọn đồ hoạ vector thay vì bitmap?",
           options: [
-            "Thiết kế logo trường cần in từ danh thiếp nhỏ đến phông sân khấu lớn",
-            "Lưu lại một bức ảnh chụp phong cảnh để đăng lên trang cá nhân",
-            "Lưu ảnh chụp màn hình một trò chơi điện tử để làm ảnh nền máy tính",
             "Quét lại một trang tài liệu giấy cũ để lưu trữ như ảnh gốc",
+            "Lưu lại một bức ảnh chụp phong cảnh để đăng lên trang cá nhân",
+            "Thiết kế logo trường cần in từ danh thiếp nhỏ đến phông sân khấu lớn",
+            "Lưu ảnh chụp màn hình một trò chơi điện tử để làm ảnh nền máy tính",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "Logo cần co giãn ở rất nhiều kích thước khác nhau mà vẫn sắc nét — đây chính là thế mạnh của vector. Ảnh chụp, ảnh chụp màn hình và tài liệu quét đều vốn dĩ là dữ liệu điểm ảnh (bitmap), không thể và không cần chuyển sang vector.",
         },
@@ -132,12 +132,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "GIMP và Inkscape khác nhau cơ bản ở điểm nào?",
           options: [
-            "GIMP xử lí đồ hoạ bitmap (ảnh chụp), còn Inkscape vẽ đồ hoạ vector (hình khối, logo)",
-            "GIMP dùng để xem video, còn Inkscape dùng để nghe nhạc trên máy tính",
-            "GIMP là phần mềm trả phí, còn Inkscape hoàn toàn miễn phí không giới hạn",
             "GIMP chỉ chạy trên điện thoại, còn Inkscape chỉ chạy trên máy tính để bàn",
+            "GIMP là phần mềm trả phí, còn Inkscape hoàn toàn miễn phí không giới hạn",
+            "GIMP dùng để xem video, còn Inkscape dùng để nghe nhạc trên máy tính",
+            "GIMP xử lí đồ hoạ bitmap (ảnh chụp), còn Inkscape vẽ đồ hoạ vector (hình khối, logo)",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "GIMP tương ứng với Photoshop (xử lí ảnh điểm ảnh), Inkscape tương ứng với Illustrator (vẽ đồ hoạ vector). Cả hai đều miễn phí và đều chạy đa nền tảng trên máy tính.",
         },
@@ -146,9 +146,9 @@ const theory: LessonTheory = {
           q: "Ban tổ chức cần ghép 40 ảnh chụp hoạt động các lớp thành một ảnh kỉ niệm chung và chỉnh sáng cho đều màu. Nên dùng phần mềm nào?",
           options: [
             "GIMP, vì đây là thao tác ghép lớp và chỉnh màu trên ảnh bitmap",
-            "Inkscape, vì ảnh kỉ niệm cần phóng to không vỡ hạt",
-            "Cả hai đều không phù hợp, phải dùng phần mềm dựng video",
             "Bất kì phần mềm nào cũng được vì bitmap và vector là như nhau",
+            "Cả hai đều không phù hợp, phải dùng phần mềm dựng video",
+            "Inkscape, vì ảnh kỉ niệm cần phóng to không vỡ hạt",
           ],
           answer: 0,
           explain:
@@ -219,20 +219,20 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Trong Inkscape, muốn đổi màu viền (đường bao quanh) của một hình đã vẽ mà không làm thay đổi màu bên trong hình, em cần chỉnh thuộc tính nào?",
           options: [
-            "Stroke (màu nét)",
             "Fill (màu tô)",
             "Canvas (trang vẽ)",
+            "Stroke (màu nét)",
             "Palette (bảng màu)",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "Stroke là màu và độ dày của đường viền, tách biệt hoàn toàn với Fill là màu bên trong hình — chỉnh cái này không ảnh hưởng tới cái kia.",
         },
         {
           kind: "check",
           q: "Tệp làm việc mặc định khi lưu một bản vẽ trong Inkscape có định dạng gì?",
-          options: [".svg", ".gimp", ".docx", ".mp4"],
-          answer: 0,
+          options: [".mp4", ".gimp", ".docx", ".svg"],
+          answer: 3,
           explain:
             "Inkscape lưu trực tiếp ở định dạng SVG (Scalable Vector Graphics) — chuẩn vector mở mà trình duyệt web hiển thị được ngay mà không cần chuyển đổi.",
         },

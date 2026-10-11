@@ -59,28 +59,28 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Muốn in đủ số báo danh cho đúng 20 thí sinh, đánh số từ 1 đến 20, cách viết nào là đúng?",
           options: [
-            "for i in range(1, 21):",
-            "for i in range(1, 20):",
             "for i in range(0, 20):",
+            "for i in range(1, 21):",
             "for i in range(20):",
+            "for i in range(1, 20):",
           ],
-          answer: 0,
+          answer: 1,
           explain:
             "range(a, b) sinh dãy từ a đến b−1, tức KHÔNG bao gồm b. Muốn dãy chạy đến đúng 20, chặn trên phải là 21 để 20 vẫn còn nằm trong dãy: range(1, 21) cho đúng 1, 2, ..., 20.",
         },
         {
           kind: "check",
           q: "Vòng lặp for i in range(5): print(\"🔔\") thực hiện thân lặp bao nhiêu lần?",
-          options: ["5 lần", "4 lần", "6 lần", "Không xác định được"],
-          answer: 0,
+          options: ["4 lần", "6 lần", "5 lần", "Không xác định được"],
+          answer: 2,
           explain:
             "range(5) sinh đúng 5 giá trị (0, 1, 2, 3, 4), nên thân vòng lặp được thực hiện đúng 5 lần — dù bản thân giá trị của i không được dùng đến trong lệnh in.",
         },
         {
           kind: "check",
           q: "range(3, 8) sinh ra dãy số nào?",
-          options: ["3, 4, 5, 6, 7", "3, 4, 5, 6, 7, 8", "4, 5, 6, 7, 8", "3, 8"],
-          answer: 0,
+          options: ["3, 4, 5, 6, 7, 8", "4, 5, 6, 7, 8", "3, 8", "3, 4, 5, 6, 7"],
+          answer: 3,
           explain:
             "range(a, b) bắt đầu từ a, dừng TRƯỚC b: range(3, 8) cho ra 3, 4, 5, 6, 7 — đúng 5 giá trị (8 − 3 = 5), không có số 8.",
         },
@@ -121,9 +121,9 @@ const theory: LessonTheory = {
           q: "Trong chương trình quyên góp sách, vì sao khi chuyển dòng s = 0 vào bên trong vòng lặp thì kết quả cuối cùng lại sai?",
           options: [
             "Vì biến s bị đặt lại 0 ở đầu mỗi vòng, nên mất hết phần tổng đã cộng dồn được từ các vòng trước",
-            "Vì Python không cho phép đặt lệnh gán bên trong một vòng lặp for",
-            "Vì biến đếm i sẽ tự động dừng lại sau vòng lặp đầu tiên",
             "Vì lệnh print(s) chỉ hoạt động khi s được khởi tạo bên ngoài vòng lặp",
+            "Vì biến đếm i sẽ tự động dừng lại sau vòng lặp đầu tiên",
+            "Vì Python không cho phép đặt lệnh gán bên trong một vòng lặp for",
           ],
           answer: 0,
           explain:
@@ -132,8 +132,8 @@ const theory: LessonTheory = {
         {
           kind: "check",
           q: "Đoạn chương trình s = 0; for i in range(1, 6): s = s + i; print(s) cuối cùng in ra giá trị nào?",
-          options: ["15", "5", "10", "6"],
-          answer: 0,
+          options: ["6", "5", "15", "10"],
+          answer: 2,
           explain:
             "s cộng dồn lần lượt 1 + 2 + 3 + 4 + 5 = 15, vì s = 0 được khởi tạo đúng một lần trước vòng lặp và giữ nguyên kết quả tích luỹ qua từng vòng.",
         },
@@ -173,20 +173,20 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Trong chương trình in sơ đồ ghế rạp chiếu phim, khi vòng lặp ngoài đang ở hàng 2, vòng lặp trong sẽ làm gì?",
           options: [
-            "Chạy trọn vẹn từ ghế 1 đến ghế 5 của đúng hàng 2, rồi mới quay lại vòng ngoài để sang hàng 3",
-            "Chỉ in đúng một ghế duy nhất rồi lập tức chuyển ngay sang hàng 3",
             "Bỏ qua hàng 2 hoàn toàn vì vòng trong chỉ chạy ở hàng đầu tiên",
             "Chạy lại từ ghế 1 đến ghế 5 của tất cả các hàng đã đi qua trước đó",
+            "Chỉ in đúng một ghế duy nhất rồi lập tức chuyển ngay sang hàng 3",
+            "Chạy trọn vẹn từ ghế 1 đến ghế 5 của đúng hàng 2, rồi mới quay lại vòng ngoài để sang hàng 3",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "Ứng với mỗi lần lặp của vòng ngoài (mỗi hàng), vòng lặp trong luôn chạy trọn vẹn một lượt đầy đủ (ghế 1 đến ghế 5) trước khi vòng ngoài chuyển sang giá trị hàng tiếp theo.",
         },
         {
           kind: "check",
           q: "Chương trình in sơ đồ ghế rạp chiếu phim ở trên (3 hàng, mỗi hàng 5 ghế) in ra tổng cộng bao nhiêu dòng?",
-          options: ["15 dòng", "8 dòng", "3 dòng", "5 dòng"],
-          answer: 0,
+          options: ["5 dòng", "15 dòng", "8 dòng", "3 dòng"],
+          answer: 1,
           explain:
             "Vòng ngoài chạy 3 lần (3 hàng), mỗi lần vòng trong lại chạy đủ 5 lần (5 ghế) — tổng số dòng in ra là 3 nhân 5, bằng 15 dòng.",
         },

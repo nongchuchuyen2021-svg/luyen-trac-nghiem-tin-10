@@ -40,20 +40,20 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Vy có biến ten = \"Vi\" và muốn sửa kí tự thứ hai thành \"y\". Lệnh ten[1] = \"y\" cho kết quả gì?",
           options: [
-            "Chương trình báo lỗi TypeError vì xâu không cho phép gán lại từng kí tự",
-            "Biến ten đổi thành \"Vy\" giống hệt cách sửa một phần tử của danh sách",
             "Chương trình chạy bình thường nhưng ten vẫn giữ nguyên giá trị \"Vi\"",
+            "Chương trình báo lỗi TypeError vì xâu không cho phép gán lại từng kí tự",
             "Biến ten trở thành danh sách [\"V\", \"y\"] một cách tự động",
+            "Biến ten đổi thành \"Vy\" giống hệt cách sửa một phần tử của danh sách",
           ],
-          answer: 0,
+          answer: 1,
           explain:
             "Xâu là kiểu dữ liệu bất biến (immutable) — không có cách nào gán lại trực tiếp một kí tự bên trong nó. Muốn đổi nội dung, phải tạo một xâu mới rồi gán lại cho biến ten, ví dụ ten = \"Vy\".",
         },
         {
           kind: "check",
           q: "Với s = \"Na Ri\" (có một dấu cách ở giữa), giá trị của len(s) là bao nhiêu?",
-          options: ["5", "4", "6", "2"],
-          answer: 0,
+          options: ["4", "2", "5", "6"],
+          answer: 2,
           explain:
             "len() đếm TẤT CẢ kí tự, kể cả dấu cách: N-a-(dấu cách)-R-i, tổng cộng đúng 5 kí tự.",
         },
@@ -93,19 +93,19 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Vì sao khi Vy ghép \"Xin chào,\" + \"Vy\" + \"!\", kết quả lại in dính liền thành \"Xin chào,Vy!\" thay vì có khoảng trắng sau dấu phẩy?",
           options: [
-            "Vì phép + chỉ ghép nối các xâu lại đúng như chúng có, không tự động thêm bất kì kí tự nào khác",
             "Vì Python luôn xoá hết khoảng trắng khi thực hiện phép ghép nối hai xâu",
             "Vì dấu phẩy trong xâu đầu tiên đã bị lỗi cú pháp nên bị bỏ qua",
             "Vì chỉ có phép nhân xâu mới giữ được khoảng trắng, còn phép cộng thì không",
+            "Vì phép + chỉ ghép nối các xâu lại đúng như chúng có, không tự động thêm bất kì kí tự nào khác",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "Phép + chỉ đơn thuần nối liền hai xâu theo đúng nội dung đã có, không hề tự thêm dấu cách hay bất kì kí tự nào khác. Muốn có khoảng trắng, người viết code phải tự đưa nó vào trong xâu, ví dụ \"Xin chào, \" (có dấu cách ở cuối).",
         },
         {
           kind: "check",
           q: "Với lop = \"10A2\", lát cắt lop[0:3] trả về xâu nào?",
-          options: ['"10A"', '"10A2"', '"0A2"', '"A2"'],
+          options: ['"10A"', '"A2"', '"0A2"', '"10A2"'],
           answer: 0,
           explain:
             "Lát cắt s[a:b] lấy từ chỉ số a đến TRƯỚC chỉ số b. lop[0:3] lấy chỉ số 0, 1, 2 (tức \"1\", \"0\", \"A\"), tạo thành \"10A\" — kí tự ở chỉ số 3 (\"2\") không được lấy vào.",
@@ -146,20 +146,20 @@ const theory: LessonTheory = {
           kind: "check",
           q: "So sánh hai xâu \"An\" và \"Bình\" bằng \"An\" < \"Bình\", kết quả là gì và vì sao?",
           options: [
+            "Báo lỗi, vì hai xâu có độ dài khác nhau nên không so sánh được",
+            "False, vì \"Bình\" có dấu thanh nên luôn lớn hơn xâu không dấu",
             "True, vì kí tự \"A\" đứng trước kí tự \"B\" trong bảng chữ cái",
             "False, vì \"An\" có ít kí tự hơn nên luôn được coi là nhỏ hơn",
-            "False, vì \"Bình\" có dấu thanh nên luôn lớn hơn xâu không dấu",
-            "Báo lỗi, vì hai xâu có độ dài khác nhau nên không so sánh được",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "So sánh xâu xét lần lượt từng kí tự từ trái sang phải theo mã kí tự, không liên quan gì đến độ dài. Ngay kí tự đầu tiên, \"A\" đã đứng trước \"B\" trong bảng chữ cái, nên phép so sánh dừng lại và trả về True — không cần xét tới các kí tự còn lại.",
         },
         {
           kind: "check",
           q: "Biểu thức \"Nguyễn\" in \"Nguyễn Văn An\" trả về giá trị gì?",
-          options: ["True", "False", '"Nguyễn"', "0"],
-          answer: 0,
+          options: ["0", "False", '"Nguyễn"', "True"],
+          answer: 3,
           explain:
             "Toán tử in kiểm tra xem xâu bên trái có phải là một đoạn xâu con xuất hiện đâu đó trong xâu bên phải hay không. \"Nguyễn\" xuất hiện ngay từ đầu xâu \"Nguyễn Văn An\", nên kết quả là True.",
         },

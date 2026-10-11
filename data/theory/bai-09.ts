@@ -89,12 +89,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Khi nhận được tin nhắn từ tài khoản mạng xã hội của một người bạn thân nhờ chuyển tiền gấp, cách xử lí nào sau đây là AN TOÀN NHẤT?",
           options: [
+            "Nhắn tin hỏi lại trên chính tài khoản đó để kiểm tra xem có đúng là bạn không",
             "Gọi điện thoại trực tiếp hoặc gặp mặt bạn đó để xác minh trước khi chuyển",
             "Chuyển tiền ngay vì tin nhắn có cách xưng hô thân quen đúng như ngày thường",
-            "Nhắn tin hỏi lại trên chính tài khoản đó để kiểm tra xem có đúng là bạn không",
             "Gửi tài khoản ngân hàng và mật khẩu của mình cho bạn tự vào rút tiền",
           ],
-          answer: 0,
+          answer: 1,
           explain:
             "Kẻ xấu khi chiếm đoạt tài khoản sẽ đọc tin nhắn cũ để bắt chước cách xưng hô. Cách xác minh an toàn duy nhất là liên lạc qua một kênh độc lập khác (gọi điện thoại trực tiếp hoặc gặp mặt).",
         },
@@ -198,12 +198,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Đặc điểm nào sau đây phân biệt CHÍNH XÁC nhất giữa Virus và Worm (Sâu máy tính)?",
           options: [
-            "Virus cần gắn vào tệp chủ để lây nhiễm, còn Worm là phần mềm hoàn chỉnh tự lây lan độc lập qua mạng",
             "Virus chỉ hoạt động trên hệ thống máy tính, còn Worm chỉ hoạt động trên hệ điều hành điện thoại di động",
             "Virus lây lan tự động qua mạng Internet, còn Worm bắt buộc phải cắm thiết bị lưu trữ USB mới lây lan được",
+            "Virus cần gắn vào tệp chủ để lây nhiễm, còn Worm là phần mềm hoàn chỉnh tự lây lan độc lập qua mạng",
             "Virus là một phần mềm độc lập hoàn chỉnh, còn Worm chỉ là một đoạn mã độc ngắn đính kèm trong thư điện tử",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "Virus bắt buộc phải ký sinh vào tệp chủ và cần kích hoạt tệp chủ mới lây được; Worm là phần mềm độc lập hoàn chỉnh có khả năng tự nhân bản và tự lây lan qua mạng.",
         },
@@ -279,12 +279,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Khi bạn vừa cắm một chiếc USB mượn của bạn vào máy tính và muốn kiểm tra riêng chiếc USB đó xem có virus không, bạn nên chọn chế độ quét nào trong Windows Defender?",
           options: [
-            "Custom scan (Quét tuỳ chọn)",
             "Quick scan (Quét nhanh)",
             "Full scan (Quét toàn bộ)",
             "Windows Defender Offline scan",
+            "Custom scan (Quét tuỳ chọn)",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "Custom scan cho phép người dùng chỉ định chính xác thư mục hoặc ổ đĩa USB cụ thể để quét, tiết kiệm thời gian và kiểm tra đúng mục tiêu.",
         },

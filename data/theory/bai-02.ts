@@ -51,12 +51,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Trong ba thiết bị: (a) cân điện tử hiện số, (b) đồng hồ kết nối với điện thoại qua bluetooth, (c) máy tính cầm tay — thiết bị nào là thiết bị thông minh?",
           options: [
-            "Đồng hồ kết nối với điện thoại qua bluetooth",
-            "Cân điện tử hiện số cân nặng lên màn hình",
-            "Máy tính cầm tay dùng để tính toán",
             "Cả ba thiết bị trên đều là thiết bị thông minh",
+            "Đồng hồ kết nối với điện thoại qua bluetooth",
+            "Máy tính cầm tay dùng để tính toán",
+            "Cân điện tử hiện số cân nặng lên màn hình",
           ],
-          answer: 0,
+          answer: 1,
           explain:
             "Đồng hồ kết nối bluetooth có khả năng trao đổi dữ liệu tự động với điện thoại nên là thiết bị thông minh. Cân điện tử và máy tính cầm tay chỉ hiển thị kết quả tại chỗ, không tự kết nối trao đổi dữ liệu.",
         },
@@ -124,12 +124,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Cuộc cách mạng công nghiệp nào có dấu ấn là sự ra đời của động cơ hơi nước?",
           options: [
-            "Cách mạng công nghiệp lần thứ nhất",
-            "Cách mạng công nghiệp lần thứ hai",
             "Cách mạng công nghiệp lần thứ ba",
             "Cách mạng công nghiệp lần thứ tư",
+            "Cách mạng công nghiệp lần thứ nhất",
+            "Cách mạng công nghiệp lần thứ hai",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "CMCN lần thứ nhất (cuối thế kỉ XVIII – đầu thế kỉ XIX) chuyển từ lao động thủ công sang cơ giới, với dấu ấn là động cơ hơi nước.",
         },
@@ -137,12 +137,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "IoT (kết nối vạn vật) là gì?",
           options: [
-            "Việc kết nối các thiết bị thông minh để tự động thu thập, xử lí thông tin",
-            "Một loại virus máy tính chuyên tấn công các thiết bị di động thông minh",
             "Một ngôn ngữ lập trình dùng riêng để viết chương trình cho robot công nghiệp",
+            "Một loại virus máy tính chuyên tấn công các thiết bị di động thông minh",
             "Tên gọi khác của mạng xã hội phổ biến dùng trên điện thoại thông minh",
+            "Việc kết nối các thiết bị thông minh để tự động thu thập, xử lí thông tin",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "IoT là việc kết nối các thiết bị thông minh với nhau nhằm thu thập và xử lí thông tin một cách tự động, tức thời trên diện rộng.",
         },
@@ -195,9 +195,9 @@ const theory: LessonTheory = {
           q: "Việc robot có thể làm việc thay con người ở những nơi nguy hiểm như nhà máy điện hạt nhân là ví dụ cho đóng góp nào của Tin học?",
           options: [
             "Tự động hoá",
+            "Giải quyết bài toán khoa học kĩ thuật",
             "Giao tiếp cộng đồng",
             "Thay đổi cách thức làm việc của ngành nghề",
-            "Giải quyết bài toán khoa học kĩ thuật",
           ],
           answer: 0,
           explain:
@@ -250,12 +250,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Phát minh nào đã tạo ra phương tiện truy cập Internet dễ dàng và nhất quán, giúp Internet được phổ cập rộng rãi?",
           options: [
+            "Hệ quản trị cơ sở dữ liệu MySQL",
+            "Ngôn ngữ lập trình FORTRAN, ra đời năm 1957",
             "World Wide Web (WWW), ra đời năm 1992",
             "Hệ điều hành OS/360, ra đời năm 1964",
-            "Ngôn ngữ lập trình FORTRAN, ra đời năm 1957",
-            "Hệ quản trị cơ sở dữ liệu MySQL",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "SGK nêu: việc phát minh ra World Wide Web (WWW) vào năm 1992 đã tạo ra phương tiện truy cập Internet dễ dàng và nhất quán, giúp phổ cập Internet.",
         },
@@ -263,12 +263,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Ngôn ngữ lập trình bậc cao mang lại lợi ích gì cho người lập trình so với việc viết bằng ngôn ngữ máy?",
           options: [
-            "Chỉ cần thể hiện cách giải quyết vấn đề, không cần biết đến mã máy",
-            "Bắt buộc phải biết rõ cấu tạo phần cứng của từng loại máy tính",
-            "Chương trình viết ra chạy nhanh hơn chương trình viết bằng mã máy",
             "Không cần trình biên dịch để chuyển sang mã máy khi chạy",
+            "Chương trình viết ra chạy nhanh hơn chương trình viết bằng mã máy",
+            "Bắt buộc phải biết rõ cấu tạo phần cứng của từng loại máy tính",
+            "Chỉ cần thể hiện cách giải quyết vấn đề, không cần biết đến mã máy",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "Ngôn ngữ bậc cao giúp người lập trình chỉ cần thể hiện cách giải quyết vấn đề (thuật toán) mà không cần biết đến các lệnh máy; chương trình dịch sẽ chuyển sang mã máy.",
         },

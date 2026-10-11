@@ -89,12 +89,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Hành vi nào sau đây thể hiện đúng chuẩn mực văn hoá và đạo đức khi tham gia môi trường số?",
           options: [
-            "Kiểm chứng tính chính xác của thông tin từ nguồn đáng tin cậy trước khi bấm nút chia sẻ",
             "Đăng ảnh chụp lén khoảnh khắc trớ trêu của bạn cùng lớp lên mạng xã hội để mọi người cùng vui",
-            "Tham gia bình luận xúc phạm người khác trên mạng vì cho rằng tài khoản của mình là ẩn danh",
+            "Kiểm chứng tính chính xác của thông tin từ nguồn đáng tin cậy trước khi bấm nút chia sẻ",
             "Chia sẻ ngay các bài viết có tiêu đề giật gân, li kì mà không cần kiểm tra nguồn gốc bài đăng",
+            "Tham gia bình luận xúc phạm người khác trên mạng vì cho rằng tài khoản của mình là ẩn danh",
           ],
-          answer: 0,
+          answer: 1,
           explain:
             "Kiểm chứng thông tin trước khi chia sẻ là trách nhiệm của mỗi công dân số nhằm ngăn chặn tin giả và bảo vệ cộng đồng mạng.",
         },
@@ -170,12 +170,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Theo quy định pháp luật Việt Nam hiện hành, người chia sẻ thông tin sai sự thật trên mạng xã hội có thể phải chịu chế tài nào?",
           options: [
-            "Bị xử phạt vi phạm hành chính bằng tiền và có thể bị truy cứu trách nhiệm hình sự nếu gây hậu quả nghiêm trọng",
             "Chỉ bị mạng xã hội gửi tin nhắn cảnh báo tự động và tạm thời khoá tài khoản trong thời gian ngắn",
             "Không phải chịu bất kì trách nhiệm hay chế tài nào vì người chia sẻ không phải là tác giả gốc của thông tin",
+            "Bị xử phạt vi phạm hành chính bằng tiền và có thể bị truy cứu trách nhiệm hình sự nếu gây hậu quả nghiêm trọng",
             "Chỉ cần tự xoá bài đăng và viết lời xin lỗi công khai trên trang cá nhân là được miễn mọi trách nhiệm",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "Nghị định 15/2020/NĐ-CP quy định xử phạt vi phạm hành chính từ 10 - 20 triệu đồng; nếu hành vi gây hậu quả nghiêm trọng có thể bị truy cứu trách nhiệm hình sự theo Bộ luật Hình sự.",
         },
@@ -241,12 +241,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Khi một người dùng mua bản quyền hệ điều hành Windows hoặc gói Microsoft Office, người dùng đó đã nhận được quyền gì?",
           options: [
-            "Nhận được Giấy phép quyền sử dụng (Licence) để cài đặt và sử dụng phần mềm trên số lượng máy nhất định",
-            "Trở thành chủ sở hữu toàn bộ mã nguồn và nắm toàn quyền kinh doanh bán lại phần mềm cho người khác",
             "Được phép tự do bẻ khoá và sao chép phần mềm sang không giới hạn số lượng máy tính trong trường học",
             "Được phép chỉnh sửa mã nguồn gốc của phần mềm và đổi tên tác phẩm thành sản phẩm của riêng mình",
+            "Trở thành chủ sở hữu toàn bộ mã nguồn và nắm toàn quyền kinh doanh bán lại phần mềm cho người khác",
+            "Nhận được Giấy phép quyền sử dụng (Licence) để cài đặt và sử dụng phần mềm trên số lượng máy nhất định",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "Người dùng cá nhân chỉ mua Giấy phép quyền sử dụng (Licence) với các điều khoản giới hạn số máy cài đặt; bản quyền sở hữu trí tuệ gốc vẫn thuộc về tập đoàn Microsoft.",
         },

@@ -80,12 +80,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Phát biểu nào sau đây mô tả đúng mối quan hệ giữa thông tin và dữ liệu?",
           options: [
-            "Thông tin là ý nghĩa, dữ liệu là hình thức thể hiện thông tin đó",
             "Dữ liệu là ý nghĩa, thông tin là các con số ghi lại trong máy tính",
-            "Thông tin và dữ liệu hoàn toàn đồng nhất, không có sự khác biệt",
+            "Thông tin là ý nghĩa, dữ liệu là hình thức thể hiện thông tin đó",
             "Thông tin chỉ tồn tại bên trong máy tính, dữ liệu chỉ ở ngoài đời",
+            "Thông tin và dữ liệu hoàn toàn đồng nhất, không có sự khác biệt",
           ],
-          answer: 0,
+          answer: 1,
           explain:
             "Thông tin là ý nghĩa mà con người hiểu được; dữ liệu là dạng thể hiện (số hoá) của thông tin để máy tính lưu trữ và xử lí.",
         },
@@ -123,12 +123,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "1 KB bằng bao nhiêu byte?",
           options: [
-            "1 024 byte (tức 2¹⁰ byte)",
-            "1 000 byte (tức 10³ byte)",
-            "8 byte (tức 2³ byte)",
             "512 byte (tức 2⁹ byte)",
+            "1 000 byte (tức 10³ byte)",
+            "1 024 byte (tức 2¹⁰ byte)",
+            "8 byte (tức 2³ byte)",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "Theo quy ước trong tin học, 1 KB = 2¹⁰ byte = 1 024 byte. Tương tự, các đơn vị tiếp theo (MB, GB, TB) cũng nhân 1 024.",
         },
@@ -136,12 +136,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Sắp xếp các đơn vị đo dữ liệu theo thứ tự tăng dần:",
           options: [
-            "B → KB → MB → GB → TB",
-            "B → MB → KB → GB → TB",
-            "KB → B → MB → TB → GB",
             "B → KB → GB → MB → TB",
+            "KB → B → MB → TB → GB",
+            "B → MB → KB → GB → TB",
+            "B → KB → MB → GB → TB",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "Thứ tự tăng dần: Byte → Kilobyte → Megabyte → Gigabyte → Terabyte, mỗi bậc gấp 1 024 lần bậc liền trước.",
         },
@@ -193,9 +193,9 @@ const theory: LessonTheory = {
           q: "Thiết bị nào sau đây KHÔNG phải là thiết bị số?",
           options: [
             "Quạt điện cơ không có bảng điều khiển điện tử",
-            "Máy tính xách tay dùng để soạn văn bản hàng ngày",
-            "Thẻ nhớ SD dùng để lưu trữ ảnh chụp bằng máy ảnh",
             "Bộ thu phát wifi cung cấp mạng Internet cho gia đình",
+            "Thẻ nhớ SD dùng để lưu trữ ảnh chụp bằng máy ảnh",
+            "Máy tính xách tay dùng để soạn văn bản hàng ngày",
           ],
           answer: 0,
           explain:
@@ -205,12 +205,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Ưu điểm nào sau đây là ưu điểm tuyệt đối của máy tính so với tính toán thủ công?",
           options: [
-            "Thực hiện tính toán nhanh, cho kết quả chính xác và ổn định",
             "Máy tính có thể tự sáng tạo ra kiến thức mới hoàn toàn",
-            "Máy tính có thể tự nhận thức và hiểu ý nghĩa của dữ liệu",
             "Máy tính có thể thay thế hoàn toàn con người trong mọi việc",
+            "Thực hiện tính toán nhanh, cho kết quả chính xác và ổn định",
+            "Máy tính có thể tự nhận thức và hiểu ý nghĩa của dữ liệu",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "SGK nêu rõ: \"thực hiện tính toán nhanh, cho kết quả chính xác và ổn định là các ưu điểm tuyệt đối của máy tính so với tính toán thủ công\". Máy tính không tự nhận thức hay sáng tạo kiến thức mới.",
         },

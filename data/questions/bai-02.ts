@@ -7,9 +7,9 @@ const questions: Question[] = [
     q: "Thiết bị thông minh là gì?",
     options: [
       "Thiết bị điện tử hoạt động tự chủ ở mức nhất định nhờ phần mềm điều khiển",
+      "Thiết bị điện tử đời mới có giá thành cao và nhiều tính năng tiện ích",
       "Thiết bị điện tử có màn hình cảm ứng và giao diện đồ hoạ cho người dùng",
       "Thiết bị điện tử chạy bằng điện lưới hoặc pin sạc và có tuổi thọ cao",
-      "Thiết bị điện tử đời mới có giá thành cao và nhiều tính năng tiện ích",
     ],
     answer: 0,
     explain:
@@ -19,12 +19,12 @@ const questions: Question[] = [
     id: "b2-02",
     q: "Thiết bị nào sau đây là thiết bị thông minh?",
     options: [
-      "Đồng hồ thông minh tự đo nhịp tim và đồng bộ số liệu sang điện thoại",
-      "Máy tính bỏ túi thực hiện được các phép tính lượng giác và luỹ thừa",
-      "Quạt bàn có hẹn giờ tắt bằng núm vặn cơ và ba mức tốc độ gió",
       "Bóng đèn sợi đốt gắn công tắc cảm ứng bật tắt bằng cách chạm tay",
+      "Quạt bàn có hẹn giờ tắt bằng núm vặn cơ và ba mức tốc độ gió",
+      "Máy tính bỏ túi thực hiện được các phép tính lượng giác và luỹ thừa",
+      "Đồng hồ thông minh tự đo nhịp tim và đồng bộ số liệu sang điện thoại",
     ],
-    answer: 0,
+    answer: 3,
     explain:
       "Smartwatch có bộ xử lí, phần mềm, cảm biến và kết nối không dây — đủ đặc điểm của thiết bị thông minh.",
   },
@@ -32,12 +32,12 @@ const questions: Question[] = [
     id: "b2-03",
     q: "Cuộc cách mạng công nghiệp lần thứ tư (4.0) gắn với đặc trưng nào?",
     options: [
-      "Kết nối vạn vật, trí tuệ nhân tạo, dữ liệu lớn và tự động hoá thông minh",
-      "Cơ giới hoá sản xuất nhờ động cơ hơi nước thay cho sức người và gia súc",
-      "Điện khí hoá và sản xuất hàng loạt theo dây chuyền lắp ráp quy mô lớn",
       "Tự động hoá nhờ máy tính điện tử và các thiết bị điều khiển lập trình",
+      "Điện khí hoá và sản xuất hàng loạt theo dây chuyền lắp ráp quy mô lớn",
+      "Cơ giới hoá sản xuất nhờ động cơ hơi nước thay cho sức người và gia súc",
+      "Kết nối vạn vật, trí tuệ nhân tạo, dữ liệu lớn và tự động hoá thông minh",
     ],
-    answer: 0,
+    answer: 3,
     explain:
       "CMCN 4.0 dựa trên IoT, AI, dữ liệu lớn, điện toán đám mây... trong đó thiết bị thông minh đóng vai trò chủ chốt.",
   },
@@ -71,12 +71,12 @@ const questions: Question[] = [
     id: "b2-06",
     q: "Ứng dụng nào sau đây là thành tựu của trí tuệ nhân tạo (AI)?",
     options: [
-      "Trợ lí ảo nhận dạng giọng nói và trả lời câu hỏi của người dùng",
       "Bảng tính tự cộng dãy số và vẽ biểu đồ theo công thức đã nhập sẵn",
-      "Máy in tự nhận diện khổ giấy trong khay rồi in tài liệu cho vừa trang",
       "Thẻ nhớ tự nén dữ liệu lại để lưu được nhiều tệp hơn dung lượng thật",
+      "Máy in tự nhận diện khổ giấy trong khay rồi in tài liệu cho vừa trang",
+      "Trợ lí ảo nhận dạng giọng nói và trả lời câu hỏi của người dùng",
     ],
-    answer: 0,
+    answer: 3,
     explain:
       "Nhận dạng giọng nói, nhận dạng hình ảnh, dịch tự động... là các ứng dụng tiêu biểu của AI.",
   },
@@ -84,12 +84,12 @@ const questions: Question[] = [
     id: "b2-07",
     q: "Học tập trực tuyến (e-learning) là ví dụ về đóng góp của tin học trong lĩnh vực nào?",
     options: [
+      "Nông nghiệp — cảm biến đo độ ẩm đất và hệ thống tưới tiêu tự động",
+      "Giao thông — dẫn đường vệ tinh, đèn tín hiệu và thu phí không dừng",
       "Giáo dục — dạy học từ xa, kho học liệu số và lớp học ảo trên mạng",
       "Y tế — bệnh án điện tử, hội chẩn từ xa và theo dõi sức khoẻ qua thiết bị",
-      "Giao thông — dẫn đường vệ tinh, đèn tín hiệu và thu phí không dừng",
-      "Nông nghiệp — cảm biến đo độ ẩm đất và hệ thống tưới tiêu tự động",
     ],
-    answer: 0,
+    answer: 2,
     explain:
       "E-learning ứng dụng tin học vào giáo dục: học từ xa, kho học liệu số, lớp học ảo...",
   },
@@ -97,12 +97,12 @@ const questions: Question[] = [
     id: "b2-08",
     q: "Đặc điểm nào giúp thiết bị thông minh ngày càng phổ biến?",
     options: [
+      "Tiêu thụ rất ít điện nên có thể dùng liên tục nhiều tháng không sạc",
       "Nhỏ gọn, giá ngày càng hợp lí, kết nối không dây và nhiều tiện ích",
       "Cấu tạo đơn giản nên bền và hầu như không cần bảo trì hay sửa chữa",
-      "Tiêu thụ rất ít điện nên có thể dùng liên tục nhiều tháng không sạc",
       "Được cài sẵn mọi phần mềm nên người dùng không phải cập nhật gì thêm",
     ],
-    answer: 0,
+    answer: 1,
     explain:
       "Nhờ công nghệ vi xử lí phát triển, thiết bị thông minh nhỏ gọn, rẻ hơn, kết nối dễ dàng nên phổ biến rộng rãi.",
   },
@@ -110,12 +110,12 @@ const questions: Question[] = [
     id: "b2-09",
     q: 'Thành tựu nào sau đây thuộc về "xã hội tri thức"?',
     options: [
-      "Tri thức và thông tin trở thành nguồn lực chính tạo ra của cải xã hội",
       "Sản xuất chủ yếu dựa vào sức lao động cơ bắp của đông đảo công nhân",
       "Nền kinh tế phát triển chủ yếu nhờ khai thác tài nguyên thiên nhiên sẵn có",
+      "Tri thức và thông tin trở thành nguồn lực chính tạo ra của cải xã hội",
       "Mọi giao dịch mua bán đều thực hiện trực tiếp bằng tiền mặt cho an toàn",
     ],
-    answer: 0,
+    answer: 2,
     explain:
       "Trong xã hội tri thức, tri thức (mà tin học là công cụ tạo ra, lưu trữ, phân phối) là nguồn lực quan trọng nhất.",
   },
@@ -138,8 +138,8 @@ const questions: Question[] = [
     options: [
       "Cập nhật phần mềm thường xuyên và đặt mật khẩu khoá màn hình thiết bị",
       "Bật chia sẻ vị trí công khai mọi lúc để bạn bè dễ tìm và liên lạc",
-      "Cài thêm nhiều ứng dụng tăng tốc từ các trang tải phần mềm miễn phí",
       "Giữ máy luôn bật và không khởi động lại để ứng dụng phản hồi nhanh hơn",
+      "Cài thêm nhiều ứng dụng tăng tốc từ các trang tải phần mềm miễn phí",
     ],
     answer: 0,
     explain:
@@ -151,8 +151,8 @@ const questions: Question[] = [
     options: [
       "Khả năng tự cảm nhận môi trường và tự ra quyết định, không cần điều khiển",
       "Khả năng kết nối Internet để người dùng theo dõi từ xa qua ứng dụng",
-      "Khả năng tiết kiệm điện năng nhờ tự tắt khi đã lau xong toàn bộ căn phòng",
       "Khả năng thu nhỏ kích thước để chui vừa gầm giường và các khe hẹp",
+      "Khả năng tiết kiệm điện năng nhờ tự tắt khi đã lau xong toàn bộ căn phòng",
     ],
     answer: 0,
     explain:

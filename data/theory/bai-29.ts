@@ -40,12 +40,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Dòng lệnh if diem > 5 (không có dấu hai chấm ở cuối) mắc lỗi loại nào?",
           options: [
-            "Lỗi cú pháp — vi phạm quy tắc ngữ pháp bắt buộc phải có dấu hai chấm sau điều kiện if",
-            "Lỗi ngoại lệ — phát sinh khi chương trình đang chạy và gặp tình huống không xử lí được",
             "Lỗi lôgic — chương trình vẫn chạy được nhưng cho ra kết quả không đúng ý",
+            "Lỗi cú pháp — vi phạm quy tắc ngữ pháp bắt buộc phải có dấu hai chấm sau điều kiện if",
             "Không phải lỗi, chỉ là một cách viết khác của câu lệnh if trong Python",
+            "Lỗi ngoại lệ — phát sinh khi chương trình đang chạy và gặp tình huống không xử lí được",
           ],
-          answer: 0,
+          answer: 1,
           explain:
             "Thiếu dấu hai chấm sau điều kiện if là vi phạm cú pháp bắt buộc của Python — lỗi này được phát hiện ngay khi đọc mã nguồn, trước khi chạy, nên gọi là lỗi cú pháp (SyntaxError).",
         },
@@ -53,12 +53,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Đặc điểm nhận diện nào đúng nhất cho một lỗi cú pháp?",
           options: [
-            "Chương trình không chạy được dòng nào cả, kể cả những dòng không liên quan tới chỗ sai",
-            "Chương trình chạy hết toàn bộ rồi mới cho biết kết quả bị sai ở đâu",
             "Chương trình chạy được một đoạn dài rồi mới dừng đột ngột giữa chừng",
             "Chương trình chạy xong xuôi và luôn cho ra kết quả đúng như mong đợi",
+            "Chương trình không chạy được dòng nào cả, kể cả những dòng không liên quan tới chỗ sai",
+            "Chương trình chạy hết toàn bộ rồi mới cho biết kết quả bị sai ở đâu",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "Vì Python kiểm tra toàn bộ cú pháp trước khi bắt đầu chạy, một lỗi cú pháp ở bất kì đâu cũng khiến toàn bộ chương trình không chạy được dòng nào — khác hẳn lỗi ngoại lệ (chạy được một phần) hay lỗi lôgic (chạy hết nhưng sai kết quả).",
         },
@@ -98,19 +98,19 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Vì sao chương trình chia quỹ của Sinh chạy được vài dòng đầu rồi mới dừng lại, thay vì dừng ngay từ đầu như lỗi cú pháp?",
           options: [
-            "Vì cú pháp của chương trình hoàn toàn đúng — lỗi chỉ phát sinh khi thực hiện phép chia với dữ liệu cụ thể là số 0",
-            "Vì Python luôn chạy thử một vài dòng đầu tiên trước khi kiểm tra cú pháp toàn bộ chương trình",
-            "Vì bạn Sinh đã sửa cú pháp sai ở phần đầu chương trình nhưng quên sửa phần sau",
             "Vì lỗi cú pháp và lỗi ngoại lệ thực chất chỉ là một loại lỗi duy nhất",
+            "Vì bạn Sinh đã sửa cú pháp sai ở phần đầu chương trình nhưng quên sửa phần sau",
+            "Vì Python luôn chạy thử một vài dòng đầu tiên trước khi kiểm tra cú pháp toàn bộ chương trình",
+            "Vì cú pháp của chương trình hoàn toàn đúng — lỗi chỉ phát sinh khi thực hiện phép chia với dữ liệu cụ thể là số 0",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "Cú pháp của chương trình không hề sai nên Python cho chạy bình thường. Vấn đề chỉ nảy sinh khi thực hiện phép chia với giá trị so_ban bằng 0 — một tình huống chỉ được phát hiện lúc chạy, dựa trên dữ liệu thực tế, không phải lỗi ngữ pháp.",
         },
         {
           kind: "check",
           q: "Lệnh int(\"abc\") khi chạy sẽ gây ra lỗi ngoại lệ nào?",
-          options: ["ValueError", "SyntaxError", "IndexError", "NameError"],
+          options: ["ValueError", "IndexError", "NameError", "SyntaxError"],
           answer: 0,
           explain:
             "Xâu \"abc\" không có dạng số nên int() không thể chuyển đổi được — đây là lỗi ValueError, phát sinh khi chạy vì giá trị đưa vào không hợp lệ cho phép chuyển đổi, chứ không phải lỗi cú pháp.",
@@ -118,8 +118,8 @@ const theory: LessonTheory = {
         {
           kind: "check",
           q: "Với danh sách to = [\"An\", \"Bình\", \"Cường\"], lệnh print(to[5]) gây ra lỗi ngoại lệ nào?",
-          options: ["IndexError", "ValueError", "TypeError", "NameError"],
-          answer: 0,
+          options: ["TypeError", "NameError", "IndexError", "ValueError"],
+          answer: 2,
           explain:
             "Danh sách to chỉ có 3 phần tử, chỉ số hợp lệ là 0, 1, 2. Chỉ số 5 vượt quá phạm vi cho phép, nên Python báo lỗi IndexError khi chạy tới dòng truy cập này.",
         },
@@ -159,12 +159,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Vì sao lỗi lôgic được coi là loại lỗi khó phát hiện và nguy hiểm nhất trong ba loại lỗi đã học?",
           options: [
-            "Vì chương trình không đưa ra bất kì thông báo lỗi nào, người viết phải tự kiểm thử và đối chiếu kết quả mới nhận ra",
-            "Vì lỗi lôgic luôn khiến chương trình dừng lại ngay từ vạch xuất phát, không chạy được dòng nào",
             "Vì lỗi lôgic chỉ xảy ra trên những máy tính có cấu hình phần cứng yếu",
             "Vì Python không có bất kì công cụ nào giúp tìm ra lỗi lôgic trong chương trình",
+            "Vì lỗi lôgic luôn khiến chương trình dừng lại ngay từ vạch xuất phát, không chạy được dòng nào",
+            "Vì chương trình không đưa ra bất kì thông báo lỗi nào, người viết phải tự kiểm thử và đối chiếu kết quả mới nhận ra",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "Khác với lỗi cú pháp và lỗi ngoại lệ đều có thông báo rõ ràng, lỗi lôgic hoàn toàn im lặng — chương trình chạy xong xuôi như bình thường. Chỉ có cách chủ động kiểm thử, so sánh kết quả với đáp án đã biết trước, mới phát hiện ra được sai sót này.",
         },
@@ -172,12 +172,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Với a = 8 và b = 6, biểu thức tb = a + b / 2 (thiếu dấu ngoặc) cho kết quả bao nhiêu, và đây là loại lỗi gì?",
           options: [
-            "11.0 — lỗi lôgic, vì chương trình chạy đúng cú pháp nhưng sai ý đồ do thứ tự phép toán",
-            "7.0 — không phải lỗi, vì Python luôn ưu tiên tính tổng trước khi chia",
             "Báo lỗi ZeroDivisionError vì phép chia không thực hiện được",
+            "11.0 — lỗi lôgic, vì chương trình chạy đúng cú pháp nhưng sai ý đồ do thứ tự phép toán",
             "Báo lỗi SyntaxError vì biểu thức thiếu dấu ngoặc bắt buộc",
+            "7.0 — không phải lỗi, vì Python luôn ưu tiên tính tổng trước khi chia",
           ],
-          answer: 0,
+          answer: 1,
           explain:
             "Theo thứ tự ưu tiên phép toán, phép chia thực hiện trước phép cộng: a + b / 2 = 8 + (6 / 2) = 8 + 3 = 11.0. Chương trình chạy hoàn toàn bình thường, không báo lỗi gì — nhưng kết quả sai với ý đồ tính trung bình cộng, đây chính là lỗi lôgic.",
         },

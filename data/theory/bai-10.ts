@@ -82,12 +82,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Khi tìm kiếm tài liệu trên Google, việc đặt từ khoá trong dấu ngoặc kép mang lại tác dụng gì?",
           options: [
+            "Loại bỏ toàn bộ các trang web có chứa cụm từ đó ra khỏi danh sách kết quả tìm",
             "Yêu cầu kết quả phải chứa chính xác nguyên cụm từ đó theo đúng thứ tự các từ",
             "Tự động dịch cụm từ đó sang tiếng Anh rồi mới tiến hành tìm kiếm trên toàn cầu",
-            "Loại bỏ toàn bộ các trang web có chứa cụm từ đó ra khỏi danh sách kết quả tìm",
             "Chỉ tìm kiếm các hình ảnh và video có liên quan trực tiếp đến cụm từ khoá đó",
           ],
-          answer: 0,
+          answer: 1,
           explain:
             "Đặt trong dấu ngoặc kép giúp máy tìm kiếm hiểu đây là một cụm từ cố định, không tách rời từng từ đơn lẻ, giúp loại bỏ các kết quả tản mạn.",
         },
@@ -163,12 +163,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Khi muốn dịch nguyên một bảng tính Excel từ tiếng Anh sang tiếng Việt bằng Google Translate, em thực hiện như thế nào?",
           options: [
-            "Chọn thẻ 'Tài liệu', tải tệp bảng tính lên rồi bấm nút 'Dịch'",
-            "Phải chuyển đổi bảng tính thành ảnh chụp rồi mới đưa vào dịch",
             "Bắt buộc phải copy từng ô trong bảng tính rồi dán vào khung dịch",
             "Chỉ dịch được tệp Word, Google Translate không hỗ trợ tệp Excel",
+            "Chọn thẻ 'Tài liệu', tải tệp bảng tính lên rồi bấm nút 'Dịch'",
+            "Phải chuyển đổi bảng tính thành ảnh chụp rồi mới đưa vào dịch",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "Google Translate hỗ trợ thẻ 'Tài liệu' cho phép tải trực tiếp các tệp Word, Excel, PowerPoint và PDF để dịch tự động toàn bộ nội dung mà giữ nguyên cấu trúc bảng biểu.",
         },
@@ -239,12 +239,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Cấu trúc danh mục cấp 1 trên trang học liệu số igiaoduc.vn của Bộ Giáo dục & Đào tạo bao gồm các mục nào?",
           options: [
-            "Học liệu số, Sách giáo khoa và Dư địa chí",
+            "Bài giảng điện tử, Video thí nghiệm và Đề thi học kì",
             "Mầm non, Tiểu học, Trung học cơ sở và Trung học phổ thông",
             "Đại số, Hình học, Vật lí, Hoá học, Ngữ văn và Tin học",
-            "Bài giảng điện tử, Video thí nghiệm và Đề thi học kì",
+            "Học liệu số, Sách giáo khoa và Dư địa chí",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "Theo SGK Tin học 10, danh mục cấp 1 trên cây thư mục trang chủ igiaoduc.vn gồm 3 loại: Học liệu số, Sách giáo khoa và Dư địa chí. Khối lớp thuộc cấp 2 và môn học thuộc cấp 3.",
         },

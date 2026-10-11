@@ -49,12 +49,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Nếu Kiên may mắn gõ đúng \"bimat\" ngay trong lần input() đầu tiên (trước khi vào vòng lặp), điều gì xảy ra?",
           options: [
-            "Điều kiện while đã sai ngay từ đầu, nên thân vòng lặp không chạy lần nào, chương trình in thẳng lời chúc mừng",
-            "Thân vòng lặp vẫn chạy đúng một lần trước khi thoát, dù đã gõ đúng",
-            "Chương trình báo lỗi vì while luôn cần chạy ít nhất một lần",
             "Chương trình lặp vô hạn vì không có cơ hội để dừng lại",
+            "Điều kiện while đã sai ngay từ đầu, nên thân vòng lặp không chạy lần nào, chương trình in thẳng lời chúc mừng",
+            "Chương trình báo lỗi vì while luôn cần chạy ít nhất một lần",
+            "Thân vòng lặp vẫn chạy đúng một lần trước khi thoát, dù đã gõ đúng",
           ],
-          answer: 0,
+          answer: 1,
           explain:
             "while kiểm tra điều kiện trước khi thực hiện thân lặp. Nếu mk đã bằng \"bimat\" từ input() ban đầu, điều kiện mk != \"bimat\" sai ngay lập tức, nên khối lệnh nhập lại bên trong while không được thực hiện lần nào.",
         },
@@ -62,12 +62,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Trong bốn bài toán sau, bài nào NÊN dùng while thay vì for?",
           options: [
-            "Yêu cầu nhập lại mật khẩu cho đến khi gõ đúng",
-            "In bảng cửu chương 7 gồm đúng 9 dòng",
-            "Tính tổng 100 số nguyên dương đầu tiên",
             "In sơ đồ ghế ngồi của rạp chiếu phim 3 hàng 5 ghế",
+            "In bảng cửu chương 7 gồm đúng 9 dòng",
+            "Yêu cầu nhập lại mật khẩu cho đến khi gõ đúng",
+            "Tính tổng 100 số nguyên dương đầu tiên",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "Ba bài còn lại đều biết chính xác số lần lặp ngay khi viết chương trình (9 dòng, 100 số, 15 ghế) nên for là lựa chọn gọn hơn. Việc nhập mật khẩu thì không biết trước người dùng sẽ gõ đúng ở lần thứ mấy — đúng đặc trưng của while.",
         },
@@ -107,12 +107,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Vì sao chương trình đếm ngược của Kiên bị lặp vô hạn, cứ hiện mãi số 5 không dừng?",
           options: [
-            "Vì thân vòng lặp thiếu dòng lệnh giảm biến dem, nên dem mãi mãi giữ giá trị 5 và điều kiện luôn đúng",
-            "Vì Python không hỗ trợ đếm ngược từ một số dương về 0",
-            "Vì lệnh print(dem) chỉ được phép gọi đúng một lần trong toàn bộ chương trình",
             "Vì biến dem đã bị đặt sai kiểu dữ liệu ngay từ đầu chương trình",
+            "Vì lệnh print(dem) chỉ được phép gọi đúng một lần trong toàn bộ chương trình",
+            "Vì Python không hỗ trợ đếm ngược từ một số dương về 0",
+            "Vì thân vòng lặp thiếu dòng lệnh giảm biến dem, nên dem mãi mãi giữ giá trị 5 và điều kiện luôn đúng",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "while không tự động thay đổi bất kì biến nào — chỉ có lệnh dem = dem - 1 bên trong thân lặp mới làm dem giảm dần. Thiếu dòng đó, dem đứng yên ở 5 mãi mãi, khiến điều kiện dem > 0 không bao giờ sai.",
         },
@@ -121,9 +121,9 @@ const theory: LessonTheory = {
           q: "Khi một chương trình Python lỡ rơi vào lặp vô hạn đang chạy trên máy, cách xử lí đúng và nhanh nhất là gì?",
           options: [
             "Nhấn Ctrl+C hoặc nút Stop của môi trường lập trình để ngắt chương trình",
-            "Tắt hẳn máy tính rồi khởi động lại từ đầu để chương trình tự dừng",
-            "Chờ đúng một phút, Python sẽ tự động huỷ mọi vòng lặp quá dài",
             "Nhấn phím Enter thật nhiều lần liên tục cho đến khi chương trình tự thoát",
+            "Chờ đúng một phút, Python sẽ tự động huỷ mọi vòng lặp quá dài",
+            "Tắt hẳn máy tính rồi khởi động lại từ đầu để chương trình tự dừng",
           ],
           answer: 0,
           explain:
@@ -170,12 +170,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Vì sao bài toán \"gấp giấy đến khi dày hơn 1000mm\" phù hợp dùng while hơn là for?",
           options: [
+            "Vì for chỉ hoạt động được với các số nguyên, không hoạt động với số thập phân như 0.1",
+            "Vì bài toán này không thể lập trình được bằng bất kì loại vòng lặp nào",
             "Vì không biết trước chính xác cần gấp bao nhiêu lần mới vượt ngưỡng độ dày — phải tính dần mới biết",
             "Vì phép nhân đôi liên tiếp chỉ thực hiện được bằng while, for không hỗ trợ nhân",
-            "Vì bài toán này không thể lập trình được bằng bất kì loại vòng lặp nào",
-            "Vì for chỉ hoạt động được với các số nguyên, không hoạt động với số thập phân như 0.1",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "Số lần cần gấp phụ thuộc vào phép tính nhân đôi liên tiếp, không biết trước ngay từ đầu — chỉ khi chạy chương trình và so sánh với ngưỡng 1000mm ở mỗi vòng mới xác định được khi nào nên dừng. Đây là đặc trưng điển hình để dùng while.",
         },

@@ -33,9 +33,14 @@ thích đầy đủ, còn phương án nhiễu thì cụt lủn và ngô nghê �
 
 ## Vị trí đáp án đúng
 
-Luôn đặt đáp án đúng ở **vị trí 0** (`answer: 0`) cho dễ soát. Không cần lo học
-sinh nhớ vị trí vì web **tự trộn thứ tự 4 phương án mỗi lượt làm bài**
-(xem hàm `prepare` trong `components/QuizClient.tsx`).
+Đáp án đúng trong toàn bộ các file dữ liệu (`data/questions/`, `data/games/`, và `data/theory/`) đã được **xáo trộn ngẫu nhiên phân bố đều ở cả 4 vị trí 0–3** (tương ứng A, B, C, D) thay vì luôn để vị trí 0.
+
+Đồng thời, khi học sinh làm bài trắc nghiệm hay đấu trường trên web, hệ thống vẫn **tự động xáo trộn động** danh sách phương án mỗi lượt chơi (xem hàm `prepare` trong [QuizClient.tsx](file:///e:/du-an/luyen-trac-nghiem-tin-10/components/QuizClient.tsx), `shuffleThreat` trong [CyberArenaGame.tsx](file:///e:/du-an/luyen-trac-nghiem-tin-10/components/CyberArenaGame.tsx)), đảm bảo tính khách quan tuyệt đối.
+
+Nếu soạn thêm câu hỏi mới và muốn xáo trộn hàng loạt, có thể chạy:
+```bash
+python shuffle_answers.py
+```
 
 ## Cách đo lại sau khi sửa
 

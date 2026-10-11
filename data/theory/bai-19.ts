@@ -40,20 +40,20 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Với chương trình kiểm tra lên tàu lượn ở trên, nếu Thảo nhập chiều cao 138, điều gì xảy ra?",
           options: [
-            "Không có gì được in ra, vì điều kiện chiều cao từ 140cm trở lên là sai",
             "Chương trình vẫn in ra dòng \"Được lên tàu lượn!\" như bình thường",
-            "Chương trình báo lỗi vì 138 nhỏ hơn giá trị so sánh trong điều kiện",
+            "Không có gì được in ra, vì điều kiện chiều cao từ 140cm trở lên là sai",
             "Chương trình tự động làm tròn 138 thành 140 rồi cho qua",
+            "Chương trình báo lỗi vì 138 nhỏ hơn giá trị so sánh trong điều kiện",
           ],
-          answer: 0,
+          answer: 1,
           explain:
             "138 >= 140 là sai (False), nên khối lệnh in ra bên trong if bị bỏ qua hoàn toàn — chương trình kết thúc mà không in gì cả, không phải là lỗi.",
         },
         {
           kind: "check",
           q: "Trong Python, điều gì bắt buộc phải có ngay sau điều kiện của câu lệnh if?",
-          options: ["Dấu hai chấm (:)", "Dấu chấm phẩy (;)", "Từ khoá then", "Cặp ngoặc nhọn { }"],
-          answer: 0,
+          options: ["Dấu chấm phẩy (;)", "Từ khoá then", "Dấu hai chấm (:)", "Cặp ngoặc nhọn { }"],
+          answer: 2,
           explain:
             "Python yêu cầu dấu hai chấm ngay sau điều kiện, sau đó khối lệnh bên trong được xác định bằng cách thụt lề — không dùng then, dấu chấm phẩy hay ngoặc nhọn như một số ngôn ngữ khác.",
         },
@@ -93,12 +93,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Em Bống cao 125cm đến chơi Đu quay Ngựa gỗ. Chương trình sẽ in ra thông báo nào?",
           options: [
-            "👨‍👩‍👧 Đi cùng người lớn",
-            "🚫 Không được chơi",
             "✅ Được chơi tự do",
             "Cả ba thông báo cùng lúc",
+            "🚫 Không được chơi",
+            "👨‍👩‍👧 Đi cùng người lớn",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "125 < 120 là sai nên bỏ qua nhánh đầu; 125 < 140 là đúng nên chương trình in \"Đi cùng người lớn\" rồi dừng lại, không xét tiếp nhánh else nữa.",
         },
@@ -107,9 +107,9 @@ const theory: LessonTheory = {
           q: "Vì sao trong cấu trúc if-elif-else, dù cả điều kiện của elif và của else đều \"có vẻ đúng\" trên lý thuyết, chương trình vẫn chỉ in ra đúng một thông báo?",
           options: [
             "Vì máy kiểm tra từ trên xuống, gặp điều kiện đúng đầu tiên là dừng lại, các nhánh sau không được xét nữa",
-            "Vì else không bao giờ đúng nếu chương trình đã có elif ở phía trước nó",
-            "Vì Python chỉ cho phép tối đa một elif trong toàn bộ chương trình",
             "Vì chương trình chọn ngẫu nhiên một trong các nhánh có điều kiện đúng để in ra",
+            "Vì Python chỉ cho phép tối đa một elif trong toàn bộ chương trình",
+            "Vì else không bao giờ đúng nếu chương trình đã có elif ở phía trước nó",
           ],
           answer: 0,
           explain:
@@ -119,12 +119,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Nếu đổi thứ tự chương trình thành kiểm tra chiều cao từ 140cm trở lên trước, sau đó mới kiểm tra dưới 120cm, kết quả phân loại chung cuộc có thay đổi không?",
           options: [
-            "Không, vì ba điều kiện này không chồng lấn nhau nên mỗi chiều cao vẫn chỉ khớp đúng một nhánh",
-            "Có, vì thứ tự các nhánh elif luôn làm thay đổi mọi kết quả phân loại",
             "Có, vì Python bắt buộc phải kiểm tra điều kiện nhỏ nhất trước tiên",
+            "Có, vì thứ tự các nhánh elif luôn làm thay đổi mọi kết quả phân loại",
+            "Không, vì ba điều kiện này không chồng lấn nhau nên mỗi chiều cao vẫn chỉ khớp đúng một nhánh",
             "Không xác định được nếu không chạy thử chương trình trên máy tính",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "Ba khoảng chiều cao (dưới 120, từ 120 đến dưới 140, từ 140 trở lên) không hề chồng lấn nhau — mỗi chiều cao chỉ rơi đúng vào một khoảng, nên đổi thứ tự viết các nhánh không làm thay đổi kết quả phân loại cuối cùng.",
         },
@@ -164,12 +164,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Một bạn cao 130cm và nặng 65kg muốn chơi Phao lướt nước đôi (yêu cầu chiều cao từ 120cm trở lên VÀ cân nặng tối đa 60kg). Bạn đó có được chơi không?",
           options: [
-            "Không, vì tuy đủ chiều cao nhưng cân nặng vượt quá giới hạn cho phép nên điều kiện and sai",
-            "Có, vì chỉ cần một trong hai điều kiện đúng là được chơi",
             "Có, vì cân nặng không ảnh hưởng gì tới việc chơi Phao lướt nước đôi",
             "Không xác định được nếu thiếu thông tin về độ tuổi của bạn đó",
+            "Có, vì chỉ cần một trong hai điều kiện đúng là được chơi",
+            "Không, vì tuy đủ chiều cao nhưng cân nặng vượt quá giới hạn cho phép nên điều kiện and sai",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "and yêu cầu CẢ HAI điều kiện cùng đúng. Dù chiều cao 130 đạt yêu cầu (đúng), cân nặng 65kg vượt quá giới hạn 60kg (sai) — một vế sai khiến cả biểu thức and trở thành sai, nên bạn đó không được chơi.",
         },
@@ -177,19 +177,19 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Một bạn không có thẻ thành viên nhưng hôm đó đúng là sinh nhật của bạn. Theo quy định miễn phí vé (có thẻ thành viên HOẶC đúng ngày sinh nhật), bạn đó có được miễn phí vé không?",
           options: [
-            "Có, vì or chỉ cần một trong hai điều kiện đúng là cả biểu thức đúng",
             "Không, vì thiếu điều kiện có thẻ thành viên nên bị từ chối miễn phí",
-            "Không, vì phải thoả mãn đồng thời cả hai điều kiện mới được miễn phí",
+            "Có, vì or chỉ cần một trong hai điều kiện đúng là cả biểu thức đúng",
             "Chỉ được giảm giá một nửa chứ không được miễn phí hoàn toàn",
+            "Không, vì phải thoả mãn đồng thời cả hai điều kiện mới được miễn phí",
           ],
-          answer: 0,
+          answer: 1,
           explain:
             "or chỉ cần ít nhất một vế đúng là cả biểu thức đúng. Dù không có thẻ thành viên (sai), việc đúng ngày sinh nhật (đúng) đã đủ khiến biểu thức or trở thành đúng, nên bạn đó vẫn được miễn phí vé.",
         },
         {
           kind: "check",
           q: "Biểu thức not (chieu_cao >= 140) tương đương với điều kiện nào sau đây?",
-          options: ["chieu_cao < 140", "chieu_cao > 140", "chieu_cao == 140", "chieu_cao <= 140"],
+          options: ["chieu_cao < 140", "chieu_cao == 140", "chieu_cao <= 140", "chieu_cao > 140"],
           answer: 0,
           explain:
             "not đảo ngược giá trị đúng/sai. Phủ định của \"lớn hơn hoặc bằng 140\" chính là \"nhỏ hơn 140\" — not làm mất đi cả trường hợp bằng 140 khỏi phía đúng ban đầu.",

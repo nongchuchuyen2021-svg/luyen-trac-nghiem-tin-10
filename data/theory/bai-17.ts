@@ -39,8 +39,8 @@ const theory: LessonTheory = {
         {
           kind: "check",
           q: "Sau khi thực hiện lệnh quy = quy + 500000 với quy đang có giá trị 0 từ trước, giá trị mới của quy là bao nhiêu?",
-          options: ["500000", "0", "Báo lỗi vì quy không thể bằng chính nó cộng thêm", "1000000"],
-          answer: 0,
+          options: ["0", "500000", "1000000", "Báo lỗi vì quy không thể bằng chính nó cộng thêm"],
+          answer: 1,
           explain:
             "Máy tính lấy giá trị hiện tại của quy (là 0), cộng thêm 500000, rồi lưu kết quả 500000 trở lại vào biến quy. Đây là lệnh gán hợp lệ và rất phổ biến, không phải phương trình cần giải.",
         },
@@ -48,12 +48,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Vinh gán vi = 200000, rồi ban_dau = vi, sau đó cập nhật vi = vi - 50000. Hỏi lúc này biến ban_dau có giá trị bao nhiêu?",
           options: [
+            "Báo lỗi vì không thể gán giá trị của một biến cho biến khác",
+            "0, vì lệnh ban_dau = vi không có tác dụng gì trong Python",
             "200000, vì ban_dau đã sao chép giá trị của vi tại thời điểm gán, không đổi theo vi về sau",
             "150000, vì ban_dau luôn tự động cập nhật theo giá trị mới nhất của vi",
-            "0, vì lệnh ban_dau = vi không có tác dụng gì trong Python",
-            "Báo lỗi vì không thể gán giá trị của một biến cho biến khác",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "Lệnh ban_dau = vi chỉ sao chép giá trị của vi (là 200000) vào ban_dau tại đúng thời điểm đó. Sau đó hai biến hoàn toàn độc lập — thay đổi vi không ảnh hưởng tới giá trị đã lưu trong ban_dau.",
         },
@@ -97,8 +97,8 @@ const theory: LessonTheory = {
         {
           kind: "check",
           q: "Tên biến nào sau đây KHÔNG hợp lệ trong Python?",
-          options: ["diem toan", "diem_toan", "diemToan2", "diem_2"],
-          answer: 0,
+          options: ["diem_2", "diemToan2", "diem_toan", "diem toan"],
+          answer: 3,
           explain:
             "Tên biến không được chứa dấu cách. diem_toan, diemToan2 và diem_2 đều đúng quy tắc: chỉ gồm chữ cái, chữ số, dấu gạch dưới và không bắt đầu bằng chữ số.",
         },
@@ -107,9 +107,9 @@ const theory: LessonTheory = {
           q: "Trong Python, hai biến diem và Diem có phải là cùng một biến hay không?",
           options: [
             "Không, vì Python phân biệt chữ hoa và chữ thường trong tên biến",
-            "Có, vì Python coi chữ hoa và chữ thường là như nhau",
             "Tuỳ vào phiên bản Python đang sử dụng để chạy chương trình",
             "Không xác định được cho đến khi chương trình chạy xong",
+            "Có, vì Python coi chữ hoa và chữ thường là như nhau",
           ],
           answer: 0,
           explain:
@@ -151,12 +151,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Bạn Yên có 17 chiếc bánh chia đều cho 5 bạn. Phép toán nào giúp tính số bánh dư ra sau khi chia đều?",
           options: [
-            "Phép chia lấy phần dư",
             "Phép chia lấy phần nguyên",
             "Phép chia thông thường",
+            "Phép chia lấy phần dư",
             "Phép luỹ thừa",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "Phép chia lấy phần dư cho biết chính xác phần còn thừa sau khi đã chia đều hết mức có thể — 17 chia cho 5 được 3 phần đều nhau và dư đúng 2 chiếc.",
         },
@@ -164,12 +164,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Trong huyền thoại hạt gạo trên bàn cờ, số hạt gạo ở mỗi ô tăng lên theo cách nào so với ô liền trước?",
           options: [
-            "Nhân đôi liên tiếp — đúng bản chất của phép luỹ thừa cơ số 2",
-            "Cộng thêm đúng một hạt so với ô liền trước nó",
             "Giữ nguyên không đổi số hạt gạo trên mọi ô của bàn cờ",
+            "Cộng thêm đúng một hạt so với ô liền trước nó",
             "Giảm dần một nửa số hạt gạo so với ô liền trước nó",
+            "Nhân đôi liên tiếp — đúng bản chất của phép luỹ thừa cơ số 2",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "Mỗi ô tiếp theo có số hạt gạo gấp đôi ô trước (1, 2, 4, 8, 16…) — đây chính là phép luỹ thừa cơ số 2, lí do khiến tổng số hạt tăng nhanh đến mức khó tin chỉ sau vài chục ô.",
         },
@@ -177,12 +177,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Kết quả của phép chia thông thường giữa 8 và 4 trong Python (hai số chia hết cho nhau) là kiểu giá trị nào?",
           options: [
+            "Báo lỗi, vì Python không cho phép chia hai số chia hết tuyệt đối cho nhau",
             "Số thực 2.0, vì phép chia thông thường trong Python luôn trả về số thực",
             "Số nguyên 2, vì hai số chia hết cho nhau nên kết quả phải là số nguyên",
             "Một xâu kí tự \"2\", vì phép chia luôn trả về dạng văn bản",
-            "Báo lỗi, vì Python không cho phép chia hai số chia hết tuyệt đối cho nhau",
           ],
-          answer: 0,
+          answer: 1,
           explain:
             "Phép chia thông thường trong Python luôn trả về kiểu số thực, bất kể hai số có chia hết cho nhau hay không. Muốn lấy kết quả dạng số nguyên, phải dùng phép chia lấy phần nguyên thay vì phép chia thông thường.",
         },

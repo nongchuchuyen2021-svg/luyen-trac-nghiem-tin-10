@@ -40,12 +40,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Trong định nghĩa def tinh_tien(so_luong, don_gia): ..., so_luong và don_gia được gọi là gì?",
           options: [
-            "Tham số (tham số hình thức) của hàm",
             "Đối số truyền vào lúc gọi hàm",
-            "Biến toàn cục dùng chung cho cả chương trình",
+            "Tham số (tham số hình thức) của hàm",
             "Giá trị mà hàm trả về sau khi tính xong",
+            "Biến toàn cục dùng chung cho cả chương trình",
           ],
-          answer: 0,
+          answer: 1,
           explain:
             "Tên biến xuất hiện trong dòng def, đại diện cho dữ liệu hàm sẽ nhận, được gọi là tham số (tham số hình thức). Giá trị cụ thể chỉ xuất hiện khi hàm được gọi, lúc đó mới gọi là đối số.",
         },
@@ -53,12 +53,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Trong lời gọi tinh_tien(3, 5000), hai giá trị 3 và 5000 được gọi là gì?",
           options: [
+            "Biến cục bộ khai báo bên trong hàm",
+            "Tên của hàm đang được gọi",
             "Đối số truyền cho hàm",
             "Tham số hình thức của hàm",
-            "Tên của hàm đang được gọi",
-            "Biến cục bộ khai báo bên trong hàm",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "3 và 5000 là những giá trị cụ thể được đưa vào khi gọi hàm — đây chính là đối số, sẽ được gán lần lượt cho các tham số so_luong và don_gia theo đúng thứ tự.",
         },
@@ -98,12 +98,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Vì sao khi Vy lỡ gọi con_lai(200000, 500000) thay vì con_lai(500000, 200000), chương trình lại không hề báo lỗi dù kết quả hoàn toàn sai?",
           options: [
-            "Vì cả hai đối số đều là số nguyên hợp lệ về mặt cú pháp — Python chỉ gán chúng theo đúng thứ tự vị trí, không hiểu được ý nghĩa thực tế của từng con số",
-            "Vì hàm con_lai đã được viết sai ngay từ phần định nghĩa nên luôn cho kết quả sai",
             "Vì Python luôn tự động phát hiện và sửa lại thứ tự đối số hợp lí trước khi tính toán",
+            "Vì hàm con_lai đã được viết sai ngay từ phần định nghĩa nên luôn cho kết quả sai",
             "Vì hai giá trị 200000 và 500000 không phải là số hợp lệ trong Python",
+            "Vì cả hai đối số đều là số nguyên hợp lệ về mặt cú pháp — Python chỉ gán chúng theo đúng thứ tự vị trí, không hiểu được ý nghĩa thực tế của từng con số",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "Python chỉ quan tâm đối số nào đứng ở vị trí nào để gán cho đúng tham số tương ứng — nó không thể biết được ý nghĩa thực tế (đâu là \"tổng quỹ\", đâu là \"đã chi\") đằng sau mỗi con số, nên không có cách nào phát hiện lỗi đảo thứ tự này.",
         },
@@ -112,9 +112,9 @@ const theory: LessonTheory = {
           q: "Nếu hàm con_lai(tong_quy, da_chi) được gọi với chỉ một đối số duy nhất là con_lai(500000), điều gì sẽ xảy ra?",
           options: [
             "Chương trình báo lỗi TypeError vì thiếu đối số cho tham số da_chi",
-            "Tham số da_chi tự động nhận giá trị 0 để chương trình vẫn chạy được",
-            "Chương trình chạy bình thường và coi da_chi bằng đúng tong_quy",
             "Tham số da_chi tự động nhận giá trị None và phép trừ vẫn thực hiện được",
+            "Chương trình chạy bình thường và coi da_chi bằng đúng tong_quy",
+            "Tham số da_chi tự động nhận giá trị 0 để chương trình vẫn chạy được",
           ],
           answer: 0,
           explain:
@@ -160,12 +160,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Với hàm quy_va_con_lai(tong_quy, da_chi) trả về return tong_quy, tong_quy - da_chi, lệnh t, h = quy_va_con_lai(500000, 200000) gán giá trị nào cho hai biến t và h?",
           options: [
-            "t nhận 500000, h nhận 300000",
-            "t nhận 300000, h nhận 500000",
-            "Cả t và h đều nhận cùng giá trị 500000",
             "Chương trình báo lỗi vì không thể gán hai biến cùng lúc như vậy",
+            "t nhận 300000, h nhận 500000",
+            "t nhận 500000, h nhận 300000",
+            "Cả t và h đều nhận cùng giá trị 500000",
           ],
-          answer: 0,
+          answer: 2,
           explain:
             "return trả về đúng hai giá trị theo thứ tự tong_quy trước, rồi đến tong_quy trừ da_chi. Khi gán t, h = ..., biến đầu tiên (t) nhận giá trị đầu tiên được trả về (500000), biến thứ hai (h) nhận giá trị thứ hai (300000).",
         },
@@ -173,12 +173,12 @@ const theory: LessonTheory = {
           kind: "check",
           q: "Với hàm gap_doi(x) trả về gấp đôi giá trị x, lời gọi lồng nhau gap_doi(gap_doi(3)) được tính theo thứ tự nào?",
           options: [
-            "Tính gap_doi(3) trước để ra 6, sau đó tính tiếp gap_doi(6) để ra kết quả cuối cùng là 12",
-            "Tính gap_doi ở ngoài trước với giá trị chưa xác định, rồi mới tính gap_doi(3) ở trong",
             "Cả hai lời gọi gap_doi được thực hiện đồng thời cùng một lúc",
+            "Tính gap_doi ở ngoài trước với giá trị chưa xác định, rồi mới tính gap_doi(3) ở trong",
             "Chương trình báo lỗi vì không được phép gọi cùng một hàm hai lần lồng nhau",
+            "Tính gap_doi(3) trước để ra 6, sau đó tính tiếp gap_doi(6) để ra kết quả cuối cùng là 12",
           ],
-          answer: 0,
+          answer: 3,
           explain:
             "Python luôn tính hàm nằm ở trong cùng trước để có một kết quả cụ thể, rồi mới dùng kết quả đó làm đối số cho hàm bên ngoài. gap_doi(3) tính trước ra 6, sau đó 6 được đưa vào làm đối số cho lời gọi gap_doi ở ngoài, cho kết quả cuối cùng là 12.",
         },

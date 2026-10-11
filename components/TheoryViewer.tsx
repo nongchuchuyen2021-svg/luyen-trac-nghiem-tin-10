@@ -42,6 +42,18 @@ function Rich({ text }: { text: string }) {
   );
 }
 
+function shuffleQuestion(options: string[], answer: number) {
+  const indices = options.map((_, i) => i);
+  for (let i = indices.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [indices[i], indices[j]] = [indices[j], indices[i]];
+  }
+  return {
+    shuffledOptions: indices.map((i) => options[i]),
+    shuffledAnswer: indices.indexOf(answer),
+  };
+}
+
 function QuickCheck({
   q,
   options,
@@ -53,8 +65,21 @@ function QuickCheck({
   answer: number;
   explain: string;
 }) {
+  const [data, setData] = useState(() => ({
+    shuffledOptions: options,
+    shuffledAnswer: answer,
+  }));
   const [picked, setPicked] = useState<number | null>(null);
-  const correct = picked === answer;
+
+  useEffect(() => {
+    setData(shuffleQuestion(options, answer));
+  }, [options, answer]);
+
+  const correct = picked === data.shuffledAnswer;
+  const handleRetry = () => {
+    setPicked(null);
+    setData(shuffleQuestion(options, answer));
+  };
 
   return (
     <div className="rounded-2xl border-2 border-dashed border-grape/30 bg-grape/[0.05] p-4 sm:p-5">
@@ -63,10 +88,10 @@ function QuickCheck({
         <Rich text={q} />
       </p>
       <div className="mt-3 space-y-2">
-        {options.map((o, i) => {
+        {data.shuffledOptions.map((o, i) => {
           const chosen = picked === i;
           const reveal = picked !== null;
-          const isRight = i === answer;
+          const isRight = i === data.shuffledAnswer;
           return (
             <button
               key={i}
@@ -92,9 +117,17 @@ function QuickCheck({
       </div>
       {picked !== null && (
         <div className="mt-3 animate-pop-in rounded-xl bg-white/80 p-3.5">
-          <p className={`font-display text-sm font-semibold ${correct ? "text-mint-deep" : "text-bubble-deep"}`}>
-            {correct ? "🎉 Chính xác!" : "💡 Chưa đúng, em xem lại nhé"}
-          </p>
+          <div className="flex items-center justify-between gap-2">
+            <p className={`font-display text-sm font-semibold ${correct ? "text-mint-deep" : "text-bubble-deep"}`}>
+              {correct ? "🎉 Chính xác!" : "💡 Chưa đúng, em xem lại nhé"}
+            </p>
+            <button
+              onClick={handleRetry}
+              className="text-xs font-medium text-grape-deep hover:underline"
+            >
+              🔄 Thử lại
+            </button>
+          </div>
           <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">
             <Rich text={explain} />
           </p>

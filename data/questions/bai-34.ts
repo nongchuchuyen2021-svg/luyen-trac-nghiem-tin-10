@@ -8,8 +8,8 @@ const questions: Question[] = [
     options: [
       "Phân tích yêu cầu, thiết kế, lập trình, kiểm thử và bảo trì sản phẩm phần mềm",
       "Chỉ viết mã nguồn theo bản thiết kế có sẵn, không tham gia các khâu còn lại",
-      "Lắp đặt, cấu hình và sửa chữa máy tính, mạng nội bộ cho các doanh nghiệp",
       "Thiết kế giao diện đồ hoạ và ấn phẩm quảng cáo cho các sản phẩm công nghệ",
+      "Lắp đặt, cấu hình và sửa chữa máy tính, mạng nội bộ cho các doanh nghiệp",
     ],
     answer: 0,
     explain:
@@ -20,9 +20,9 @@ const questions: Question[] = [
     q: "Các công đoạn chính của quy trình phát triển phần mềm theo thứ tự là:",
     options: [
       "Xác định yêu cầu → thiết kế → lập trình → kiểm thử → triển khai, bảo trì",
+      "Xác định yêu cầu → lập trình → kiểm thử → thiết kế → triển khai, bảo trì",
       "Thiết kế → xác định yêu cầu → lập trình → triển khai → kiểm thử, bảo trì",
       "Lập trình → xác định yêu cầu → thiết kế → kiểm thử → triển khai, bảo trì",
-      "Xác định yêu cầu → lập trình → kiểm thử → thiết kế → triển khai, bảo trì",
     ],
     answer: 0,
     explain:
@@ -33,9 +33,9 @@ const questions: Question[] = [
     q: "Lập trình viên (developer) làm nhiệm vụ gì trong nhóm phát triển?",
     options: [
       "Viết mã nguồn để hiện thực hoá bản thiết kế thành chương trình chạy được",
-      "Gặp gỡ khách hàng để thu thập và mô tả lại các yêu cầu nghiệp vụ chi tiết",
-      "Thiết kế các tình huống thử nhằm phát hiện lỗi trước khi phần mềm phát hành",
       "Lập kế hoạch, phân công công việc và theo dõi tiến độ chung của cả nhóm",
+      "Thiết kế các tình huống thử nhằm phát hiện lỗi trước khi phần mềm phát hành",
+      "Gặp gỡ khách hàng để thu thập và mô tả lại các yêu cầu nghiệp vụ chi tiết",
     ],
     answer: 0,
     explain:
@@ -46,9 +46,9 @@ const questions: Question[] = [
     q: "Kĩ sư kiểm thử (tester) có vai trò gì trong nhóm phát triển phần mềm?",
     options: [
       "Thiết kế tình huống thử để tìm lỗi trước khi phần mềm đến tay người dùng",
-      "Viết mã nguồn cho các tính năng chính theo bản thiết kế đã được duyệt",
       "Thiết kế giao diện và trải nghiệm sử dụng cho người dùng cuối của sản phẩm",
       "Cài đặt phần mềm lên máy chủ và theo dõi hệ thống vận hành hằng ngày",
+      "Viết mã nguồn cho các tính năng chính theo bản thiết kế đã được duyệt",
     ],
     answer: 0,
     explain:
@@ -58,12 +58,12 @@ const questions: Question[] = [
     id: "b34-05",
     q: "Tố chất nào quan trọng nhất với người làm nghề phát triển phần mềm?",
     options: [
+      "Khả năng làm việc độc lập tuyệt đối, tự giải quyết mọi việc không cần trao đổi",
       "Tư duy lôgic, kiên trì giải quyết vấn đề, ham học công nghệ mới, làm việc nhóm",
       "Gõ bàn phím thật nhanh và nhớ chính xác cú pháp của nhiều ngôn ngữ lập trình",
       "Giỏi tính nhẩm các phép toán phức tạp và thuộc lòng nhiều công thức toán học",
-      "Khả năng làm việc độc lập tuyệt đối, tự giải quyết mọi việc không cần trao đổi",
     ],
-    answer: 0,
+    answer: 1,
     explain:
       "Cú pháp có thể tra cứu, phép tính đã có máy lo; thứ máy không thay được là tư duy giải quyết vấn đề. Phần mềm lớn luôn do nhóm làm nên không thể 'độc lập tuyệt đối'.",
   },
@@ -71,12 +71,12 @@ const questions: Question[] = [
     id: "b34-06",
     q: "Sản phẩm nào sau đây là kết quả của nghề phát triển phần mềm?",
     options: [
+      "Poster, logo, video quảng cáo và các ấn phẩm truyền thông trên môi trường số",
+      "Cáp mạng, bộ định tuyến và hệ thống mạng nội bộ đã lắp đặt cho công ty",
       "Ứng dụng di động, website, trò chơi, phần mềm quản lí, hệ thống trí tuệ nhân tạo",
       "Bộ vi xử lí, bo mạch chủ, ổ cứng và các linh kiện điện tử bên trong máy tính",
-      "Cáp mạng, bộ định tuyến và hệ thống mạng nội bộ đã lắp đặt cho công ty",
-      "Poster, logo, video quảng cáo và các ấn phẩm truyền thông trên môi trường số",
     ],
-    answer: 0,
+    answer: 2,
     explain:
       "Phần mềm là sản phẩm phi vật thể chạy trên máy tính. Linh kiện là sản phẩm của ngành điện tử, hệ thống mạng của kĩ thuật mạng, ấn phẩm của thiết kế đồ hoạ.",
   },
@@ -86,8 +86,8 @@ const questions: Question[] = [
     options: [
       "Là bước khởi đầu rèn tư duy lập trình — nền tảng chung của nghề phần mềm",
       "Là ngôn ngữ duy nhất được dùng trong mọi dự án phần mềm chuyên nghiệp",
-      "Chỉ phục vụ việc thi cử ở phổ thông, các công ty phần mềm không dùng đến",
       "Là ngôn ngữ chuyên dụng dành riêng cho việc thiết kế đồ hoạ và xử lí ảnh",
+      "Chỉ phục vụ việc thi cử ở phổ thông, các công ty phần mềm không dùng đến",
     ],
     answer: 0,
     explain:
@@ -97,12 +97,12 @@ const questions: Question[] = [
     id: "b34-08",
     q: "Cơ hội việc làm của nghề phát triển phần mềm ở Việt Nam hiện nay như thế nào?",
     options: [
-      "Nhu cầu tuyển dụng lớn, thu nhập khá, có thể làm từ xa cho công ty nước ngoài",
+      "Thu nhập cao nhưng chỉ làm được đến khoảng 30 tuổi rồi buộc phải đổi nghề",
       "Nhu cầu tuyển dụng rất thấp vì trí tuệ nhân tạo đã thay thế hết lập trình viên",
       "Chỉ tuyển được ở các thành phố lớn và bắt buộc phải có bằng thạc sĩ trở lên",
-      "Thu nhập cao nhưng chỉ làm được đến khoảng 30 tuổi rồi buộc phải đổi nghề",
+      "Nhu cầu tuyển dụng lớn, thu nhập khá, có thể làm từ xa cho công ty nước ngoài",
     ],
-    answer: 0,
+    answer: 3,
     explain:
       "Công nghệ thông tin nhiều năm liền thiếu nhân lực. AI hiện là công cụ hỗ trợ chứ chưa thay được người; làm việc từ xa giúp người ở tỉnh vẫn nhận được việc tốt.",
   },
