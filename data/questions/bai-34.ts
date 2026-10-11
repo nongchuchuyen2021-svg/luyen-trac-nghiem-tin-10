@@ -6,12 +6,12 @@ const questions: Question[] = [
     id: "b34-01",
     q: "Phát triển phần mềm là nghề làm công việc gì?",
     options: [
-      "Phân tích yêu cầu, thiết kế, lập trình, kiểm thử và bảo trì sản phẩm phần mềm",
       "Chỉ viết mã nguồn theo bản thiết kế có sẵn, không tham gia các khâu còn lại",
       "Thiết kế giao diện đồ hoạ và ấn phẩm quảng cáo cho các sản phẩm công nghệ",
+      "Phân tích yêu cầu, thiết kế, lập trình, kiểm thử và bảo trì sản phẩm phần mềm",
       "Lắp đặt, cấu hình và sửa chữa máy tính, mạng nội bộ cho các doanh nghiệp",
     ],
-    answer: 0,
+    answer: 2,
     explain:
       "Làm phần mềm là cả một quy trình nhiều công đoạn, lập trình chỉ là một phần trong đó. Lắp đặt máy là công việc của kĩ thuật viên IT, còn thiết kế ấn phẩm thuộc nghề đồ hoạ.",
   },
@@ -19,12 +19,12 @@ const questions: Question[] = [
     id: "b34-02",
     q: "Các công đoạn chính của quy trình phát triển phần mềm theo thứ tự là:",
     options: [
-      "Xác định yêu cầu → thiết kế → lập trình → kiểm thử → triển khai, bảo trì",
       "Xác định yêu cầu → lập trình → kiểm thử → thiết kế → triển khai, bảo trì",
+      "Xác định yêu cầu → thiết kế → lập trình → kiểm thử → triển khai, bảo trì",
       "Thiết kế → xác định yêu cầu → lập trình → triển khai → kiểm thử, bảo trì",
       "Lập trình → xác định yêu cầu → thiết kế → kiểm thử → triển khai, bảo trì",
     ],
-    answer: 0,
+    answer: 1,
     explain:
       "Phải hiểu người dùng cần gì trước, thiết kế giải pháp, rồi mới viết code, kiểm thử và vận hành. Thiết kế hay lập trình trước khi biết yêu cầu là làm ngược quy trình.",
   },
@@ -32,12 +32,12 @@ const questions: Question[] = [
     id: "b34-03",
     q: "Lập trình viên (developer) làm nhiệm vụ gì trong nhóm phát triển?",
     options: [
-      "Viết mã nguồn để hiện thực hoá bản thiết kế thành chương trình chạy được",
       "Lập kế hoạch, phân công công việc và theo dõi tiến độ chung của cả nhóm",
       "Thiết kế các tình huống thử nhằm phát hiện lỗi trước khi phần mềm phát hành",
       "Gặp gỡ khách hàng để thu thập và mô tả lại các yêu cầu nghiệp vụ chi tiết",
+      "Viết mã nguồn để hiện thực hoá bản thiết kế thành chương trình chạy được",
     ],
-    answer: 0,
+    answer: 3,
     explain:
       "Developer chuyển thiết kế thành mã nguồn. Ba phương án còn lại lần lượt là việc của chuyên viên phân tích nghiệp vụ, kĩ sư kiểm thử và quản trị dự án.",
   },
@@ -45,12 +45,12 @@ const questions: Question[] = [
     id: "b34-04",
     q: "Kĩ sư kiểm thử (tester) có vai trò gì trong nhóm phát triển phần mềm?",
     options: [
-      "Thiết kế tình huống thử để tìm lỗi trước khi phần mềm đến tay người dùng",
       "Thiết kế giao diện và trải nghiệm sử dụng cho người dùng cuối của sản phẩm",
+      "Thiết kế tình huống thử để tìm lỗi trước khi phần mềm đến tay người dùng",
       "Cài đặt phần mềm lên máy chủ và theo dõi hệ thống vận hành hằng ngày",
       "Viết mã nguồn cho các tính năng chính theo bản thiết kế đã được duyệt",
     ],
-    answer: 0,
+    answer: 1,
     explain:
       "Tester chủ động nghĩ ra các tình huống để 'bắt' lỗi sớm — vận dụng kiến thức kiểm thử ở Bài 30. Ba việc còn lại thuộc về developer, người thiết kế UI/UX và kĩ sư vận hành.",
   },
@@ -84,12 +84,12 @@ const questions: Question[] = [
     id: "b34-07",
     q: "Ngôn ngữ Python học ở lớp 10 có liên quan thế nào đến nghề phát triển phần mềm?",
     options: [
-      "Là bước khởi đầu rèn tư duy lập trình — nền tảng chung của nghề phần mềm",
       "Là ngôn ngữ duy nhất được dùng trong mọi dự án phần mềm chuyên nghiệp",
       "Là ngôn ngữ chuyên dụng dành riêng cho việc thiết kế đồ hoạ và xử lí ảnh",
+      "Là bước khởi đầu rèn tư duy lập trình — nền tảng chung của nghề phần mềm",
       "Chỉ phục vụ việc thi cử ở phổ thông, các công ty phần mềm không dùng đến",
     ],
-    answer: 0,
+    answer: 2,
     explain:
       "Python được dùng rộng rãi trong web, dữ liệu và AI, nhưng không phải ngôn ngữ duy nhất — mỗi lĩnh vực có ngôn ngữ mạnh riêng. Điều quý nhất mang theo là tư duy lập trình.",
   },
@@ -110,12 +110,12 @@ const questions: Question[] = [
     id: "b34-09",
     q: "Muốn theo nghề phát triển phần mềm, học sinh nên chọn nhóm ngành nào?",
     options: [
-      "Công nghệ thông tin, Khoa học máy tính, Kĩ thuật phần mềm, An toàn thông tin",
       "Kĩ thuật điện tử, Cơ khí chế tạo máy, Tự động hoá và điều khiển công nghiệp",
       "Thiết kế đồ hoạ, Truyền thông đa phương tiện, Mĩ thuật ứng dụng, Kiến trúc",
+      "Công nghệ thông tin, Khoa học máy tính, Kĩ thuật phần mềm, An toàn thông tin",
       "Quản trị kinh doanh, Kế toán, Tài chính ngân hàng, Marketing thương mại",
     ],
-    answer: 0,
+    answer: 2,
     explain:
       "Các ngành này đào tạo trực tiếp về lập trình và công nghệ phần mềm. Ngoài đại học còn có cao đẳng và các khoá đào tạo nghề thiên về thực hành.",
   },
@@ -123,12 +123,12 @@ const questions: Question[] = [
     id: "b34-10",
     q: "Vì sao nghề phát triển phần mềm đòi hỏi kĩ năng làm việc nhóm?",
     options: [
-      "Phần mềm lớn do nhiều người cùng xây dựng nên phải phối hợp và dùng chung mã nguồn",
       "Vì mỗi lập trình viên chỉ thành thạo một ngôn ngữ nên cần ghép đủ nhóm ngôn ngữ",
       "Vì số người tham gia tăng bao nhiêu lần thì thời gian hoàn thành giảm bấy nhiêu lần",
       "Vì quy định của ngành bắt buộc mọi dự án phần mềm phải có tối thiểu năm thành viên",
+      "Phần mềm lớn do nhiều người cùng xây dựng nên phải phối hợp và dùng chung mã nguồn",
     ],
-    answer: 0,
+    answer: 3,
     explain:
       "Một ứng dụng thực tế gồm hàng nghìn tệp mã nguồn nên cần phối hợp và công cụ quản lí phiên bản. Lưu ý: thêm người KHÔNG làm dự án nhanh lên tương ứng, vì còn tốn công trao đổi.",
   },
