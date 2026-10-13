@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start -p 3001",
     "lint": "next lint",
-    "sync:slides": "node scripts/build_slide_bai_09.mjs && node scripts/build_slide_bai_10.mjs"
+    "sync:slides": "node scripts/build_slide_bai_09.mjs && node scripts/build_slide_bai_10.mjs && node scripts/build_slide_bai_11.mjs"
   },
   "dependencies": {
     "next": "14.2.35",

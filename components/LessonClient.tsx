@@ -193,7 +193,9 @@ export default function LessonClient({
                 ? "15 slide tương tác · mô phỏng an ninh mạng, diệt virus & đố vui"
                 : lessonId === "bai-10"
                   ? "15 slide tương tác · toán tử Google, Google Translate AI & kho số igiaoduc.vn"
-                  : "Slide bài giảng điện tử tương tác · sơ đồ động & đố vui củng cố",
+                  : lessonId === "bai-11"
+                    ? "15 slide tương tác · văn hoá số, toà án an ninh mạng & quyền tác giả"
+                    : "Slide bài giảng điện tử tương tác · sơ đồ động & đố vui củng cố",
             best: null,
             enabled: true,
           },
