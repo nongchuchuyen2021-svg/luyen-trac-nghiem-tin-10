@@ -3,1421 +3,1127 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bài 9: An toàn trên không gian mạng — Tin học 10</title>
+  <title>Bài 9: An toàn trên không gian mạng — Tin học 10 · THPT Na Rì</title>
   <style>
-    /* ─── RESET & HỆ THỐNG BIẾN MÀU SẮC CHUẨN CYBERSECURITY 2026 ─── */
+    /* ─── RESET & HỆ THỐNG BIẾN MÀU SẮC CHUẨN CYBERSECURITY TIN 12 ─── */
     :root {
-      --bg: #060D17;
-      --bg-card: rgba(11, 20, 34, 0.95);
-      --border-card: rgba(56, 225, 240, 0.22);
+      --bg: #070D14;
+      --bg-card: rgba(13, 23, 35, 0.94);
+      --border-card: rgba(56, 225, 240, 0.18);
       --ink: #FFFFFF;
       --ink-soft: #94A3B8;
-      --cyan: #38E1F0;
-      --cyan-glow: rgba(56, 225, 240, 0.4);
-      --blue: #3B82F6;
-      --green: #10B981;
-      --green-light: #34D399;
-      --amber: #F5A623;
-      --amber-light: #FCD34D;
-      --red: #EF4444;
-      --red-light: #F87171;
+      --sea: #0D7C86;
+      --sea-light: #38E1F0;
+      --sea-glow: rgba(56, 225, 240, 0.35);
+      --coral: #F2683C;
+      --coral-light: #FF855D;
+      --gold: #F5A623;
+      --gold-light: #FFC043;
+      --leaf: #10B981;
+      --leaf-light: #34D399;
       --purple: #8B5CF6;
       --purple-light: #C4B5FD;
+      --rose: #F43F5E;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 10px;
       --font-main: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       --font-mono: 'Consolas', 'Fira Code', 'Courier New', monospace;
-      --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+      --transition-slide: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: var(--font-main);
-      background: var(--bg);
+      background-color: var(--bg);
       color: var(--ink);
       overflow: hidden;
-      width: 100vw; height: 100vh;
+      width: 100vw;
+      height: 100vh;
       user-select: none;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ─── HIỆU ỨNG NỀN MẠNG LƯỚI KHÔNG GIAN SỐ & RADAR ─── */
+    /* ─── NỀN GRADIENT VŨ TRỤ SỐ ĐỘNG VỚI HẠT TRÔI NỔI ─── */
     .bg-mesh {
-      position: fixed; inset: 0;
-      background:
-        radial-gradient(circle at 15% 15%, rgba(13, 124, 134, 0.35) 0, transparent 45%),
-        radial-gradient(circle at 85% 85%, rgba(59, 130, 246, 0.28) 0, transparent 45%),
-        radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.16) 0, transparent 60%);
-      animation: meshPulse 14s ease-in-out infinite alternate;
-      pointer-events: none; z-index: 0;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: radial-gradient(circle at 15% 15%, rgba(13, 124, 134, 0.32) 0%, transparent 45%),
+                  radial-gradient(circle at 85% 80%, rgba(242, 104, 60, 0.25) 0%, transparent 45%),
+                  radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.16) 0%, transparent 60%);
+      z-index: 0;
+      pointer-events: none;
+      animation: meshPulse 12s ease-in-out infinite alternate;
     }
+
     @keyframes meshPulse {
-      0%   { transform: scale(1) translate(0, 0); opacity: 0.9; }
-      100% { transform: scale(1.05) translate(-10px, 10px); opacity: 1; }
+      0% { transform: scale(1) translate(0, 0); opacity: 0.9; }
+      100% { transform: scale(1.06) translate(-10px, 10px); opacity: 1; }
     }
 
-    /* Lưới toạ độ số an ninh */
-    .cyber-grid {
+    /* Ký hiệu An ninh mạng trôi lơ lửng */
+    .floating-symbols {
       position: fixed; inset: 0;
-      background-image: 
-        linear-gradient(rgba(56, 225, 240, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(56, 225, 240, 0.04) 1px, transparent 1px);
-      background-size: 44px 44px;
       pointer-events: none; z-index: 1;
+      overflow: hidden;
     }
-
-    /* Ký hiệu bảo mật trôi nổi */
-    .float-layer { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
     .float-tag {
       position: absolute;
-      font-family: var(--font-mono); font-size: 13px; font-weight: 700;
-      color: rgba(56, 225, 240, 0.18);
-      border: 1px solid rgba(56, 225, 240, 0.12);
+      font-family: var(--font-mono); font-size: 13.5px; font-weight: 700;
+      color: rgba(56, 225, 240, 0.16);
+      border: 1px solid rgba(56, 225, 240, 0.14);
       padding: 4px 10px; border-radius: 8px;
       background: rgba(13, 124, 134, 0.05);
-      animation: floatUp 24s linear infinite;
+      animation: floatUp 20s linear infinite;
     }
     @keyframes floatUp {
-      0%   { transform: translateY(108vh) rotate(0deg); opacity: 0; }
-      10%  { opacity: 0.4; }
-      90%  { opacity: 0.4; }
+      0%   { transform: translateY(105vh) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.45; }
+      90%  { opacity: 0.45; }
       100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
     }
 
-    /* ─── DECK CONTAINER ─── */
+    /* ─── CONTAINER TRÌNH CHIẾU ─── */
     .deck-container {
       position: relative; width: 100vw; height: 100vh;
       display: flex; justify-content: center; align-items: center; z-index: 2;
     }
 
-    /* ─── SLIDE FRAME ─── */
+    /* ─── KHUNG MỖI SLIDE (CĂN VỪA VẶN 88VH KHÔNG TRÀN) ─── */
     .slide {
       position: absolute;
-      width: calc(100vw - 140px); max-width: 1360px;
-      height: calc(100vh - 44px); max-height: 880px;
+      width: 95vw; max-width: 1360px;
+      height: 88vh; max-height: 860px;
       background: var(--bg-card);
       border: 1px solid var(--border-card);
-      border-radius: 24px;
+      border-radius: var(--radius-lg);
       backdrop-filter: blur(28px);
-      box-shadow: 0 38px 85px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-      padding: 24px 38px;
+      -webkit-backdrop-filter: blur(28px);
+      box-shadow: 0 35px 80px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      padding: 26px 42px 34px 42px;
       display: flex; flex-direction: column;
       opacity: 0; pointer-events: none;
       transform: translateX(70px) scale(0.96);
-      transition: opacity 0.5s var(--ease-spring), transform 0.55s var(--ease-spring);
+      transition: var(--transition-slide);
+      overflow-y: auto;
     }
-    .slide.active {
-      opacity: 1; pointer-events: auto;
-      transform: translateX(0) scale(1);
-    }
-    .slide.prev {
-      opacity: 0; pointer-events: none;
-      transform: translateX(-70px) scale(0.96);
-    }
+    .slide::-webkit-scrollbar { width: 6px; }
+    .slide::-webkit-scrollbar-thumb { background: rgba(56, 225, 240, 0.25); border-radius: 4px; }
+    .slide.active { opacity: 1; pointer-events: auto; transform: translateX(0) scale(1); z-index: 3; }
+    .slide.prev   { opacity: 0; pointer-events: none; transform: translateX(-70px) scale(0.96); }
 
-    /* Header của Slide */
+    /* ─── HEADER MỖI SLIDE ─── */
     .slide-header {
-      display: flex; justify-content: space-between; align-items: center;
-      padding-bottom: 12px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.09);
-      margin-bottom: 18px; flex-shrink: 0;
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 10px; flex-shrink: 0;
     }
     .slide-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 4px 14px; border-radius: 999px;
-      font-size: 12px; font-weight: 700; font-family: var(--font-mono);
-      letter-spacing: 0.5px; text-transform: uppercase;
-      background: rgba(56, 225, 240, 0.12);
-      color: var(--cyan);
-      border: 1px solid rgba(56, 225, 240, 0.28);
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 13px; border-radius: 20px;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+      background: rgba(13, 124, 134, 0.28); color: #38E1F0;
+      border: 1px solid rgba(56, 225, 240, 0.35); margin-bottom: 5px;
     }
-    .slide-title-wrap { display: flex; flex-direction: column; gap: 4px; }
+    .slide-badge.coral  { background: rgba(242, 104, 60, 0.25);  color: #FF855D; border-color: rgba(255, 133, 93, 0.35); }
+    .slide-badge.gold   { background: rgba(245, 166, 35, 0.25);  color: #FFC043; border-color: rgba(255, 192, 67, 0.35); }
+    .slide-badge.leaf   { background: rgba(16, 185, 129, 0.25);  color: #34D399; border-color: rgba(52, 211, 153, 0.35); }
+    .slide-badge.purple { background: rgba(139, 92, 246, 0.25);  color: #C4B5FD; border-color: rgba(196, 181, 253, 0.35); }
+
     .slide-title {
-      font-size: 24px; font-weight: 800; color: #FFF;
-      display: flex; align-items: center; gap: 10px;
-      letter-spacing: -0.3px;
+      font-size: 26px; font-weight: 800; letter-spacing: -0.4px; line-height: 1.25;
+      background: linear-gradient(135deg, #FFFFFF 40%, #BFEAF2 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-    .slide-subtitle { font-size: 13px; color: var(--ink-soft); }
+    .slide-subtitle { font-size: 13.5px; color: var(--ink-soft); margin-top: 2px; }
 
-    /* Nội dung Slide có thể cuộn nhẹ nếu màn hình nhỏ */
     .slide-body {
-      flex: 1; overflow-y: auto; overflow-x: hidden;
-      display: flex; flex-direction: column; gap: 18px;
-      padding-right: 6px;
-      padding-bottom: 14px;
-    }
-    .slide-body::-webkit-scrollbar { width: 6px; }
-    .slide-body::-webkit-scrollbar-thumb { background: rgba(56, 225, 240, 0.25); border-radius: 4px; }
-
-    /* ─── HỆ THỐNG THẺ & KHỐI TƯƠNG TÁC ─── */
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-    .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
-
-    .card {
-      background: rgba(16, 29, 48, 0.82);
-      border: 1px solid rgba(56, 225, 240, 0.15);
-      border-radius: 18px; padding: 20px;
-      transition: all 0.28s ease;
-      position: relative; overflow: hidden;
-    }
-    .card:hover {
-      border-color: rgba(56, 225, 240, 0.45);
-      transform: translateY(-3px);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
-    }
-    .card-title {
-      font-size: 16px; font-weight: 700; color: #FFF;
-      margin-bottom: 8px; display: flex; align-items: center; gap: 8px;
-    }
-    .card-desc { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; }
-
-    /* ─── THANH TIẾN ĐỘ TRÊN ĐỈNH ─── */
-    .top-progress-bar {
-      position: fixed; top: 0; left: 0; right: 0;
-      height: 4px; background: rgba(255, 255, 255, 0.08);
-      z-index: 200; cursor: pointer;
-    }
-    .top-progress-fill {
-      height: 100%; width: 6.66%;
-      background: linear-gradient(90deg, var(--cyan), #3B82F6, #10B981);
-      box-shadow: 0 0 12px var(--cyan);
-      transition: width 0.35s ease;
+      flex: 1; display: flex; flex-direction: column;
+      justify-content: center; gap: 14px; position: relative;
     }
 
-    /* ─── 2 NÚT CHUYỂN SLIDE 2 BÊN SƯỜN MÀN HÌNH ─── */
-    .nav-side-btn {
-      position: fixed; top: 50%; transform: translateY(-50%);
-      width: 48px; height: 48px; border-radius: 50%;
-      background: rgba(11, 20, 34, 0.9);
-      border: 1px solid rgba(56, 225, 240, 0.35);
-      color: var(--cyan);
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      backdrop-filter: blur(18px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65), 0 0 15px rgba(56, 225, 240, 0.15);
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-      z-index: 150;
-      user-select: none;
-    }
-    .nav-side-btn.prev { left: 14px; }
-    .nav-side-btn.next { right: 14px; }
-    .nav-side-btn:hover {
-      background: var(--cyan); color: #060D17;
-      border-color: var(--cyan);
-      transform: translateY(-50%) scale(1.12);
-      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8), 0 0 25px rgba(56, 225, 240, 0.6);
-    }
-    .nav-side-btn:active {
-      transform: translateY(-50%) scale(0.96);
-    }
-    .nav-side-btn:disabled, .nav-side-btn.disabled {
-      opacity: 0.2; pointer-events: none; filter: grayscale(1);
-    }
-
-    /* ─── CỤM TIỆN ÍCH HUD GÓC TRÊN BÊN PHẢI ─── */
-    .top-quick-hud {
-      position: fixed; top: 12px; right: 18px;
-      z-index: 160;
+    /* ─── BỘ ĐIỀU KHIỂN HIỆU ỨNG TỪNG BƯỚC (REVEAL CONTROLLER) ─── */
+    .reveal-controller {
       display: flex; align-items: center; gap: 8px;
-      background: rgba(11, 20, 34, 0.9);
-      border: 1px solid rgba(56, 225, 240, 0.28);
-      border-radius: 999px;
-      padding: 5px 14px;
-      backdrop-filter: blur(18px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.38); padding: 5px 13px;
+      border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.1); font-size: 12.5px;
     }
-    .slide-indicator {
-      font-family: var(--font-mono); font-size: 13px; font-weight: 700;
-      color: var(--cyan); min-width: 55px; text-align: center;
+    .reveal-status { font-weight: 800; color: #38E1F0; font-family: var(--font-mono); }
+    .reveal-btn {
+      background: linear-gradient(135deg, #0D7C86, #16A8B6); color: white; border: none;
+      padding: 4px 11px; border-radius: 16px; font-size: 11.5px; font-weight: 700;
+      cursor: pointer; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-flex; align-items: center; gap: 4px;
     }
-    .hud-divider {
-      width: 1px; height: 16px; background: rgba(255, 255, 255, 0.15);
-      margin: 0 2px;
+    .reveal-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(56, 225, 240, 0.45); }
+
+    /* ─── CÁC PHẦN TỬ HIỂN THỊ TỪNG BƯỚC (REVEAL ITEM) ─── */
+    .reveal-item {
+      opacity: 0; transform: translateY(22px) scale(0.97);
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
+      will-change: opacity, transform;
     }
-    .hud-btn {
-      background: none; border: none; color: var(--ink-soft);
-      font-size: 14px; cursor: pointer;
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 4px 8px; border-radius: 999px;
+    .slide.active .reveal-item.visible { opacity: 1; transform: translateY(0) scale(1); }
+    .reveal-item.just-revealed {
+      box-shadow: 0 0 25px rgba(56, 225, 240, 0.4), inset 0 0 15px rgba(56, 225, 240, 0.15);
+      border-color: #38E1F0 !important;
+    }
+
+    /* ─── HỆ THỐNG THẺ CARD & LAYOUT ─── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: var(--radius-md); padding: 16px 20px;
+      position: relative; overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
+    }
+    .card:hover { transform: translateY(-3px); border-color: rgba(56, 225, 240, 0.35); }
+    .card-title {
+      font-size: 15.5px; font-weight: 700; color: #FFFFFF;
+      margin-bottom: 6px; display: flex; align-items: center; gap: 8px;
+    }
+
+    /* ─── NÚT THAO TÁC / BUTTON CHUẨN TIN 12 ─── */
+    .sim-btn {
+      background: rgba(255, 255, 255, 0.08); color: #E2E8F0;
+      border: 1px solid rgba(255, 255, 255, 0.18); padding: 7px 15px;
+      border-radius: 9px; font-size: 13px; font-weight: 600; cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .sim-btn:hover { background: rgba(56, 225, 240, 0.2); border-color: #38E1F0; color: #FFF; transform: translateY(-1px); }
+    .sim-btn.active { background: #0D7C86; border-color: #38E1F0; color: #FFF; box-shadow: 0 0 12px rgba(56, 225, 240, 0.4); }
+
+    /* ─── THANH ĐIỀU HƯỚNG DƯỚI CÙNG (.DECK-NAV) CHUẨN TIN 12 ─── */
+    .deck-nav {
+      position: fixed; bottom: 13px; left: 50%; transform: translateX(-50%);
+      background: rgba(8, 15, 24, 0.92); border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 40px; padding: 6px 16px;
+      display: flex; align-items: center; gap: 12px;
+      backdrop-filter: blur(18px); z-index: 100;
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.65);
+    }
+    .nav-btn {
+      background: transparent; border: none; color: #E2E8F0; font-size: 18px;
+      cursor: pointer; padding: 3px 9px; border-radius: 20px;
+      transition: all 0.2s; display: flex; align-items: center; justify-content: center;
+    }
+    .nav-btn:hover { color: #38E1F0; background: rgba(255, 255, 255, 0.1); transform: scale(1.12); }
+    .deck-progress {
+      width: 220px; height: 6px; background: rgba(255, 255, 255, 0.14);
+      border-radius: 3px; overflow: hidden; cursor: pointer;
+    }
+    .deck-progress-bar {
+      height: 100%; width: 6.66%;
+      background: linear-gradient(90deg, #0D7C86, #38E1F0, #F2683C);
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .deck-counter {
+      font-size: 13px; font-weight: 700; color: #94A3B8;
+      font-family: var(--font-mono); min-width: 60px; text-align: center;
+    }
+
+    /* ─── TƯƠNG TÁC ĐẶC BIỆT CỦA BÀI 9 ─── */
+    .choice-opt-btn {
+      background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px; padding: 12px 16px; text-align: left; color: #FFF;
+      cursor: pointer; font-size: 13.5px; transition: all 0.2s; display: flex; align-items: flex-start; gap: 10px;
+    }
+    .choice-opt-btn:hover { background: rgba(56, 225, 240, 0.15); border-color: #38E1F0; transform: translateX(4px); }
+
+    .risk-tab-btn {
+      background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 9px 13px; border-radius: 10px; color: #CBD5E1; font-size: 12.5px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s; text-align: left;
+    }
+    .risk-tab-btn:hover { border-color: #38E1F0; color: #FFF; }
+    .risk-tab-btn.active { background: rgba(13, 124, 134, 0.35); border-color: #38E1F0; color: #38E1F0; }
+
+    .quiz-card {
+      background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 8px;
+    }
+    .quiz-opt-btn {
+      background: rgba(255, 255, 255, 0.06); color: #E2E8F0;
+      border: 1px solid rgba(255, 255, 255, 0.12); padding: 7px 12px;
+      border-radius: 8px; font-size: 12.5px; text-align: left; cursor: pointer;
       transition: all 0.2s;
     }
-    .hud-btn span { font-size: 12px; font-weight: 600; font-family: var(--font-sans); }
-    .hud-btn:hover {
-      color: var(--cyan);
-      background: rgba(56, 225, 240, 0.12);
-    }
+    .quiz-opt-btn:hover { background: rgba(56, 225, 240, 0.15); border-color: #38E1F0; color: #FFF; transform: translateX(4px); }
+    .quiz-opt-btn.correct { background: #059669 !important; border-color: #34D399 !important; color: #FFF !important; font-weight: 700; }
+    .quiz-opt-btn.wrong   { background: #DC2626 !important; border-color: #F87171 !important; color: #FFF !important; }
 
-    @media (max-width: 900px) {
-      .slide {
-        width: calc(100vw - 80px);
-        padding: 20px 22px;
-      }
-      .nav-side-btn { width: 38px; height: 38px; }
-      .nav-side-btn.prev { left: 4px; }
-      .nav-side-btn.next { right: 4px; }
-      .top-quick-hud { top: 8px; right: 8px; padding: 4px 10px; gap: 4px; }
-      .hud-btn span { display: none; }
-    }
-
-    /* ─── MODAL MỤC LỤC & PHÍM TẮT ─── */
-    .toc-modal {
-      position: fixed; inset: 0; background: rgba(0, 0, 0, 0.78);
-      backdrop-filter: blur(12px);
-      display: none; align-items: center; justify-content: center;
-      z-index: 200;
-    }
-    .toc-modal.open { display: flex; }
-    .toc-content {
-      width: 90vw; max-width: 780px; max-height: 85vh;
-      background: #0B1422; border: 1px solid var(--border-card);
-      border-radius: 20px; padding: 26px 32px;
-      display: flex; flex-direction: column; gap: 16px;
-      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9);
-    }
-    .toc-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-      overflow-y: auto; max-height: 60vh; padding-right: 6px;
-    }
-    .toc-item {
-      padding: 10px 14px; border-radius: 10px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      cursor: pointer; display: flex; align-items: center; gap: 10px;
-      font-size: 13.5px; transition: all 0.2s;
-    }
-    .toc-item:hover, .toc-item.active {
-      background: rgba(56, 225, 240, 0.12);
-      border-color: var(--cyan); color: var(--cyan);
-    }
-
-    /* ─── PHONG CÁCH CHO CÁC TIỆN ÍCH TƯƠNG TÁC ĐẶC BIỆT ─── */
-    /* 1. Tin nhắn chat lừa đảo */
-    .chat-mock {
-      background: #0F172A; border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 18px; padding: 18px; max-width: 520px; margin: 0 auto;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-    .chat-bubble {
-      padding: 12px 16px; border-radius: 16px; font-size: 14px; line-height: 1.5;
-      margin-bottom: 12px; position: relative;
-    }
-    .chat-bubble.other {
-      background: #1E293B; color: #F1F5F9; border-bottom-left-radius: 4px;
-    }
-    .chat-choice-btn {
-      width: 100%; text-align: left; padding: 12px 16px; border-radius: 12px;
-      background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #FFF; font-size: 13.5px; cursor: pointer; transition: all 0.2s;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .chat-choice-btn:hover {
-      background: rgba(56, 225, 240, 0.12); border-color: var(--cyan);
-    }
-
-    /* 2. Keylogger Lab */
-    .keylogger-screen {
-      background: #020617; border: 1px solid #1E293B; border-radius: 14px;
-      padding: 16px; font-family: var(--font-mono); font-size: 14px; color: #22C55E;
-      min-height: 120px; box-shadow: inset 0 2px 10px rgba(0,0,0,0.8);
-    }
-
-    /* 3. Windows Security Simulator */
-    .win-sec-box {
-      background: #181E29; border: 1px solid #2D3748; border-radius: 16px;
-      padding: 24px; box-shadow: 0 16px 40px rgba(0,0,0,0.6);
-    }
-    .scan-mode-btn {
-      display: flex; align-items: center; gap: 12px; padding: 14px 18px;
-      border-radius: 12px; background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.08); cursor: pointer;
-      color: #FFF; text-align: left; transition: all 0.2s;
-    }
-    .scan-mode-btn.selected, .scan-mode-btn:hover {
-      background: rgba(56, 225, 240, 0.12); border-color: var(--cyan);
-    }
-
-    /* 4. Mini Quiz */
-    .quiz-card {
-      background: rgba(16, 29, 48, 0.9); border: 1px solid rgba(56, 225, 240, 0.2);
-      border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 16px;
-    }
-    .quiz-opt {
-      padding: 13px 18px; border-radius: 12px;
-      background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #FFF; cursor: pointer; font-size: 14px; transition: all 0.2s;
-      display: flex; align-items: center; gap: 12px;
-    }
-    .quiz-opt:hover {
-      background: rgba(56, 225, 240, 0.12); border-color: var(--cyan);
-    }
-    .quiz-opt.correct {
-      background: rgba(16, 185, 129, 0.25) !important;
-      border-color: #10B981 !important; color: #34D399;
-    }
-    .quiz-opt.wrong {
-      background: rgba(239, 68, 68, 0.25) !important;
-      border-color: #EF4444 !important; color: #F87171;
-    }
-
-    /* 5. Pháo hoa canvas */
-    #confetti-canvas {
-      position: fixed; inset: 0; pointer-events: none; z-index: 999;
-    }
+    #confettiCanvas { position: fixed; inset: 0; pointer-events: none; z-index: 999; }
   </style>
 </head>
 <body>
 
+  <!-- Nền Gradient Vũ trụ & Ký hiệu An ninh mạng lơ lửng -->
   <div class="bg-mesh"></div>
-  <div class="cyber-grid"></div>
-  <canvas id="confetti-canvas"></canvas>
-
-  <!-- Ký hiệu an ninh mạng trôi nổi -->
-  <div class="float-layer">
-    <div class="float-tag" style="left:8%; animation-delay:0s;">🛡️ Windows Defender</div>
-    <div class="float-tag" style="left:24%; animation-delay:5s;">🦠 Virus != Worm</div>
-    <div class="float-tag" style="left:45%; animation-delay:2s;">🔒 Ransomware: WannaCry</div>
-    <div class="float-tag" style="left:68%; animation-delay:7s;">🎣 Phishing Alert</div>
-    <div class="float-tag" style="left:86%; animation-delay:3s;">🔑 2FA Security</div>
-    <div class="float-tag" style="left:38%; animation-delay:12s;">🐴 Trojan Horse</div>
-    <div class="float-tag" style="left:76%; animation-delay:16s;">⌨️ Keylogger Trap</div>
+  <div class="floating-symbols">
+    <div class="float-tag" style="left: 5%; animation-delay: 0s;">🛡️ 2FA Verified</div>
+    <div class="float-tag" style="left: 18%; animation-delay: 4s;">🦠 Worm Alert</div>
+    <div class="float-tag" style="left: 32%; animation-delay: 8s;">⚠️ Phishing Trap</div>
+    <div class="float-tag" style="left: 48%; animation-delay: 2s;">🐴 Trojan disguised</div>
+    <div class="float-tag" style="left: 63%; animation-delay: 6s;">⌨️ Keylogger sniffer</div>
+    <div class="float-tag" style="left: 77%; animation-delay: 11s;">🔒 Ransomware AES-256</div>
+    <div class="float-tag" style="left: 88%; animation-delay: 14s;">🔥 Firewall Active</div>
+    <div class="float-tag" style="left: 93%; animation-delay: 17s;">🛡️ Windows Defender</div>
   </div>
+
+  <canvas id="confettiCanvas"></canvas>
 
   <div class="deck-container">
 
-    <!-- ══════════════════════════════════════════════════════════════════════
-         SLIDE 1: TRANG BÌA BÀI HỌC
-         ══════════════════════════════════════════════════════════════════════ -->
-    <section class="slide active" id="slide-1">
+    <!-- ══ SLIDE 1: TRANG BÌA ════════════════════════════════════════════════ -->
+    <section class="slide active" id="slide-1" data-total-reveal="3">
       <div class="slide-header">
-        <span class="slide-badge">🏫 TRƯỜNG THPT NA RÌ</span>
-        <div style="font-size:13px; color:var(--ink-soft); font-family:var(--font-mono); display:flex; align-items:center; gap:8px;">
-          <span>CHỦ ĐỀ 2: MẠNG MÁY TÍNH & INTERNET</span>
-          <span>·</span>
-          <span>SGK KẾT NỐI TRI THỨC</span>
+        <div>
+          <span class="slide-badge">🏫 TRƯỜNG THPT NA RÌ · TIN HỌC 10 · KẾT NỐI TRI THỨC</span>
+          <div class="slide-title">Bài 9. An toàn trên không gian mạng</div>
+          <div class="slide-subtitle">Chủ đề 2: Mạng máy tính và Internet · Sách giáo khoa trang 44 – 49</div>
         </div>
-      </div>
-      <div class="slide-body" style="justify-content:center; align-items:center; text-align:center; padding-bottom:14px;">
-        <div style="max-width:960px;">
-          <div style="display:inline-flex; align-items:center; gap:8px; padding:5px 16px; border-radius:999px; background:rgba(56,225,240,0.12); border:1px solid rgba(56,225,240,0.3); color:var(--cyan); font-weight:700; font-size:12px; margin-bottom:12px;">
-            <span>🛡️ BÀI HỌC SỐ 09 · TIN HỌC LỚP 10</span>
-          </div>
-
-          <h1 style="font-size:36px; font-weight:900; letter-spacing:-0.5px; margin-bottom:10px; background:linear-gradient(135deg, #FFFFFF 25%, #38E1F0 70%, #EF4444 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">
-            AN TOÀN TRÊN KHÔNG GIAN MẠNG
-          </h1>
-
-          <p style="font-size:15px; color:var(--ink-soft); line-height:1.5; max-width:800px; margin:0 auto 18px;">
-            Nhận diện 5 nguy cơ tiềm ẩn · Phân biệt bản chất Virus, Sâu máy tính (Worm), Trojan · Thiết lập 4 lá chắn phòng vệ và làm chủ công cụ Windows Defender.
-          </p>
-
-          <!-- 3 Trụ cột bài học -->
-          <div class="grid-3" style="text-align:left; margin-bottom:20px;">
-            <div class="card" style="border-top:3px solid var(--red); padding:14px 16px;">
-              <div style="font-size:24px; margin-bottom:6px;">⚠️</div>
-              <div style="font-weight:800; font-size:15px; color:#FFF; margin-bottom:4px;">1. Năm Nguy Cơ Tiềm Ẩn</div>
-              <div style="font-size:12.5px; color:var(--ink-soft); line-height:1.45;">Tin giả, lừa đảo tài chính, lộ lọt dữ liệu cá nhân, bắt nạt mạng và nghiện Internet.</div>
-            </div>
-
-            <div class="card" style="border-top:3px solid var(--amber); padding:14px 16px;">
-              <div style="font-size:24px; margin-bottom:6px;">🦠</div>
-              <div style="font-weight:800; font-size:15px; color:#FFF; margin-bottom:4px;">2. Tam Giác Mã Độc</div>
-              <div style="font-size:12.5px; color:var(--ink-soft); line-height:1.45;">Virus ký sinh tệp chủ, Sâu Worm tự lây qua mạng, Trojan nguỵ trang, Spyware & Ransomware.</div>
-            </div>
-
-            <div class="card" style="border-top:3px solid var(--cyan); padding:14px 16px;">
-              <div style="font-size:24px; margin-bottom:6px;">🛡️</div>
-              <div style="font-weight:800; font-size:15px; color:#FFF; margin-bottom:4px;">3. Bốn Lá Chắn Phòng Vệ</div>
-              <div style="font-size:12.5px; color:var(--ink-soft); line-height:1.45;">Nguyên tắc vàng, bảo mật 2FA và mô phỏng 4 chế độ quét diệt của Windows Defender.</div>
-            </div>
-          </div>
-
-          <div style="display:flex; justify-content:center; gap:14px; align-items:center;">
-            <button onclick="goToSlide(2)" class="nav-btn" style="width:auto; padding:10px 28px; font-size:14px; background:var(--cyan); color:#060D17; font-weight:700; gap:8px;">
-              <span>Bắt đầu bài học</span>
-              <span>→</span>
-            </button>
-            <button onclick="openTOC()" class="nav-btn" style="width:auto; padding:10px 22px; font-size:13.5px; gap:8px;">
-              <span>📑 Mục lục bài học (15 slide)</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ══════════════════════════════════════════════════════════════════════
-         SLIDE 2: KHỞI ĐỘNG - TÌNH HUỐNG THỰC TẾ
-         ══════════════════════════════════════════════════════════════════════ -->
-    <section class="slide" id="slide-2">
-      <div class="slide-header">
-        <span class="slide-badge">⚡ KHỞI ĐỘNG · TÌNH HUỐNG ĐỜI THƯỜNG</span>
-        <div class="slide-title-wrap">
-          <div class="slide-title">Bẫy Mạo Danh Vay Tiền Gấp Qua Mạng Xã Hội</div>
-          <div class="slide-subtitle">Nếu em nhận được tin nhắn này từ nick bạn thân vào tối Chủ nhật, em sẽ làm gì?</div>
+        <div class="reveal-controller">
+          <span>✨ Hiệu ứng:</span>
+          <span class="reveal-status" id="slide-1-status">0 / 3</span>
+          <button class="reveal-btn" onclick="revealNextInCurrentSlide();">▶ Hiện ý (↓)</button>
+          <button class="reveal-btn" style="background: rgba(255,255,255,0.15);" onclick="revealAllInCurrentSlide();">Hiện hết</button>
         </div>
       </div>
       <div class="slide-body">
-        <div class="grid-2" style="align-items:center;">
-          <!-- Mockup Messenger -->
-          <div class="chat-mock">
-            <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.1);">
-              <div style="width:36px; height:36px; border-radius:50%; background:#38E1F0; display:flex; align-items:center; justify-content:center; color:#060D17; font-weight:800;">X</div>
-              <div>
-                <div style="font-weight:700; font-size:14px;">Xuân Mai (Bạn thân)</div>
-                <div style="font-size:11px; color:#22C55E;">● Đang hoạt động</div>
-              </div>
-            </div>
-
-            <div class="chat-bubble other">
-              "Cậu ơi, tớ đang kẹt tiền nộp học phí gấp quá, chuyển giúp tớ 500k vào số tài khoản <strong>987654321 - MBBank</strong> này nhé! Mai lên lớp tớ gửi lại tiền mặt liền nha!"
-            </div>
-            <div style="font-size:11px; color:var(--ink-soft); margin-bottom:16px; text-align:right;">21:45 · Đã xem</div>
-
-            <div style="display:flex; flex-direction:column; gap:8px;">
-              <button class="chat-choice-btn" onclick="checkChatChoice(1)">
-                <span>1. Chuyển khoản ngay vì xưng hô thân mật đúng như ngày thường</span>
-                <span>👉</span>
-              </button>
-              <button class="chat-choice-btn" onclick="checkChatChoice(2)">
-                <span>2. Nhắn tin hỏi lại trên chính nick đó xem có đúng bạn không</span>
-                <span>👉</span>
-              </button>
-              <button class="chat-choice-btn" onclick="checkChatChoice(3)">
-                <span>3. Gọi điện thoại trực tiếp hoặc gặp mặt để xác minh trước</span>
-                <span>👉</span>
-              </button>
-            </div>
+        <div class="grid-3" style="margin-top: 8px;">
+          <div class="card reveal-item" style="border-top: 4px solid var(--coral); text-align: center; padding: 22px 16px;">
+            <div style="font-size: 42px; margin-bottom: 10px;">⚠️</div>
+            <div style="font-size: 16.5px; font-weight: 700; color: var(--coral-light); margin-bottom: 6px;">1. Năm Nguy Cơ Tiềm Ẩn</div>
+            <p style="font-size: 13.5px; color: #CBD5E1; line-height: 1.5;">Tin giả, lừa đảo tài chính, lộ lọt dữ liệu cá nhân, bắt nạt trực tuyến và hội chứng nghiện mạng.</p>
           </div>
-
-          <!-- Lời giải & Phản hồi tương tác -->
-          <div class="card" id="chat-feedback-box" style="min-height:300px; display:flex; flex-direction:column; justify-content:center;">
-            <div style="text-align:center; color:var(--ink-soft);">
-              <div style="font-size:48px; margin-bottom:12px;">🤔</div>
-              <h3 style="color:#FFF; font-size:18px; margin-bottom:8px;">Hãy chọn 1 trong 3 hành động bên trái</h3>
-              <p style="font-size:13.5px; line-height:1.6;">Xem phản ứng an toàn số của em ở mức nào!</p>
-            </div>
+          <div class="card reveal-item" style="border-top: 4px solid var(--gold); text-align: center; padding: 22px 16px;">
+            <div style="font-size: 42px; margin-bottom: 10px;">🦠</div>
+            <div style="font-size: 16.5px; font-weight: 700; color: var(--gold-light); margin-bottom: 6px;">2. Tam Giác Mã Độc</div>
+            <p style="font-size: 13.5px; color: #CBD5E1; line-height: 1.5;">Phân biệt bản chất Virus ký sinh tệp chủ, Sâu Worm tự lây qua mạng và Trojan nguỵ trang.</p>
           </div>
+          <div class="card reveal-item" style="border-top: 4px solid var(--sea-light); text-align: center; padding: 22px 16px;">
+            <div style="font-size: 42px; margin-bottom: 10px;">🛡️</div>
+            <div style="font-size: 16.5px; font-weight: 700; color: var(--sea-light); margin-bottom: 6px;">3. Bốn Lá Chắn Phòng Vệ</div>
+            <p style="font-size: 13.5px; color: #CBD5E1; line-height: 1.5;">Quy tắc vàng ứng xử, xác thực 2 bước 2FA và mô phỏng 4 chế độ quét diệt Windows Defender.</p>
+          </div>
+        </div>
+
+        <div class="card reveal-item" style="background: rgba(13, 124, 134, 0.15); border: 1px dashed rgba(56, 225, 240, 0.4); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="font-size: 13.5px; color: #E2E8F0;">
+            ⌨️ <strong>Mẹo trình chiếu:</strong> Nhấn phím <strong>Space / →</strong> để chuyển slide · Phím <strong>↓</strong> để mở từng ý · <strong>F</strong> toàn màn hình · <strong>M</strong> bật/tắt âm!
+          </div>
+          <button class="sim-btn" onclick="nextSlide();" style="background: #0D7C86; color: white; font-weight: 700;">Bắt đầu bài học 🚀</button>
         </div>
       </div>
     </section>
 
-    <!-- ══════════════════════════════════════════════════════════════════════
-         SLIDE 3: MỤC TIÊU BÀI HỌC (3 TRỤ CỘT TRI THỨC)
-         ══════════════════════════════════════════════════════════════════════ -->
-    <section class="slide" id="slide-3">
+    <!-- ══ SLIDE 2: KHỞI ĐỘNG · BẪY VAY TIỀN FACEBOOK ═══════════════════════ -->
+    <section class="slide" id="slide-2" data-total-reveal="3">
       <div class="slide-header">
-        <span class="slide-badge">🎯 MỤC TIÊU BÀI HỌC</span>
-        <div class="slide-title-wrap">
-          <div class="slide-title">3 Trụ Cột Tri Thức Cần Đạt Trong Bài 9</div>
-          <div class="slide-subtitle">SGK Tin học 10 (Kết nối tri thức, trang 44)</div>
+        <div>
+          <span class="slide-badge coral">Khởi động · Tình huống đời thực</span>
+          <div class="slide-title">Tình huống: "Alo bạn ơi, chuyển gấp cho tớ 500k!"</div>
+          <div class="slide-subtitle">Em sẽ xử trí như thế nào để vừa giúp bạn vừa không bị mắc bẫy?</div>
         </div>
-      </div>
-      <div class="slide-body" style="justify-content:center;">
-        <div class="grid-3">
-          <div class="card" style="border-top:4px solid var(--amber);">
-            <div style="font-size:36px; margin-bottom:12px;">🚨</div>
-            <div class="card-title" style="color:var(--amber);">1. Nhận diện 5 Nguy cơ</div>
-            <p class="card-desc">
-              Biết và phân tích được <strong>5 nguy cơ chính</strong> khi tham gia Internet: Tin giả, Lừa đảo, Lộ thông tin cá nhân, Bắt nạt mạng và Nghiện mạng.
-            </p>
-            <div style="margin-top:16px; padding:8px 12px; border-radius:8px; background:rgba(245,166,35,0.1); font-size:12px; color:var(--amber);">
-              📌 Giúp tự bảo vệ mình và bạn bè
-            </div>
-          </div>
-
-          <div class="card" style="border-top:4px solid var(--red);">
-            <div style="font-size:36px; margin-bottom:12px;">🦠</div>
-            <div class="card-title" style="color:var(--red-light);">2. Phân biệt Malware</div>
-            <p class="card-desc">
-              Hiểu bản chất phần mềm độc hại (Malware). Phân biệt rạch ròi cơ chế lây lan giữa <strong>Virus (cần tệp chủ)</strong>, <strong>Worm (tự lây qua mạng)</strong> và <strong>Trojan (nguỵ trang)</strong>.
-            </p>
-            <div style="margin-top:16px; padding:8px 12px; border-radius:8px; background:rgba(239,68,68,0.1); font-size:12px; color:var(--red-light);">
-              📌 Trọng tâm các câu hỏi thi trắc nghiệm
-            </div>
-          </div>
-
-          <div class="card" style="border-top:4px solid var(--green);">
-            <div style="font-size:36px; margin-bottom:12px;">🛡️</div>
-            <div class="card-title" style="color:var(--green-light);">3. Kỹ năng Phòng thủ</div>
-            <p class="card-desc">
-              Nắm vững <strong>4 nguyên tắc vàng</strong> bảo vệ dữ liệu, sao lưu định kỳ, bật tường lửa và thực hành thành thạo <strong>Windows Security (Defender)</strong>.
-            </p>
-            <div style="margin-top:16px; padding:8px 12px; border-radius:8px; background:rgba(16,185,129,0.1); font-size:12px; color:var(--green-light);">
-              📌 Ứng dụng ngay trên máy tính cá nhân
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ══════════════════════════════════════════════════════════════════════
-         SLIDE 4: MỤC 1 - NĂM NGUY CƠ TIỀM ẨN TRÊN MẠNG
-         ══════════════════════════════════════════════════════════════════════ -->
-    <section class="slide" id="slide-4">
-      <div class="slide-header">
-        <span class="slide-badge">🚨 MỤC 1 · NGUY CƠ TRÊN KHÔNG GIAN MẠNG</span>
-        <div class="slide-title-wrap">
-          <div class="slide-title">Năm Cạm Bẫy Hàng Đầu Khi Tham Gia Internet</div>
-          <div class="slide-subtitle">Bấm vào từng thẻ nguy cơ để xem chi tiết biểu hiện và biện pháp phòng tránh</div>
-        </div>
-      </div>
-      <div class="slide-body">
-        <div class="grid-5" id="risk-cards-grid">
-          <div class="card" onclick="showRiskDetail(0)" style="cursor:pointer; text-align:center;">
-            <div style="font-size:32px; margin-bottom:8px;">📰</div>
-            <div style="font-weight:700; font-size:14px; color:#FFF; margin-bottom:6px;">1. Tin giả & Phản văn hoá</div>
-            <div style="font-size:12px; color:var(--ink-soft);">Bịa đặt, kích động bạo lực</div>
-          </div>
-          <div class="card" onclick="showRiskDetail(1)" style="cursor:pointer; text-align:center;">
-            <div style="font-size:32px; margin-bottom:8px;">🎣</div>
-            <div style="font-weight:700; font-size:14px; color:#FFF; margin-bottom:6px;">2. Lừa đảo trực tuyến</div>
-            <div style="font-size:12px; color:var(--ink-soft);">Phishing, web giả mạo</div>
-          </div>
-          <div class="card" onclick="showRiskDetail(2)" style="cursor:pointer; text-align:center;">
-            <div style="font-size:32px; margin-bottom:8px;">🔓</div>
-            <div style="font-weight:700; font-size:14px; color:#FFF; margin-bottom:6px;">3. Lộ thông tin cá nhân</div>
-            <div style="font-size:12px; color:var(--ink-soft);">CCCD, mật khẩu, tài khoản</div>
-          </div>
-          <div class="card" onclick="showRiskDetail(3)" style="cursor:pointer; text-align:center;">
-            <div style="font-size:32px; margin-bottom:8px;">⚠️</div>
-            <div style="font-weight:700; font-size:14px; color:#FFF; margin-bottom:6px;">4. Bắt nạt qua mạng</div>
-            <div style="font-size:12px; color:var(--ink-soft);">Cyberbullying, bêu xấu</div>
-          </div>
-          <div class="card" onclick="showRiskDetail(4)" style="cursor:pointer; text-align:center;">
-            <div style="font-size:32px; margin-bottom:8px;">🎮</div>
-            <div style="font-weight:700; font-size:14px; color:#FFF; margin-bottom:6px;">5. Nghiện mạng & Game</div>
-            <div style="font-size:12px; color:var(--ink-soft);">Kiệt quệ sức khoẻ, sa sút</div>
-          </div>
-        </div>
-
-        <div class="card" id="risk-detail-display" style="background:rgba(13,23,37,0.9); border-color:var(--cyan); padding:22px;">
-          <!-- Chi tiết mặc định -->
-          <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-            <div>
-              <h3 style="color:var(--cyan); font-size:18px; margin-bottom:8px;" id="risk-det-title">📰 1. Tin giả và thông tin phản văn hoá</h3>
-              <p style="font-size:14px; color:#F1F5F9; line-height:1.6;" id="risk-det-desc">
-                Thông tin bịa đặt, bóp méo sự thật, mê tín dị đoan, kích động bạo lực hoặc hình ảnh phản cảm. Tiếp nhận tin giả khiến học sinh có nhận thức sai lệch, hoang mang, thậm chí vi phạm pháp luật (Luật An ninh mạng).
-              </p>
-            </div>
-            <div style="background:rgba(56,225,240,0.1); border:1px solid rgba(56,225,240,0.3); border-radius:12px; padding:10px 16px; font-size:13px; color:var(--cyan); min-width:260px;" id="risk-det-tip">
-              🛡️ <strong>Kỹ năng phòng ngừa:</strong> Kiểm tra nguồn tin chính thống (báo đài trung ương, cổng thông tin chính phủ), không chia sẻ tin giật gân khi chưa xác thực.
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ══════════════════════════════════════════════════════════════════════
-         SLIDE 5: ĐẤU TRƯỜNG PHÂN LOẠI - HÀNH VI NGUY HIỂM VS KỸ NĂNG THÔNG MINH
-         ══════════════════════════════════════════════════════════════════════ -->
-    <section class="slide" id="slide-5">
-      <div class="slide-header">
-        <span class="slide-badge">⚖️ TƯƠNG TÁC THỰC HÀNH · PHÂN LOẠI HÀNH VI</span>
-        <div class="slide-title-wrap">
-          <div class="slide-title">Hành Vi Nguy Hiểm ❌ Hay Kỹ Năng Số Thông Minh 🛡️?</div>
-          <div class="slide-subtitle">Bấm vào từng hành vi để xếp vào cột tương ứng và kiểm tra điểm số</div>
+        <div class="reveal-controller">
+          <span>✨ Hiệu ứng:</span>
+          <span class="reveal-status" id="slide-2-status">0 / 3</span>
+          <button class="reveal-btn" onclick="revealNextInCurrentSlide();">▶ Hiện ý (↓)</button>
+          <button class="reveal-btn" style="background: rgba(255,255,255,0.15);" onclick="revealAllInCurrentSlide();">Hiện hết</button>
         </div>
       </div>
       <div class="slide-body">
         <div class="grid-2">
-          <!-- Cột Nguy hiểm -->
-          <div class="card" style="border-color:rgba(239,68,68,0.3); background:rgba(239,68,68,0.04);">
-            <h3 style="color:var(--red-light); font-size:16px; margin-bottom:12px; display:flex; align-items:center; gap:8px;">
-              ❌ HÀNH VI NGUY HIỂM (DỄ MẮC BẪY)
-            </h3>
-            <div id="col-danger" style="display:flex; flex-direction:column; gap:8px; min-height:220px;">
-              <!-- Thẻ đã phân vào đây -->
+          <div class="card reveal-item" style="border-left: 4px solid var(--gold);">
+            <div class="card-title" style="color: var(--gold-light);">📱 Tình huống giả định:</div>
+            <p style="font-size: 13.5px; line-height: 1.6; color: #E2E8F0; margin-bottom: 12px;">
+              Một buổi tối, em nhận được tin nhắn từ nick Facebook của bạn thân cùng lớp: <em>"Cậu ơi, tài khoản ngân hàng của tớ bị lỗi, cậu chuyển giúp tớ 500.000đ vào số tài khoản này gấp với, sáng mai lên lớp tớ trả tiền mặt ngay nhé!"</em>
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <button class="choice-opt-btn" onclick="handleCaseStudy(1)">
+                <span>🔴</span>
+                <span><strong>Cách 1:</strong> Chuyển tiền ngay vì là bạn thân, sáng mai lên lớp đòi lại sau.</span>
+              </button>
+              <button class="choice-opt-btn" onclick="handleCaseStudy(2)">
+                <span>🟡</span>
+                <span><strong>Cách 2:</strong> Nhắn tin hỏi lại trên Facebook xem có đúng là bạn không.</span>
+              </button>
+              <button class="choice-opt-btn" onclick="handleCaseStudy(3)">
+                <span>🟢</span>
+                <span><strong>Cách 3:</strong> Gọi điện thoại trực tiếp hoặc gọi video để xác minh danh tính.</span>
+              </button>
             </div>
           </div>
 
-          <!-- Cột Kỹ năng thông minh -->
-          <div class="card" style="border-color:rgba(16,185,129,0.3); background:rgba(16,185,129,0.04);">
-            <h3 style="color:var(--green-light); font-size:16px; margin-bottom:12px; display:flex; align-items:center; gap:8px;">
-              🛡️ KỸ NĂNG SỐ THÔNG MINH (AN TOÀN)
-            </h3>
-            <div id="col-safe" style="display:flex; flex-direction:column; gap:8px; min-height:220px;">
-              <!-- Thẻ đã phân vào đây -->
+          <div class="card reveal-item" id="case-result-box" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border: 1px dashed rgba(255,255,255,0.2);">
+            <div style="font-size: 40px; margin-bottom: 8px;">🤔</div>
+            <div style="font-size: 15px; font-weight: 700; color: var(--sea-light);">Hãy chọn một phương án xử lý bên trái</div>
+            <div style="font-size: 13px; color: var(--ink-soft); margin-top: 4px;">Xem phân tích an ninh mạng cho từng quyết định</div>
+          </div>
+        </div>
+
+        <div class="card reveal-item" style="background: rgba(13, 124, 134, 0.12); padding: 10px 16px; font-size: 13px;">
+          💡 <strong>Bài học rút ra:</strong> Không bao giờ xác minh một thông tin nhạy cảm (tài chính, mật khẩu) qua chính kênh đang nghi ngờ bị chiếm đoạt!
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ SLIDE 3: MỤC TIÊU BÀI HỌC GDPT 2018 ═══════════════════════════════ -->
+    <section class="slide" id="slide-3" data-total-reveal="3">
+      <div class="slide-header">
+        <div>
+          <span class="slide-badge leaf">Chuẩn kiến thức & Kĩ năng · GDPT 2018</span>
+          <div class="slide-title">Mục tiêu bài học: Ba trụ cột năng lực số</div>
+          <div class="slide-subtitle">Học sinh lớp 10 cần đạt được những phẩm chất và năng lực gì sau bài học?</div>
+        </div>
+        <div class="reveal-controller">
+          <span>✨ Hiệu ứng:</span>
+          <span class="reveal-status" id="slide-3-status">0 / 3</span>
+          <button class="reveal-btn" onclick="revealNextInCurrentSlide();">▶ Hiện ý (↓)</button>
+          <button class="reveal-btn" style="background: rgba(255,255,255,0.15);" onclick="revealAllInCurrentSlide();">Hiện hết</button>
+        </div>
+      </div>
+      <div class="slide-body">
+        <div class="grid-3">
+          <div class="card reveal-item" style="border-top: 4px solid var(--sea-light);">
+            <div class="card-title" style="color: var(--sea-light);">🎯 1. Năng lực Nhận diện</div>
+            <ul style="margin-left: 18px; font-size: 13px; line-height: 1.6; color: #CBD5E1;">
+              <li>Nêu được 5 nguy cơ tiềm ẩn phổ biến khi hoạt động trên Internet.</li>
+              <li>Phân biệt bản chất giữa tin giả, lừa đảo, lộ lọt dữ liệu và bắt nạt số.</li>
+            </ul>
+          </div>
+          <div class="card reveal-item" style="border-top: 4px solid var(--gold);">
+            <div class="card-title" style="color: var(--gold-light);">🔬 2. Năng lực Phân tích</div>
+            <ul style="margin-left: 18px; font-size: 13px; line-height: 1.6; color: #CBD5E1;">
+              <li>Giải thích được khái niệm phần mềm độc hại (Malware).</li>
+              <li>Phân biệt chính xác cơ chế hoạt động: Virus, Sâu máy tính (Worm), Trojan.</li>
+            </ul>
+          </div>
+          <div class="card reveal-item" style="border-top: 4px solid var(--leaf-light);">
+            <div class="card-title" style="color: var(--leaf-light);">🛡️ 3. Kỹ năng Phòng thủ</div>
+            <ul style="margin-left: 18px; font-size: 13px; line-height: 1.6; color: #CBD5E1;">
+              <li>Tuân thủ 4 nguyên tắc vàng để phòng ngừa rủi ro trên không gian số.</li>
+              <li>Biết kích hoạt bảo mật 2 lớp (2FA) và sử dụng công cụ Windows Defender.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card reveal-item" style="border-left: 4px solid var(--purple-light); padding: 12px 18px;">
+          <div class="card-title" style="color: var(--purple-light);">🌟 Phẩm chất cốt lõi:</div>
+          <p style="font-size: 13px; color: #E2E8F0; line-height: 1.6;">
+            Hình thành thói quen tỉnh táo, có trách nhiệm với lời nói và hành vi số; tôn trọng pháp luật và quy tắc văn hóa ứng xử trên mạng.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ SLIDE 4: MỤC 1 · NĂM NGUY CƠ TIỀM ẨN TRÊN INTERNET ═════════════════ -->
+    <section class="slide" id="slide-4" data-total-reveal="2">
+      <div class="slide-header">
+        <div>
+          <span class="slide-badge coral">Mục 1 · SGK Trang 44</span>
+          <div class="slide-title">Năm nguy cơ tiềm ẩn trên không gian mạng</div>
+          <div class="slide-subtitle">Nhấp chọn từng nguy cơ để khám phá biểu hiện và kỹ năng phòng ngừa</div>
+        </div>
+        <div class="reveal-controller">
+          <span>✨ Hiệu ứng:</span>
+          <span class="reveal-status" id="slide-4-status">0 / 2</span>
+          <button class="reveal-btn" onclick="revealNextInCurrentSlide();">▶ Hiện ý (↓)</button>
+          <button class="reveal-btn" style="background: rgba(255,255,255,0.15);" onclick="revealAllInCurrentSlide();">Hiện hết</button>
+        </div>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2 reveal-item">
+          <!-- BÊN TRÁI: 5 NÚT CHỌN -->
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <button class="risk-tab-btn active" onclick="selectRisk(0)">📰 1. Tin giả và văn hoá độc hại</button>
+            <button class="risk-tab-btn" onclick="selectRisk(1)">🎣 2. Lừa đảo trực tuyến (Phishing)</button>
+            <button class="risk-tab-btn" onclick="selectRisk(2)">🔓 3. Lộ lọt thông tin đời tư</button>
+            <button class="risk-tab-btn" onclick="selectRisk(3)">⚠️ 4. Bắt nạt qua mạng (Cyberbullying)</button>
+            <button class="risk-tab-btn" onclick="selectRisk(4)">🎮 5. Nghiện mạng & game trực tuyến</button>
+          </div>
+
+          <!-- BÊN PHẢI: CHI TIẾT -->
+          <div class="card" id="risk-detail-card" style="border-left: 4px solid var(--sea-light); display: flex; flex-direction: column; justify-content: center;">
+            <div id="risk-det-title" style="font-size: 16px; font-weight: 700; color: var(--sea-light); margin-bottom: 8px;">
+              📰 1. Tin giả và thông tin phản văn hoá
+            </div>
+            <div id="risk-det-desc" style="font-size: 13px; line-height: 1.6; color: #CBD5E1; margin-bottom: 10px;">
+              Thông tin bịa đặt, bóp méo sự thật, mê tín dị đoan hoặc kích động bạo lực. Tiếp nhận tin giả khiến học sinh có nhận thức sai lệch, hoang mang, thậm chí vi phạm Luật An ninh mạng.
+            </div>
+            <div id="risk-det-tip" style="font-size: 12.5px; color: #34D399; background: rgba(16,185,129,0.12); padding: 8px 12px; border-radius: 8px;">
+              🛡️ Kỹ năng phòng ngừa: Kiểm tra nguồn tin chính thống (báo đài chính thống, cổng thông tin chính phủ), không like/share tin giật gân chưa kiểm chứng.
             </div>
           </div>
         </div>
 
-        <!-- Hàng các thẻ hành vi chờ phân loại -->
-        <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:12px 18px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-            <span style="font-size:13px; font-weight:700; color:var(--cyan);">HÀNH VI CHƯA PHÂN LOẠI (Nhấp để chọn cột):</span>
-            <button onclick="resetSortLab()" style="background:rgba(255,255,255,0.08); border:none; color:var(--ink-soft); padding:4px 12px; border-radius:6px; font-size:12px; cursor:pointer;">
-              🔄 Làm lại
-            </button>
-          </div>
-          <div id="sort-items-pool" style="display:flex; flex-wrap:wrap; gap:8px;">
+        <div class="card reveal-item" style="border-left: 4px solid var(--gold); padding: 10px 16px; font-size: 13px;">
+          ⚖️ <strong>Cảnh báo pháp lý:</strong> Hành vi lan truyền tin giả có thể bị xử phạt hành chính từ 10 - 20 triệu đồng theo Nghị định 15/2020/NĐ-CP của Chính phủ.
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ SLIDE 5: ĐẤU TRƯỜNG PHÂN LOẠI HÀNH VI AN TOÀN VS NGUY HIỂM ═════════ -->
+    <section class="slide" id="slide-5" data-total-reveal="1">
+      <div class="slide-header">
+        <div>
+          <span class="slide-badge leaf">Đấu trường Tương tác · Luyện tập Mục 1</span>
+          <div class="slide-title">Đấu trường: Phân loại Hành vi An toàn vs Nguy hiểm</div>
+          <div class="slide-subtitle">Nhấp chọn xếp loại đúng cho 6 tình huống đời thực dưới đây</div>
+        </div>
+        <div class="reveal-controller">
+          <button class="sim-btn" onclick="resetSortLab();">🔄 Chơi lại từ đầu</button>
+        </div>
+      </div>
+      <div class="slide-body">
+        <div class="reveal-item visible">
+          <div id="sort-items-pool" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px;">
             <!-- Render bằng JavaScript -->
           </div>
+
+          <div class="grid-2">
+            <div class="card" style="border: 1px solid var(--rose); background: rgba(239,68,68,0.06); min-height: 120px;">
+              <div class="card-title" style="color: var(--rose);">❌ Nhóm Hành vi NGUY HIỂM:</div>
+              <div id="col-danger" style="display: flex; flex-direction: column; gap: 6px; font-size: 12px;"></div>
+            </div>
+            <div class="card" style="border: 1px solid var(--leaf-light); background: rgba(16,185,129,0.06); min-height: 120px;">
+              <div class="card-title" style="color: var(--leaf-light);">🛡️ Nhóm Hành vi AN TOÀN:</div>
+              <div id="col-safe" style="display: flex; flex-direction: column; gap: 6px; font-size: 12px;"></div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ══════════════════════════════════════════════════════════════════════
-         SLIDE 6: MỤC 2 - MALWARE LÀ GÌ?
-         ══════════════════════════════════════════════════════════════════════ -->
-    <section class="slide" id="slide-6">
+    <!-- ══ SLIDE 6: MỤC 2 · KHÁI NIỆM MALWARE (PHẦN MỀM ĐỘC HẠI) ═══════════════ -->
+    <section class="slide" id="slide-6" data-total-reveal="3">
       <div class="slide-header">
-        <span class="slide-badge">🦠 MỤC 2 · PHẦN MỀM ĐỘC HẠI (MALWARE)</span>
-        <div class="slide-title-wrap">
-          <div class="slide-title">Malware Là Gì? Bản Chất & Cây Phả Hệ Mã Độc</div>
-          <div class="slide-subtitle">Malware = Malicious Software (Phần mềm độc hại)</div>
+        <div>
+          <span class="slide-badge coral">Mục 2 · SGK Trang 46</span>
+          <div class="slide-title">Phần mềm độc hại (Malware) là gì?</div>
+          <div class="slide-subtitle">Hiểu đúng bản chất để không nhầm lẫn mọi mã độc đều là "Virus"</div>
+        </div>
+        <div class="reveal-controller">
+          <span>✨ Hiệu ứng:</span>
+          <span class="reveal-status" id="slide-6-status">0 / 3</span>
+          <button class="reveal-btn" onclick="revealNextInCurrentSlide();">▶ Hiện ý (↓)</button>
+          <button class="reveal-btn" style="background: rgba(255,255,255,0.15);" onclick="revealAllInCurrentSlide();">Hiện hết</button>
         </div>
       </div>
       <div class="slide-body">
-        <div class="grid-2" style="align-items:stretch;">
-          <!-- Khái niệm cốt lõi -->
-          <div class="card" style="display:flex; flex-direction:column; justify-content:space-between;">
-            <div>
-              <div class="card-title" style="color:var(--cyan); font-size:18px;">
-                🔑 Khái Niệm Quyết Định Chuẩn SGK
-              </div>
-              <p style="font-size:14.5px; color:#F1F5F9; line-height:1.7; margin-top:10px;">
-                <strong>Phần mềm độc hại (Malware)</strong> là các phần mềm được viết ra với 
-                <span style="color:#EF4444; font-weight:800; background:rgba(239,68,68,0.15); padding:2px 6px; border-radius:4px;">Ý ĐỒ XẤU</span>, 
-                nhằm gây hại cho người dùng, chiếm quyền điều khiển hoặc phá hoại hệ thống máy tính.
-              </p>
+        <div class="card reveal-item" style="border-left: 5px solid var(--sea-light); padding: 14px 20px;">
+          <div class="card-title" style="color: var(--sea-light);">📖 Định nghĩa chuẩn SGK Tin học 10:</div>
+          <p style="font-size: 14.5px; line-height: 1.6; color: #E2E8F0;">
+            <strong>Phần mềm độc hại (Malware - Malicious Software)</strong> là tên gọi chung cho tất cả các phần mềm hoặc đoạn mã được thiết kế với mục đích xấu: phá hoại hệ thống, ăn cắp thông tin, tống tiền hoặc chiếm quyền điều khiển máy tính.
+          </p>
+        </div>
 
-              <div style="margin-top:18px; padding:14px; border-radius:12px; background:rgba(245,166,35,0.1); border-left:4px solid var(--amber);">
-                <strong style="color:var(--amber);">⚠️ Điểm mấu chốt:</strong>
-                <p style="font-size:13px; color:var(--ink-soft); margin-top:4px;">
-                  Điều quyết định một phần mềm có phải là mã độc hay không chính là <strong>mục đích của người tạo ra nó</strong>, không phụ thuộc vào kích thước hay giao diện của phần mềm!
-                </p>
-              </div>
-            </div>
-
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:18px;">
-              <div style="background:rgba(255,255,255,0.03); padding:10px; border-radius:10px; font-size:12.5px;">
-                💥 <strong>Phá hoại:</strong> Xóa file, làm hỏng hệ điều hành, chậm máy.
-              </div>
-              <div style="background:rgba(255,255,255,0.03); padding:10px; border-radius:10px; font-size:12.5px;">
-                🕵️ <strong>Đánh cắp:</strong> Trộm tài khoản, mật khẩu, thẻ ngân hàng.
-              </div>
-            </div>
+        <div class="grid-2 reveal-item">
+          <div class="card" style="border-top: 4px solid var(--gold);">
+            <div class="card-title" style="color: var(--gold-light);">🎯 Mục đích chính của Malware:</div>
+            <ul style="margin-left: 18px; font-size: 13px; line-height: 1.6; color: #CBD5E1;">
+              <li>Chiếm quyền quản trị máy tính từ xa.</li>
+              <li>Theo dõi bàn phím để trộm mật khẩu & mã OTP ngân hàng.</li>
+              <li>Mã hóa toàn bộ dữ liệu máy tính để đòi tiền chuộc (Ransomware).</li>
+            </ul>
           </div>
-
-          <!-- Cây phân nhánh Malware -->
-          <div class="card" style="background:#09121E;">
-            <div class="card-title" style="color:var(--purple-light);">
-              🌳 Cây Phả Hệ Các Loại Mã Độc Phổ Biến
-            </div>
-            <div style="display:flex; flex-direction:column; gap:10px; margin-top:12px;">
-              <div style="background:rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.3); border-radius:10px; padding:12px; display:flex; align-items:center; gap:12px;">
-                <span style="font-size:24px;">🦠</span>
-                <div>
-                  <strong style="color:#F87171;">Virus máy tính:</strong>
-                  <span style="font-size:13px; color:var(--ink-soft);"> Ký sinh bắt buộc vào tệp chủ (.exe, .docx).</span>
-                </div>
-              </div>
-
-              <div style="background:rgba(59,130,246,0.12); border:1px solid rgba(59,130,246,0.3); border-radius:10px; padding:12px; display:flex; align-items:center; gap:12px;">
-                <span style="font-size:24px;">🐛</span>
-                <div>
-                  <strong style="color:#60A5FA;">Worm (Sâu máy tính):</strong>
-                  <span style="font-size:13px; color:var(--ink-soft);"> Phần mềm hoàn chỉnh, tự nhân bản lây qua Internet.</span>
-                </div>
-              </div>
-
-              <div style="background:rgba(245,166,35,0.12); border:1px solid rgba(245,166,35,0.3); border-radius:10px; padding:12px; display:flex; align-items:center; gap:12px;">
-                <span style="font-size:24px;">🐴</span>
-                <div>
-                  <strong style="color:var(--amber);">Trojan (Ngựa thành Troa):</strong>
-                  <span style="font-size:13px; color:var(--ink-soft);"> Nguỵ trang phần mềm hữu ích lừa người dùng cài.</span>
-                </div>
-              </div>
-
-              <div style="background:rgba(139,92,246,0.12); border:1px solid rgba(139,92,246,0.3); border-radius:10px; padding:12px; display:flex; align-items:center; gap:12px;">
-                <span style="font-size:24px;">🔒</span>
-                <div>
-                  <strong style="color:var(--purple-light);">Biến thể nguy hiểm:</strong>
-                  <span style="font-size:13px; color:var(--ink-soft);"> Spyware, Keylogger, Ransomware (tống tiền), Backdoor.</span>
-                </div>
-              </div>
-            </div>
+          <div class="card" style="border-top: 4px solid var(--purple-light);">
+            <div class="card-title" style="color: var(--purple-light);">⚠️ Sai lầm học sinh hay mắc:</div>
+            <p style="font-size: 13px; color: #CBD5E1; line-height: 1.6;">
+              Nhiều bạn gọi chung mọi thứ là "máy tính bị dính virus". Trên thực tế, <strong>Virus chỉ là 1 loài trong gia đình Malware</strong> rộng lớn, cùng với Worm (Sâu), Trojan (Ngựa thành Troy), Spyware và Ransomware!
+            </p>
           </div>
+        </div>
+
+        <div class="card reveal-item" style="background: rgba(13, 124, 134, 0.12); padding: 10px 16px; font-size: 13px;">
+          ⚡ <strong>Ghi nhớ chìa khóa:</strong> Malware là khái niệm rộng nhất (tập mẹ); Virus, Worm, Trojan là các tập con!
         </div>
       </div>
     </section>
 
-    <!-- ══════════════════════════════════════════════════════════════════════
-         SLIDE 7: TAM GIÁC MÃ ĐỘC - VIRUS VS WORM VS TROJAN
-         ══════════════════════════════════════════════════════════════════════ -->
-    <section class="slide" id="slide-7">
+    <!-- ══ SLIDE 7: TAM GIÁC MÃ ĐỘC: VIRUS VS WORM VS TROJAN ═══════════════════ -->
+    <section class="slide" id="slide-7" data-total-reveal="3">
       <div class="slide-header">
-        <span class="slide-badge">⚡ TRỌNG TÂM · SO SÁNH 3 LOẠI MÃ ĐỘC</span>
-        <div class="slide-title-wrap">
-          <div class="slide-title">Tam Giác Mã Độc: Virus vs Worm (Sâu) vs Trojan</div>
-          <div class="slide-subtitle">Nắm chắc 3 đặc điểm phân biệt then chốt không bao giờ bị bẫy đề thi</div>
+        <div>
+          <span class="slide-badge gold">Trọng tâm thi cử · SGK Trang 46-47</span>
+          <div class="slide-title">Tam giác Mã độc: Phân biệt Virus, Worm & Trojan</div>
+          <div class="slide-subtitle">Ba dòng họ mã độc kinh điển khác nhau cơ bản ở điểm nào?</div>
+        </div>
+        <div class="reveal-controller">
+          <span>✨ Hiệu ứng:</span>
+          <span class="reveal-status" id="slide-7-status">0 / 3</span>
+          <button class="reveal-btn" onclick="revealNextInCurrentSlide();">▶ Hiện ý (↓)</button>
+          <button class="reveal-btn" style="background: rgba(255,255,255,0.15);" onclick="revealAllInCurrentSlide();">Hiện hết</button>
         </div>
       </div>
       <div class="slide-body">
         <div class="grid-3">
-          <!-- Cột 1: Virus -->
-          <div class="card" style="border-color:rgba(239,68,68,0.35);">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-              <span style="font-size:32px;">🦠</span>
-              <span style="font-size:11px; font-family:var(--font-mono); color:#F87171; background:rgba(239,68,68,0.15); padding:3px 8px; border-radius:6px;">CẦN VẬT CHỦ</span>
-            </div>
-            <h3 style="color:#F87171; font-size:17px; margin-bottom:8px;">Virus Máy Tính</h3>
-            <ul style="font-size:13px; color:var(--ink-soft); line-height:1.7; padding-left:18px;">
-              <li><strong>Không phải</strong> phần mềm hoàn chỉnh, chỉ là đoạn mã độc.</li>
-              <li><strong>Bắt buộc ký sinh</strong> vào tệp chủ (.exe, .docx macro).</li>
-              <li>Chỉ lây lan <strong>khi tệp chủ được người dùng mở/chạy</strong>.</li>
-              <li>Lây qua sao chép tệp (USB, gửi file, tải về).</li>
+          <div class="card reveal-item" style="border-top: 4px solid var(--rose);">
+            <div style="font-size: 36px; margin-bottom: 6px;">🦠</div>
+            <div class="card-title" style="color: var(--coral-light);">1. VIRUS MÁY TÍNH</div>
+            <ul style="margin-left: 16px; font-size: 12.5px; line-height: 1.6; color: #CBD5E1;">
+              <li><strong>Bản chất:</strong> Không phải file độc lập; là đoạn mã ký sinh vào tệp chủ (<code>.exe, .docx</code>).</li>
+              <li><strong>Cách lây:</strong> Chỉ lây khi người dùng MỞ tệp bị nhiễm (cắm USB, tải file).</li>
             </ul>
           </div>
 
-          <!-- Cột 2: Worm -->
-          <div class="card" style="border-color:rgba(59,130,246,0.35);">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-              <span style="font-size:32px;">🐛</span>
-              <span style="font-size:11px; font-family:var(--font-mono); color:#60A5FA; background:rgba(59,130,246,0.15); padding:3px 8px; border-radius:6px;">TỰ NHÂN BẢN</span>
-            </div>
-            <h3 style="color:#60A5FA; font-size:17px; margin-bottom:8px;">Sâu Máy Tính (Worm)</h3>
-            <ul style="font-size:13px; color:var(--ink-soft); line-height:1.7; padding-left:18px;">
-              <li><strong>Là phần mềm hoàn chỉnh</strong>, độc lập.</li>
-              <li><strong>Không cần tệp chủ</strong>, tự nhân bản chính nó.</li>
-              <li>Tự động khai thác lỗ hổng mạng để <strong>tự lây lan qua Internet/Email</strong>.</li>
-              <li>Tốc độ lây nhiễm chóng mặt <strong>không cần người dùng mở file</strong>.</li>
+          <div class="card reveal-item" style="border-top: 4px solid var(--gold);">
+            <div style="font-size: 36px; margin-bottom: 6px;">🐛</div>
+            <div class="card-title" style="color: var(--gold-light);">2. SÂU MÁY TÍNH (WORM)</div>
+            <ul style="margin-left: 16px; font-size: 12.5px; line-height: 1.6; color: #CBD5E1;">
+              <li><strong>Bản chất:</strong> Là phần mềm ĐỘC LẬP hoàn chỉnh, không cần tệp chủ ký sinh.</li>
+              <li><strong>Cách lây:</strong> TỰ ĐỘNG lây lan qua lỗ hổng mạng Internet mà không cần người dùng can thiệp!</li>
             </ul>
           </div>
 
-          <!-- Cột 3: Trojan -->
-          <div class="card" style="border-color:rgba(245,166,35,0.35);">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-              <span style="font-size:32px;">🐴</span>
-              <span style="font-size:11px; font-family:var(--font-mono); color:var(--amber); background:rgba(245,166,35,0.15); padding:3px 8px; border-radius:6px;">NGUỴ TRANG</span>
-            </div>
-            <h3 style="color:var(--amber); font-size:17px; margin-bottom:8px;">Trojan Horse</h3>
-            <ul style="font-size:13px; color:var(--ink-soft); line-height:1.7; padding-left:18px;">
-              <li>Lấy cảm hứng từ <strong>thần thoại Hy Lạp</strong>.</li>
-              <li><strong>Nguỵ trang</strong> vỏ bọc phần mềm hữu ích (game crack, tiện ích).</li>
-              <li>Lừa người dùng <strong>tự tay tải về và cài đặt</strong>.</li>
-              <li><strong>KHÔNG tự nhân bản</strong>; mở cửa sau (backdoor) trộm mật khẩu.</li>
+          <div class="card reveal-item" style="border-top: 4px solid var(--purple-light);">
+            <div style="font-size: 36px; margin-bottom: 6px;">🐴</div>
+            <div class="card-title" style="color: var(--purple-light);">3. TROJAN (NGỰA TROY)</div>
+            <ul style="margin-left: 16px; font-size: 12.5px; line-height: 1.6; color: #CBD5E1;">
+              <li><strong>Bản chất:</strong> Nguỵ trang thành ứng dụng hữu ích (game crack, bộ gõ tiếng Việt giả).</li>
+              <li><strong>Đặc điểm:</strong> KHÔNG tự nhân bản; chỉ mở cổng hậu (Backdoor) cho hacker đột nhập.</li>
             </ul>
           </div>
         </div>
 
-        <!-- Khung mô phỏng chuyển động trực quan -->
-        <div class="card" style="background:#09121E; padding:16px 20px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-            <span style="font-size:13.5px; font-weight:700; color:var(--cyan);">🎬 PHÒNG THÍ NGHIỆM MÔ PHỎNG CƠ CHẾ LÂY LAN:</span>
-            <div style="display:flex; gap:10px;">
-              <button onclick="runVirusSim()" class="nav-btn" style="width:auto; height:32px; font-size:12px; padding:0 14px; border-radius:8px;">
-                Mô phỏng Virus 🦠
-              </button>
-              <button onclick="runWormSim()" class="nav-btn" style="width:auto; height:32px; font-size:12px; padding:0 14px; border-radius:8px;">
-                Mô phỏng Sâu Worm 🐛
-              </button>
-            </div>
-          </div>
-          <div id="sim-canvas-box" style="height:90px; background:rgba(0,0,0,0.4); border-radius:10px; display:flex; align-items:center; justify-content:center; color:var(--ink-soft); font-size:13px; font-family:var(--font-mono);">
-            Nhấn vào nút bên trên để xem mô phỏng hoạt họa trực quan!
-          </div>
+        <div class="card reveal-item" style="border-left: 4px solid var(--sea-light); padding: 10px 18px; font-size: 13px;">
+          🎯 <strong>Mẹo phân biệt cực chuẩn:</strong> Bắt buộc có file chủ = <strong>Virus</strong> · Tự bò qua mạng = <strong>Worm</strong> · Nguỵ trang phần mềm hay ho = <strong>Trojan</strong>.
         </div>
       </div>
     </section>
 
-    <!-- ══════════════════════════════════════════════════════════════════════
-         SLIDE 8: CÁC BIẾN THỂ MÃ ĐỘC NGUY HIỂM & KEYLOGGER LAB
-         ══════════════════════════════════════════════════════════════════════ -->
-    <section class="slide" id="slide-8">
+    <!-- ══ SLIDE 8: CÁC BIẾN THỂ & PHÒNG THÍ NGHIỆM KEYLOGGER ══════════════════ -->
+    <section class="slide" id="slide-8" data-total-reveal="2">
       <div class="slide-header">
-        <span class="slide-badge">⚠️ BIẾN THỂ NGUY HIỂM · THỰC HÀNH ẢO</span>
-        <div class="slide-title-wrap">
-          <div class="slide-title">Spyware, Keylogger & Ransomware (Mã Độc Tống Tiền)</div>
-          <div class="slide-subtitle">Trải nghiệm gõ phím bắt trộm mật khẩu thời gian thực trong phòng thí nghiệm Keylogger</div>
+        <div>
+          <span class="slide-badge coral">Mô phỏng thực hành · SGK Trang 47</span>
+          <div class="slide-title">Spyware & Phòng thí nghiệm mô phỏng Keylogger</div>
+          <div class="slide-subtitle">Xem cách mã độc ghi nhận từng thao tác gõ phím để trộm mật khẩu</div>
+        </div>
+        <div class="reveal-controller">
+          <span>✨ Hiệu ứng:</span>
+          <span class="reveal-status" id="slide-8-status">0 / 2</span>
+          <button class="reveal-btn" onclick="revealNextInCurrentSlide();">▶ Hiện ý (↓)</button>
+          <button class="reveal-btn" style="background: rgba(255,255,255,0.15);" onclick="revealAllInCurrentSlide();">Hiện hết</button>
         </div>
       </div>
       <div class="slide-body">
-        <div class="grid-2">
-          <!-- 4 Biến thể -->
-          <div style="display:flex; flex-direction:column; gap:12px;">
-            <div class="card" style="padding:14px;">
-              <div class="card-title" style="color:#60A5FA; font-size:15px;">🕵️ Spyware (Phần mềm gián điệp)</div>
-              <p class="card-desc" style="font-size:13px;">Âm thầm theo dõi hành vi lướt web, lục lọi tài liệu, hình ảnh riêng tư và gửi dữ liệu đánh cắp được ra máy chủ kẻ tấn công.</p>
-            </div>
-            <div class="card" style="padding:14px;">
-              <div class="card-title" style="color:#F87171; font-size:15px;">⌨️ Keylogger (Phần mềm ghi phím)</div>
-              <p class="card-desc" style="font-size:13px;">Ghi lại toàn bộ thao tác bàn phím và chuột nhằm đánh cắp mật khẩu đăng nhập, mã OTP, số thẻ tín dụng.</p>
-            </div>
-            <div class="card" style="padding:14px;">
-              <div class="card-title" style="color:var(--amber); font-size:15px;">🔒 Ransomware (Mã độc tống tiền)</div>
-              <p class="card-desc" style="font-size:13px;">Mã hoá toàn bộ dữ liệu trên ổ cứng, đổi đuôi tệp thành .locked và đòi tiền chuộc bằng tiền điện tử (Bitcoin).</p>
-            </div>
+        <div class="grid-2 reveal-item">
+          <!-- BÊN TRÁI: Ô NHẬP LIỆU CỦA NGƯỜI DÙNG -->
+          <div class="card" style="border-top: 4px solid var(--sea-light);">
+            <div class="card-title" style="color: var(--sea-light);">👤 Màn hình của người dùng (Nạn nhân):</div>
+            <p style="font-size: 12.5px; color: var(--ink-soft); margin-bottom: 8px;">Gõ thử mật khẩu hoặc số tài khoản ngân hàng vào ô bên dưới:</p>
+            <input type="text" id="victim-input" placeholder="Ví dụ: MatKhau@2026..." oninput="handleKeyloggerSim(this.value)" style="width: 100%; background: #0A1118; border: 1px solid rgba(56,225,240,0.3); padding: 10px 14px; border-radius: 8px; color: #FFF; font-family: var(--font-mono); font-size: 14px; outline: none; margin-bottom: 8px;">
+            <div style="font-size: 12px; color: #94A3B8;">Em cứ tưởng chỉ mình em nhìn thấy màn hình này...</div>
           </div>
 
-          <!-- Keylogger Live Lab -->
-          <div class="card" style="background:#09121E; border-color:var(--red);">
-            <div class="card-title" style="color:#F87171; justify-content:space-between;">
-              <span>💀 PHÒNG THÍ NGHIỆM KEYLOGGER ẢO</span>
-              <span style="font-size:11px; font-family:var(--font-mono); color:var(--red-light);">[HACKER TERMINAL]</span>
+          <!-- BÊN PHẢI: MÀN HÌNH BẮT TRỘM CỦA HACKER -->
+          <div class="card" style="border-top: 4px solid var(--rose); background: #0B1017;">
+            <div class="card-title" style="color: var(--coral-light);">🕵️ Màn hình giám sát ngầm của Hacker (Keylogger):</div>
+            <div style="font-size: 12px; color: #94A3B8; margin-bottom: 6px;">Dữ liệu bị mã độc ghi âm thầm chuyển về máy chủ:</div>
+            <div id="hacker-sniffer-box" style="font-family: var(--font-mono); font-size: 14px; color: #34D399; background: #000; padding: 12px; border-radius: 8px; min-height: 44px; border: 1px solid #1E293B; word-break: break-all;">
+              [Đang lắng nghe bàn phím...]
             </div>
-            <p style="font-size:13px; color:var(--ink-soft); margin-bottom:12px;">
-              Hãy gõ thử bất kỳ mật khẩu nào vào ô của người dùng dưới đây:
-            </p>
-
-            <div style="margin-bottom:12px;">
-              <label style="font-size:12px; color:var(--cyan); display:block; margin-bottom:4px;">Ô nhập mật khẩu của người dùng (ẩn dấu chấm •••):</label>
-              <input type="password" id="user-pw-input" placeholder="Nhập thử mật khẩu vào đây..." oninput="onKeyloggerType(this.value)"
-                     style="width:100%; padding:10px 14px; border-radius:8px; background:#1E293B; border:1px solid #334155; color:#FFF; font-family:var(--font-mono); font-size:15px; outline:none;">
-            </div>
-
-            <label style="font-size:12px; color:#F87171; display:block; margin-bottom:4px;">Màn hình Hacker nhận được trong thời gian thực:</label>
-            <div class="keylogger-screen" id="hacker-log-display">
-              > [Keylogger Active - Listening keystrokes...]<br>
-              > Đang chờ người dùng gõ phím...
-            </div>
+            <div style="font-size: 11.5px; color: #EF4444; margin-top: 6px;">⚠️ Mọi ký tự gõ phím đều bị lưu trọn vẹn theo thời gian thực!</div>
           </div>
+        </div>
+
+        <div class="card reveal-item" style="border-left: 4px solid var(--gold); padding: 10px 16px; font-size: 13px;">
+          🛡️ <strong>Cách phòng chống:</strong> Dùng bàn phím ảo (Virtual Keyboard) khi đăng nhập tài khoản ngân hàng, hoặc dùng xác thực vân tay / Face ID!
         </div>
       </div>
     </section>
 
-    <!-- ══════════════════════════════════════════════════════════════════════
-         SLIDE 9: DÒNG THỜI GIAN ĐẠI DỊCH SÂU MÁY TÍNH
-         ══════════════════════════════════════════════════════════════════════ -->
-    <section class="slide" id="slide-9">
+    <!-- ══ SLIDE 9: DÒNG THỜI GIAN 3 ĐẠI DỊCH MÃ ĐỘC LỊCH SỬ ═══════════════════ -->
+    <section class="slide" id="slide-9" data-total-reveal="3">
       <div class="slide-header">
-        <span class="slide-badge">⏳ LỊCH SỬ · ĐẠI DỊCH MÃ ĐỘC TOÀN CẦU</span>
-        <div class="slide-title-wrap">
-          <div class="slide-title">Ba Đại Dịch Sâu Máy Tính Đi Vào Lịch Sử Internet</div>
-          <div class="slide-subtitle">SGK Tin học 10 (Mục Em có biết?, trang 47)</div>
+        <div>
+          <span class="slide-badge purple">Lịch sử an ninh mạng toàn cầu</span>
+          <div class="slide-title">Dòng thời gian: Ba đại dịch mã độc chấn động thế giới</div>
+          <div class="slide-subtitle">Sức tàn phá kinh hoàng của sâu máy tính qua các thập kỷ</div>
+        </div>
+        <div class="reveal-controller">
+          <span>✨ Hiệu ứng:</span>
+          <span class="reveal-status" id="slide-9-status">0 / 3</span>
+          <button class="reveal-btn" onclick="revealNextInCurrentSlide();">▶ Hiện ý (↓)</button>
+          <button class="reveal-btn" style="background: rgba(255,255,255,0.15);" onclick="revealAllInCurrentSlide();">Hiện hết</button>
         </div>
       </div>
-      <div class="slide-body" style="justify-content:center;">
+      <div class="slide-body">
         <div class="grid-3">
-          <!-- 1999: Melissa -->
-          <div class="card" style="border-top:4px solid #38E1F0;">
-            <div style="font-size:13px; font-family:var(--font-mono); color:var(--cyan); font-weight:700; margin-bottom:6px;">NĂM 1999</div>
-            <div class="card-title" style="color:#FFF;">Sâu Melissa (Lây qua Email)</div>
-            <div style="font-size:40px; margin:10px 0;">📧</div>
-            <p class="card-desc">
-              Ngụy trang dưới dạng tệp văn bản Word đính kèm trong thư điện tử. Khi mở ra, nó tự động gửi thư tới <strong>50 địa chỉ đầu tiên</strong> trong danh bạ Outlook. Thiệt hại toàn cầu ước tính hơn <strong>1 tỉ USD</strong>.
+          <div class="card reveal-item" style="border-top: 4px solid var(--sea-light);">
+            <div style="font-size: 20px; font-weight: 800; color: var(--sea-light); font-family: var(--font-mono);">NĂM 1988</div>
+            <div style="font-size: 16px; font-weight: 700; color: #FFF; margin: 4px 0 8px;">Sâu Morris (Worm)</div>
+            <p style="font-size: 13px; color: #CBD5E1; line-height: 1.5;">
+              Sâu máy tính đầu tiên trên mạng ARPANET. Khiến 10% toàn bộ máy tính kết nối mạng lúc bấy giờ bị tê liệt chỉ sau vài giờ.
             </p>
           </div>
 
-          <!-- 2001: Code Red -->
-          <div class="card" style="border-top:4px solid #F5A623;">
-            <div style="font-size:13px; font-family:var(--font-mono); color:var(--amber); font-weight:700; margin-bottom:6px;">NĂM 2001</div>
-            <div class="card-title" style="color:#FFF;">Sâu Code Red (Tấn công Server)</div>
-            <div style="font-size:40px; margin:10px 0;">🌐</div>
-            <p class="card-desc">
-              Lợi dụng lỗ hổng bảo mật của Windows IIS để chiếm quyền điều khiển các máy chủ web toàn cầu. Gây nghẽn mạng Internet diện rộng và thiệt hại khoảng <strong>2 tỉ USD chỉ trong 10 ngày</strong>.
+          <div class="card reveal-item" style="border-top: 4px solid var(--gold);">
+            <div style="font-size: 20px; font-weight: 800; color: var(--gold-light); font-family: var(--font-mono);">NĂM 2000</div>
+            <div style="font-size: 16px; font-weight: 700; color: #FFF; margin: 4px 0 8px;">Sâu ILOVEYOU</div>
+            <p style="font-size: 13px; color: #CBD5E1; line-height: 1.5;">
+              Ẩn danh dưới tệp thư tình <code>LOVE-LETTER-FOR-YOU.txt.vbs</code>. Tự gửi email tới danh bạ người dùng, gây thiệt hại ước tính 10 tỷ USD!
             </p>
           </div>
 
-          <!-- 2017: WannaCry -->
-          <div class="card" style="border-top:4px solid #EF4444;">
-            <div style="font-size:13px; font-family:var(--font-mono); color:#F87171; font-weight:700; margin-bottom:6px;">NĂM 2017</div>
-            <div class="card-title" style="color:#FFF;">Sâu WannaCry (Ransomware)</div>
-            <div style="font-size:40px; margin:10px 0;">💰</div>
-            <p class="card-desc">
-              Tự quét qua mạng để lây nhiễm hàng trăm nghìn máy tính ở <strong>150 quốc gia</strong>. Tự động mã hoá toàn bộ ổ cứng và đòi tiền chuộc bằng <strong>Bitcoin</strong>. Làm tê liệt hàng loạt bệnh viện tại Anh.
+          <div class="card reveal-item" style="border-top: 4px solid var(--rose);">
+            <div style="font-size: 20px; font-weight: 800; color: var(--rose); font-family: var(--font-mono);">NĂM 2017</div>
+            <div style="font-size: 16px; font-weight: 700; color: #FFF; margin: 4px 0 8px;">WannaCry Ransomware</div>
+            <p style="font-size: 13px; color: #CBD5E1; line-height: 1.5;">
+              Tấn công hơn 200.000 máy tính tại 150 quốc gia, mã hóa toàn bộ dữ liệu đòi tiền chuộc Bitcoin; làm tê liệt nhiều bệnh viện ở Anh.
             </p>
           </div>
         </div>
 
-        <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:12px 18px; text-align:center; font-size:13px; color:var(--ink-soft);">
-          💡 <strong>Bài học rút ra:</strong> Tốc độ lây lan của Worm (Sâu) hoàn toàn độc lập và tự động qua mạng — Cần luôn cập nhật bản vá hệ điều hành!
+        <div class="card reveal-item" style="background: rgba(13, 124, 134, 0.12); padding: 10px 16px; font-size: 13px;">
+          💡 <strong>Quy luật chung:</strong> Các mã độc nguy hiểm nhất đều khai thác sự chủ quan của con người hoặc lỗ hổng hệ điều hành chưa được cập nhật vá lỗi!
         </div>
       </div>
     </section>
 
-    <!-- ══════════════════════════════════════════════════════════════════════
-         SLIDE 10: MỤC 3 - BỐN NGUYÊN TẮC VÀNG PHÒNG CHỐNG
-         ══════════════════════════════════════════════════════════════════════ -->
-    <section class="slide" id="slide-10">
+    <!-- ══ SLIDE 10: MỤC 3 · BỐN NGUYÊN TẮC VÀNG PHÒNG THỦ ═════════════════════ -->
+    <section class="slide" id="slide-10" data-total-reveal="3">
       <div class="slide-header">
-        <span class="slide-badge">🛡️ MỤC 3 · PHÒNG CHỐNG MÃ ĐỘC</span>
-        <div class="slide-title-wrap">
-          <div class="slide-title">Bốn Lá Chắn Thép Bảo Vệ An Toàn Số</div>
-          <div class="slide-subtitle">SGK Tin học 10 (Trang 48)</div>
+        <div>
+          <span class="slide-badge leaf">Mục 3 · SGK Trang 47-48</span>
+          <div class="slide-title">Bốn nguyên tắc vàng phòng thủ không gian mạng</div>
+          <div class="slide-subtitle">Bộ quy tắc bất biến giúp em luôn an toàn trước mọi hiểm họa số</div>
         </div>
-      </div>
-      <div class="slide-body" style="justify-content:center;">
-        <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:16px;">
-          <!-- 1. Phần mềm bản quyền -->
-          <div class="card" style="display:flex; gap:16px; align-items:flex-start;">
-            <div style="font-size:36px; padding:8px; border-radius:12px; background:rgba(239,68,68,0.12);">🚫</div>
-            <div>
-              <div class="card-title" style="color:#F87171;">1. Nói Không Với Phần Mềm Lậu (Crack)</div>
-              <p class="card-desc">Tuyệt đối không tải các bản bẻ khoá, keygen từ trang web lạ. Hầu hết các bản bẻ khoá đều bị kẻ xấu nhúng sẵn Trojan hoặc mã độc gián điệp.</p>
-            </div>
-          </div>
-
-          <!-- 2. Windows Update -->
-          <div class="card" style="display:flex; gap:16px; align-items:flex-start;">
-            <div style="font-size:36px; padding:8px; border-radius:12px; background:rgba(59,130,246,0.12);">🔄</div>
-            <div>
-              <div class="card-title" style="color:#60A5FA;">2. Cập Nhật Hệ Điều Hành Thường Xuyên</div>
-              <p class="card-desc">Luôn bật tính năng tự động cập nhật (Windows Update) để nhận các bản vá lỗ hổng bảo mật, ngăn chặn sâu máy tính (Worm) tự xâm nhập qua mạng.</p>
-            </div>
-          </div>
-
-          <!-- 3. Sao lưu đa tầng -->
-          <div class="card" style="display:flex; gap:16px; align-items:flex-start;">
-            <div style="font-size:36px; padding:8px; border-radius:12px; background:rgba(245,166,35,0.12);">💾</div>
-            <div>
-              <div class="card-title" style="color:var(--amber);">3. Sao Lưu Dữ Liệu Định Kỳ (Backup)</div>
-              <p class="card-desc">Lưu trữ bản sao dữ liệu quan trọng lên đám mây (Google Drive, OneDrive) hoặc ổ cứng ngoài để không bao giờ sợ bị tống tiền (Ransomware).</p>
-            </div>
-          </div>
-
-          <!-- 4. Antivirus & Firewall -->
-          <div class="card" style="display:flex; gap:16px; align-items:flex-start;">
-            <div style="font-size:36px; padding:8px; border-radius:12px; background:rgba(16,185,129,0.12);">🛡️</div>
-            <div>
-              <div class="card-title" style="color:var(--green-light);">4. Bật Tường Lửa (Firewall) & Antivirus</div>
-              <p class="card-desc">Sử dụng phần mềm phòng chống mã độc như Windows Defender, Kaspersky, BKAV... và luôn bật tường lửa để lọc luồng dữ liệu độc hại.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ══════════════════════════════════════════════════════════════════════
-         SLIDE 11: PHÒNG THÍ NGHIỆM ẢO WINDOWS DEFENDER
-         ══════════════════════════════════════════════════════════════════════ -->
-    <section class="slide" id="slide-11">
-      <div class="slide-header">
-        <span class="slide-badge">🖥️ THỰC HÀNH · WINDOWS SECURITY (DEFENDER)</span>
-        <div class="slide-title-wrap">
-          <div class="slide-title">Mô Phỏng 4 Chế Độ Quét Của Windows Defender</div>
-          <div class="slide-subtitle">SGK Tin học 10 (Trang 48–49)</div>
+        <div class="reveal-controller">
+          <span>✨ Hiệu ứng:</span>
+          <span class="reveal-status" id="slide-10-status">0 / 3</span>
+          <button class="reveal-btn" onclick="revealNextInCurrentSlide();">▶ Hiện ý (↓)</button>
+          <button class="reveal-btn" style="background: rgba(255,255,255,0.15);" onclick="revealAllInCurrentSlide();">Hiện hết</button>
         </div>
       </div>
       <div class="slide-body">
         <div class="grid-2">
-          <!-- Bảng chọn chế độ -->
-          <div class="win-sec-box">
-            <h3 style="color:#FFF; font-size:16px; margin-bottom:14px; display:flex; align-items:center; gap:8px;">
-              🛡️ Windows Security · Scan Options
-            </h3>
-
-            <div style="display:flex; flex-direction:column; gap:8px;">
-              <div class="scan-mode-btn selected" id="opt-quick" onclick="selectScanMode('quick')">
-                <input type="radio" name="scan-opt" checked>
-                <div>
-                  <div style="font-weight:700; font-size:13.5px;">Quick scan (Quét nhanh)</div>
-                  <div style="font-size:11.5px; color:var(--ink-soft);">Quét các thư mục hệ thống xung yếu hay bị mã độc nhắm tới.</div>
-                </div>
-              </div>
-
-              <div class="scan-mode-btn" id="opt-full" onclick="selectScanMode('full')">
-                <input type="radio" name="scan-opt">
-                <div>
-                  <div style="font-weight:700; font-size:13.5px;">Full scan (Quét toàn bộ)</div>
-                  <div style="font-size:11.5px; color:var(--ink-soft);">Quét toàn bộ tệp tin và tiến trình trên tất cả ổ đĩa (mất nhiều thời gian).</div>
-                </div>
-              </div>
-
-              <div class="scan-mode-btn" id="opt-custom" onclick="selectScanMode('custom')">
-                <input type="radio" name="scan-opt">
-                <div>
-                  <div style="font-weight:700; font-size:13.5px;">Custom scan (Quét tuỳ chọn)</div>
-                  <div style="font-size:11.5px; color:var(--ink-soft);">Chỉ định chính xác một thư mục hoặc ổ đĩa USB cần kiểm tra.</div>
-                </div>
-              </div>
-
-              <div class="scan-mode-btn" id="opt-offline" onclick="selectScanMode('offline')">
-                <input type="radio" name="scan-opt">
-                <div>
-                  <div style="font-weight:700; font-size:13.5px;">Microsoft Defender Offline scan</div>
-                  <div style="font-size:11.5px; color:var(--ink-soft);">Khởi động lại máy để diệt tận gốc các rootkit cứng đầu.</div>
-                </div>
-              </div>
-            </div>
-
-            <button onclick="startDefenderScan()" id="btn-start-scan" class="nav-btn" style="width:100%; height:42px; border-radius:10px; margin-top:14px; background:var(--cyan); color:#060D17; font-weight:700; font-size:14px;">
-              Bắt đầu quét ngay (Scan now) 🔍
-            </button>
-          </div>
-
-          <!-- Màn hình trạng thái quét -->
-          <div class="win-sec-box" style="display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
-            <div id="scan-radar-icon" style="font-size:56px; margin-bottom:12px;">🛡️</div>
-            <h3 id="scan-status-text" style="color:#FFF; font-size:18px; margin-bottom:8px;">Trạng thái: Sẵn sàng quét</h3>
-            <p id="scan-status-sub" style="font-size:13px; color:var(--ink-soft); max-width:320px; line-height:1.5;">
-              Chọn chế độ quét bên trái và nhấn Scan now để kiểm tra an ninh hệ thống.
+          <div class="card reveal-item" style="border-left: 4px solid var(--sea-light);">
+            <div class="card-title" style="color: var(--sea-light);">🛡️ 1. Cảnh giác với liên kết & tệp đính kèm lạ</div>
+            <p style="font-size: 13px; color: #CBD5E1; line-height: 1.6;">
+              Không tải tệp crack, không mở file nén hoặc file <code>.exe</code> gửi từ người không quen; cẩn trọng trước các đường link giục giã "đổi mật khẩu gấp".
             </p>
+          </div>
 
-            <div id="scan-progress-wrap" style="width:80%; height:8px; background:rgba(255,255,255,0.1); border-radius:4px; margin-top:16px; overflow:hidden; display:none;">
-              <div id="scan-progress-bar" style="height:100%; width:0%; background:linear-gradient(90deg, var(--cyan), #22C55E); transition:width 0.2s;"></div>
+          <div class="card reveal-item" style="border-left: 4px solid var(--gold);">
+            <div class="card-title" style="color: var(--gold-light);">🔑 2. Mật khẩu mạnh & Bật xác thực 2 lớp (2FA)</div>
+            <p style="font-size: 13px; color: #CBD5E1; line-height: 1.6;">
+              Mật khẩu tối thiểu 8 ký tự gồm chữ hoa, chữ thường, số và ký tự đặc biệt. Kích hoạt mã OTP qua tin nhắn hoặc Google Authenticator cho toàn bộ tài khoản.
+            </p>
+          </div>
+
+          <div class="card reveal-item" style="border-left: 4px solid var(--leaf-light);">
+            <div class="card-title" style="color: var(--leaf-light);">🔄 3. Thường xuyên cập nhật hệ điều hành & phần mềm</div>
+            <p style="font-size: 13px; color: #CBD5E1; line-height: 1.6;">
+              Bật tính năng Windows Update định kỳ để vá ngay các lỗ hổng bảo mật mà hacker và sâu mạng đang nhắm vào khai thác.
+            </p>
+          </div>
+
+          <div class="card reveal-item" style="border-left: 4px solid var(--purple-light);">
+            <div class="card-title" style="color: var(--purple-light);">💾 4. Sao lưu dữ liệu dự phòng định kỳ</div>
+            <p style="font-size: 13px; color: #CBD5E1; line-height: 1.6;">
+              Sao lưu các tài liệu quan trọng lên Google Drive, OneDrive hoặc ổ cứng di động để không bị mất trắng dữ liệu khi chẳng may dính mã độc tống tiền.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ SLIDE 11: PHÒNG THỰC HÀNH MÔ PHỎNG WINDOWS DEFENDER ═════════════════ -->
+    <section class="slide" id="slide-11" data-total-reveal="1">
+      <div class="slide-header">
+        <div>
+          <span class="slide-badge sea">Thực hành mô phỏng · SGK Trang 48</span>
+          <div class="slide-title">Làm chủ công cụ diệt virus: Windows Security (Defender)</div>
+          <div class="slide-subtitle">Chọn chế độ quét và bấm Bắt đầu để trải nghiệm quy trình rà soát an ninh</div>
+        </div>
+        <div class="reveal-controller">
+          <button class="sim-btn" onclick="startDefenderScan();">🔍 Bắt đầu quét virus</button>
+        </div>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2 reveal-item visible">
+          <!-- BÊN TRÁI: 4 CHẾ ĐỘ QUÉT -->
+          <div class="card" style="border-top: 4px solid var(--sea-light);">
+            <div class="card-title" style="color: var(--sea-light);">⚙️ Chọn 1 trong 4 chế độ quét:</div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <button class="sim-btn active" id="mode-quick" onclick="setScanMode('quick')">⚡ Quick scan (Quét nhanh vùng nguy hiểm)</button>
+              <button class="sim-btn" id="mode-full" onclick="setScanMode('full')">🖥️ Full scan (Quét toàn bộ ổ đĩa máy tính)</button>
+              <button class="sim-btn" id="mode-custom" onclick="setScanMode('custom')">📁 Custom scan (Quét thư mục/USB chỉ định)</button>
+              <button class="sim-btn" id="mode-offline" onclick="setScanMode('offline')">🔄 Offline scan (Khởi động lại quét sâu)</button>
+            </div>
+          </div>
+
+          <!-- BÊN PHẢI: MÀN HÌNH QUÉT THỜI GIAN THỰC -->
+          <div class="card" style="border: 1px solid rgba(56,225,240,0.3); background: #0A121C; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 24px;">
+            <div id="scan-radar-icon" style="font-size: 48px; margin-bottom: 10px;">🛡️</div>
+            <div id="scan-status-text" style="font-size: 16px; font-weight: 700; color: #FFF; margin-bottom: 4px;">
+              Hệ thống đã sẵn sàng quét
+            </div>
+            <div id="scan-sub-text" style="font-size: 13px; color: var(--ink-soft); margin-bottom: 14px;">
+              Chế độ hiện tại: Quick Scan (Quét nhanh)
+            </div>
+            <div id="scan-progress-wrap" style="width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; display: none;">
+              <div id="scan-progress-bar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #0D7C86, #38E1F0); transition: width 0.3s;"></div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ══════════════════════════════════════════════════════════════════════
-         SLIDE 12: CẢNH BÁO BẪY THI & MẸO NHỚ NHANH
-         ══════════════════════════════════════════════════════════════════════ -->
-    <section class="slide" id="slide-12">
+    <!-- ══ SLIDE 12: MẸO NHỚ & CẢNH BÁO BẪY THI TRẮC NGHIỆM ═════════════════════ -->
+    <section class="slide" id="slide-12" data-total-reveal="3">
       <div class="slide-header">
-        <span class="slide-badge">💡 MẸO NHỚ & CẢNH BÁO BẪY ĐỀ THI</span>
-        <div class="slide-title-wrap">
-          <div class="slide-title">4 Bẫy Trắc Nghiệm Học Sinh Rất Dễ Nhầm Lẫn</div>
-          <div class="slide-subtitle">Tránh mất điểm oan trong các bài kiểm tra định kỳ và tốt nghiệp</div>
+        <div>
+          <span class="slide-badge coral">Mẹo thi cử · Chống mất điểm</span>
+          <div class="slide-title">Cảnh báo: Ba "Bẫy ngầm" trong đề thi trắc nghiệm</div>
+          <div class="slide-subtitle">Những câu hỏi học sinh thường xuyên chọn sai nhiều nhất</div>
+        </div>
+        <div class="reveal-controller">
+          <span>✨ Hiệu ứng:</span>
+          <span class="reveal-status" id="slide-12-status">0 / 3</span>
+          <button class="reveal-btn" onclick="revealNextInCurrentSlide();">▶ Hiện ý (↓)</button>
+          <button class="reveal-btn" style="background: rgba(255,255,255,0.15);" onclick="revealAllInCurrentSlide();">Hiện hết</button>
         </div>
       </div>
       <div class="slide-body">
-        <div class="grid-2">
-          <!-- Bẫy 1 -->
-          <div class="card" style="border-left:4px solid #EF4444;">
-            <div style="font-size:12px; font-weight:700; color:#F87171; margin-bottom:4px;">⚠️ BẪY 1: KHẢ NĂNG TỰ LÂY QUA MẠNG</div>
-            <div style="font-size:13.5px; color:#F1F5F9; line-height:1.6;">
-              <span style="color:#EF4444; font-weight:700;">❌ Học sinh hay nghĩ:</span> "Virus có thể tự bò qua mạng Internet sang máy khác mà không cần ai mở file."<br>
-              <span style="color:#34D399; font-weight:700;">✅ Bản chất đúng:</span> <strong>SAI!</strong> Đó là <strong>Worm (Sâu)</strong>. Virus BẮT BUỘC phải có tệp chủ và chỉ lây khi tệp chủ được kích hoạt!
-            </div>
+        <div class="grid-3">
+          <div class="card reveal-item" style="border-top: 4px solid var(--rose);">
+            <div class="card-title" style="color: var(--coral-light);">❌ BẪY 1: Nhầm lẫn Virus & Worm</div>
+            <p style="font-size: 13px; color: #CBD5E1; line-height: 1.6;">
+              Đề hỏi: <em>"Loại mã độc nào tự lây qua mạng không cần tệp chủ?"</em><br>
+              Nhiều bạn nhanh tay khoanh "Virus" là <strong>SAI HOÀN TOÀN</strong>! Đáp án đúng bắt buộc phải là <strong>Sâu máy tính (Worm)</strong>!
+            </p>
           </div>
 
-          <!-- Bẫy 2 -->
-          <div class="card" style="border-left:4px solid #F5A623;">
-            <div style="font-size:12px; font-weight:700; color:var(--amber); margin-bottom:4px;">⚠️ BẪY 2: TROJAN CÓ TỰ NHÂN BẢN KHÔNG?</div>
-            <div style="font-size:13.5px; color:#F1F5F9; line-height:1.6;">
-              <span style="color:#EF4444; font-weight:700;">❌ Học sinh hay nghĩ:</span> "Trojan tự sao chép nhân bản ra hàng loạt file trên ổ cứng."<br>
-              <span style="color:#34D399; font-weight:700;">✅ Bản chất đúng:</span> <strong>Trojan KHÔNG tự nhân bản</strong>. Nó chỉ nguỵ trang để lừa người dùng tự cài đặt và mở cửa sau (backdoor)!
-            </div>
+          <div class="card reveal-item" style="border-top: 4px solid var(--gold);">
+            <div class="card-title" style="color: var(--gold-light);">❌ BẪY 2: Nhầm Trojan có thể tự lây</div>
+            <p style="font-size: 13px; color: #CBD5E1; line-height: 1.6;">
+              Đề hỏi: <em>"Trojan có khả năng tự nhân bản lây nhiễm không?"</em><br>
+              Ghi nhớ tuyệt đối: <strong>Trojan KHÔNG BAO GIỜ tự nhân bản</strong>! Nó chỉ nằm yên nguỵ trang lừa người dùng mở lên.
+            </p>
           </div>
 
-          <!-- Bẫy 3 -->
-          <div class="card" style="border-left:4px solid #3B82F6;">
-            <div style="font-size:12px; font-weight:700; color:#60A5FA; margin-bottom:4px;">⚠️ BẪY 3: PHẦN MỀM DIỆT VIRUS BẢO VỆ 100%?</div>
-            <div style="font-size:13.5px; color:#F1F5F9; line-height:1.6;">
-              <span style="color:#EF4444; font-weight:700;">❌ Học sinh hay nghĩ:</span> "Cứ cài phần mềm diệt virus là thỏa sức bấm vào mọi đường link lạ."<br>
-              <span style="color:#34D399; font-weight:700;">✅ Bản chất đúng:</span> Phần mềm chỉ bảo vệ được các mẫu độc hại đã biết. <strong>Ý thức cảnh giác</strong> của con người mới là lá chắn tối quan trọng!
-            </div>
-          </div>
-
-          <!-- Bẫy 4 -->
-          <div class="card" style="border-left:4px solid #10B981;">
-            <div style="font-size:12px; font-weight:700; color:var(--green-light); margin-bottom:4px;">⚠️ BẪY 4: CẮM USB CHỌN QUÉT GÌ?</div>
-            <div style="font-size:13.5px; color:#F1F5F9; line-height:1.6;">
-              <span style="color:#EF4444; font-weight:700;">❌ Đề hỏi:</span> "Mượn USB của bạn cắm vào máy tính, muốn quét riêng USB chọn chế độ nào?"<br>
-              <span style="color:#34D399; font-weight:700;">✅ Đáp án chuẩn:</span> Phải chọn <strong>Custom scan (Quét tuỳ chọn)</strong> để chỉ định ổ đĩa USB, không chọn Full scan!
-            </div>
+          <div class="card reveal-item" style="border-top: 4px solid var(--leaf-light);">
+            <div class="card-title" style="color: var(--leaf-light);">❌ BẪY 3: Cài phần mềm diệt là an toàn 100%</div>
+            <p style="font-size: 13px; color: #CBD5E1; line-height: 1.6;">
+              Đề hỏi câu đúng/sai: <em>"Đã cài phần mềm diệt virus thì có thể thoải mái bấm vào mọi đường link lạ?"</em><br>
+              <strong>SAI!</strong> Ý thức người dùng mới là lá chắn an ninh quan trọng nhất!
+            </p>
           </div>
         </div>
 
-        <!-- Khẩu quyết ghi nhớ -->
-        <div style="background:rgba(56,225,240,0.08); border:1px solid rgba(56,225,240,0.25); border-radius:12px; padding:12px 20px; text-align:center;">
-          <span style="font-size:15px; font-weight:800; color:var(--cyan);">
-            📢 KHẨU QUYẾT: "Virus ký sinh tệp chủ · Sâu bò độc lập qua mạng · Trojan lừa gạt áo mới!"
-          </span>
+        <div class="card reveal-item" style="background: rgba(13, 124, 134, 0.12); padding: 10px 16px; font-size: 13px;">
+          💡 <strong>Khắc cốt ghi tâm:</strong> Đọc kỹ từ khóa "tự lây lan" (Worm) vs "gắn vào tệp" (Virus) vs "nguỵ trang" (Trojan).
         </div>
       </div>
     </section>
 
-    <!-- ══════════════════════════════════════════════════════════════════════
-         SLIDE 13: ĐẤU TRƯỜNG CHINH PHỤC MINI QUIZ (5 CÂU)
-         ══════════════════════════════════════════════════════════════════════ -->
-    <section class="slide" id="slide-13">
+    <!-- ══ SLIDE 13: ĐẤU TRƯỜNG MINI QUIZ 5 CÂU ════════════════════════════════ -->
+    <section class="slide" id="slide-13" data-total-reveal="1">
       <div class="slide-header">
-        <span class="slide-badge">🏆 ĐẤU TRƯỜNG MINI QUIZ · 5 CÂU HỎI NHANH</span>
-        <div class="slide-title-wrap">
-          <div class="slide-title" id="quiz-question-title">Câu 1/5: Khái niệm phân biệt Virus & Worm</div>
-          <div class="slide-subtitle">Bấm vào phương án em chọn để kiểm tra độ chính xác</div>
+        <div>
+          <span class="slide-badge leaf">Đấu trường Mini Quiz · 5 Câu củng cố</span>
+          <div class="slide-title" id="quiz-question-title">Đấu trường Mini Quiz: Kiểm tra độ hiểu bài</div>
+          <div class="slide-subtitle" id="quiz-score-badge">Điểm số hiện tại: 0 / 5</div>
+        </div>
+        <div class="reveal-controller">
+          <button class="sim-btn" onclick="nextQuizQuestion();" id="btn-next-quiz" style="display: none; background: #0D7C86;">Câu tiếp theo →</button>
         </div>
       </div>
       <div class="slide-body">
-        <div class="quiz-card">
-          <div id="quiz-question-text" style="font-size:16px; font-weight:700; color:#FFF; line-height:1.6;">
+        <div class="card reveal-item visible" style="border: 1px solid rgba(56,225,240,0.3); padding: 20px;">
+          <div id="quiz-question-text" style="font-size: 15.5px; font-weight: 700; color: #FFF; line-height: 1.5; margin-bottom: 14px;">
             Đang tải câu hỏi...
           </div>
-
-          <div id="quiz-options-box" style="display:flex; flex-direction:column; gap:10px;">
-            <!-- Options được render bằng JS -->
+          <div id="quiz-options-box" style="display: flex; flex-direction: column; gap: 8px;">
+            <!-- Render options -->
           </div>
-
-          <div id="quiz-feedback-box" style="display:none; padding:12px 16px; border-radius:10px; font-size:13.5px; line-height:1.6;">
-            <!-- Lời giải -->
-          </div>
-
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
-            <span style="font-family:var(--font-mono); font-size:13px; color:var(--cyan);" id="quiz-score-badge">Điểm số: 0 / 5</span>
-            <button id="btn-next-quiz" onclick="nextQuizQuestion()" class="nav-btn" style="width:auto; height:36px; padding:0 20px; border-radius:8px; display:none; background:var(--cyan); color:#060D17; font-weight:700; font-size:13px;">
-              Câu tiếp theo ➜
-            </button>
-          </div>
+          <div id="quiz-feedback-box" style="margin-top: 12px; font-size: 13px; padding: 10px 14px; border-radius: 8px; display: none;"></div>
         </div>
       </div>
     </section>
 
-    <!-- ══════════════════════════════════════════════════════════════════════
-         SLIDE 14: SƠ ĐỒ TƯ DUY TỔNG KẾT TOÀN BÀI
-         ══════════════════════════════════════════════════════════════════════ -->
-    <section class="slide" id="slide-14">
+    <!-- ══ SLIDE 14: SƠ ĐỒ TƯ DUY (MINDMAP) TỔNG QUAN ══════════════════════════ -->
+    <section class="slide" id="slide-14" data-total-reveal="3">
       <div class="slide-header">
-        <span class="slide-badge">🗺️ SƠ ĐỒ TƯ DUY (MINDMAP)</span>
-        <div class="slide-title-wrap">
-          <div class="slide-title">Bản Đồ Kiến Thức Tổng Thể Bài 9</div>
-          <div class="slide-subtitle">Hệ thống hóa toàn bộ kiến thức theo 3 nhánh trực quan</div>
+        <div>
+          <span class="slide-badge purple">Sơ đồ tư duy tri thức</span>
+          <div class="slide-title">Bản đồ tư duy: Trọn vẹn kiến thức Bài 9 trong 1 trang</div>
+          <div class="slide-subtitle">Hệ thống hóa toàn bộ nội dung đã học để ghi nhớ bền vững</div>
+        </div>
+        <div class="reveal-controller">
+          <span>✨ Hiệu ứng:</span>
+          <span class="reveal-status" id="slide-14-status">0 / 3</span>
+          <button class="reveal-btn" onclick="revealNextInCurrentSlide();">▶ Hiện ý (↓)</button>
+          <button class="reveal-btn" style="background: rgba(255,255,255,0.15);" onclick="revealAllInCurrentSlide();">Hiện hết</button>
         </div>
       </div>
-      <div class="slide-body" style="justify-content:center;">
-        <div style="display:grid; grid-template-columns:1.2fr 1.5fr 1.3fr; gap:16px;">
-          <!-- Nhánh 1 -->
-          <div class="card" style="border-top:4px solid var(--amber);">
-            <div style="font-weight:800; font-size:15px; color:var(--amber); margin-bottom:10px;">
-              🚨 5 NGUY CƠ TRÊN MẠNG
-            </div>
-            <ul style="font-size:13px; color:var(--ink-soft); line-height:1.8; padding-left:18px;">
-              <li>1. Tin giả & phản văn hoá</li>
-              <li>2. Lừa đảo trực tuyến (Phishing)</li>
-              <li>3. Lộ thông tin cá nhân/CCCD</li>
-              <li>4. Bắt nạt mạng (Cyberbullying)</li>
-              <li>5. Nghiện mạng & trò chơi</li>
+      <div class="slide-body">
+        <div class="grid-3">
+          <div class="card reveal-item" style="border-top: 4px solid var(--rose);">
+            <div class="card-title" style="color: var(--coral-light);">1. NĂM NGUY CƠ</div>
+            <ul style="margin-left: 16px; font-size: 12.5px; line-height: 1.6; color: #CBD5E1;">
+              <li>Tin giả & văn hóa xấu</li>
+              <li>Lừa đảo mạng (Phishing)</li>
+              <li>Lộ thông tin đời tư</li>
+              <li>Bắt nạt qua mạng</li>
+              <li>Nghiện Internet & game</li>
             </ul>
           </div>
 
-          <!-- Nhánh 2 -->
-          <div class="card" style="border-top:4px solid var(--red);">
-            <div style="font-weight:800; font-size:15px; color:var(--red-light); margin-bottom:10px;">
-              🦠 MALWARE (PHẦN MỀM ĐỘC HẠI)
-            </div>
-            <ul style="font-size:13px; color:var(--ink-soft); line-height:1.8; padding-left:18px;">
-              <li><strong>Virus:</strong> Ký sinh tệp chủ, lây khi chạy</li>
-              <li><strong>Worm:</strong> Độc lập, tự nhân bản qua mạng</li>
-              <li><strong>Trojan:</strong> Nguỵ trang phần mềm có ích</li>
-              <li><strong>Biến thể:</strong> Spyware, Keylogger, Ransomware</li>
+          <div class="card reveal-item" style="border-top: 4px solid var(--gold);">
+            <div class="card-title" style="color: var(--gold-light);">2. MÃ ĐỘC (MALWARE)</div>
+            <ul style="margin-left: 16px; font-size: 12.5px; line-height: 1.6; color: #CBD5E1;">
+              <li><strong>Virus:</strong> Ký sinh tệp chủ</li>
+              <li><strong>Worm:</strong> Tự lây qua mạng</li>
+              <li><strong>Trojan:</strong> Nguỵ trang ứng dụng</li>
+              <li><strong>Spyware:</strong> Nghe trộm phím</li>
+              <li><strong>Ransomware:</strong> Tống tiền</li>
             </ul>
           </div>
 
-          <!-- Nhánh 3 -->
-          <div class="card" style="border-top:4px solid var(--green);">
-            <div style="font-weight:800; font-size:15px; color:var(--green-light); margin-bottom:10px;">
-              🛡️ BIỆN PHÁP BẢO VỆ
-            </div>
-            <ul style="font-size:13px; color:var(--ink-soft); line-height:1.8; padding-left:18px;">
-              <li>Không dùng phần mềm lậu (crack)</li>
-              <li>Cập nhật hệ điều hành (Update)</li>
-              <li>Sao lưu dữ liệu định kỳ (Cloud/USB)</li>
-              <li><strong>Windows Defender:</strong> Quick, Full, Custom scan</li>
+          <div class="card reveal-item" style="border-top: 4px solid var(--leaf-light);">
+            <div class="card-title" style="color: var(--leaf-light);">3. BỐN LÁ CHẮN</div>
+            <ul style="margin-left: 16px; font-size: 12.5px; line-height: 1.6; color: #CBD5E1;">
+              <li>Cảnh giác link & tệp lạ</li>
+              <li>Mật khẩu mạnh & 2FA</li>
+              <li>Cập nhật Windows Update</li>
+              <li>Sao lưu dữ liệu định kỳ</li>
+              <li>Quét diệt Windows Security</li>
             </ul>
           </div>
         </div>
 
-        <div style="text-align:center; margin-top:8px;">
-          <div style="display:inline-block; padding:10px 24px; border-radius:999px; background:rgba(56,225,240,0.12); border:1px solid rgba(56,225,240,0.3); font-size:14px; color:var(--cyan); font-weight:700;">
-            🔑 CÔNG THỨC VÀNG: "5 NGUY CƠ — 3 LOẠI MÃ ĐỘC — 4 LÁ CHẮN BẢO VỆ"
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ══════════════════════════════════════════════════════════════════════
-         SLIDE 15: TỔNG KẾT & NHIỆM VỤ VỀ NHÀ
-         ══════════════════════════════════════════════════════════════════════ -->
-    <section class="slide" id="slide-15">
-      <div class="slide-header">
-        <span class="slide-badge">🎉 KẾT THÚC BÀI HỌC</span>
-        <div class="slide-title-wrap">
-          <div class="slide-title">Chúc Mừng Em Đã Hoàn Thành Bài 9!</div>
-          <div class="slide-subtitle">Trở thành công dân số thông thái, an toàn và có trách nhiệm</div>
-        </div>
-      </div>
-      <div class="slide-body" style="justify-content:center; align-items:center; text-align:center; gap:20px;">
-        <div style="font-size:64px; animation:bounce 2s infinite;">🛡️✨</div>
-
-        <h2 style="font-size:28px; font-weight:900; color:#FFF;">
-          HÃY LÀ NGƯỜI SỬ DỤNG MẠNG THÔNG MINH & TỈNH TÁO!
-        </h2>
-
-        <div class="card" style="max-width:680px; text-align:left; background:rgba(16,29,48,0.8);">
-          <div class="card-title" style="color:var(--cyan);">📝 NHIỆM VỤ THỰC HÀNH VỀ NHÀ:</div>
-          <ol style="font-size:14px; color:var(--ink-soft); line-height:1.8; padding-left:22px;">
-            <li>Mở ứng dụng <strong>Windows Security</strong> trên máy tính của em hoặc gia đình.</li>
-            <li>Thực hiện một lần quét nhanh (<strong>Quick scan</strong>) và ghi lại số lượng tệp đã quét.</li>
-            <li>Bật xác thực hai bước (<strong>2FA</strong>) cho tài khoản mạng xã hội hoặc email cá nhân.</li>
-            <li>Vào phần <strong>Luyện trắc nghiệm Bài 9</strong> trên trang web để củng cố 100% kiến thức!</li>
-          </ol>
-        </div>
-
-        <div style="display:flex; gap:16px; justify-content:center;">
-          <button onclick="goToSlide(1)" class="nav-btn" style="width:auto; padding:12px 26px; border-radius:999px; gap:8px;">
-            ↺ Xem lại từ đầu
-          </button>
-          <button onclick="launchConfetti()" class="nav-btn" style="width:auto; padding:12px 28px; border-radius:999px; background:var(--cyan); color:#060D17; font-weight:700; gap:8px;">
-            🎉 Pháo hoa chúc mừng
+        <div class="card reveal-item" style="text-align: center; padding: 12px; background: rgba(13, 124, 134, 0.12); border-color: rgba(56, 225, 240, 0.4);">
+          <button class="sim-btn" onclick="fireConfetti();" style="background: linear-gradient(135deg, #0D7C86, #38E1F0); color: white; font-weight: 800; padding: 8px 22px;">
+            🎉 Bắn pháo hoa vinh danh Hiệp sĩ An toàn số!
           </button>
         </div>
       </div>
     </section>
 
-  </div>
-
-  <!-- ─── THANH TIẾN ĐỘ TRÊN ĐỈNH ─── -->
-  <div class="top-progress-bar" onclick="seekSlide(event)" title="Tiến độ bài học - Nhấp để tua nhanh slide">
-    <div class="top-progress-fill" id="slide-progress-fill"></div>
-  </div>
-
-  <!-- ─── 2 NÚT CHUYỂN SLIDE 2 BÊN SƯỜN MÀN HÌNH ─── -->
-  <button class="nav-side-btn prev" onclick="prevSlide()" id="btn-side-prev" title="Slide trước (← Phím mũi tên Trái)">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-  </button>
-  <button class="nav-side-btn next" onclick="nextSlide()" id="btn-side-next" title="Slide kế tiếp (→ Phím mũi tên Phải / Phím Cách)">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-  </button>
-
-  <!-- ─── CỤM TIỆN ÍCH HUD GÓC TRÊN BÊN PHẢI ─── -->
-  <div class="top-quick-hud">
-    <div class="slide-indicator" id="slide-num-indicator">1 / 15</div>
-    <div class="hud-divider"></div>
-    <button class="hud-btn" onclick="openTOC()" title="Mục lục bài giảng (Phím T)">📑 <span>Mục lục</span></button>
-    <button class="hud-btn" onclick="toggleAudio()" id="btn-audio-toggle" title="Bật/Tắt âm thanh (Phím M)">🔊</button>
-    <button class="hud-btn" onclick="toggleFullScreen()" title="Toàn màn hình (Phím F)">⛶</button>
-  </div>
-
-  <!-- ─── MODAL MỤC LỤC ─── -->
-  <div class="toc-modal" id="toc-modal" onclick="closeTOC(event)">
-    <div class="toc-content" onclick="event.stopPropagation()">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h3 style="color:var(--cyan); font-size:18px; font-weight:800;">📑 MỤC LỤC BÀI GIẢNG ĐIỆN TỬ BÀI 9</h3>
-        <button onclick="closeTOC()" style="background:none; border:none; color:var(--ink-soft); font-size:22px; cursor:pointer;">✕</button>
+    <!-- ══ SLIDE 15: TỔNG KẾT & NHIỆM VỤ VỀ NHÀ ═════════════════════════════════ -->
+    <section class="slide" id="slide-15" data-total-reveal="3">
+      <div class="slide-header">
+        <div>
+          <span class="slide-badge leaf">Tổng kết & Vận dụng</span>
+          <div class="slide-title">Thông điệp cốt lõi & Nhiệm vụ thực hành tại nhà</div>
+          <div class="slide-subtitle">Trở thành công dân số thông minh, an toàn và có trách nhiệm</div>
+        </div>
+        <div class="reveal-controller">
+          <span>✨ Hiệu ứng:</span>
+          <span class="reveal-status" id="slide-15-status">0 / 3</span>
+          <button class="reveal-btn" onclick="revealNextInCurrentSlide();">▶ Hiện ý (↓)</button>
+          <button class="reveal-btn" style="background: rgba(255,255,255,0.15);" onclick="revealAllInCurrentSlide();">Hiện hết</button>
+        </div>
       </div>
-      <div class="toc-grid" id="toc-grid-container">
-        <!-- Render bằng JavaScript -->
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- 3 THÔNG ĐIỆP -->
+          <div class="reveal-item" style="display: flex; flex-direction: column; gap: 10px;">
+            <div class="card" style="border-left: 4px solid var(--sea-light); padding: 12px 16px;">
+              <div style="font-weight: 700; font-size: 14px; color: var(--sea-light);">1. Tỉnh táo trước mọi cám dỗ số</div>
+              <div style="font-size: 12.5px; color: var(--ink-soft); margin-top: 2px;">Không có phần thưởng hay học bổng miễn phí nào yêu cầu nhập mật khẩu hoặc gửi mã OTP.</div>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--gold); padding: 12px 16px;">
+              <div style="font-weight: 700; font-size: 14px; color: var(--gold-light);">2. Bảo vệ danh tính như bảo vệ ngôi nhà</div>
+              <div style="font-size: 12.5px; color: var(--ink-soft); margin-top: 2px;">Không công khai căn cước, vé máy bay hay địa chỉ nhà riêng lên mạng xã hội.</div>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--leaf-light); padding: 12px 16px;">
+              <div style="font-weight: 700; font-size: 14px; color: var(--leaf-light);">3. Ứng xử nhân văn & Văn minh mạng</div>
+              <div style="font-size: 12.5px; color: var(--ink-soft); margin-top: 2px;">Nói không với bạo lực ngôn từ và tin giả; đồng hành xây dựng môi trường mạng lành mạnh.</div>
+            </div>
+          </div>
+
+          <!-- NHIỆM VỤ VỀ NHÀ -->
+          <div class="card reveal-item" style="border-top: 4px solid var(--sea-light); display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div class="card-title" style="color: #FFF;">📝 Nhiệm vụ thực hành tại nhà:</div>
+              <ul style="margin-left: 18px; font-size: 13px; line-height: 1.7; color: #CBD5E1;">
+                <li>Kiểm tra và kích hoạt bảo mật 2 bước (2FA) cho tài khoản Zalo, Facebook cá nhân.</li>
+                <li>Mở Windows Security trên máy tính gia đình và chạy thử 1 lần <strong>Quick scan</strong>.</li>
+                <li>Luyện tập trọn bộ 30 câu trắc nghiệm Bài 9 trên hệ thống web ôn thi của trường.</li>
+              </ul>
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 14px;">
+              <button class="sim-btn" onclick="goToSlide(1)" style="flex: 1; justify-content: center;">🔄 Xem lại từ đầu</button>
+              <button class="sim-btn" onclick="fireConfetti()" style="background: #0D7C86; color: white;">🎉 Pháo hoa chúc mừng</button>
+            </div>
+          </div>
+        </div>
       </div>
+    </section>
+
+  </div><!-- /deck-container -->
+
+  <!-- ─── THANH ĐIỀU HƯỚNG DƯỚI CÙNG (.DECK-NAV) CHUẨN TIN 12 ─── -->
+  <div class="deck-nav">
+    <button class="nav-btn" onclick="prevSlide();" title="Slide trước (← Phím Mũi tên trái)">‹</button>
+    <div class="deck-progress" onclick="seekSlide(event)" title="Nhấp chuột để tua nhanh slide">
+      <div class="deck-progress-bar" id="progressBar"></div>
     </div>
+    <div class="deck-counter" id="slideCounter">01 / 15</div>
+    <button class="nav-btn" onclick="nextSlide();" title="Slide tiếp (→ Phím Mũi tên phải hoặc Space)">›</button>
+    <button class="nav-btn" onclick="toggleMute();" id="muteBtn" title="Bật/Tắt âm thanh (M)">🔊</button>
+    <button class="nav-btn" onclick="toggleFullScreen();" title="Toàn màn hình (F)">⛶</button>
   </div>
 
   <script>
-    /* ─── HỆ THỐNG ÂM THANH WEB AUDIO TỰ TẠO SỐNG ĐỘNG ─── */
-    let audioCtx = null;
-    let isSoundOn = true;
+    let currentSlide = 1;
+    const totalSlides = 15;
+    let isMuted = false;
 
-    function getAudio() {
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-      return audioCtx;
-    }
+    /* ─── BỘ TỔNG HỢP ÂM THANH WEB AUDIO API (KHÔNG CẦN TỆP NGOÀI) ─── */
+    const audioCtx = (typeof window !== 'undefined' && (window.AudioContext || window.webkitAudioContext))
+      ? new (window.AudioContext || window.webkitAudioContext)() : null;
 
     function playSound(type) {
-      if (!isSoundOn) return;
-      try {
-        const ctx = getAudio();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        const t = ctx.currentTime;
+      if (isMuted || !audioCtx) return;
+      if (audioCtx.state === 'suspended') audioCtx.resume();
 
-        if (type === 'slide') {
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(320, t);
-          osc.frequency.exponentialRampToValueAtTime(540, t + 0.12);
-          gain.gain.setValueAtTime(0.08, t);
-          gain.gain.linearRampToValueAtTime(0, t + 0.12);
-          osc.start(t); osc.stop(t + 0.12);
-        } else if (type === 'correct') {
-          osc.type = 'triangle';
-          osc.frequency.setValueAtTime(523.25, t); // C5
-          osc.frequency.setValueAtTime(659.25, t + 0.08); // E5
-          osc.frequency.setValueAtTime(783.99, t + 0.16); // G5
-          gain.gain.setValueAtTime(0.18, t);
-          gain.gain.linearRampToValueAtTime(0, t + 0.35);
-          osc.start(t); osc.stop(t + 0.35);
-        } else if (type === 'wrong') {
-          osc.type = 'sawtooth';
-          osc.frequency.setValueAtTime(220, t);
-          osc.frequency.linearRampToValueAtTime(140, t + 0.25);
-          gain.gain.setValueAtTime(0.15, t);
-          gain.gain.linearRampToValueAtTime(0, t + 0.25);
-          osc.start(t); osc.stop(t + 0.25);
-        } else if (type === 'radar') {
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(800, t);
-          osc.frequency.exponentialRampToValueAtTime(300, t + 0.18);
-          gain.gain.setValueAtTime(0.1, t);
-          gain.gain.linearRampToValueAtTime(0, t + 0.18);
-          osc.start(t); osc.stop(t + 0.18);
-        } else if (type === 'key') {
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(450 + Math.random() * 100, t);
-          gain.gain.setValueAtTime(0.04, t);
-          gain.gain.linearRampToValueAtTime(0, t + 0.04);
-          osc.start(t); osc.stop(t + 0.04);
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      if (type === 'click') {
+        osc.frequency.setValueAtTime(600, now);
+        osc.frequency.exponentialRampToValueAtTime(300, now + 0.05);
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.05);
+        osc.start(now); osc.stop(now + 0.05);
+      } else if (type === 'reveal') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(440, now);
+        osc.frequency.exponentialRampToValueAtTime(880, now + 0.12);
+        gain.gain.setValueAtTime(0.18, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.12);
+        osc.start(now); osc.stop(now + 0.12);
+      } else if (type === 'success') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(523.25, now);
+        osc.frequency.setValueAtTime(659.25, now + 0.08);
+        osc.frequency.setValueAtTime(783.99, now + 0.16);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.35);
+        osc.start(now); osc.stop(now + 0.35);
+      } else if (type === 'wrong') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(220, now);
+        osc.frequency.linearRampToValueAtTime(150, now + 0.18);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.18);
+        osc.start(now); osc.stop(now + 0.18);
+      }
+    }
+
+    function toggleMute() {
+      isMuted = !isMuted;
+      document.getElementById('muteBtn').innerText = isMuted ? '🔇' : '🔊';
+    }
+
+    /* ─── QUẢN LÝ REVEAL TỪNG BƯỚC ─── */
+    function getActiveSlideElement() {
+      return document.getElementById('slide-' + currentSlide);
+    }
+
+    function updateRevealStatus() {
+      const slide = getActiveSlideElement();
+      if (!slide) return;
+      const items = slide.querySelectorAll('.reveal-item');
+      const visibleCount = slide.querySelectorAll('.reveal-item.visible').length;
+      const statusEl = document.getElementById('slide-' + currentSlide + '-status');
+      if (statusEl) {
+        statusEl.innerText = visibleCount + ' / ' + items.length;
+      }
+    }
+
+    function revealNextInCurrentSlide() {
+      const slide = getActiveSlideElement();
+      if (!slide) return false;
+      const hiddenItems = Array.from(slide.querySelectorAll('.reveal-item:not(.visible)'));
+      if (hiddenItems.length > 0) {
+        const nextItem = hiddenItems[0];
+        nextItem.classList.add('visible', 'just-revealed');
+        playSound('reveal');
+        setTimeout(() => nextItem.classList.remove('just-revealed'), 700);
+        updateRevealStatus();
+        return true;
+      }
+      return false;
+    }
+
+    function revealAllInCurrentSlide() {
+      const slide = getActiveSlideElement();
+      if (!slide) return;
+      slide.querySelectorAll('.reveal-item').forEach(item => {
+        item.classList.add('visible');
+      });
+      playSound('click');
+      updateRevealStatus();
+    }
+
+    function autoStaggerReveal(slide) {
+      const items = slide.querySelectorAll('.reveal-item');
+      if (items.length === 0) return;
+      items.forEach((item, index) => {
+        setTimeout(() => {
+          item.classList.add('visible');
+          updateRevealStatus();
+        }, (index + 1) * 160);
+      });
+    }
+
+    /* ─── ĐIỀU HƯỚNG SLIDE ─── */
+    function updateSlide() {
+      document.querySelectorAll('.slide').forEach((s, idx) => {
+        const slideIndex = idx + 1;
+        s.classList.remove('active', 'prev');
+        if (slideIndex === currentSlide) {
+          s.classList.add('active');
+          s.querySelectorAll('.reveal-item').forEach(el => el.classList.remove('visible'));
+          autoStaggerReveal(s);
+        } else if (slideIndex < currentSlide) {
+          s.classList.add('prev');
         }
-      } catch (e) {}
-    }
+      });
 
-    function toggleAudio() {
-      isSoundOn = !isSoundOn;
-      document.getElementById('btn-audio-toggle').innerText = isSoundOn ? '🔊' : '🔇';
-    }
+      const progress = (currentSlide / totalSlides) * 100;
+      document.getElementById('progressBar').style.width = progress + '%';
+      document.getElementById('slideCounter').innerText =
+        String(currentSlide).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
 
-    /* ─── QUẢN LÝ CHUYỂN SLIDE ─── */
-    const totalSlides = 15;
-    let currentSlide = 1;
-
-    const slideTitles = [
-      "1. Trang bìa bài giảng",
-      "2. Khởi động · Bẫy vay tiền",
-      "3. Mục tiêu bài học",
-      "4. Mục 1: 5 Nguy cơ trên mạng",
-      "5. Đấu trường phân loại hành vi",
-      "6. Mục 2: Khái niệm Malware",
-      "7. Tam giác: Virus - Worm - Trojan",
-      "8. Biến thể & Keylogger Lab",
-      "9. Dòng thời gian 3 đại dịch sâu",
-      "10. Mục 3: 4 Nguyên tắc phòng thủ",
-      "11. Thực hành Windows Defender",
-      "12. Mẹo nhớ & Bẫy thi trắc nghiệm",
-      "13. Đấu trường Mini Quiz 5 câu",
-      "14. Sơ đồ tư duy (Mindmap)",
-      "15. Tổng kết & Nhiệm vụ về nhà"
-    ];
-
-    function updateSlideUI() {
-      for (let i = 1; i <= totalSlides; i++) {
-        const el = document.getElementById('slide-' + i);
-        if (!el) continue;
-        el.classList.remove('active', 'prev');
-        if (i === currentSlide) {
-          el.classList.add('active');
-        } else if (i < currentSlide) {
-          el.classList.add('prev');
-        }
-      }
-
-      document.getElementById('slide-num-indicator').innerText = currentSlide + ' / ' + totalSlides;
-      const pct = (currentSlide / totalSlides) * 100;
-      document.getElementById('slide-progress-fill').style.width = pct + '%';
-
-      const prevBtn = document.getElementById('btn-side-prev');
-      const nextBtn = document.getElementById('btn-side-next');
-      if (prevBtn) {
-        prevBtn.disabled = currentSlide === 1;
-        prevBtn.classList.toggle('disabled', currentSlide === 1);
-      }
-      if (nextBtn) {
-        nextBtn.disabled = currentSlide === totalSlides;
-        nextBtn.classList.toggle('disabled', currentSlide === totalSlides);
-      }
-    }
-
-    function goToSlide(n) {
-      if (n < 1 || n > totalSlides || n === currentSlide) return;
-      currentSlide = n;
-      playSound('slide');
-      updateSlideUI();
+      if (currentSlide === 13) renderQuiz();
     }
 
     function nextSlide() {
       if (currentSlide < totalSlides) {
-        goToSlide(currentSlide + 1);
+        currentSlide++;
+        playSound('click');
+        updateSlide();
       }
     }
 
     function prevSlide() {
       if (currentSlide > 1) {
-        goToSlide(currentSlide - 1);
+        currentSlide--;
+        playSound('click');
+        updateSlide();
+      }
+    }
+
+    function goToSlide(n) {
+      if (n >= 1 && n <= totalSlides && n !== currentSlide) {
+        currentSlide = n;
+        playSound('click');
+        updateSlide();
       }
     }
 
@@ -1429,21 +1135,6 @@
       goToSlide(target);
     }
 
-    /* Bàn phím điều khiển */
-    window.addEventListener('keydown', (e) => {
-      if (['ArrowRight', 'Space', 'PageDown'].includes(e.code)) {
-        e.preventDefault(); nextSlide();
-      } else if (['ArrowLeft', 'PageUp'].includes(e.code)) {
-        e.preventDefault(); prevSlide();
-      } else if (e.code === 'KeyF') {
-        toggleFullScreen();
-      } else if (e.code === 'KeyM') {
-        toggleAudio();
-      } else if (e.code === 'KeyT') {
-        openTOC();
-      }
-    });
-
     function toggleFullScreen() {
       if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen().catch(() => {});
@@ -1452,75 +1143,54 @@
       }
     }
 
-    /* ─── MỤC LỤC MODAL ─── */
-    function openTOC() {
-      const container = document.getElementById('toc-grid-container');
-      container.innerHTML = slideTitles.map((t, idx) => {
-        const n = idx + 1;
-        const active = n === currentSlide ? 'active' : '';
-        return `<div class="toc-item ${active}" onclick="goToSlide(${n}); closeTOC();">
-          <span style="font-family:var(--font-mono); font-weight:700;">${n < 10 ? '0' + n : n}.</span>
-          <span>${t.split('. ')[1] || t}</span>
-        </div>`;
-      }).join('');
-      document.getElementById('toc-modal').classList.add('open');
-    }
-    function closeTOC() {
-      document.getElementById('toc-modal').classList.remove('open');
-    }
+    /* ─── PHÍM TẮT CHUẨN TIN 12 ─── */
+    window.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return;
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault(); nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault(); prevSlide();
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault(); revealNextInCurrentSlide();
+      } else if (e.key === 'f' || e.key === 'F') {
+        e.preventDefault(); toggleFullScreen();
+      } else if (e.key === 'm' || e.key === 'M') {
+        e.preventDefault(); toggleMute();
+      } else if (e.key === 'Home') {
+        goToSlide(1);
+      } else if (e.key === 'End') {
+        goToSlide(totalSlides);
+      }
+    });
 
-    /* ─── SLIDE 2: PHẢN HỒI CHAT TÌNH HUỐNG ─── */
-    function checkChatChoice(choice) {
-      const box = document.getElementById('chat-feedback-box');
+    /* ─── LOGIC TƯƠNG TÁC SLIDE 2: CASE STUDY VAY TIỀN ─── */
+    function handleCaseStudy(choice) {
+      const box = document.getElementById('case-result-box');
       if (choice === 1) {
         playSound('wrong');
-        box.innerHTML = `
-          <div style="text-align:center;">
-            <div style="font-size:48px; margin-bottom:8px;">❌</div>
-            <h3 style="color:#EF4444; font-size:18px; margin-bottom:8px;">BẠN ĐÃ SẬP BẪY LỪA ĐẢO!</h3>
-            <p style="font-size:13.5px; color:#F1F5F9; line-height:1.6; margin-bottom:12px;">
-              Kẻ xấu khi chiếm đoạt tài khoản đã đọc toàn bộ tin nhắn cũ để bắt chước chuẩn xác cách xưng hô thân mật. Chuyển tiền ngay sẽ khiến em mất trắng 500.000đ!
-            </p>
-            <div style="font-size:12px; color:var(--amber); background:rgba(245,166,35,0.1); padding:8px; border-radius:8px;">
-              ⚠️ Luôn cảnh giác với bất kỳ yêu cầu chuyển tiền gấp nào trên mạng!
-            </div>
-          </div>`;
+        box.innerHTML = '<div style="font-size:36px; margin-bottom:6px;">❌</div>' +
+          '<div style="color:var(--rose); font-weight:700; font-size:15px; margin-bottom:4px;">RẤT NGUY HIỂM! MẮC BẪY 100%!</div>' +
+          '<div style="font-size:12.5px; color:#E2E8F0; line-height:1.5;">Kẻ lừa đảo đã hack tài khoản Facebook của bạn em và dùng chính danh bạ để nhắn mượn tiền hàng loạt. Tiền chuyển đi sẽ không bao giờ lấy lại được!</div>';
       } else if (choice === 2) {
         playSound('wrong');
-        box.innerHTML = `
-          <div style="text-align:center;">
-            <div style="font-size:48px; margin-bottom:8px;">⚠️</div>
-            <h3 style="color:var(--amber); font-size:18px; margin-bottom:8px;">VẪN CHƯA THỰC SỰ AN TOÀN!</h3>
-            <p style="font-size:13.5px; color:#F1F5F9; line-height:1.6; margin-bottom:12px;">
-              Kẻ lừa đảo hiện đang nắm quyền điều khiển nick Facebook/Zalo đó. Khi em nhắn hỏi lại, chính kẻ lừa đảo sẽ trả lời khẳng định "Đúng là tớ đây mà!" để tiếp tục giăng bẫy em!
-            </p>
-            <div style="font-size:12px; color:var(--cyan); background:rgba(56,225,240,0.1); padding:8px; border-radius:8px;">
-              👉 Cần liên hệ qua một kênh độc lập khác ngoài tin nhắn chat!
-            </div>
-          </div>`;
+        box.innerHTML = '<div style="font-size:36px; margin-bottom:6px;">⚠️</div>' +
+          '<div style="color:var(--gold-light); font-weight:700; font-size:15px; margin-bottom:4px;">CHƯA THẬT SỰ AN TOÀN!</div>' +
+          '<div style="font-size:12.5px; color:#E2E8F0; line-height:1.5;">Kẻ lừa đảo đang trực tiếp cầm nick đó. Khi em nhắn hỏi "Có phải cậu thật không?", chính kẻ xấu sẽ trả lời: "Đúng là tớ đây mà!" để tiếp tục lừa em.</div>';
       } else if (choice === 3) {
-        playSound('correct');
-        launchConfetti();
-        box.innerHTML = `
-          <div style="text-align:center;">
-            <div style="font-size:48px; margin-bottom:8px;">🎉🛡️</div>
-            <h3 style="color:#10B981; font-size:18px; margin-bottom:8px;">CHÍNH XÁC TUYỆT ĐỐI!</h3>
-            <p style="font-size:13.5px; color:#F1F5F9; line-height:1.6; margin-bottom:12px;">
-              Khi gọi điện thoại trực tiếp, bạn của em sẽ ngớ người: <em>"Tớ có mượn tiền đâu, nick của tớ vừa bị hack mất rồi!"</em>. Nhờ sự tỉnh táo kiểm chứng qua kênh độc lập, em đã bảo vệ an toàn túi tiền của mình!
-            </p>
-            <div style="font-size:12px; color:#34D399; background:rgba(16,185,129,0.1); padding:8px; border-radius:8px;">
-              🏆 Em xứng đáng nhận danh hiệu: "Hiệp sĩ An toàn số"!
-            </div>
-          </div>`;
+        playSound('success');
+        fireConfetti();
+        box.innerHTML = '<div style="font-size:36px; margin-bottom:6px;">🎉🛡️</div>' +
+          '<div style="color:var(--leaf-light); font-weight:700; font-size:15px; margin-bottom:4px;">CHÍNH XÁC TUYỆT ĐỐI!</div>' +
+          '<div style="font-size:12.5px; color:#E2E8F0; line-height:1.5;">Khi gọi điện thoại trực tiếp, bạn của em sẽ ngớ người: "Nick của tớ vừa bị hack mất rồi!". Em đã cứu ví tiền của mình bằng cách kiểm chứng qua một kênh độc lập!</div>';
       }
     }
 
-    /* ─── SLIDE 4: CHI TIẾT 5 NGUY CƠ ─── */
+    /* ─── LOGIC TƯƠNG TÁC SLIDE 4: CHỌN NGUY CƠ ─── */
     const riskData = [
       {
         title: "📰 1. Tin giả và thông tin phản văn hoá",
-        desc: "Thông tin bịa đặt, bóp méo sự thật, mê tín dị đoan, kích động bạo lực hoặc hình ảnh phản cảm. Tiếp nhận tin giả khiến học sinh có nhận thức sai lệch, hoang mang, thậm chí vi phạm pháp luật (Luật An ninh mạng).",
-        tip: "🛡️ Kỹ năng phòng ngừa: Kiểm tra nguồn tin chính thống (báo đài trung ương, cổng thông tin chính phủ), không like/share tin giật gân khi chưa kiểm chứng."
+        desc: "Thông tin bịa đặt, bóp méo sự thật, mê tín dị đoan hoặc kích động bạo lực. Tiếp nhận tin giả khiến học sinh có nhận thức sai lệch, hoang mang, thậm chí vi phạm Luật An ninh mạng.",
+        tip: "🛡️ Kỹ năng phòng ngừa: Kiểm tra nguồn tin chính thống (báo đài chính thống, cổng thông tin chính phủ), không like/share tin giật gân chưa kiểm chứng."
       },
       {
         title: "🎣 2. Lừa đảo trực tuyến (Phishing)",
@@ -1528,7 +1198,7 @@
         tip: "🛡️ Kỹ năng phòng ngừa: Không nhập mật khẩu/mã OTP vào các đường link lạ gửi qua Messenger, Zalo hay Email."
       },
       {
-        title: "🔓 3. Lộ thông tin cá nhân",
+        title: "🔓 3. Lộ lọt thông tin cá nhân",
         desc: "Lộ họ tên đầy đủ, ngày sinh, số CCCD, thẻ học sinh, địa chỉ nhà, vị trí thời gian thực. Kẻ xấu có thể dùng để mạo danh vay tiền tín dụng đen hoặc tống tiền đe dọa.",
         tip: "🛡️ Kỹ năng phòng ngừa: Tuyệt đối không chụp ảnh CCCD, vé máy bay/tàu xe lên mạng xã hội; cài đặt chế độ bạn bè thay vì công khai."
       },
@@ -1544,15 +1214,18 @@
       }
     ];
 
-    function showRiskDetail(idx) {
-      playSound('slide');
+    function selectRisk(idx) {
+      playSound('click');
+      document.querySelectorAll('.risk-tab-btn').forEach((b, i) => {
+        b.classList.toggle('active', i === idx);
+      });
       const d = riskData[idx];
       document.getElementById('risk-det-title').innerText = d.title;
       document.getElementById('risk-det-desc').innerText = d.desc;
       document.getElementById('risk-det-tip').innerText = d.tip;
     }
 
-    /* ─── SLIDE 5: ĐẤU TRƯỜNG PHÂN LOẠI HÀNH VI ─── */
+    /* ─── LOGIC TƯƠNG TÁC SLIDE 5: ĐẤU TRƯỜNG PHÂN LOẠI HÀNH VI ─── */
     const sortItems = [
       { id: 1, text: "Bấm vào link giục 'Đổi mật khẩu gấp' gửi từ email lạ", type: "danger" },
       { id: 2, text: "Bật xác thực 2 bước (2FA) cho toàn bộ tài khoản email & mạng xã hội", type: "safe" },
@@ -1565,19 +1238,22 @@
 
     function renderSortLab() {
       const pool = document.getElementById('sort-items-pool');
+      if (!pool) return;
       if (currentPool.length === 0) {
-        pool.innerHTML = '<span style="color:#34D399; font-weight:700;">🎉 ĐÃ PHÂN LOẠI XONG TOÀN BỘ 6 HÀNH VI!</span>';
-        playSound('correct');
-        launchConfetti();
+        pool.innerHTML = '<span style="color:#34D399; font-weight:700;">🎉 ĐÃ PHÂN LOẠI XONG TOÀN BỘ 6 HÀNH VI! XUẤT SẮC!</span>';
+        playSound('success');
+        fireConfetti();
         return;
       }
-      pool.innerHTML = currentPool.map(item => `
-        <div style="background:#1E293B; border:1px solid #334155; padding:8px 14px; border-radius:10px; font-size:13px; color:#FFF; display:flex; align-items:center; gap:10px;">
-          <span>${item.text}</span>
-          <button onclick="assignSortItem(${item.id}, 'danger')" style="background:rgba(239,68,68,0.2); border:1px solid #EF4444; color:#F87171; border-radius:6px; padding:3px 8px; cursor:pointer; font-size:11px;">❌ Xếp Nguy hiểm</button>
-          <button onclick="assignSortItem(${item.id}, 'safe')" style="background:rgba(16,185,129,0.2); border:1px solid #10B981; color:#34D399; border-radius:6px; padding:3px 8px; cursor:pointer; font-size:11px;">🛡️ Xếp An toàn</button>
-        </div>
-      `).join('');
+      pool.innerHTML = currentPool.map(item =>
+        '<div style="background:#1E293B; border:1px solid #334155; padding:8px 14px; border-radius:10px; font-size:12.5px; color:#FFF; display:flex; align-items:center; justify-content:space-between; gap:10px;">' +
+          '<span>' + item.text + '</span>' +
+          '<div style="display:flex; gap:6px;">' +
+            '<button onclick="assignSortItem(' + item.id + ', \'danger\')" style="background:rgba(239,68,68,0.2); border:1px solid #EF4444; color:#F87171; border-radius:6px; padding:3px 8px; cursor:pointer; font-size:11px;">❌ Nguy hiểm</button>' +
+            '<button onclick="assignSortItem(' + item.id + ', \'safe\')" style="background:rgba(16,185,129,0.2); border:1px solid #10B981; color:#34D399; border-radius:6px; padding:3px 8px; cursor:pointer; font-size:11px;">🛡️ An toàn</button>' +
+          '</div>' +
+        '</div>'
+      ).join('');
     }
 
     function assignSortItem(id, target) {
@@ -1585,11 +1261,11 @@
       if (!item) return;
 
       if (item.type === target) {
-        playSound('correct');
+        playSound('success');
         currentPool = currentPool.filter(x => x.id !== id);
         const col = document.getElementById(target === 'danger' ? 'col-danger' : 'col-safe');
         const badge = document.createElement('div');
-        badge.style = "background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); padding:8px 12px; border-radius:8px; font-size:12.5px; color:#F1F5F9;";
+        badge.style = "background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); padding:6px 10px; border-radius:6px; font-size:12px; color:#F1F5F9;";
         badge.innerText = item.text;
         col.appendChild(badge);
         renderSortLab();
@@ -1606,104 +1282,63 @@
       renderSortLab();
     }
 
-    /* ─── SLIDE 7: MÔ PHỎNG HOẠT HOẠ VIRUS & WORM ─── */
-    function runVirusSim() {
-      playSound('slide');
-      const box = document.getElementById('sim-canvas-box');
-      box.innerHTML = `
-        <div style="display:flex; align-items:center; gap:14px; animation:fadeIn 0.4s;">
-          <div style="border:1px solid #EF4444; background:rgba(239,68,68,0.15); padding:6px 12px; border-radius:8px;">
-            📄 Tai_Lieu.docx <span style="color:#F87171;">[Có mã Virus bám ngủ đông 💤]</span>
-          </div>
-          <span style="font-size:20px;">➜</span>
-          <div style="color:var(--amber);">Người dùng nháy đúp mở file 🖱️</div>
-          <span style="font-size:20px;">➜</span>
-          <div style="border:1px solid #EF4444; background:#EF4444; color:#000; font-weight:800; padding:6px 12px; border-radius:8px; animation:pulse 0.5s infinite;">
-            ⚠️ Virus kích hoạt & lây sang file .exe khác!
-          </div>
-        </div>`;
-    }
-
-    function runWormSim() {
-      playSound('slide');
-      const box = document.getElementById('sim-canvas-box');
-      box.innerHTML = `
-        <div style="display:flex; align-items:center; gap:12px; animation:fadeIn 0.4s;">
-          <div style="border:1px solid #60A5FA; background:rgba(59,130,246,0.15); padding:6px 12px; border-radius:8px;">
-            💻 Máy A [Bị nhiễm Sâu]
-          </div>
-          <span style="color:#60A5FA; font-weight:700;">══ Tự quét mạng Internet ══►</span>
-          <div style="border:1px solid #60A5FA; background:rgba(59,130,246,0.15); padding:6px 12px; border-radius:8px;">
-            🖥️ Máy B [Lây nhiễm tự động!]
-          </div>
-          <span style="color:#60A5FA; font-weight:700;">══►</span>
-          <div style="border:1px solid #60A5FA; background:rgba(59,130,246,0.15); padding:6px 12px; border-radius:8px;">
-            🏢 Máy C, D, E... [Không cần ai mở file]
-          </div>
-        </div>`;
-    }
-
-    /* ─── SLIDE 8: KEYLOGGER LAB ─── */
-    function onKeyloggerType(val) {
-      playSound('key');
-      const screen = document.getElementById('hacker-log-display');
+    /* ─── LOGIC TƯƠNG TÁC SLIDE 8: KEYLOGGER SIMULATOR ─── */
+    function handleKeyloggerSim(val) {
+      playSound('click');
+      const box = document.getElementById('hacker-sniffer-box');
       if (!val) {
-        screen.innerHTML = "> [Keylogger Active - Listening keystrokes...]<br>> Đang chờ người dùng gõ phím...";
+        box.innerText = "[Đang lắng nghe bàn phím...]";
+        box.style.color = '#64748B';
       } else {
-        screen.innerHTML = `
-          > [KEYSTROKE CAPTURED]: <span style="color:#FFF; background:#DC2626; padding:2px 6px; border-radius:4px; font-weight:800;">"${val}"</span><br>
-          > Độ dài: ${val.length} ký tự<br>
-          > Trạng thái: Đã gửi gói tin giải mã về IP: 194.26.29.112 (Server Hacker) 🚨
-        `;
+        box.innerText = "CAPTURED: " + val;
+        box.style.color = '#34D399';
       }
     }
 
-    /* ─── SLIDE 11: WINDOWS DEFENDER SIMULATOR ─── */
-    let selectedMode = 'quick';
-    function selectScanMode(mode) {
-      playSound('slide');
-      selectedMode = mode;
-      document.querySelectorAll('.scan-mode-btn').forEach(btn => btn.classList.remove('selected'));
-      document.getElementById('opt-' + mode).classList.add('selected');
+    /* ─── LOGIC TƯƠNG TÁC SLIDE 11: WINDOWS DEFENDER ─── */
+    let selectedScanMode = 'quick';
+    function setScanMode(m) {
+      selectedScanMode = m;
+      playSound('click');
+      document.querySelectorAll('#slide-11 .sim-btn').forEach(b => {
+        b.classList.toggle('active', b.id === 'mode-' + m);
+      });
+      const sub = document.getElementById('scan-sub-text');
+      const titles = { quick: 'Quick scan (Quét nhanh)', full: 'Full scan (Quét toàn bộ)', custom: 'Custom scan (Quét tuỳ chọn)', offline: 'Offline scan (Quét ngoại tuyến)' };
+      sub.innerText = "Chế độ hiện tại: " + (titles[m] || m);
     }
 
     function startDefenderScan() {
       const radar = document.getElementById('scan-radar-icon');
       const text = document.getElementById('scan-status-text');
-      const sub = document.getElementById('scan-status-sub');
-      const wrap = document.getElementById('scan-progress-wrap');
+      const sub = document.getElementById('scan-sub-text');
       const bar = document.getElementById('scan-progress-bar');
-      const btn = document.getElementById('btn-start-scan');
+      const wrap = document.getElementById('scan-progress-wrap');
 
-      btn.disabled = true;
-      btn.innerText = "Đang tiến hành quét...";
-      radar.innerText = "🔄";
-      text.innerText = "Đang quét hệ thống (" + selectedMode.toUpperCase() + " SCAN)...";
-      sub.innerText = "Đang kiểm tra các tệp tin hệ thống và tiến trình bộ nhớ...";
-      wrap.style.display = "block";
-      bar.style.width = "0%";
+      wrap.style.display = 'block';
+      bar.style.width = '0%';
+      radar.innerText = '🔄';
+      text.innerText = 'Đang quét hệ thống (' + selectedScanMode.toUpperCase() + ' SCAN)...';
+      sub.innerText = 'Đang rà soát tệp tin hệ thống và tiến trình bộ nhớ...';
 
       let p = 0;
-      playSound('radar');
+      playSound('click');
       const interval = setInterval(() => {
         p += 20;
         bar.style.width = p + '%';
-        if (p % 40 === 0) playSound('radar');
-
+        playSound('click');
         if (p >= 100) {
           clearInterval(interval);
-          btn.disabled = false;
-          btn.innerText = "Quét lại 🔍";
-          radar.innerText = "✅";
-          text.innerText = "Quét hoàn tất: Không tìm thấy mối đe doạ!";
-          sub.innerText = "Đã quét 42.850 tệp tin. Máy tính của bạn đang được bảo vệ an toàn tối đa.";
-          playSound('correct');
-          launchConfetti();
+          radar.innerText = '✅';
+          text.innerText = 'Quét hoàn tất: Không tìm thấy mối đe doạ!';
+          sub.innerText = 'Đã quét 42.850 tệp tin. Máy tính của bạn đang được bảo vệ an toàn tối đa.';
+          playSound('success');
+          fireConfetti();
         }
       }, 350);
     }
 
-    /* ─── SLIDE 13: MINI QUIZ 5 CÂU ─── */
+    /* ─── LOGIC TƯƠNG TÁC SLIDE 13: MINI QUIZ 5 CÂU ─── */
     const quizList = [
       {
         q: "Đặc điểm nào sau đây phân biệt CHÍNH XÁC nhất giữa Virus và Worm (Sâu máy tính)?",
@@ -1717,48 +1352,48 @@
         exp: "Chính xác! Virus bắt buộc phải ký sinh vào tệp chủ (.exe, .docx) và chỉ lây khi mở file; trong khi Worm là phần mềm hoàn chỉnh tự lây lan độc lập qua Internet."
       },
       {
-        q: "Phần mềm độc hại Trojan lấy tên từ thần thoại nào và có phương thức hoạt động đặc trưng là gì?",
+        q: "Mã độc Trojan được đặt tên phỏng theo điển tích nào trong lịch sử?",
         opts: [
-          "A. Thần thoại Bắc Âu; đóng băng toàn bộ màn hình máy tính",
-          "B. Thần thoại Hy Lạp; nguỵ trang dưới vỏ bọc phần mềm hữu ích để lừa người dùng cài đặt",
-          "C. Thần thoại La Mã; tự sao chép nhân bản ra hàng ngàn bản copy",
-          "D. Thần thoại Ai Cập; xoá sạch hệ điều hành ngay khi cắm chuột"
+          "A. Chiếc hộp Pandora mở ra mọi tai hoạ",
+          "B. Con ngựa gỗ thành Troy nguỵ trang quà tặng chứa quân lính bên trong",
+          "C. Gót chân Asin điểm yếu chí mạng",
+          "D. Mê cung mê lộ thần thoại Hy Lạp"
         ],
         ans: 1,
-        exp: "Chính xác! Lấy cảm hứng từ 'Ngựa gỗ thành Troa' của Hy Lạp, Trojan nguỵ trang phần mềm có ích (game crack, app xem phim) để người dùng tự cài đặt vào máy."
+        exp: "Chính xác! Trojan nguỵ trang thành phần mềm hữu ích, khi người dùng mở ra thì mã độc mới bí mật chiếm quyền kiểm soát máy tính."
       },
       {
-        q: "Đại dịch sâu WannaCry năm 2017 lây nhiễm 150 quốc gia thuộc loại mã độc nào sau đây?",
+        q: "Khi nhận được tin nhắn Facebook từ bạn thân nhờ chuyển gấp 500k, cách xử lý KHÔN NGOAN nhất là:",
         opts: [
-          "A. Adware (phần mềm quảng cáo)",
-          "B. Ransomware (mã độc tống tiền đòi Bitcoin)",
-          "C. Spyware chỉ theo dõi lịch sử lướt web",
-          "D. Phần mềm diệt virus giả mạo"
+          "A. Chuyển tiền ngay vì sợ bạn giận",
+          "B. Nhắn tin hỏi lại trên chính Messenger đó",
+          "C. Gọi điện thoại trực tiếp hoặc gọi video để xác minh",
+          "D. Chụp màn hình gửi cho cả lớp xem"
+        ],
+        ans: 2,
+        exp: "Chính xác! Kẻ lừa đảo đang giữ nick Facebook đó, do đó bắt buộc phải gọi điện thoại trực tiếp qua kênh độc lập để xác minh."
+      },
+      {
+        q: "Biện pháp nào sau đây giúp phòng chống lộ mật khẩu hiệu quả nhất ngay cả khi máy dính Keylogger?",
+        opts: [
+          "A. Đặt mật khẩu thật ngắn cho dễ nhớ",
+          "B. Bật xác thực hai bước (2FA) qua mã OTP điện thoại hoặc ứng dụng",
+          "C. Không bao giờ tắt máy tính",
+          "D. Đổi màn hình nền máy tính định kỳ"
         ],
         ans: 1,
-        exp: "Chính xác! WannaCry là sâu máy tính mang mã độc tống tiền (Ransomware), tự mã hoá toàn bộ ổ cứng và đòi tiền chuộc bằng Bitcoin."
+        exp: "Chính xác! Với xác thực 2 bước (2FA), dù kẻ xấu có biết mật khẩu bàn phím cũng không thể đăng nhập vì thiếu mã xác thực trên điện thoại của em."
       },
       {
-        q: "Khi bạn vừa cắm một chiếc USB mượn vào máy tính, chế độ quét nào trong Windows Defender là phù hợp và tiết kiệm thời gian nhất?",
+        q: "Chế độ nào trong Windows Security (Defender) cho phép quét sâu bằng cách khởi động lại máy trước khi hệ điều hành nạp?",
         opts: [
-          "A. Quick scan (Quét nhanh)",
-          "B. Full scan (Quét toàn bộ ổ cứng)",
-          "C. Custom scan (Quét tuỳ chọn ổ đĩa USB)",
+          "A. Quick scan",
+          "B. Full scan",
+          "C. Custom scan",
           "D. Microsoft Defender Offline scan"
         ],
-        ans: 2,
-        exp: "Chính xác! Custom scan cho phép chỉ định chính xác ổ đĩa USB cần kiểm tra mà không tốn công quét lại toàn bộ ổ cứng của máy."
-      },
-      {
-        q: "Khi tài khoản mạng xã hội của bạn thân nhắn tin mượn 500k gấp, hành vi nào sau đây là AN TOÀN NHẤT?",
-        opts: [
-          "A. Chuyển tiền ngay vì có cách xưng hô thân mật đúng ngày thường",
-          "B. Nhắn tin hỏi lại trên chính nick đó xem có đúng bạn không",
-          "C. Gọi điện thoại trực tiếp hoặc gặp mặt để xác minh trước khi chuyển",
-          "D. Gửi mật khẩu tài khoản ngân hàng của mình cho bạn tự vào rút"
-        ],
-        ans: 2,
-        exp: "Chính xác! Kẻ lừa đảo có thể đã chiếm đoạt nick; chỉ có liên hệ qua kênh độc lập (gọi điện thoại trực tiếp hoặc gặp mặt) mới là cách xác minh an toàn nhất!"
+        ans: 3,
+        exp: "Chính xác! Offline scan sẽ khởi động lại máy tính vào môi trường an toàn độc lập để diệt tận gốc các mã độc cứng đầu."
       }
     ];
 
@@ -1769,37 +1404,34 @@
     function renderQuiz() {
       const q = quizList[currentQuizIdx];
       answeredCurrent = false;
-      document.getElementById('quiz-question-title').innerText = `Câu ${currentQuizIdx + 1}/5: ${q.q.substring(0, 38)}...`;
-      document.getElementById('quiz-question-text').innerText = `Câu ${currentQuizIdx + 1}: ${q.q}`;
+      document.getElementById('quiz-question-title').innerText = "Câu " + (currentQuizIdx + 1) + "/5: Kiểm tra độ hiểu bài";
+      document.getElementById('quiz-question-text').innerText = "Câu " + (currentQuizIdx + 1) + ": " + q.q;
       document.getElementById('quiz-feedback-box').style.display = 'none';
       document.getElementById('btn-next-quiz').style.display = 'none';
 
       const optBox = document.getElementById('quiz-options-box');
-      optBox.innerHTML = q.opts.map((opt, i) => `
-        <div class="quiz-opt" onclick="chooseQuizAnswer(${i})">
-          <span style="font-weight:700; font-family:var(--font-mono);">${String.fromCharCode(65 + i)}.</span>
-          <span>${opt.substring(3)}</span>
-        </div>
-      `).join('');
+      optBox.innerHTML = q.opts.map((opt, i) =>
+        '<button class="quiz-opt-btn" onclick="chooseQuizAnswer(' + i + ')">' + opt + '</button>'
+      ).join('');
     }
 
     function chooseQuizAnswer(idx) {
       if (answeredCurrent) return;
       answeredCurrent = true;
       const q = quizList[currentQuizIdx];
-      const optEls = document.querySelectorAll('.quiz-opt');
+      const optBtns = document.querySelectorAll('.quiz-opt-btn');
 
       if (idx === q.ans) {
-        playSound('correct');
+        playSound('success');
         quizScore++;
-        optEls[idx].classList.add('correct');
+        optBtns[idx].classList.add('correct');
       } else {
         playSound('wrong');
-        optEls[idx].classList.add('wrong');
-        optEls[q.ans].classList.add('correct');
+        optBtns[idx].classList.add('wrong');
+        optBtns[q.ans].classList.add('correct');
       }
 
-      document.getElementById('quiz-score-badge').innerText = `Điểm số: ${quizScore} / 5`;
+      document.getElementById('quiz-score-badge').innerText = "Điểm số hiện tại: " + quizScore + " / 5";
       const fb = document.getElementById('quiz-feedback-box');
       fb.style.display = 'block';
       fb.style.background = idx === q.ans ? 'rgba(16,185,129,0.15)' : 'rgba(239,68,68,0.15)';
@@ -1808,10 +1440,8 @@
       fb.innerHTML = (idx === q.ans ? '🎉 <strong>ĐÚNG RỒI!</strong> ' : '❌ <strong>CHƯA CHÍNH XÁC!</strong> ') + q.exp;
 
       const nextBtn = document.getElementById('btn-next-quiz');
-      nextBtn.style.display = 'block';
-      if (currentQuizIdx === quizList.length - 1) {
-        nextBtn.innerText = 'Xem tổng kết 🎉';
-      }
+      nextBtn.style.display = 'inline-flex';
+      nextBtn.innerText = currentQuizIdx === quizList.length - 1 ? 'Xem tổng kết 🎉' : 'Câu tiếp theo →';
     }
 
     function nextQuizQuestion() {
@@ -1819,71 +1449,50 @@
         currentQuizIdx++;
         renderQuiz();
       } else {
-        playSound('correct');
-        launchConfetti();
-        alert(`Chúc mừng em đã hoàn thành Mini Quiz với kết quả: ${quizScore}/5 câu đúng! ${quizScore >= 4 ? 'Xuất sắc đạt danh hiệu Hiệp sĩ An toàn số!' : 'Hãy xem lại bài giảng để đạt 5/5 nhé!'}`);
+        playSound('success');
+        fireConfetti();
+        alert("Chúc mừng em đã hoàn thành Mini Quiz! Kết quả: " + quizScore + "/5 câu đúng! " + (quizScore >= 4 ? 'Xuất sắc đạt danh hiệu Hiệp sĩ An toàn số!' : 'Hãy xem lại bài giảng để đạt 5/5 điểm nhé!'));
         goToSlide(14);
       }
     }
 
     /* ─── PHÁO HOA ĂN MỪNG CANVAS CONFETTI ─── */
-    function launchConfetti() {
-      const canvas = document.getElementById('confetti-canvas');
-      const ctx = canvas.getContext('2d');
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-
-      const particles = [];
-      const colors = ['#38E1F0', '#10B981', '#F5A623', '#EF4444', '#8B5CF6', '#FFFFFF'];
-
-      for (let i = 0; i < 90; i++) {
-        particles.push({
-          x: canvas.width / 2,
-          y: canvas.height * 0.45,
-          vx: (Math.random() - 0.5) * 14,
-          vy: (Math.random() - 0.7) * 14,
-          size: Math.random() * 8 + 4,
-          color: colors[Math.floor(Math.random() * colors.length)],
-          rotation: Math.random() * 360,
-          vrot: (Math.random() - 0.5) * 10,
-          alpha: 1
-        });
-      }
-
+    function fireConfetti() {
+      playSound('success');
+      const cvs = document.getElementById('confettiCanvas');
+      const ctx = cvs.getContext('2d');
+      cvs.width = window.innerWidth; cvs.height = window.innerHeight;
+      const colors = ['#38E1F0', '#0D7C86', '#F2683C', '#F5A623', '#10B981', '#FFFFFF'];
+      const parts = Array.from({ length: 110 }, () => ({
+        x: window.innerWidth / 2, y: window.innerHeight * 0.42,
+        vx: (Math.random() - 0.5) * 18,
+        vy: (Math.random() - 0.65) * 18,
+        sz: Math.random() * 9 + 4,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        alpha: 1, rot: Math.random() * 360, vrot: (Math.random() - 0.5) * 14
+      }));
       function render() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, cvs.width, cvs.height);
         let alive = false;
-        particles.forEach(p => {
-          p.x += p.vx;
-          p.y += p.vy;
-          p.vy += 0.25; // Trọng lực
-          p.rotation += p.vrot;
-          p.alpha -= 0.012;
+        parts.forEach(p => {
+          p.x += p.vx; p.y += p.vy; p.vy += 0.38; p.alpha -= 0.013; p.rot += p.vrot;
           if (p.alpha > 0) {
-            alive = true;
-            ctx.save();
-            ctx.globalAlpha = p.alpha;
-            ctx.translate(p.x, p.y);
-            ctx.rotate((p.rotation * Math.PI) / 180);
-            ctx.fillStyle = p.color;
-            ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+            alive = true; ctx.save(); ctx.globalAlpha = p.alpha;
+            ctx.translate(p.x, p.y); ctx.rotate(p.rot * Math.PI / 180);
+            ctx.fillStyle = p.color; ctx.fillRect(-p.sz / 2, -p.sz / 2, p.sz, p.sz);
             ctx.restore();
           }
         });
-        if (alive) {
-          requestAnimationFrame(render);
-        } else {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
+        if (alive) requestAnimationFrame(render);
+        else ctx.clearRect(0, 0, cvs.width, cvs.height);
       }
       render();
     }
 
-    // Khởi tạo các bài thực hành
+    // Khởi tạo trạng thái ban đầu
     window.addEventListener('DOMContentLoaded', () => {
-      updateSlideUI();
+      updateSlide();
       renderSortLab();
-      renderQuiz();
     });
   </script>
 </body>

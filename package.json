@@ -6,7 +6,8 @@
     "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start -p 3001",
-    "lint": "next lint"
+    "lint": "next lint",
+    "sync:slides": "node scripts/build_slide_bai_09.mjs && node scripts/build_slide_bai_10.mjs"
   },
   "dependencies": {
     "next": "14.2.35",
