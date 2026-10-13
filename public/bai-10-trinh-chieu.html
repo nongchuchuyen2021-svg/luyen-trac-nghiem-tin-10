@@ -1,0 +1,2268 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bài 10: Thực hành khai thác tài nguyên trên Internet — Tin học 10</title>
+  <style>
+    /* ─── RESET & HỆ THỐNG BIẾN MÀU SẮC KHOA HỌC DỮ LIỆU & INTERNET 2026 ─── */
+    :root {
+      --bg: #070F1E;
+      --bg-card: rgba(13, 25, 48, 0.94);
+      --border-card: rgba(56, 189, 248, 0.22);
+      --ink: #FFFFFF;
+      --ink-soft: #94A3B8;
+      --cyan: #38BDF8;
+      --cyan-glow: rgba(56, 189, 248, 0.35);
+      --blue: #3B82F6;
+      --blue-glow: rgba(59, 130, 246, 0.35);
+      --amber: #F59E0B;
+      --amber-light: #FCD34D;
+      --emerald: #10B981;
+      --emerald-light: #6EE7B7;
+      --purple: #8B5CF6;
+      --purple-light: #C4B5FD;
+      --coral: #F97316;
+      --red: #EF4444;
+      --font-main: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: 'Consolas', 'Fira Code', 'Courier New', monospace;
+      --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-main);
+      background: var(--bg);
+      color: var(--ink);
+      overflow: hidden;
+      width: 100vw; height: 100vh;
+      user-select: none;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── HIỆU ỨNG NỀN MẠNG LƯỚI TRI THỨC KHO SỐ ─── */
+    .bg-mesh {
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(59, 130, 246, 0.28) 0, transparent 48%),
+        radial-gradient(circle at 82% 80%, rgba(16, 185, 129, 0.22) 0, transparent 48%),
+        radial-gradient(circle at 50% 45%, rgba(139, 92, 246, 0.18) 0, transparent 55%),
+        radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.15) 0, transparent 40%);
+      animation: meshPulse 16s ease-in-out infinite alternate;
+      pointer-events: none; z-index: 0;
+    }
+    @keyframes meshPulse {
+      0%   { transform: scale(1) translate(0, 0); opacity: 0.9; }
+      100% { transform: scale(1.06) translate(-12px, 8px); opacity: 1; }
+    }
+
+    /* Lưới toạ độ Internet số */
+    .cyber-grid {
+      position: fixed; inset: 0;
+      background-image: 
+        linear-gradient(rgba(56, 189, 248, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none; z-index: 1;
+    }
+
+    /* Thẻ từ khoá trôi nổi */
+    .float-layer { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+    .float-tag {
+      position: absolute;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 700;
+      color: rgba(56, 189, 248, 0.22);
+      border: 1px solid rgba(56, 189, 248, 0.14);
+      padding: 5px 12px; border-radius: 999px;
+      background: rgba(15, 23, 42, 0.4);
+      animation: floatUp 26s linear infinite;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(108vh) rotate(0deg); opacity: 0; }
+      12%  { opacity: 0.45; }
+      88%  { opacity: 0.45; }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* ─── DECK CONTAINER ─── */
+    .deck-container {
+      position: relative; width: 100vw; height: 100vh;
+      display: flex; justify-content: center; align-items: center; z-index: 2;
+    }
+
+    /* ─── SLIDE FRAME ─── */
+    .slide {
+      position: absolute;
+      width: 95vw; max-width: 1380px;
+      height: 88vh; max-height: 870px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 24px;
+      backdrop-filter: blur(28px);
+      box-shadow: 0 35px 80px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      padding: 26px 42px;
+      display: flex; flex-direction: column;
+      opacity: 0; pointer-events: none;
+      transform: translateX(70px) scale(0.96);
+      transition: opacity 0.5s var(--ease-spring), transform 0.55s var(--ease-spring);
+    }
+    .slide.active {
+      opacity: 1; pointer-events: auto;
+      transform: translateX(0) scale(1);
+    }
+    .slide.prev {
+      opacity: 0; pointer-events: none;
+      transform: translateX(-70px) scale(0.96);
+    }
+
+    /* Header của Slide */
+    .slide-header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+      margin-bottom: 18px; flex-shrink: 0;
+    }
+    .slide-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(56, 189, 248, 0.14);
+      color: var(--cyan);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 999px;
+      padding: 5px 14px;
+      font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;
+    }
+    .slide-title-wrap { flex: 1; margin: 0 18px; }
+    .slide-title {
+      font-size: 23px; font-weight: 800; color: #FFF;
+      letter-spacing: -0.3px; line-height: 1.25;
+    }
+    .slide-subtitle {
+      font-size: 13px; color: var(--ink-soft); margin-top: 2px;
+    }
+    .slide-meta {
+      font-family: var(--font-mono); font-size: 12px; color: var(--ink-soft);
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    /* Body của Slide */
+    .slide-body {
+      flex: 1; overflow-y: auto; overflow-x: hidden;
+      padding-right: 6px;
+      display: flex; flex-direction: column;
+    }
+    .slide-body::-webkit-scrollbar { width: 5px; }
+    .slide-body::-webkit-scrollbar-track { background: transparent; }
+    .slide-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); border-radius: 999px; }
+
+    /* Layout Grids */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+    /* Interactive Card */
+    .card {
+      background: rgba(18, 32, 60, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      padding: 20px;
+      transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+    .card:hover {
+      border-color: rgba(56, 189, 248, 0.45);
+      transform: translateY(-3px);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
+    }
+    .card.active-card {
+      border-color: var(--cyan);
+      background: rgba(14, 38, 77, 0.9);
+      box-shadow: 0 0 24px rgba(56, 189, 248, 0.22);
+    }
+
+    /* Tag / Pill */
+    .pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 10px; border-radius: 8px;
+      font-size: 11px; font-weight: 700; font-family: var(--font-mono);
+    }
+    .pill-cyan   { background: rgba(56, 189, 248, 0.16); color: var(--cyan); border: 1px solid rgba(56, 189, 248, 0.35); }
+    .pill-amber  { background: rgba(245, 158, 11, 0.16); color: var(--amber); border: 1px solid rgba(245, 158, 11, 0.35); }
+    .pill-green  { background: rgba(16, 185, 129, 0.16); color: var(--emerald); border: 1px solid rgba(16, 185, 129, 0.35); }
+    .pill-purple { background: rgba(139, 92, 246, 0.16); color: var(--purple-light); border: 1px solid rgba(139, 92, 246, 0.35); }
+    .pill-red    { background: rgba(239, 68, 68, 0.16); color: var(--red); border: 1px solid rgba(239, 68, 68, 0.35); }
+
+    /* Button styles */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      border: none; border-radius: 12px; cursor: pointer;
+      font-weight: 700; font-size: 14px;
+      padding: 10px 20px; transition: all 0.22s var(--ease-spring);
+      font-family: inherit;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #0284C7, #38BDF8);
+      color: #070F1E; box-shadow: 0 4px 18px rgba(56, 189, 248, 0.35);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px); box-shadow: 0 6px 24px rgba(56, 189, 248, 0.55);
+    }
+    .btn-amber {
+      background: linear-gradient(135deg, #D97706, #F59E0B);
+      color: #070F1E; box-shadow: 0 4px 18px rgba(245, 158, 11, 0.35);
+    }
+    .btn-amber:hover {
+      transform: translateY(-2px); box-shadow: 0 6px 24px rgba(245, 158, 11, 0.55);
+    }
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #FFF;
+    }
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(56, 189, 248, 0.5);
+    }
+
+    /* Code block / syntax highlight */
+    .code-box {
+      font-family: var(--font-mono);
+      background: #040914;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 13px; color: #E2E8F0;
+      line-height: 1.6;
+    }
+    .kw { color: #38BDF8; font-weight: 700; }
+    .str { color: #FCD34D; }
+    .cm { color: #64748B; font-style: italic; }
+
+    /* ─── FOOTER CONTROLLER BAR ─── */
+    .deck-controls {
+      position: fixed; bottom: 18px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; align-items: center; gap: 14px;
+      background: rgba(10, 20, 40, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 999px;
+      padding: 7px 18px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+      z-index: 100;
+    }
+    .ctrl-btn {
+      width: 38px; height: 38px; border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.06);
+      color: #FFF; font-size: 16px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .ctrl-btn:hover {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: var(--cyan);
+      transform: scale(1.08);
+    }
+    .slide-progress {
+      width: 220px; height: 6px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 999px; overflow: hidden;
+      cursor: pointer;
+    }
+    .slide-progress-fill {
+      height: 100%; width: 6.66%;
+      background: linear-gradient(90deg, #38BDF8, #F59E0B);
+      border-radius: 999px; transition: width 0.3s ease;
+    }
+    .slide-indicator {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 700;
+      color: var(--cyan); min-width: 65px; text-align: center;
+    }
+
+    /* ─── MODAL MỤC LỤC ─── */
+    .toc-modal {
+      position: fixed; inset: 0;
+      background: rgba(3, 7, 18, 0.88);
+      backdrop-filter: blur(16px);
+      z-index: 999;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .toc-modal.open { opacity: 1; pointer-events: auto; }
+    .toc-card {
+      width: 90vw; max-width: 880px; max-height: 80vh;
+      background: #0B192F;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 24px; padding: 28px 36px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+      display: flex; flex-direction: column;
+    }
+    .toc-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+      margin-top: 18px; overflow-y: auto; padding-right: 6px;
+    }
+    .toc-item {
+      padding: 12px 16px; border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      cursor: pointer; display: flex; align-items: center; gap: 10px;
+      font-size: 14px; transition: all 0.2s;
+    }
+    .toc-item:hover {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: var(--cyan);
+      transform: translateX(4px);
+    }
+    .toc-item.active {
+      background: rgba(56, 189, 248, 0.25);
+      border-color: var(--cyan);
+      font-weight: 700; color: #FFF;
+    }
+
+    /* ─── TOÁN TỬ BUILDER & SEARCH MOCKUP ─── */
+    .search-mockup {
+      background: #0F172A;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 18px;
+      padding: 20px;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .google-bar {
+      display: flex; align-items: center; gap: 12px;
+      background: #1E293B;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 999px;
+      padding: 10px 20px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+    .google-bar input {
+      flex: 1; background: transparent; border: none;
+      color: #FFF; font-size: 15px; font-family: var(--font-mono);
+      outline: none;
+    }
+    .token-chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(56, 189, 248, 0.16);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      color: #38BDF8; font-family: var(--font-mono);
+      font-size: 12px; font-weight: 700;
+      padding: 5px 12px; border-radius: 999px;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .token-chip:hover {
+      background: rgba(56, 189, 248, 0.3);
+      transform: scale(1.05);
+    }
+    .token-chip.selected {
+      background: #38BDF8; color: #070F1E;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+    }
+
+    /* Google Result Item Mockup */
+    .serp-item {
+      background: rgba(30, 41, 59, 0.6);
+      border-radius: 12px; padding: 14px 18px;
+      border-left: 4px solid var(--blue);
+      margin-top: 10px;
+    }
+    .serp-breadcrumb { font-size: 11px; color: #94A3B8; margin-bottom: 3px; }
+    .serp-title { font-size: 16px; font-weight: 700; color: #60A5FA; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+    .serp-snippet { font-size: 13px; color: #CBD5E1; margin-top: 5px; line-height: 1.45; }
+
+    /* ─── TRANSLATE LAB STYLES ─── */
+    .trans-box {
+      background: #0B162C;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      overflow: hidden;
+      display: grid; grid-template-columns: 1fr 1fr;
+    }
+    .trans-pane {
+      padding: 20px; display: flex; flex-direction: column;
+      min-height: 280px; position: relative;
+    }
+    .trans-pane:first-child {
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .trans-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 12px; padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .trans-lang { font-size: 13px; font-weight: 700; color: var(--cyan); }
+    .trans-text {
+      flex: 1; font-size: 16px; line-height: 1.6;
+      color: #E2E8F0; background: transparent; border: none; outline: none;
+      resize: none;
+    }
+    .trans-footer {
+      display: flex; align-items: center; gap: 10px;
+      margin-top: 10px;
+    }
+
+    /* ─── TREE EXPLORER (IGIAODUC.VN) ─── */
+    .tree-nav {
+      background: #0A162B;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 16px; padding: 18px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .tree-node {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 14px; border-radius: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      cursor: pointer; transition: all 0.2s;
+    }
+    .tree-node:hover {
+      background: rgba(56, 189, 248, 0.12);
+      border-color: rgba(56, 189, 248, 0.3);
+    }
+    .tree-node.active {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: var(--cyan);
+      font-weight: 700;
+    }
+
+    /* ─── CONFETTI CANVAS ─── */
+    #confetti-canvas {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hiệu ứng nền -->
+  <div class="bg-mesh"></div>
+  <div class="cyber-grid"></div>
+
+  <!-- Các thẻ từ khoá trôi nổi -->
+  <div class="float-layer">
+    <div class="float-tag" style="left: 10%; animation-delay: 0s;">"từ khóa chính xác"</div>
+    <div class="float-tag" style="left: 28%; animation-delay: 5s;">site:moet.gov.vn</div>
+    <div class="float-tag" style="left: 52%; animation-delay: 11s;">filetype:pptx</div>
+    <div class="float-tag" style="left: 74%; animation-delay: 3s;">-quangcao</div>
+    <div class="float-tag" style="left: 88%; animation-delay: 8s;">translate.google.com</div>
+    <div class="float-tag" style="left: 40%; animation-delay: 17s;">https://igiaoduc.vn</div>
+    <div class="float-tag" style="left: 65%; animation-delay: 13s;">MIT OpenCourseWare 2002</div>
+    <div class="float-tag" style="left: 18%; animation-delay: 20s;">Open Educational Resources (OER)</div>
+  </div>
+
+  <canvas id="confetti-canvas"></canvas>
+
+  <div class="deck-container">
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         SLIDE 1: TRANG BÌA BÀI HỌC
+         ══════════════════════════════════════════════════════════════════════ -->
+    <section class="slide active" id="slide-1">
+      <div class="slide-header">
+        <span class="slide-badge">🏫 TRƯỜNG THPT PHỤC HÒA · CAO BẰNG</span>
+        <div class="slide-meta">
+          <span>CHỦ ĐỀ 2: MẠNG MÁY TÍNH & INTERNET</span>
+          <span>·</span>
+          <span>SGK KẾT NỐI TRI THỨC</span>
+        </div>
+      </div>
+      <div class="slide-body" style="justify-content:center; align-items:center; text-align:center;">
+        <div style="max-width:960px;">
+          <div style="display:inline-flex; align-items:center; gap:8px; padding:6px 18px; border-radius:999px; background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.3); color:var(--cyan); font-weight:700; font-size:13px; margin-bottom:18px;">
+            <span>🚀 BÀI THỰC HÀNH SỐ 10 · TIN HỌC LỚP 10</span>
+          </div>
+
+          <h1 style="font-size:42px; font-weight:900; letter-spacing:-0.5px; margin-bottom:16px; background:linear-gradient(135deg, #FFFFFF 25%, #38BDF8 70%, #F59E0B 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+            THỰC HÀNH KHAI THÁC TÀI NGUYÊN<br/>TRÊN INTERNET
+          </h1>
+
+          <p style="font-size:17px; color:var(--ink-soft); line-height:1.6; max-width:820px; margin:0 auto 28px;">
+            Trở thành chuyên gia săn thông tin với <strong>Toán tử tìm kiếm Google</strong>, làm chủ <strong>Google Translate đa ngữ</strong> và tự tin khai thác <strong>Kho học liệu số quốc gia igiaoduc.vn</strong> của Bộ Giáo dục & Đào tạo.
+          </p>
+
+          <!-- 3 Trụ cột bài học -->
+          <div class="grid-3" style="text-align:left; margin-bottom:32px;">
+            <div class="card" style="border-top:3px solid var(--cyan);">
+              <div style="font-size:28px; margin-bottom:8px;">🔍</div>
+              <div style="font-weight:800; font-size:16px; color:#FFF; margin-bottom:4px;">1. Tìm kiếm Nâng cao</div>
+              <div style="font-size:13px; color:var(--ink-soft); line-height:1.45;">Bốn toán tử vàng: ngoặc kép <code style="color:var(--cyan);">""</code>, <code style="color:var(--cyan);">site:</code>, <code style="color:var(--cyan);">filetype:</code> và <code style="color:var(--cyan);">-</code>.</div>
+            </div>
+
+            <div class="card" style="border-top:3px solid var(--emerald);">
+              <div style="font-size:28px; margin-bottom:8px;">🌐</div>
+              <div style="font-weight:800; font-size:16px; color:#FFF; margin-bottom:4px;">2. Google Translate AI</div>
+              <div style="font-size:13px; color:var(--ink-soft); line-height:1.45;">Dịch văn bản, Micro giọng nói và dịch trực tiếp nguyên tệp Word, Excel, PowerPoint, PDF.</div>
+            </div>
+
+            <div class="card" style="border-top:3px solid var(--amber);">
+              <div style="font-size:28px; margin-bottom:8px;">📚</div>
+              <div style="font-weight:800; font-size:16px; color:#FFF; margin-bottom:4px;">3. Kho học liệu igiaoduc.vn</div>
+              <div style="font-size:13px; color:var(--ink-soft); line-height:1.45;">Cây thư mục 3 cấp chuẩn quốc gia, bài giảng số và SGK điện tử hoàn toàn miễn phí.</div>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:center; gap:14px; align-items:center;">
+            <button class="btn btn-primary" onclick="nextSlide()" style="padding:12px 30px; font-size:15px;">
+              <span>Bắt đầu bài học</span>
+              <span>→</span>
+            </button>
+            <button class="btn btn-outline" onclick="openTOC()" style="padding:12px 22px; font-size:14px;">
+              <span>📑 Mục lục bài học (15 slide)</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         SLIDE 2: KHỞI ĐỘNG - TÌNH HUỐNG THỰC TẾ
+         ══════════════════════════════════════════════════════════════════════ -->
+    <section class="slide" id="slide-2">
+      <div class="slide-header">
+        <span class="slide-badge">⚡ KHỞI ĐỘNG · TÌNH HUỐNG ĐỜI THỰC</span>
+        <div class="slide-title-wrap">
+          <div class="slide-title">Bão Thông Tin & Thảm Hoạ Tìm Kiếm Sơ Sài</div>
+          <div class="slide-subtitle">Nếu em cần nộp bài thuyết trình vào sáng mai, em sẽ tìm kiếm như thế nào?</div>
+        </div>
+        <div class="slide-meta">Trang 50 SGK</div>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2" style="align-items:center;">
+          <!-- Tình huống của Nam -->
+          <div class="card" style="border-left:4px solid var(--amber);">
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+              <div style="width:44px; height:44px; border-radius:50%; background:#F59E0B; display:flex; align-items:center; justify-content:center; font-size:22px;">👦</div>
+              <div>
+                <div style="font-weight:800; font-size:16px;">Tình huống của bạn Nam (Lớp 10A1)</div>
+                <div style="font-size:12px; color:var(--ink-soft);">21:30 tối Chủ Nhật · Trước giờ nộp bài môn Tin học</div>
+              </div>
+            </div>
+
+            <div style="background:rgba(0,0,0,0.3); border-radius:12px; padding:14px; margin-bottom:14px; font-size:14px; line-height:1.6; color:#E2E8F0;">
+              "Sáng mai lớp mình có tiết thuyết trình về <strong>An toàn trên không gian mạng</strong>. Nam mở Google gõ cụm từ: <code style="color:var(--amber); font-weight:700;">an toan mang</code>."
+            </div>
+
+            <div style="background:#050B14; border:1px solid rgba(239,68,68,0.3); border-radius:12px; padding:14px;">
+              <div style="color:var(--red); font-weight:700; font-size:13px; margin-bottom:6px;">⚠️ KẾT QUẢ GOOGLE TRẢ VỀ:</div>
+              <div style="font-family:var(--font-mono); font-size:12px; color:#FCA5A5;">
+                Khoảng <strong>28.400.000 kết quả</strong> (0.42 giây):<br/>
+                - Quảng cáo khoá học an ninh mạng 15 triệu đồng<br/>
+                - Báo lá cải giật tít lừa đảo tài khoản ngân hàng<br/>
+                - Phần mềm diệt virus thương mại đòi trả phí<br/>
+                ❌ <em>Không thấy tệp PowerPoint mẫu nào để tham khảo! Nam thức trắng đêm lướt từng trang!</em>
+              </div>
+            </div>
+          </div>
+
+          <!-- Câu hỏi tương tác -->
+          <div>
+            <div style="font-weight:800; font-size:17px; margin-bottom:14px; color:var(--cyan);">
+              🎯 Nếu là bạn thân của Nam, em sẽ gõ gì vào Google để tìm đúng ngay tệp PowerPoint (.pptx) có sẵn?
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:10px;" id="s2-options">
+              <button class="card" onclick="checkS2(1)" style="text-align:left; cursor:pointer; padding:14px 18px;" id="s2-opt-1">
+                <div style="font-weight:700; font-size:14px; color:#FFF;">A. Gõ: <code style="color:var(--cyan);">an toan mang powerpoint download</code></div>
+                <div style="font-size:12px; color:var(--ink-soft); margin-top:4px;">Vẫn ra hàng triệu trang web chứa bài viết chữ kèm quảng cáo tải file rác.</div>
+              </button>
+
+              <button class="card" onclick="checkS2(2)" style="text-align:left; cursor:pointer; padding:14px 18px;" id="s2-opt-2">
+                <div style="font-weight:700; font-size:14px; color:#FFF;">B. Gõ: <code style="color:var(--emerald-light);">"an toàn trên không gian mạng" filetype:pptx</code></div>
+                <div style="font-size:12px; color:var(--ink-soft); margin-top:4px;">Bọc nguyên cụm từ cố định + chỉ định đích danh tệp trình chiếu PowerPoint.</div>
+              </button>
+
+              <button class="card" onclick="checkS2(3)" style="text-align:left; cursor:pointer; padding:14px 18px;" id="s2-opt-3">
+                <div style="font-weight:700; font-size:14px; color:#FFF;">C. Nhắn tin vào nhóm Zalo nhờ các bạn làm giúp</div>
+                <div style="font-size:12px; color:var(--ink-soft); margin-top:4px;">Dễ bị bạn bè từ chối vì đã quá muộn!</div>
+              </button>
+            </div>
+
+            <div id="s2-feedback" style="margin-top:14px; display:none; padding:14px; border-radius:12px;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         SLIDE 3: MỤC TIÊU BÀI HỌC (3 TRỤ CỘT TRI THỨC)
+         ══════════════════════════════════════════════════════════════════════ -->
+    <section class="slide" id="slide-3">
+      <div class="slide-header">
+        <span class="slide-badge">🎯 MỤC TIÊU CẦN ĐẠT · CHUẨN GDPT 2018</span>
+        <div class="slide-title-wrap">
+          <div class="slide-title">Ba Trụ Cột Năng Lực Khai Thác Tài Nguyên Số</div>
+          <div class="slide-subtitle">Yêu cầu cần đạt sau tiết thực hành Tin học 10 Bài 10</div>
+        </div>
+      </div>
+      <div class="slide-body">
+        <div class="grid-3" style="height:100%; align-items:stretch;">
+          <!-- Trụ cột 1 -->
+          <div class="card" style="display:flex; flex-direction:column; justify-content:space-between; border-top:4px solid var(--cyan);">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                <span class="pill pill-cyan">NĂNG LỰC NLa</span>
+                <span style="font-size:26px;">🔍</span>
+              </div>
+              <h3 style="font-size:18px; font-weight:800; color:#FFF; margin-bottom:10px;">Làm chủ Toán tử Tìm kiếm</h3>
+              <ul style="font-size:14px; color:#CBD5E1; line-height:1.6; padding-left:18px; display:flex; flex-direction:column; gap:8px;">
+                <li>Sử dụng thành thạo dấu ngoặc kép <code style="color:var(--cyan);">""</code> để tìm chính xác cụm từ.</li>
+                <li>Biết khoanh vùng website với toán tử <code style="color:var(--cyan);">site:</code>.</li>
+                <li>Tìm đích danh tệp tài liệu (<code style="color:var(--cyan);">.pdf</code>, <code style="color:var(--cyan);">.pptx</code>, <code style="color:var(--cyan);">.docx</code>) với <code style="color:var(--cyan);">filetype:</code>.</li>
+                <li>Loại trừ thông tin gây nhiễu với toán tử dấu trừ <code style="color:var(--cyan);">-</code>.</li>
+              </ul>
+            </div>
+            <div style="background:rgba(56,189,248,0.1); border-radius:10px; padding:10px; margin-top:14px; font-size:12px; color:var(--cyan);">
+              ✨ Đạt được: Khả năng tìm đúng tài liệu chỉ sau 1 lần bấm Enter.
+            </div>
+          </div>
+
+          <!-- Trụ cột 2 -->
+          <div class="card" style="display:flex; flex-direction:column; justify-content:space-between; border-top:4px solid var(--emerald);">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                <span class="pill pill-green">NĂNG LỰC NLb</span>
+                <span style="font-size:26px;">🌐</span>
+              </div>
+              <h3 style="font-size:18px; font-weight:800; color:#FFF; margin-bottom:10px;">Google Translate Đa Ngữ</h3>
+              <ul style="font-size:14px; color:#CBD5E1; line-height:1.6; padding-left:18px; display:flex; flex-direction:column; gap:8px;">
+                <li>Khai thác địa chỉ <code style="color:var(--emerald);">translate.google.com</code> với hơn 100 ngôn ngữ.</li>
+                <li>Sử dụng 3 cách nhập liệu: Gõ văn bản, Đọc qua Micro và Tải tệp văn bản.</li>
+                <li>Biết cách dịch nguyên vẹn tệp Word, Excel, PowerPoint, PDF mà không hỏng bảng biểu.</li>
+                <li>Luyện phát âm bằng loa 🔊 và đảo chiều ngôn ngữ (⇆).</li>
+              </ul>
+            </div>
+            <div style="background:rgba(16,185,129,0.1); border-radius:10px; padding:10px; margin-top:14px; font-size:12px; color:var(--emerald);">
+              ✨ Đạt được: Xoá bỏ rào cản ngôn ngữ khi tự học tài liệu quốc tế.
+            </div>
+          </div>
+
+          <!-- Trụ cột 3 -->
+          <div class="card" style="display:flex; flex-direction:column; justify-content:space-between; border-top:4px solid var(--amber);">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                <span class="pill pill-amber">NĂNG LỰC NLd</span>
+                <span style="font-size:26px;">📚</span>
+              </div>
+              <h3 style="font-size:18px; font-weight:800; color:#FFF; margin-bottom:10px;">Học Liệu Mở igiaoduc.vn</h3>
+              <ul style="font-size:14px; color:#CBD5E1; line-height:1.6; padding-left:18px; display:flex; flex-direction:column; gap:8px;">
+                <li>Hiểu ý nghĩa phong trào Tài nguyên Giáo dục Mở (OER - Khởi nguồn từ MIT 2002).</li>
+                <li>Nắm vững cấu trúc cây thư mục 3 cấp trên Cổng học liệu số quốc gia.</li>
+                <li>Biết cách duyệt đến môn Tin học lớp 10 để học bài giảng trực tuyến.</li>
+                <li>Đánh giá độ tin cậy và bản quyền của tài liệu tham khảo.</li>
+              </ul>
+            </div>
+            <div style="background:rgba(245,158,11,0.1); border-radius:10px; padding:10px; margin-top:14px; font-size:12px; color:var(--amber);">
+              ✨ Đạt được: Chủ động học tập suốt đời từ nguồn tri thức chính thống.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         SLIDE 4: MỤC 1 - BỐN TOÁN TỬ VÀNG TÌM KIẾM GOOGLE
+         ══════════════════════════════════════════════════════════════════════ -->
+    <section class="slide" id="slide-4">
+      <div class="slide-header">
+        <span class="slide-badge">🔍 NHIỆM VỤ 1 · TÌM KIẾM NÂNG CAO</span>
+        <div class="slide-title-wrap">
+          <div class="slide-title">Bốn Toán Tử "Vàng" Của Google Search</div>
+          <div class="slide-subtitle">SGK Tin học 10, trang 50 - 51 · Nhấp vào từng toán tử để xem bí kíp thực chiến</div>
+        </div>
+      </div>
+      <div class="slide-body">
+        <div class="grid-4" style="margin-bottom:18px;">
+          <!-- Toán tử 1 -->
+          <div class="card active-card" onclick="showOpDetail(1)" id="op-card-1" style="cursor:pointer;">
+            <div style="font-size:24px; margin-bottom:6px;">🎯</div>
+            <div style="font-weight:800; font-size:15px; color:var(--cyan);">"cụm từ khoá"</div>
+            <div style="font-size:12px; color:var(--ink-soft); margin-top:4px;">Tìm chính xác nguyên vẹn cả cụm từ theo đúng thứ tự.</div>
+          </div>
+
+          <!-- Toán tử 2 -->
+          <div class="card" onclick="showOpDetail(2)" id="op-card-2" style="cursor:pointer;">
+            <div style="font-size:24px; margin-bottom:6px;">🌐</div>
+            <div style="font-weight:800; font-size:15px; color:var(--emerald);">site:tên_miền</div>
+            <div style="font-size:12px; color:var(--ink-soft); margin-top:4px;">Giới hạn phạm vi trong một website hoặc cơ quan (.gov.vn).</div>
+          </div>
+
+          <!-- Toán tử 3 -->
+          <div class="card" onclick="showOpDetail(3)" id="op-card-3" style="cursor:pointer;">
+            <div style="font-size:24px; margin-bottom:6px;">📑</div>
+            <div style="font-weight:800; font-size:15px; color:var(--amber);">filetype:đuôi</div>
+            <div style="font-size:12px; color:var(--ink-soft); margin-top:4px;">Chỉ định chính xác định dạng tệp (.pptx, .docx, .pdf).</div>
+          </div>
+
+          <!-- Toán tử 4 -->
+          <div class="card" onclick="showOpDetail(4)" id="op-card-4" style="cursor:pointer;">
+            <div style="font-size:24px; margin-bottom:6px;">➖</div>
+            <div style="font-weight:800; font-size:15px; color:var(--red);">từ_khoá -từ_bỏ</div>
+            <div style="font-size:12px; color:var(--ink-soft); margin-top:4px;">Dấu trừ (-) viết liền trước từ cần thanh lọc bỏ đi.</div>
+          </div>
+        </div>
+
+        <!-- Chi tiết giải thích tương tác -->
+        <div class="card" id="op-detail-box" style="flex:1; background:rgba(10,20,40,0.85); border:1px solid rgba(56,189,248,0.3); display:flex; flex-direction:column; justify-content:center;">
+          <!-- Render động từ JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         SLIDE 5: ĐẤU TRƯỜNG LẮP RÁP TOÁN TỬ (GOOGLE SEARCH SIMULATOR)
+         ══════════════════════════════════════════════════════════════════════ -->
+    <section class="slide" id="slide-5">
+      <div class="slide-header">
+        <span class="slide-badge">🎮 THỰC HÀNH TƯƠNG TÁC · SEARCH OPERATOR BUILDER</span>
+        <div class="slide-title-wrap">
+          <div class="slide-title">Phòng Thí Nghiệm: Thợ Săn Tìm Kiếm Google</div>
+          <div class="slide-subtitle">Nhấp chọn các mảnh ghép cú pháp để lắp ráp vào thanh tìm kiếm và bấm "Tìm kiếm Google"</div>
+        </div>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Bảng điều khiển lắp ghép -->
+          <div>
+            <div class="card" style="margin-bottom:14px; border-left:4px solid var(--cyan);">
+              <div style="font-size:13px; font-weight:700; color:var(--cyan); margin-bottom:4px;">🎯 NHIỆM VỤ SỐ 1:</div>
+              <div style="font-size:14px; color:#FFF; font-weight:700;">
+                Tìm bài thuyết trình PowerPoint (<code style="color:var(--amber);">.pptx</code>) về đề tài <code style="color:var(--emerald);">"an toàn trên không gian mạng"</code> trên kho bài giảng <code style="color:var(--cyan);">violet.vn</code>.
+              </div>
+            </div>
+
+            <div style="font-size:13px; font-weight:700; color:var(--ink-soft); margin-bottom:8px;">
+              CHỌN CÁC MẢNH TOÁN TỬ ĐÚNG ĐỂ GHÉP:
+            </div>
+            <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px;" id="token-pool">
+              <span class="token-chip" onclick="toggleToken(this, '&quot;an toàn trên không gian mạng&quot;')">"an toàn trên không gian mạng"</span>
+              <span class="token-chip" onclick="toggleToken(this, 'filetype:pptx')">filetype:pptx</span>
+              <span class="token-chip" onclick="toggleToken(this, 'site:violet.vn')">site:violet.vn</span>
+              <span class="token-chip" onclick="toggleToken(this, 'format:powerpoint')">format:powerpoint</span>
+              <span class="token-chip" onclick="toggleToken(this, 'type:ppt')">type:ppt</span>
+              <span class="token-chip" onclick="toggleToken(this, 'web:violet')">web:violet</span>
+              <span class="token-chip" onclick="toggleToken(this, '-quangcao')">-quangcao</span>
+            </div>
+
+            <div style="display:flex; gap:10px;">
+              <button class="btn btn-primary" onclick="simulateSearch()" style="flex:1;">
+                <span>🔍 Tìm kiếm Google</span>
+              </button>
+              <button class="btn btn-outline" onclick="resetSearchTokens()">
+                <span>🔄 Xoá làm lại</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Màn hình mô phỏng Google -->
+          <div class="search-mockup">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="font-weight:900; font-size:20px; color:#4285F4;">G</span>
+              <span style="font-weight:900; font-size:20px; color:#EA4335;">o</span>
+              <span style="font-weight:900; font-size:20px; color:#FBBC05;">o</span>
+              <span style="font-weight:900; font-size:20px; color:#4285F4;">g</span>
+              <span style="font-weight:900; font-size:20px; color:#34A853;">l</span>
+              <span style="font-weight:900; font-size:20px; color:#EA4335;">e</span>
+              <span style="font-size:11px; color:var(--ink-soft); margin-left:6px;">Search Simulator</span>
+            </div>
+
+            <!-- Thanh tìm kiếm -->
+            <div class="google-bar">
+              <span style="color:#94A3B8;">🔍</span>
+              <input type="text" id="sim-search-input" readonly placeholder="Chọn các mảnh ghép bên trái để ghép cú pháp..." />
+            </div>
+
+            <!-- Kết quả tìm kiếm giả lập -->
+            <div id="sim-search-results" style="min-height:200px; display:flex; flex-direction:column; justify-content:center; align-items:center; color:var(--ink-soft); font-size:13px; text-align:center;">
+              Nhấp các toán tử bên trái và bấm "Tìm kiếm Google" để kích hoạt máy quét chỉ mục!
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         SLIDE 6: ĐỐI CHIẾU TRỰC QUAN - TÌM KIẾM SƠ SÀI VS CHUYÊN GIA
+         ══════════════════════════════════════════════════════════════════════ -->
+    <section class="slide" id="slide-6">
+      <div class="slide-header">
+        <span class="slide-badge">⚖️ BẢNG ĐỐI CHIẾU THỰC CHIẾN</span>
+        <div class="slide-title-wrap">
+          <div class="slide-title">So Sánh: Người Dùng Nghiệp Dư vs Chuyên Gia Săn Tin</div>
+          <div class="slide-subtitle">Sự khác biệt giữa việc mất 2 tiếng lướt web rác và 3 giây tải trúng đích tài liệu chuẩn</div>
+        </div>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2" style="height:100%; align-items:stretch;">
+          <!-- Cột 1: Nghiệp dư -->
+          <div class="card" style="border-top:4px solid var(--red); background:rgba(30,15,20,0.6);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+              <span class="pill pill-red">TÌM KIẾM SƠ SÀI (NGHIỆP DƯ)</span>
+              <span style="font-size:28px;">🤦‍♂️</span>
+            </div>
+
+            <div class="code-box" style="margin-bottom:14px; border-color:rgba(239,68,68,0.4);">
+              <span class="cm">// Gõ từ khoá chung chung không có toán tử:</span><br/>
+              <span style="color:#F87171; font-weight:700;">dien bien phu</span>
+            </div>
+
+            <ul style="font-size:14px; color:#FCA5A5; line-height:1.65; padding-left:18px; display:flex; flex-direction:column; gap:10px;">
+              <li><strong>Hơn 34.000.000 kết quả:</strong> Bị bão thông tin áp đảo, không biết chọn trang nào.</li>
+              <li>Toàn bộ trang đầu bị chiếm bởi <strong>vé máy bay, khách sạn Điện Biên, tour du lịch, bài hát remix</strong>.</li>
+              <li>Mất hơn 45 phút nhấp từng link nhưng chỉ thấy trang giới thiệu, không tải được tài liệu nghiên cứu.</li>
+              <li>Dễ dính virus từ các trang tải miễn phí lừa đảo mạo danh.</li>
+            </ul>
+
+            <div style="margin-top:20px; padding:10px; border-radius:10px; background:rgba(239,68,68,0.15); font-size:12px; color:#F87171;">
+              ❌ Kết quả: Mệt mỏi, tốn thời gian, bài thuyết trình sơ sài thiếu căn cứ khoa học.
+            </div>
+          </div>
+
+          <!-- Cột 2: Chuyên gia -->
+          <div class="card" style="border-top:4px solid var(--emerald); background:rgba(10,35,30,0.6);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+              <span class="pill pill-green">TÌM KIẾM CHUYÊN GIA (PRO)</span>
+              <span style="font-size:28px;">🧙‍♂️</span>
+            </div>
+
+            <div class="code-box" style="margin-bottom:14px; border-color:rgba(16,185,129,0.4);">
+              <span class="cm">// Kết hợp 3 toán tử vàng cùng lúc:</span><br/>
+              <span class="str">"chiến dịch Điện Biên Phủ"</span> <span class="kw">site:</span>baotanglichsu.vn <span class="kw">filetype:</span>pdf
+            </div>
+
+            <ul style="font-size:14px; color:#A7F3D0; line-height:1.65; padding-left:18px; display:flex; flex-direction:column; gap:10px;">
+              <li><strong>Chỉ trả về đúng 4 kết quả vàng:</strong> Tất cả đều thuộc Bảo tàng Lịch sử Quốc gia.</li>
+              <li>Chứa chính xác nguyên cụm <em>"chiến dịch Điện Biên Phủ"</em> (không bị tách từ tản mạn).</li>
+              <li><strong>Tệp PDF gốc:</strong> Toàn văn tài liệu lịch sử, sơ đồ chiến dịch chuẩn của Nhà nước.</li>
+              <li>Chỉ mất <strong>5 giây</strong> để tải về máy và đưa vào báo cáo!</li>
+            </ul>
+
+            <div style="margin-top:20px; padding:10px; border-radius:10px; background:rgba(16,185,129,0.15); font-size:12px; color:#34D399;">
+              ✅ Kết quả: Chính xác 100%, nguồn tin chính thống, thuyết trình tự tin đạt điểm 10!
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         SLIDE 7: MỤC 2 - GOOGLE TRANSLATE TRỢ THỦ ĐA NGỮ AI
+         ══════════════════════════════════════════════════════════════════════ -->
+    <section class="slide" id="slide-7">
+      <div class="slide-header">
+        <span class="slide-badge">🌐 NHIỆM VỤ 2 · GOOGLE TRANSLATE</span>
+        <div class="slide-title-wrap">
+          <div class="slide-title">Google Translate — Trợ Thủ Dịch Thuật Đa Ngữ Thông Minh</div>
+          <div class="slide-subtitle">SGK Tin học 10, trang 51 - 52 · Hỗ trợ hơn 100 ngôn ngữ toàn cầu</div>
+        </div>
+      </div>
+      <div class="slide-body">
+        <div class="grid-3" style="margin-bottom:18px;">
+          <!-- Phương thức 1 -->
+          <div class="card" style="border-top:3px solid var(--cyan);">
+            <div style="font-size:30px; margin-bottom:10px;">⌨️</div>
+            <div style="font-weight:800; font-size:16px; color:#FFF; margin-bottom:6px;">1. Nhập văn bản trực tiếp</div>
+            <div style="font-size:13px; color:var(--ink-soft); line-height:1.5;">
+              Gõ hoặc dán đoạn văn bản cần dịch vào khung bên trái. Hệ thống AI tự nhận diện ngôn ngữ và dịch tức thì sang khung bên phải.
+            </div>
+          </div>
+
+          <!-- Phương thức 2 -->
+          <div class="card" style="border-top:3px solid var(--emerald);">
+            <div style="font-size:30px; margin-bottom:10px;">🎙️</div>
+            <div style="font-weight:800; font-size:16px; color:#FFF; margin-bottom:6px;">2. Giọng nói qua Micro</div>
+            <div style="font-size:13px; color:var(--ink-soft); line-height:1.5;">
+              Nhấp biểu tượng Micro rồi đọc to câu cần dịch. Công nghệ chuyển tiếng nói thành chữ (Speech-to-Text) sẽ tự động ghi và dịch ngay.
+            </div>
+          </div>
+
+          <!-- Phương thức 3 -->
+          <div class="card" style="border-top:3px solid var(--amber);">
+            <div style="font-size:30px; margin-bottom:10px;">📄</div>
+            <div style="font-weight:800; font-size:16px; color:#FFF; margin-bottom:6px;">3. Dịch nguyên tệp tài liệu</div>
+            <div style="font-size:13px; color:var(--ink-soft); line-height:1.5;">
+              Chọn thẻ <strong>Tài liệu</strong> và tải tệp <code>.docx</code>, <code>.xlsx</code>, <code>.pptx</code> hoặc <code>.pdf</code>. Máy dịch toàn bộ mà giữ nguyên định dạng bảng biểu!
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 Kĩ năng then chốt -->
+        <div class="card" style="background:rgba(15,25,50,0.8);">
+          <div style="font-weight:800; font-size:15px; color:var(--cyan); margin-bottom:12px;">
+            💡 BA KĨ NĂNG CẦN NHỚ KHI SỬ DỤNG GOOGLE TRANSLATE TRONG HỌC TẬP:
+          </div>
+          <div class="grid-3" style="gap:14px;">
+            <div style="display:flex; gap:10px; align-items:flex-start;">
+              <span style="font-size:20px;">🔊</span>
+              <div style="font-size:13px; color:#E2E8F0;">
+                <strong>Luyện nghe & phát âm:</strong> Bấm loa lần 1 đọc tốc độ chuẩn, bấm lần 2 máy sẽ đọc chậm rãi từng từ để em phát âm theo.
+              </div>
+            </div>
+
+            <div style="display:flex; gap:10px; align-items:flex-start;">
+              <span style="font-size:20px;">⇆</span>
+              <div style="font-size:13px; color:#E2E8F0;">
+                <strong>Đảo chiều dịch thuật:</strong> Bấm nút mũi tên 2 chiều để hoán đổi ngôn ngữ nguồn và đích, đối chiếu xem câu văn có tự nhiên không.
+              </div>
+            </div>
+
+            <div style="display:flex; gap:10px; align-items:flex-start;">
+              <span style="font-size:20px;">📋</span>
+              <div style="font-size:13px; color:#E2E8F0;">
+                <strong>Sao chép nhanh:</strong> Nhấp biểu tượng sao chép (hoặc nhấn Ctrl+C) để dán kết quả thẳng vào file Word bài tập.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         SLIDE 8: PHÒNG THÍ NGHIỆM ẢO - GOOGLE TRANSLATE LAB
+         ══════════════════════════════════════════════════════════════════════ -->
+    <section class="slide" id="slide-8">
+      <div class="slide-header">
+        <span class="slide-badge">🧪 THỰC HÀNH TƯƠNG TÁC · TRANSLATE LAB</span>
+        <div class="slide-title-wrap">
+          <div class="slide-title">Mô Phỏng Trực Tiếp Giao Diện Google Translate</div>
+          <div class="slide-subtitle">Trải nghiệm dịch câu văn học SGK, bấm loa phát âm 🔊 và hoán đổi ngôn ngữ ⇆</div>
+        </div>
+      </div>
+      <div class="slide-body">
+        <!-- Chuyển tab Văn bản vs Tài liệu -->
+        <div style="display:flex; gap:12px; margin-bottom:12px;">
+          <button class="btn btn-primary" id="tab-trans-text" onclick="switchTransTab('text')" style="padding:8px 16px; font-size:13px;">
+            <span>📝 Văn bản</span>
+          </button>
+          <button class="btn btn-outline" id="tab-trans-doc" onclick="switchTransTab('doc')" style="padding:8px 16px; font-size:13px;">
+            <span>📁 Tài liệu (.docx, .pdf, .pptx, .xlsx)</span>
+          </button>
+        </div>
+
+        <!-- Khung Dịch Văn Bản -->
+        <div class="trans-box" id="trans-text-ui">
+          <!-- Cột Trái (Nguồn) -->
+          <div class="trans-pane">
+            <div class="trans-header">
+              <span class="trans-lang" id="trans-src-lang">TIẾNG VIỆT</span>
+              <span style="font-size:12px; color:var(--ink-soft);">Ngôn ngữ nguồn</span>
+            </div>
+            <textarea class="trans-text" id="trans-input" oninput="doTranslate()" placeholder="Nhập văn bản cần dịch tại đây...">Cái quý giá nhất của con người là cuộc sống.</textarea>
+            <div class="trans-footer">
+              <button class="ctrl-btn" onclick="speakText('src')" title="Phát âm tiếng nguồn">🔊</button>
+              <button class="ctrl-btn" onclick="micSimulate()" title="Nhập giọng nói">🎙️</button>
+              <span style="font-size:11px; color:var(--ink-soft); margin-left:auto;" id="trans-char-count">44 / 5000</span>
+            </div>
+          </div>
+
+          <!-- Nút đổi chiều ở giữa -->
+          <div style="position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); z-index:10;">
+            <button class="ctrl-btn" onclick="swapLanguages()" style="background:#0F172A; border-color:var(--cyan); box-shadow:0 0 16px rgba(56,189,248,0.4);" title="Đổi chiều ngôn ngữ (⇆)">
+              ⇆
+            </button>
+          </div>
+
+          <!-- Cột Phải (Đích) -->
+          <div class="trans-pane">
+            <div class="trans-header">
+              <span class="trans-lang" id="trans-tgt-lang">TIẾNG ANH (ENGLISH)</span>
+              <div style="display:flex; gap:6px;">
+                <button class="pill pill-cyan" onclick="setTargetLang('en')">English</button>
+                <button class="pill pill-purple" onclick="setTargetLang('ru')">Русский (Nga)</button>
+                <button class="pill pill-amber" onclick="setTargetLang('fr')">Français</button>
+              </div>
+            </div>
+            <div class="trans-text" id="trans-output" style="color:#38BDF8; font-weight:600;">
+              The most precious thing a person has is life.
+            </div>
+            <div class="trans-footer">
+              <button class="ctrl-btn" onclick="speakText('tgt')" title="Phát âm tiếng đích">🔊</button>
+              <button class="ctrl-btn" onclick="copyTranslation()" title="Sao chép bản dịch">📋</button>
+              <span id="trans-copy-toast" style="font-size:12px; color:var(--emerald); opacity:0; transition:opacity 0.2s;">Đã sao chép!</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Khung Dịch File Tài Liệu (Ẩn mặc định) -->
+        <div id="trans-doc-ui" style="display:none; flex:1; background:#0B162C; border:1px solid rgba(255,255,255,0.12); border-radius:18px; padding:30px; text-align:center; justify-content:center; align-items:center; flex-direction:column;">
+          <div style="font-size:48px; margin-bottom:12px;">📑</div>
+          <h3 style="font-size:18px; font-weight:800; color:#FFF; margin-bottom:8px;">Chọn hoặc kéo thả tệp tài liệu cần dịch</h3>
+          <p style="font-size:13px; color:var(--ink-soft); max-width:540px; margin-bottom:18px;">
+            Hỗ trợ các loại tệp: <strong>.docx, .pdf, .pptx, .xlsx</strong>. Google Translate sẽ dịch toàn bộ nội dung mà vẫn bảo toàn 100% bố cục trang và bảng biểu.
+          </p>
+          <div style="display:flex; justify-content:center; gap:10px;">
+            <button class="btn btn-primary" onclick="simulateDocUpload()">
+              <span>📂 Tải tệp lên từ máy tính</span>
+            </button>
+          </div>
+          <div id="doc-sim-result" style="margin-top:16px; font-size:13px; color:var(--emerald); display:none;"></div>
+        </div>
+
+        <!-- Ví dụ thực tế SGK -->
+        <div style="margin-top:12px; display:flex; gap:10px; align-items:center;">
+          <span style="font-size:12px; color:var(--ink-soft); font-weight:700;">Ví dụ SGK trang 52:</span>
+          <button class="pill pill-cyan" onclick="loadSampleText(1)">"Thép đã tôi thế đấy" (Tiếng Nga)</button>
+          <button class="pill pill-green" onclick="loadSampleText(2)">Thuật ngữ Tin học (Tiếng Anh)</button>
+          <button class="pill pill-amber" onclick="loadSampleText(3)">Lời chào hữu nghị (Đa ngữ)</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         SLIDE 9: LỊCH SỬ PHONG TRÀO HỌC LIỆU MỞ OER
+         ══════════════════════════════════════════════════════════════════════ -->
+    <section class="slide" id="slide-9">
+      <div class="slide-header">
+        <span class="slide-badge">📜 LỊCH SỬ TRI THỨC SỐ · OER MOVEMENT</span>
+        <div class="slide-title-wrap">
+          <div class="slide-title">Học Liệu Mở (OER) Là Gì? Bắt Nguồn Từ Đâu?</div>
+          <div class="slide-subtitle">SGK trang 53 · Từ bước đi tiên phong của MIT năm 2002 đến giáo dục Việt Nam</div>
+        </div>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2" style="align-items:center;">
+          <div>
+            <div class="card" style="margin-bottom:14px; border-left:4px solid var(--purple);">
+              <div style="font-size:12px; font-weight:800; color:var(--purple-light); margin-bottom:4px;">KHÁI NIỆM CỐT LÕI</div>
+              <h3 style="font-size:17px; font-weight:800; color:#FFF; margin-bottom:8px;">Open Educational Resources (OER)</h3>
+              <p style="font-size:14px; color:#E2E8F0; line-height:1.6;">
+                <strong>Học liệu mở</strong> là các tài liệu giảng dạy, học tập và nghiên cứu ở mọi định dạng được công bố dưới giấy phép bản quyền mở hoặc thuộc phạm vi công cộng, cho phép bất kì ai cũng được <strong>truy cập, sử dụng, chỉnh sửa và chia sẻ hoàn toàn miễn phí</strong>.
+              </p>
+            </div>
+
+            <!-- Dòng thời gian lịch sử -->
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <div style="display:flex; gap:14px; align-items:flex-start;">
+                <div style="width:36px; height:36px; border-radius:50%; background:rgba(139,92,246,0.3); border:1px solid var(--purple); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px; color:var(--purple-light); flex-shrink:0;">2001</div>
+                <div>
+                  <div style="font-weight:700; font-size:14px; color:#FFF;">Khởi xướng tại MIT (Hoa Kỳ)</div>
+                  <div style="font-size:13px; color:var(--ink-soft); line-height:1.5;">
+                    Học viện Công nghệ Massachusetts đưa ra quyết định lịch sử: Số hoá và đưa toàn bộ bài giảng của trường lên mạng cho cả thế giới học miễn phí (MIT OpenCourseWare).
+                  </div>
+                </div>
+              </div>
+
+              <div style="display:flex; gap:14px; align-items:flex-start;">
+                <div style="width:36px; height:36px; border-radius:50%; background:rgba(56,189,248,0.3); border:1px solid var(--cyan); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px; color:var(--cyan); flex-shrink:0;">2002</div>
+                <div>
+                  <div style="font-weight:700; font-size:14px; color:#FFF;">UNESCO chính thức công nhận OER</div>
+                  <div style="font-size:13px; color:var(--ink-soft); line-height:1.5;">
+                    Diễn đàn UNESCO về Học liệu Mở thông qua định nghĩa OER, kêu gọi toàn cầu chia sẻ tài nguyên giáo dục vì sự bình đẳng tri thức.
+                  </div>
+                </div>
+              </div>
+
+              <div style="display:flex; gap:14px; align-items:flex-start;">
+                <div style="width:36px; height:36px; border-radius:50%; background:rgba(16,185,129,0.3); border:1px solid var(--emerald); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px; color:var(--emerald); flex-shrink:0;">Nay</div>
+                <div>
+                  <div style="font-weight:700; font-size:14px; color:#FFF;">Việt Nam: Cổng igiaoduc.vn</div>
+                  <div style="font-size:13px; color:var(--ink-soft); line-height:1.5;">
+                    Bộ Giáo dục & Đào tạo xây dựng Kho học liệu số quốc gia, mang bài giảng của giáo viên giỏi đến mọi học sinh, kể cả vùng sâu vùng xa.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Infographic So Sánh -->
+          <div class="card" style="background:#091428; border:1px solid rgba(139,92,246,0.3);">
+            <div style="font-weight:800; font-size:16px; color:#FFF; margin-bottom:14px; text-align:center;">
+              ⚖️ GIÁ TRỊ VĂN HOÁ & XÃ HỘI CỦA HỌC LIỆU MỞ
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <div style="padding:12px; border-radius:10px; background:rgba(239,68,68,0.1); border-left:3px solid var(--red);">
+                <div style="font-size:13px; font-weight:700; color:#FCA5A5;">Trước khi có OER:</div>
+                <div style="font-size:12px; color:var(--ink-soft); margin-top:2px;">
+                  Sách và bài giảng đắt đỏ, chỉ học sinh các trường đại học danh tiếng mới được tiếp cận giảng viên hàng đầu.
+                </div>
+              </div>
+
+              <div style="padding:12px; border-radius:10px; background:rgba(16,185,129,0.1); border-left:3px solid var(--emerald);">
+                <div style="font-size:13px; font-weight:700; color:var(--emerald);">Thời đại Học liệu Mở (OER):</div>
+                <div style="font-size:12px; color:var(--ink-soft); margin-top:2px;">
+                  Một học sinh THPT tại Cao Bằng hoàn toàn có thể xem bài giảng vật lí của giáo sư MIT, tải SGK điện tử và bài thi quốc gia miễn phí 100%!
+                </div>
+              </div>
+
+              <div style="padding:12px; border-radius:10px; background:rgba(56,189,248,0.1); border-left:3px solid var(--cyan);">
+                <div style="font-size:13px; font-weight:700; color:var(--cyan);">Nguyên tắc ứng xử của học sinh:</div>
+                <div style="font-size:12px; color:var(--ink-soft); margin-top:2px;">
+                  Được dùng miễn phí nhưng <strong>phải tôn trọng bản quyền</strong>: Ghi rõ nguồn gốc tác giả và không bán lại vì mục đích thương mại.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         SLIDE 10: MỤC 3 - CỔNG HỌC LIỆU SỐ QUỐC GIA IGIAODUC.VN
+         ══════════════════════════════════════════════════════════════════════ -->
+    <section class="slide" id="slide-10">
+      <div class="slide-header">
+        <span class="slide-badge">📚 NHIỆM VỤ 3 · KHO HỌC LIỆU SỐ</span>
+        <div class="slide-title-wrap">
+          <div class="slide-title">Cấu Trúc Cây Thư Mục 3 Cấp Trên Cổng igiaoduc.vn</div>
+          <div class="slide-subtitle">SGK Tin học 10, trang 53 - 54 · Địa chỉ chính thức: https://igiaoduc.vn</div>
+        </div>
+      </div>
+      <div class="slide-body">
+        <div class="grid-3" style="margin-bottom:16px;">
+          <!-- Cấp 1 -->
+          <div class="card" style="border-top:4px solid var(--blue);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <span class="pill pill-cyan">CẤP 1: LOẠI TÀI LIỆU</span>
+              <span style="font-size:22px;">📁</span>
+            </div>
+            <div style="font-size:15px; font-weight:800; color:#FFF; margin-bottom:8px;">3 Danh Mục Cốt Lõi:</div>
+            <ul style="font-size:13px; color:#CBD5E1; line-height:1.6; padding-left:16px;">
+              <li><strong>Học liệu số:</strong> Video bài giảng, bài giảng điện tử e-Learning.</li>
+              <li><strong>Sách giáo khoa:</strong> SGK số hoá tương tác các bộ sách.</li>
+              <li><strong>Dư địa chí:</strong> Tư liệu địa phương và văn hoá Việt Nam.</li>
+            </ul>
+          </div>
+
+          <!-- Cấp 2 -->
+          <div class="card" style="border-top:4px solid var(--emerald);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <span class="pill pill-green">CẤP 2: KHỐI LỚP HỌC</span>
+              <span style="font-size:22px;">🎒</span>
+            </div>
+            <div style="font-size:15px; font-weight:800; color:#FFF; margin-bottom:8px;">Phân Cấp Giáo Dục:</div>
+            <ul style="font-size:13px; color:#CBD5E1; line-height:1.6; padding-left:16px;">
+              <li>Mầm non & Tiểu học (Lớp 1 – 5).</li>
+              <li>Trung học cơ sở (Lớp 6 – 9).</li>
+              <li><strong>Trung học phổ thông:</strong><br/>
+                ➜ <span style="color:var(--emerald); font-weight:700;">Lớp 10</span> (chúng ta đang học)<br/>
+                ➜ Lớp 11 & Lớp 12.
+              </li>
+            </ul>
+          </div>
+
+          <!-- Cấp 3 -->
+          <div class="card" style="border-top:4px solid var(--amber);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <span class="pill pill-amber">CẤP 3: MÔN HỌC</span>
+              <span style="font-size:22px;">💻</span>
+            </div>
+            <div style="font-size:15px; font-weight:800; color:#FFF; margin-bottom:8px;">Môn Học Cụ Thể:</div>
+            <ul style="font-size:13px; color:#CBD5E1; line-height:1.6; padding-left:16px;">
+              <li><strong>Môn Tin học</strong> (Bộ Kết nối tri thức).</li>
+              <li>Môn Toán, Vật lí, Hoá học, Sinh học.</li>
+              <li>Môn Ngữ văn, Lịch sử, Địa lí, Ngoại ngữ.</li>
+              <li>Tài liệu Hoạt động trải nghiệm hướng nghiệp.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 3 Bước thực hành khai thác -->
+        <div class="card" style="background:#071224; border:1px solid rgba(56,189,248,0.25);">
+          <div style="font-weight:800; font-size:14px; color:var(--cyan); margin-bottom:10px;">
+            🚀 QUY TRÌNH 3 BƯỚC KHAI THÁC BÀI GIẢNG TRỰC TUYẾN:
+          </div>
+          <div class="grid-3" style="gap:14px;">
+            <div style="display:flex; gap:10px;">
+              <div style="width:28px; height:28px; border-radius:50%; background:#0284C7; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px; color:#FFF; flex-shrink:0;">1</div>
+              <div style="font-size:13px; color:#E2E8F0;">
+                Truy cập cổng <code>https://igiaoduc.vn</code> qua trình duyệt (Chrome, Cốc Cốc, Edge).
+              </div>
+            </div>
+
+            <div style="display:flex; gap:10px;">
+              <div style="width:28px; height:28px; border-radius:50%; background:#0E9F6E; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px; color:#FFF; flex-shrink:0;">2</div>
+              <div style="font-size:13px; color:#E2E8F0;">
+                Trên cây thư mục bên trái: Chọn <strong>Học liệu số</strong> ➜ Chọn <strong>Lớp 10</strong> ➜ Chọn môn <strong>Tin học</strong>.
+              </div>
+            </div>
+
+            <div style="display:flex; gap:10px;">
+              <div style="width:28px; height:28px; border-radius:50%; background:#D97706; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px; color:#FFF; flex-shrink:0;">3</div>
+              <div style="font-size:13px; color:#E2E8F0;">
+                Nhấp vào bài học mong muốn ➜ Bấm nút màu đỏ <strong>"Học trực tuyến"</strong> để xem video và tải tài liệu!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         SLIDE 11: KHÁM PHÁ CÂY THƯ MỤC IGIAODUC.VN (INTERACTIVE NAVIGATOR)
+         ══════════════════════════════════════════════════════════════════════ -->
+    <section class="slide" id="slide-11">
+      <div class="slide-header">
+        <span class="slide-badge">🌳 TRẢI NGHIỆM TƯƠNG TÁC · CÂY THƯ MỤC</span>
+        <div class="slide-title-wrap">
+          <div class="slide-title">Mô Phỏng Cây Thư Mục Khai Thác igiaoduc.vn</div>
+          <div class="slide-subtitle">Nhấp chuột theo từng cấp để tìm đến Bài giảng Tin học 10 chuẩn quốc gia</div>
+        </div>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2" style="height:100%;">
+          <!-- Cây thư mục điều hướng -->
+          <div class="tree-nav">
+            <div style="font-size:12px; font-weight:800; color:var(--cyan); margin-bottom:4px; letter-spacing:0.5px;">
+              CÂY DANH MỤC IGIAODUC.VN (NHẤP ĐỂ MỞ TỪNG CẤP):
+            </div>
+
+            <!-- Cấp 1 -->
+            <div class="tree-node active" id="node-cap1" onclick="navTree('cap1')">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span>📁</span>
+                <span>Cấp 1: <strong>Học liệu số</strong></span>
+              </div>
+              <span class="pill pill-cyan">Đang chọn</span>
+            </div>
+
+            <!-- Cấp 2 -->
+            <div class="tree-node" id="node-cap2" onclick="navTree('cap2')" style="margin-left:18px;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span>↳ 🎒</span>
+                <span>Cấp 2: <strong>Khối Lớp 10 (THPT)</strong></span>
+              </div>
+              <span class="pill pill-green" id="pill-cap2">Nhấp chọn</span>
+            </div>
+
+            <!-- Cấp 3 -->
+            <div class="tree-node" id="node-cap3" onclick="navTree('cap3')" style="margin-left:36px;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span>↳ 💻</span>
+                <span>Cấp 3: <strong>Môn Tin học 10</strong></span>
+              </div>
+              <span class="pill pill-amber" id="pill-cap3">Nhấp chọn</span>
+            </div>
+          </div>
+
+          <!-- Màn hình xem trước bài giảng trực tuyến -->
+          <div class="card" id="lesson-preview-box" style="display:flex; flex-direction:column; justify-content:space-between; background:#081326; border:1px solid rgba(56,189,248,0.3);">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                <span class="pill pill-cyan">KHO HỌC LIỆU SỐ BỘ GD&ĐT</span>
+                <span style="font-family:var(--font-mono); font-size:12px; color:var(--emerald);">● Máy chủ trực tuyến</span>
+              </div>
+
+              <div id="tree-preview-content">
+                <div style="font-size:40px; margin-bottom:12px; text-align:center;">🔍</div>
+                <h4 style="font-size:16px; font-weight:700; color:#FFF; text-align:center; margin-bottom:6px;">
+                  Vui lòng nhấp chọn lần lượt từ Cấp 1 ➜ Cấp 2 ➜ Cấp 3 ở cây bên trái
+                </h4>
+                <p style="font-size:13px; color:var(--ink-soft); text-align:center;">
+                  Hệ thống sẽ mô phỏng việc truy xuất cơ sở dữ liệu bài giảng của Bộ Giáo dục & Đào tạo.
+                </p>
+              </div>
+            </div>
+
+            <div id="tree-preview-action" style="display:none; margin-top:20px;">
+              <button class="btn btn-amber" onclick="simulateWatchLesson()" style="width:100%; padding:12px;">
+                <span>▶ Bấm "Học trực tuyến" (Xem Video bài giảng)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         SLIDE 12: CẢNH BÁO BẪY THI TRẮC NGHIỆM & MẸO NHỚ NHANH
+         ══════════════════════════════════════════════════════════════════════ -->
+    <section class="slide" id="slide-12">
+      <div class="slide-header">
+        <span class="slide-badge">⚠️ CẢNH BÁO BẪY THI · MẸO NHỚ SIÊU TỐC</span>
+        <div class="slide-title-wrap">
+          <div class="slide-title">Các Bẫy Đề Thi Trắc Nghiệm Bài 10 Cực Kì Dễ Mất Điểm</div>
+          <div class="slide-subtitle">Tổng hợp các câu hỏi giáo viên hay ra đề để phân loại học sinh khá giỏi</div>
+        </div>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Bẫy 1 & 2 -->
+          <div style="display:flex; flex-direction:column; gap:14px;">
+            <div class="card" style="border-left:4px solid var(--red);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <span class="pill pill-red">BẪY SỐ 1: TOÁN TỬ DẤU TRỪ (-)</span>
+                <span style="font-size:18px;">❌</span>
+              </div>
+              <div style="font-size:13px; color:#CBD5E1; line-height:1.5;">
+                <strong style="color:#FFF;">Bẫy đề thi:</strong> <em>"Cú pháp nào sau đây loại trừ từ 'quảng cáo' đúng quy tắc?"</em><br/>
+                🔴 Sai: <code>dien bien - quangcao</code> (có dấu cách sau dấu trừ).<br/>
+                🟢 Đúng: <code>dien bien -quangcao</code> (dấu trừ viết <strong>DÍNH LIỀN</strong> với từ cần loại trừ).
+              </div>
+            </div>
+
+            <div class="card" style="border-left:4px solid var(--amber);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <span class="pill pill-amber">BẪY SỐ 2: DANH MỤC CẤP 1 IGIAODUC.VN</span>
+                <span style="font-size:18px;">❌</span>
+              </div>
+              <div style="font-size:13px; color:#CBD5E1; line-height:1.5;">
+                <strong style="color:#FFF;">Bẫy đề thi:</strong> <em>"Mục nào sau đây thuộc danh mục cấp 1 của igiaoduc.vn?"</em><br/>
+                🔴 Sai hay chọn nhầm: <em>"Lớp 10"</em> (Lớp 10 thuộc Cấp 2) hoặc <em>"Tin học"</em> (Cấp 3).<br/>
+                🟢 Đúng: Danh mục Cấp 1 chỉ gồm đúng 3 mục: <strong>Học liệu số, Sách giáo khoa, Dư địa chí</strong>!
+              </div>
+            </div>
+          </div>
+
+          <!-- Bẫy 3 & 4 -->
+          <div style="display:flex; flex-direction:column; gap:14px;">
+            <div class="card" style="border-left:4px solid var(--purple);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <span class="pill pill-purple">BẪY SỐ 3: GOOGLE TRANSLATE DỊCH FILE</span>
+                <span style="font-size:18px;">❌</span>
+              </div>
+              <div style="font-size:13px; color:#CBD5E1; line-height:1.5;">
+                <strong style="color:#FFF;">Bẫy đề thi:</strong> <em>"Google Translate có dịch được bảng tính Excel không?"</em><br/>
+                🔴 Sai hay nghĩ là: <em>"Chỉ dịch được văn bản Word và văn bản thuần"</em>.<br/>
+                🟢 Đúng: Dịch được cả <strong>Word (.docx), Excel (.xlsx), PowerPoint (.pptx) và PDF (.pdf)</strong>!
+              </div>
+            </div>
+
+            <div class="card" style="border-left:4px solid var(--cyan);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <span class="pill pill-cyan">BẪY SỐ 4: TÁC DỤNG CỦA DẤU NGOẶC KÉP</span>
+                <span style="font-size:18px;">❌</span>
+              </div>
+              <div style="font-size:13px; color:#CBD5E1; line-height:1.5;">
+                <strong style="color:#FFF;">Bẫy đề thi:</strong> <em>"Dấu ngoặc kép có tác dụng gì?"</em><br/>
+                🔴 Sai hay chọn nhầm: <em>"Loại bỏ từ khoá"</em> hoặc <em>"Tự dịch sang tiếng Anh"</em>.<br/>
+                🟢 Đúng: Bắt buộc kết quả chứa <strong>chính xác nguyên cụm từ theo đúng thứ tự các từ</strong>.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         SLIDE 13: ĐẤU TRƯỜNG CHINH PHỤC MINI QUIZ (5 CÂU)
+         ══════════════════════════════════════════════════════════════════════ -->
+    <section class="slide" id="slide-13">
+      <div class="slide-header">
+        <span class="slide-badge">🏆 ĐẤU TRƯỜNG TRI THỨC · MINI QUIZ</span>
+        <div class="slide-title-wrap">
+          <div class="slide-title">Thử Thách Chinh Phục: 5 Câu Trắc Nghiệm Bài 10</div>
+          <div class="slide-subtitle">Chấm điểm trực tiếp · Chọn đáp án chính xác để nhận điểm 10 tuyệt đối!</div>
+        </div>
+        <div class="slide-meta" id="quiz-score-indicator" style="color:var(--amber); font-weight:700;">Điểm: 0 / 5</div>
+      </div>
+      <div class="slide-body">
+        <div class="card" style="flex:1; display:flex; flex-direction:column; justify-content:space-between;">
+          <!-- Câu hỏi & Tiến độ -->
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <span class="pill pill-cyan" id="quiz-q-num">CÂU HỎI 1 / 5</span>
+              <span style="font-size:12px; color:var(--ink-soft);" id="quiz-topic-tag">Toán tử tìm kiếm Google</span>
+            </div>
+
+            <div style="font-size:18px; font-weight:800; color:#FFF; margin-bottom:18px; line-height:1.5;" id="quiz-q-text">
+              Khi tìm kiếm tài liệu trên Google, việc đặt từ khoá trong dấu ngoặc kép "..." mang lại tác dụng gì?
+            </div>
+
+            <!-- Các lựa chọn A, B, C, D -->
+            <div style="display:flex; flex-direction:column; gap:10px;" id="quiz-options-container">
+              <!-- Render động bằng JS -->
+            </div>
+          </div>
+
+          <!-- Giải thích & Nút câu tiếp -->
+          <div style="margin-top:16px;">
+            <div id="quiz-explain-box" style="display:none; padding:12px 16px; border-radius:12px; font-size:13px; line-height:1.5; margin-bottom:12px;"></div>
+
+            <div style="display:flex; justify-content:flex-end;">
+              <button class="btn btn-primary" id="btn-next-quiz" onclick="nextQuizQuestion()" style="display:none;">
+                <span>Câu tiếp theo →</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         SLIDE 14: SƠ ĐỒ TƯ DUY TỔNG KẾT TOÀN BÀI (MINDMAP)
+         ══════════════════════════════════════════════════════════════════════ -->
+    <section class="slide" id="slide-14">
+      <div class="slide-header">
+        <span class="slide-badge">🧠 SƠ ĐỒ TƯ DUY · MINDMAP TƯƠNG TÁC</span>
+        <div class="slide-title-wrap">
+          <div class="slide-title">Bản Đồ Tri Thức: Bài 10 - Khai Thác Tài Nguyên Internet</div>
+          <div class="slide-subtitle">Nhấp vào từng nhánh để làm nổi bật (highlight) và xem tổng quan kiến thức trọng tâm</div>
+        </div>
+      </div>
+      <div class="slide-body">
+        <div class="grid-3" style="height:100%; align-items:stretch;">
+          <!-- Nhánh 1 -->
+          <div class="card active-card" id="mm-branch-1" onclick="focusMindmap(1)" style="cursor:pointer; border-top:4px solid var(--cyan);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <span class="pill pill-cyan">NHÁNH 1</span>
+              <span style="font-size:26px;">🔍</span>
+            </div>
+            <h3 style="font-size:17px; font-weight:800; color:#FFF; margin-bottom:8px;">Tìm kiếm Google nâng cao</h3>
+            <div style="display:flex; flex-direction:column; gap:8px; font-size:13px; color:#CBD5E1; line-height:1.5;">
+              <div>• <code>"..."</code>: Chính xác nguyên cụm từ</div>
+              <div>• <code>site:</code>: Khoanh vùng website / tên miền</div>
+              <div>• <code>filetype:</code>: Săn loại file (.pdf, .pptx, .docx)</div>
+              <div>• <code>-</code>: Loại trừ từ gây nhiễu (-quangcao)</div>
+              <div>• Thẩm định nguồn tin: .gov.vn, .edu.vn, tác giả</div>
+            </div>
+          </div>
+
+          <!-- Nhánh 2 -->
+          <div class="card" id="mm-branch-2" onclick="focusMindmap(2)" style="cursor:pointer; border-top:4px solid var(--emerald);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <span class="pill pill-green">NHÁNH 2</span>
+              <span style="font-size:26px;">🌐</span>
+            </div>
+            <h3 style="font-size:17px; font-weight:800; color:#FFF; margin-bottom:8px;">Google Translate AI</h3>
+            <div style="display:flex; flex-direction:column; gap:8px; font-size:13px; color:#CBD5E1; line-height:1.5;">
+              <div>• Hơn 100 ngôn ngữ (translate.google.com)</div>
+              <div>• 3 cách nhập: Văn bản, Micro, Tệp tài liệu</div>
+              <div>• Dịch nguyên vẹn: Word, Excel, PowerPoint, PDF</div>
+              <div>• Luyện nghe loa 🔊: Lần 1 nhanh, lần 2 chậm</div>
+              <div>• Đảo chiều ⇆ và hiệu đính ngữ cảnh</div>
+            </div>
+          </div>
+
+          <!-- Nhánh 3 -->
+          <div class="card" id="mm-branch-3" onclick="focusMindmap(3)" style="cursor:pointer; border-top:4px solid var(--amber);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <span class="pill pill-amber">NHÁNH 3</span>
+              <span style="font-size:26px;">📚</span>
+            </div>
+            <h3 style="font-size:17px; font-weight:800; color:#FFF; margin-bottom:8px;">Học liệu mở igiaoduc.vn</h3>
+            <div style="display:flex; flex-direction:column; gap:8px; font-size:13px; color:#CBD5E1; line-height:1.5;">
+              <div>• OER 2002: Khởi nguồn từ MIT (Hoa Kỳ)</div>
+              <div>• Cổng Bộ GD&ĐT: https://igiaoduc.vn</div>
+              <div>• Cây 3 cấp: Loại ➜ Lớp (10) ➜ Môn (Tin học)</div>
+              <div>• Nút "Học trực tuyến" xem video & tải tài liệu</div>
+              <div>• Tự học suốt đời & tôn trọng bản quyền</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         SLIDE 15: TỔNG KẾT & NHIỆM VỤ VỀ NHÀ
+         ══════════════════════════════════════════════════════════════════════ -->
+    <section class="slide" id="slide-15">
+      <div class="slide-header">
+        <span class="slide-badge">🏁 TỔNG KẾT BÀI HỌC · NHIỆM VỤ VỀ NHÀ</span>
+        <div class="slide-title-wrap">
+          <div class="slide-title">Chúc Mừng Em Đã Hoàn Thành Bài 10!</div>
+          <div class="slide-subtitle">Sẵn sàng bước vào Bài 11: Ứng xử trên môi trường số & Nghĩa vụ tôn trọng bản quyền</div>
+        </div>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2" style="align-items:center;">
+          <!-- 3 Thông điệp vàng -->
+          <div>
+            <div style="font-size:22px; font-weight:800; color:#FFF; margin-bottom:16px;">
+              🌟 3 THÔNG ĐIỆP VÀNG KHẮC GHI:
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <div class="card" style="border-left:4px solid var(--cyan); padding:14px;">
+                <div style="font-weight:700; font-size:15px; color:var(--cyan);">1. Săn thông tin thông minh bằng toán tử</div>
+                <div style="font-size:13px; color:var(--ink-soft); margin-top:2px;">
+                  Đừng gõ từ khoá chung chung; hãy phối hợp <code>""</code>, <code>site:</code>, <code>filetype:</code> để tiết kiệm hàng giờ quý báu.
+                </div>
+              </div>
+
+              <div class="card" style="border-left:4px solid var(--emerald); padding:14px;">
+                <div style="font-weight:700; font-size:15px; color:var(--emerald);">2. Vượt rào cản ngôn ngữ toàn cầu</div>
+                <div style="font-size:13px; color:var(--ink-soft); margin-top:2px;">
+                  Tận dụng Google Translate để đọc tài liệu quốc tế và bấm loa 🔊 để nâng cao kĩ năng phát âm ngoại ngữ mỗi ngày.
+                </div>
+              </div>
+
+              <div class="card" style="border-left:4px solid var(--amber); padding:14px;">
+                <div style="font-weight:700; font-size:15px; color:var(--amber);">3. Tự học trọn đời cùng Kho học liệu mở</div>
+                <div style="font-size:13px; color:var(--ink-soft); margin-top:2px;">
+                  Cổng <code>igiaoduc.vn</code> là người thầy trực tuyến miễn phí luôn đồng hành cùng học sinh trường THPT Phục Hòa.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Nhiệm vụ về nhà -->
+          <div class="card" style="background:#091428; border:1px solid rgba(56,189,248,0.3); padding:24px;">
+            <div style="font-size:18px; font-weight:800; color:#FFF; margin-bottom:14px; display:flex; align-items:center; gap:8px;">
+              <span>📝</span>
+              <span>NHIỆM VỤ THỰC HÀNH TẠI NHÀ:</span>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:12px; font-size:13px; color:#E2E8F0; line-height:1.6;">
+              <div style="display:flex; gap:10px;">
+                <span style="color:var(--cyan); font-weight:800;">[1]</span>
+                <span>Dùng Google tìm 1 tệp bài thuyết trình <code>.pptx</code> về danh lam thắng cảnh Cao Bằng (Thác Bản Giốc, Pác Bó) bằng cú pháp: <code>"Thác Bản Giốc" filetype:pptx</code>.</span>
+              </div>
+
+              <div style="display:flex; gap:10px;">
+                <span style="color:var(--emerald); font-weight:800;">[2]</span>
+                <span>Vào <code>translate.google.com</code>, dịch một đoạn tin công nghệ tiếng Anh sang tiếng Việt và bấm loa 🔊 nghe đọc chậm.</span>
+              </div>
+
+              <div style="display:flex; gap:10px;">
+                <span style="color:var(--amber); font-weight:800;">[3]</span>
+                <span>Truy cập <code>https://igiaoduc.vn</code>, tìm và ghi lại tên 2 bài giảng video môn Tin học 10 đạt giải quốc gia.</span>
+              </div>
+            </div>
+
+            <div style="margin-top:22px; display:flex; gap:12px;">
+              <button class="btn btn-primary" onclick="goToSlide(1)" style="flex:1;">
+                <span>🔄 Xem lại từ đầu</span>
+              </button>
+              <button class="btn btn-amber" onclick="triggerFireworks()">
+                <span>🎉 Pháo hoa chúc mừng</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /deck-container -->
+
+  <!-- ─── BỘ ĐIỀU KHIỂN DƯỚI ĐÁY ─── -->
+  <div class="deck-controls">
+    <button class="ctrl-btn" onclick="prevSlide()" title="Slide trước (Mũi tên Trái / PageUp)">←</button>
+    <div class="slide-indicator" id="slide-num-indicator">1 / 15</div>
+    <div class="slide-progress" onclick="seekSlide(event)" title="Thanh tiến độ">
+      <div class="slide-progress-fill" id="slide-progress-fill"></div>
+    </div>
+    <button class="ctrl-btn" onclick="nextSlide()" title="Slide tiếp (Mũi tên Phải / Phím Cách)">→</button>
+    <button class="ctrl-btn" onclick="toggleFullScreen()" title="Toàn màn hình (Phím F)">⛶</button>
+    <button class="ctrl-btn" id="btn-audio-toggle" onclick="toggleAudio()" title="Âm thanh (Phím M)">🔊</button>
+    <button class="ctrl-btn" onclick="openTOC()" title="Mục lục bài học (Phím T)">📑</button>
+  </div>
+
+  <!-- ─── MODAL MỤC LỤC ─── -->
+  <div class="toc-modal" id="toc-modal" onclick="closeTOC(event)">
+    <div class="toc-card" onclick="event.stopPropagation()">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <h2 style="font-size:20px; font-weight:800; color:#FFF;">📑 Mục Lục Bài 10 (15 Slide)</h2>
+          <div style="font-size:12px; color:var(--ink-soft);">Chọn nhanh slide bất kì để chuyển đến</div>
+        </div>
+        <button class="ctrl-btn" onclick="closeTOC()">✕</button>
+      </div>
+      <div class="toc-grid" id="toc-grid-container"></div>
+    </div>
+  </div>
+
+  <script>
+    /* ─── WEB AUDIO API SYNTHESIZER ─── */
+    let audioCtx = null;
+    let isSoundOn = true;
+
+    function getAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function playSound(type) {
+      if (!isSoundOn) return;
+      try {
+        const ctx = getAudio();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        const t = ctx.currentTime;
+
+        if (type === 'slide') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(320, t);
+          osc.frequency.exponentialRampToValueAtTime(540, t + 0.12);
+          gain.gain.setValueAtTime(0.08, t);
+          gain.gain.linearRampToValueAtTime(0, t + 0.12);
+          osc.start(t); osc.stop(t + 0.12);
+        } else if (type === 'correct') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(523.25, t); // C5
+          osc.frequency.setValueAtTime(659.25, t + 0.08); // E5
+          osc.frequency.setValueAtTime(783.99, t + 0.16); // G5
+          gain.gain.setValueAtTime(0.18, t);
+          gain.gain.linearRampToValueAtTime(0, t + 0.35);
+          osc.start(t); osc.stop(t + 0.35);
+        } else if (type === 'wrong') {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(220, t);
+          osc.frequency.linearRampToValueAtTime(140, t + 0.25);
+          gain.gain.setValueAtTime(0.15, t);
+          gain.gain.linearRampToValueAtTime(0, t + 0.25);
+          osc.start(t); osc.stop(t + 0.25);
+        } else if (type === 'click') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(440, t);
+          gain.gain.setValueAtTime(0.06, t);
+          gain.gain.linearRampToValueAtTime(0, t + 0.05);
+          osc.start(t); osc.stop(t + 0.05);
+        }
+      } catch (e) {}
+    }
+
+    function toggleAudio() {
+      isSoundOn = !isSoundOn;
+      document.getElementById('btn-audio-toggle').innerText = isSoundOn ? '🔊' : '🔇';
+    }
+
+    /* ─── QUẢN LÝ SLIDE & ĐIỀU HƯỚNG ─── */
+    const totalSlides = 15;
+    let currentSlide = 1;
+
+    const slideTitles = [
+      "1. Trang bìa bài giảng",
+      "2. Khởi động · Bão tìm kiếm",
+      "3. Mục tiêu 3 trụ cột GDPT 2018",
+      "4. Mục 1: Bốn toán tử vàng",
+      "5. Thợ săn tìm kiếm Google Lab",
+      "6. Đối chiếu: Nghiệp dư vs Pro",
+      "7. Mục 2: Google Translate AI",
+      "8. Google Translate Lab",
+      "9. Lịch sử Học liệu mở OER (2002)",
+      "10. Mục 3: Cổng igiaoduc.vn (3 cấp)",
+      "11. Khám phá cây thư mục igiaoduc.vn",
+      "12. Cảnh báo bẫy thi trắc nghiệm",
+      "13. Đấu trường Mini Quiz 5 câu",
+      "14. Sơ đồ tư duy (Mindmap)",
+      "15. Tổng kết & Nhiệm vụ về nhà"
+    ];
+
+    function updateSlideUI() {
+      for (let i = 1; i <= totalSlides; i++) {
+        const el = document.getElementById('slide-' + i);
+        if (!el) continue;
+        el.classList.remove('active', 'prev');
+        if (i === currentSlide) {
+          el.classList.add('active');
+        } else if (i < currentSlide) {
+          el.classList.add('prev');
+        }
+      }
+
+      document.getElementById('slide-num-indicator').innerText = currentSlide + ' / ' + totalSlides;
+      const pct = (currentSlide / totalSlides) * 100;
+      document.getElementById('slide-progress-fill').style.width = pct + '%';
+    }
+
+    function goToSlide(n) {
+      if (n < 1 || n > totalSlides || n === currentSlide) return;
+      currentSlide = n;
+      playSound('slide');
+      updateSlideUI();
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) goToSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) goToSlide(currentSlide - 1);
+    }
+
+    function seekSlide(e) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const ratio = clickX / rect.width;
+      const target = Math.max(1, Math.min(totalSlides, Math.ceil(ratio * totalSlides)));
+      goToSlide(target);
+    }
+
+    /* Bàn phím điều khiển */
+    window.addEventListener('keydown', (e) => {
+      if (['ArrowRight', 'Space', 'PageDown'].includes(e.code)) {
+        e.preventDefault(); nextSlide();
+      } else if (['ArrowLeft', 'PageUp'].includes(e.code)) {
+        e.preventDefault(); prevSlide();
+      } else if (e.code === 'KeyF') {
+        toggleFullScreen();
+      } else if (e.code === 'KeyM') {
+        toggleAudio();
+      } else if (e.code === 'KeyT') {
+        openTOC();
+      }
+    });
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    /* ─── MỤC LỤC MODAL ─── */
+    function openTOC() {
+      const container = document.getElementById('toc-grid-container');
+      container.innerHTML = slideTitles.map((t, idx) => {
+        const n = idx + 1;
+        const active = n === currentSlide ? 'active' : '';
+        return '<div class="toc-item ' + active + '" onclick="goToSlide(' + n + '); closeTOC();">' +
+          '<span style="font-family:var(--font-mono); font-weight:700;">' + (n < 10 ? '0' + n : n) + '.</span>' +
+          '<span>' + (t.split('. ')[1] || t) + '</span>' +
+        '</div>';
+      }).join('');
+      document.getElementById('toc-modal').classList.add('open');
+    }
+
+    function closeTOC(e) {
+      document.getElementById('toc-modal').classList.remove('open');
+    }
+
+    /* ─── SLIDE 2: TÌNH HUỐNG KHỞI ĐỘNG ─── */
+    function checkS2(opt) {
+      const fb = document.getElementById('s2-feedback');
+      fb.style.display = 'block';
+      if (opt === 2) {
+        playSound('correct');
+        fb.style.background = 'rgba(16,185,129,0.15)';
+        fb.style.border = '1px solid var(--emerald)';
+        fb.style.color = '#34D399';
+        fb.innerHTML = '🎉 <strong>CHÍNH XÁC TUYỆT VỜI!</strong> Cú pháp <code>"an toàn trên không gian mạng" filetype:pptx</code> sẽ lọc sạch toàn bộ trang web rác và trả về ngay các tệp bài giảng PowerPoint có sẵn cho Nam!';
+      } else {
+        playSound('wrong');
+        fb.style.background = 'rgba(239,68,68,0.15)';
+        fb.style.border = '1px solid var(--red)';
+        fb.style.color = '#F87171';
+        fb.innerHTML = '⚠️ <strong>Chưa tối ưu!</strong> Phương án này vẫn khiến Nam chìm trong bão thông tin và không tải được tệp bài giảng đúng yêu cầu. Hãy chọn phương án B!';
+      }
+    }
+
+    /* ─── SLIDE 4: CHI TIẾT 4 TOÁN TỬ VÀNG ─── */
+    const opDetails = [
+      null,
+      {
+        title: '🎯 Dấu ngoặc kép "cụm từ khoá" — Tìm chính xác nguyên cụm',
+        syntax: '"chiến dịch Điện Biên Phủ"',
+        explain: 'Bắt buộc máy tìm kiếm phải trả về các trang web có chứa <strong>chính xác cụm từ đó theo đúng thứ tự các từ</strong>, không tách rời từng từ đơn lẻ. Giúp loại bỏ hoàn toàn các trang chỉ có từ "chiến dịch" hoặc chỉ có từ "Điện Biên".',
+        example: 'Tìm bài thơ: <code style="color:var(--cyan);">"Sóng bắt đầu từ gió"</code> ➜ Chỉ ra đúng bài thơ Sóng của Xuân Quỳnh.'
+      },
+      {
+        title: '🌐 site:tên_miền — Khoanh vùng website hoặc cơ quan cụ thể',
+        syntax: '"quy chế thi tốt nghiệp" site:moet.gov.vn',
+        explain: 'Giới hạn phạm vi tìm kiếm chỉ nằm duy nhất trong tên miền được chỉ định. Rất hữu ích khi cần tìm thông tin chính thống từ các cơ quan nhà nước (<code style="color:var(--emerald);">.gov.vn</code>), trường đại học (<code style="color:var(--emerald);">.edu.vn</code>).',
+        example: 'Tra cứu điểm chuẩn: <code style="color:var(--emerald);">site:hust.edu.vn điểm chuẩn 2024</code>'
+      },
+      {
+        title: '📑 filetype:đuôi_tệp — Tìm đích danh định dạng tệp tài liệu',
+        syntax: '"tin học 10" filetype:pptx',
+        explain: 'Chỉ trả về các tệp tin có đuôi mở rộng tương ứng: <code style="color:var(--amber);">pptx</code> (PowerPoint), <code style="color:var(--amber);">docx</code> (Word), <code style="color:var(--amber);">pdf</code> (Sách/tài liệu đọc), <code style="color:var(--amber);">xlsx</code> (Bảng tính Excel).',
+        example: 'Tải đề thi thử có sẵn: <code style="color:var(--amber);">"đề thi học kì 1 tin học 10" filetype:pdf</code>'
+      },
+      {
+        title: '➖ Dấu trừ -từ_loại_trừ — Thanh lọc từ gây nhiễu',
+        syntax: 'báo -báo_chí (hoặc: python -python2)',
+        explain: 'Loại bỏ toàn bộ các trang web có chứa từ đứng sau dấu trừ. <strong>LƯU Ý CỰC KỲ QUAN TRỌNG:</strong> Dấu trừ phải viết <strong>DÍNH LIỀN</strong> với từ cần loại trừ (không có dấu cách ở giữa).',
+        example: 'Tìm hiểu loài báo săn mồi: <code style="color:var(--red);">con báo -báo_chí -tin_tức</code>'
+      }
+    ];
+
+    function showOpDetail(idx) {
+      playSound('click');
+      for (let i = 1; i <= 4; i++) {
+        document.getElementById('op-card-' + i).classList.remove('active-card');
+      }
+      document.getElementById('op-card-' + idx).classList.add('active-card');
+
+      const data = opDetails[idx];
+      document.getElementById('op-detail-box').innerHTML = `
+        <div style="font-size:18px; font-weight:800; color:#FFF; margin-bottom:8px;">${data.title}</div>
+        <div class="code-box" style="margin-bottom:12px;">
+          <span class="cm">// Cú pháp thực tế:</span><br/>
+          <span style="color:#FCD34D; font-weight:700;">${data.syntax}</span>
+        </div>
+        <p style="font-size:14px; color:#E2E8F0; line-height:1.6; margin-bottom:10px;">${data.explain}</p>
+        <div style="font-size:13px; color:var(--cyan); background:rgba(56,189,248,0.1); border-radius:8px; padding:8px 12px;">
+          💡 <strong>Ví dụ mở rộng:</strong> ${data.example}
+        </div>
+      `;
+    }
+
+    // Khởi tạo mục 4 mặc định
+    showOpDetail(1);
+
+    /* ─── SLIDE 5: THỢ SĂN TÌM KIẾM GOOGLE (SEARCH SIMULATOR) ─── */
+    let selectedTokens = [];
+
+    function toggleToken(el, token) {
+      playSound('click');
+      if (selectedTokens.includes(token)) {
+        selectedTokens = selectedTokens.filter(t => t !== token);
+        el.classList.remove('selected');
+      } else {
+        selectedTokens.push(token);
+        el.classList.add('selected');
+      }
+      document.getElementById('sim-search-input').value = selectedTokens.join(' ');
+    }
+
+    function resetSearchTokens() {
+      playSound('click');
+      selectedTokens = [];
+      document.querySelectorAll('.token-chip').forEach(c => c.classList.remove('selected'));
+      document.getElementById('sim-search-input').value = '';
+      document.getElementById('sim-search-results').innerHTML = 'Nhấp các toán tử bên trái và bấm "Tìm kiếm Google" để kích hoạt máy quét chỉ mục!';
+    }
+
+    function simulateSearch() {
+      const query = selectedTokens.join(' ');
+      const res = document.getElementById('sim-search-results');
+
+      if (!selectedTokens.includes('"an toàn trên không gian mạng"') || !selectedTokens.includes('filetype:pptx')) {
+        playSound('wrong');
+        res.innerHTML = `
+          <div style="color:var(--red); font-weight:700; font-size:14px; margin-bottom:6px;">⚠️ CÚ PHÁP CHƯA ĐỦ ĐỂ SĂN TỆP PPTX CHUẨN!</div>
+          <div style="font-size:12px; color:#CBD5E1;">Em cần ít nhất 2 mảnh: cụm từ chính xác trong ngoặc kép <code>"an toàn trên không gian mạng"</code> và định dạng tệp <code>filetype:pptx</code>. Thêm <code>site:violet.vn</code> để săn trên kho bài giảng!</div>
+        `;
+        return;
+      }
+
+      playSound('correct');
+      triggerFireworks();
+      res.innerHTML = `
+        <div style="width:100%; text-align:left;">
+          <div style="font-size:12px; color:var(--emerald); font-weight:700; margin-bottom:8px;">✅ KẾT QUẢ ĐẠT CHUẨN XUẤT SẮC (Khoảng 2 kết quả · 0.12 giây):</div>
+
+          <div class="serp-item">
+            <div class="serp-breadcrumb">violet.vn › baigiang › tin-hoc-10</div>
+            <a class="serp-title" href="javascript:void(0)">
+              <span class="pill pill-amber" style="padding:2px 6px;">PPTX</span>
+              <span>Bài giảng điện tử Tin học 10: An toàn trên không gian mạng</span>
+            </a>
+            <div class="serp-snippet">
+              Tệp trình chiếu PowerPoint hoàn chỉnh bám sát SGK Kết nối tri thức. Bao gồm 5 nguy cơ không gian mạng, các chủng loại mã độc (Virus, Worm, Trojan) và nguyên tắc phòng thủ...
+            </div>
+          </div>
+
+          <div class="serp-item" style="border-left-color:var(--cyan); margin-top:8px;">
+            <div class="serp-breadcrumb">baigiang.violet.vn › tin10 › bai-09</div>
+            <a class="serp-title" href="javascript:void(0)">
+              <span class="pill pill-amber" style="padding:2px 6px;">PPTX</span>
+              <span>Giáo án PowerPoint: Chủ đề 2 - Mạng máy tính & Internet</span>
+            </a>
+            <div class="serp-snippet">
+              Bộ slide tương tác đạt giải Giáo viên dạy giỏi, tích hợp video phóng sự an ninh mạng và câu hỏi củng cố cuối bài.
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    /* ─── SLIDE 8: GOOGLE TRANSLATE SIMULATOR ─── */
+    let currentTargetLang = 'en';
+    const sampleTranslations = {
+      en: "The most precious thing a person has is life.",
+      ru: "Самое дорогое у человека — это жизнь.",
+      fr: "La chose la plus précieuse qu'un homme possède, c'est la vie."
+    };
+
+    function switchTransTab(tab) {
+      playSound('click');
+      if (tab === 'text') {
+        document.getElementById('trans-text-ui').style.display = 'grid';
+        document.getElementById('trans-doc-ui').style.display = 'none';
+        document.getElementById('tab-trans-text').className = 'btn btn-primary';
+        document.getElementById('tab-trans-doc').className = 'btn btn-outline';
+      } else {
+        document.getElementById('trans-text-ui').style.display = 'none';
+        document.getElementById('trans-doc-ui').style.display = 'flex';
+        document.getElementById('tab-trans-text').className = 'btn btn-outline';
+        document.getElementById('tab-trans-doc').className = 'btn btn-primary';
+      }
+    }
+
+    function setTargetLang(lang) {
+      playSound('click');
+      currentTargetLang = lang;
+      const langNames = { en: 'TIẾNG ANH (ENGLISH)', ru: 'TIẾNG NGA (РУССКИЙ)', fr: 'TIẾNG PHÁP (FRANÇAIS)' };
+      document.getElementById('trans-tgt-lang').innerText = langNames[lang];
+      doTranslate();
+    }
+
+    function doTranslate() {
+      const input = document.getElementById('trans-input').value.trim();
+      document.getElementById('trans-char-count').innerText = input.length + ' / 5000';
+      const out = document.getElementById('trans-output');
+
+      if (!input) {
+        out.innerText = 'Bản dịch sẽ hiển thị tại đây...';
+        return;
+      }
+
+      if (input.includes('quý giá nhất') || input.includes('cuộc sống')) {
+        out.innerText = sampleTranslations[currentTargetLang] || sampleTranslations.en;
+      } else {
+        out.innerText = 'AI Translation (' + currentTargetLang.toUpperCase() + '): ' + input;
+      }
+    }
+
+    function swapLanguages() {
+      playSound('click');
+      const inp = document.getElementById('trans-input');
+      const out = document.getElementById('trans-output');
+      const temp = inp.value;
+      inp.value = out.innerText;
+      out.innerText = temp;
+      const srcName = document.getElementById('trans-src-lang').innerText;
+      document.getElementById('trans-src-lang').innerText = document.getElementById('trans-tgt-lang').innerText;
+      document.getElementById('trans-tgt-lang').innerText = srcName;
+      doTranslate();
+    }
+
+    function speakText(pane) {
+      playSound('click');
+      const text = pane === 'src' 
+        ? document.getElementById('trans-input').value 
+        : document.getElementById('trans-output').innerText;
+      if (!text) return;
+
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.rate = 0.9;
+        window.speechSynthesis.speak(utter);
+      } else {
+        playSound('correct');
+      }
+    }
+
+    function copyTranslation() {
+      const text = document.getElementById('trans-output').innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        playSound('click');
+        const toast = document.getElementById('trans-copy-toast');
+        toast.style.opacity = '1';
+        setTimeout(() => toast.style.opacity = '0', 1600);
+      });
+    }
+
+    function loadSampleText(idx) {
+      playSound('click');
+      const inp = document.getElementById('trans-input');
+      if (idx === 1) {
+        inp.value = "Cái quý giá nhất của con người là cuộc sống.";
+        setTargetLang('ru');
+      } else if (idx === 2) {
+        inp.value = "Hệ điều hành quản lí phần cứng và cung cấp môi trường chạy các phần mềm ứng dụng.";
+        setTargetLang('en');
+      } else if (idx === 3) {
+        inp.value = "Chào mừng các bạn học sinh đến với giờ học Tin học trực tuyến!";
+        setTargetLang('fr');
+      }
+      doTranslate();
+    }
+
+    function micSimulate() {
+      playSound('click');
+      const inp = document.getElementById('trans-input');
+      inp.value = "Xin chào! Chúc các bạn học tập tốt trên Internet.";
+      doTranslate();
+    }
+
+    function simulateDocUpload() {
+      playSound('click');
+      const res = document.getElementById('doc-sim-result');
+      res.style.display = 'block';
+      res.innerHTML = `
+        🎉 <strong>Tải lên thành công tệp: BaiTap_Nhom2.docx</strong><br/>
+        Hệ thống AI đã dịch toàn bộ 14 trang sang Tiếng Anh, bảo toàn 100% bố cục bảng biểu và hình ảnh! Bấm vào để tải về tệp đã dịch.
+      `;
+    }
+
+    /* ─── SLIDE 11: CÂY THƯ MỤC IGIAODUC.VN ─── */
+    let treeState = 1;
+
+    function navTree(node) {
+      playSound('click');
+      if (node === 'cap1') {
+        treeState = 1;
+        document.getElementById('node-cap1').className = 'tree-node active';
+        document.getElementById('node-cap2').className = 'tree-node';
+        document.getElementById('node-cap3').className = 'tree-node';
+        document.getElementById('pill-cap2').innerText = 'Nhấp chọn';
+        document.getElementById('pill-cap3').innerText = 'Nhấp chọn';
+
+        document.getElementById('tree-preview-content').innerHTML = `
+          <div style="font-size:36px; margin-bottom:8px; text-align:center;">📁</div>
+          <h4 style="font-size:16px; font-weight:700; color:var(--cyan); text-align:center; margin-bottom:6px;">
+            Đã chọn Danh mục Cấp 1: HỌC LIỆU SỐ
+          </h4>
+          <p style="font-size:13px; color:#CBD5E1; text-align:center;">
+            Kho chứa hơn 30.000 bài giảng điện tử e-Learning và video bài giảng truyền hình đạt chuẩn của Bộ Giáo dục & Đào tạo. Hãy nhấp tiếp vào <strong>Cấp 2 (Lớp 10)</strong> bên trái!
+          </p>
+        `;
+        document.getElementById('tree-preview-action').style.display = 'none';
+      } else if (node === 'cap2') {
+        treeState = 2;
+        document.getElementById('node-cap2').className = 'tree-node active';
+        document.getElementById('pill-cap2').innerText = 'Đã chọn';
+        document.getElementById('node-cap3').className = 'tree-node';
+        document.getElementById('pill-cap3').innerText = 'Nhấp chọn';
+
+        document.getElementById('tree-preview-content').innerHTML = `
+          <div style="font-size:36px; margin-bottom:8px; text-align:center;">🎒</div>
+          <h4 style="font-size:16px; font-weight:700; color:var(--emerald); text-align:center; margin-bottom:6px;">
+            Đã chọn Cấp 2: KHỐI LỚP 10 (CẤP THPT)
+          </h4>
+          <p style="font-size:13px; color:#CBD5E1; text-align:center;">
+            Đang lọc học liệu chuẩn chương trình GDPT 2018 dành riêng cho học sinh lớp 10. Hãy nhấp tiếp vào <strong>Cấp 3 (Môn Tin học 10)</strong> bên trái để mở kho bài giảng!
+          </p>
+        `;
+        document.getElementById('tree-preview-action').style.display = 'none';
+      } else if (node === 'cap3') {
+        treeState = 3;
+        playSound('correct');
+        document.getElementById('node-cap3').className = 'tree-node active';
+        document.getElementById('pill-cap3').innerText = 'Đã chọn';
+
+        document.getElementById('tree-preview-content').innerHTML = `
+          <div style="background:rgba(56,189,248,0.1); border-radius:12px; padding:16px; border:1px solid rgba(56,189,248,0.3);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <span class="pill pill-cyan">BÀI GIẢNG E-LEARNING QUỐC GIA</span>
+              <span style="font-size:12px; color:var(--amber);">★★★★★ (4.9/5)</span>
+            </div>
+            <h3 style="font-size:17px; font-weight:800; color:#FFF; margin-bottom:6px;">
+              Bài 10: Thực hành khai thác tài nguyên trên Internet
+            </h3>
+            <div style="font-size:12px; color:var(--ink-soft); margin-bottom:10px;">
+              Tác giả: Giáo viên giỏi môn Tin học · Bộ Giáo dục & Đào tạo thẩm định
+            </div>
+            <p style="font-size:13px; color:#CBD5E1; line-height:1.5;">
+              Nội dung: Video bài giảng sinh động, hướng dẫn thao tác chi tiết toán tử Google, phần mềm dịch Google Translate và thực hành khai thác kho số.
+            </p>
+          </div>
+        `;
+        document.getElementById('tree-preview-action').style.display = 'block';
+      }
+    }
+
+    function simulateWatchLesson() {
+      playSound('correct');
+      triggerFireworks();
+      alert("Đang khởi chạy trình phát video bài giảng trực tuyến Bài 10 trên Cổng học liệu số quốc gia igiaoduc.vn!");
+    }
+
+    /* ─── SLIDE 13: MINI QUIZ 5 CÂU TRẮC NGHIỆM ─── */
+    const quizData = [
+      {
+        q: "Khi tìm kiếm tài liệu trên Google, việc đặt từ khoá trong dấu ngoặc kép \"...\" mang lại tác dụng gì?",
+        tag: "Toán tử Google",
+        options: [
+          "Loại bỏ toàn bộ các trang web có chứa cụm từ đó ra khỏi danh sách kết quả",
+          "Yêu cầu kết quả phải chứa chính xác nguyên cụm từ đó theo đúng thứ tự các từ",
+          "Tự động dịch cụm từ đó sang tiếng Anh rồi mới tiến hành tìm kiếm trên toàn cầu",
+          "Chỉ tìm kiếm các hình ảnh và video có liên quan trực tiếp đến cụm từ khoá đó"
+        ],
+        answer: 1,
+        explain: "Toán tử ngoặc kép \"...\" giúp máy tìm kiếm hiểu đây là một cụm từ cố định, không tách rời từng từ đơn lẻ, giúp loại bỏ các kết quả tản mạn."
+      },
+      {
+        q: "Để tìm kiếm bài thuyết trình PowerPoint có sẵn về chủ đề An toàn mạng, cú pháp nào sau đây là chuẩn xác nhất?",
+        tag: "Toán tử filetype:",
+        options: [
+          "\"an toàn mạng\" type:powerpoint",
+          "\"an toàn mạng\" format:ppt",
+          "\"an toàn mạng\" filetype:pptx",
+          "\"an toàn mạng\" file:presentation"
+        ],
+        answer: 2,
+        explain: "Google sử dụng toán tử filetype: followed by phần mở rộng tệp (ví dụ filetype:pptx cho PowerPoint, filetype:docx cho Word, filetype:pdf cho tệp PDF)."
+      },
+      {
+        q: "Muốn tìm tư liệu lịch sử về Điện Biên Phủ nhưng muốn LOẠI TRỪ các bài viết chứa từ 'du_lịch', em sử dụng cú pháp nào?",
+        tag: "Toán tử dấu trừ (-)",
+        options: [
+          "\"Điện Biên Phủ\" not:du_lịch",
+          "\"Điện Biên Phủ\" -du_lịch",
+          "\"Điện Biên Phủ\" - du_lịch",
+          "\"Điện Biên Phủ\" without:du_lịch"
+        ],
+        answer: 1,
+        explain: "Toán tử dấu trừ (-) phải viết LIỀN TRƯỚC từ cần loại trừ (không có dấu cách sau dấu trừ). Nếu viết '- du_lịch' có dấu cách thì máy sẽ tìm kiếm cả dấu gạch ngang!"
+      },
+      {
+        q: "Khi muốn dịch nguyên một bảng tính Excel (.xlsx) từ tiếng Anh sang tiếng Việt trên Google Translate, em thực hiện như thế nào?",
+        tag: "Google Translate",
+        options: [
+          "Bắt buộc phải copy từng ô trong bảng tính rồi dán vào khung dịch văn bản",
+          "Chỉ dịch được tệp Word, Google Translate hoàn toàn không hỗ trợ tệp Excel",
+          "Chọn thẻ 'Tài liệu', tải tệp bảng tính lên rồi bấm nút 'Dịch'",
+          "Phải chụp màn hình bảng tính thành ảnh rồi đưa vào dịch bằng nhận diện chữ"
+        ],
+        answer: 2,
+        explain: "Google Translate hỗ trợ thẻ 'Tài liệu' cho phép tải trực tiếp các tệp Word, Excel, PowerPoint và PDF để dịch tự động toàn bộ nội dung mà vẫn giữ nguyên cấu trúc bảng biểu."
+      },
+      {
+        q: "Cấu trúc danh mục cấp 1 trên trang học liệu số igiaoduc.vn của Bộ Giáo dục & Đào tạo bao gồm các mục nào?",
+        tag: "Cổng igiaoduc.vn",
+        options: [
+          "Bài giảng điện tử, Video thí nghiệm và Đề thi học kì",
+          "Mầm non, Tiểu học, Trung học cơ sở và Trung học phổ thông",
+          "Đại số, Hình học, Vật lí, Hoá học, Ngữ văn và Tin học",
+          "Học liệu số, Sách giáo khoa và Dư địa chí"
+        ],
+        answer: 3,
+        explain: "Theo SGK Tin học 10, danh mục cấp 1 trên cây thư mục trang chủ igiaoduc.vn gồm đúng 3 loại: Học liệu số, Sách giáo khoa và Dư địa chí. Khối lớp thuộc cấp 2 và môn học thuộc cấp 3."
+      }
+    ];
+
+    let currentQuizIndex = 0;
+    let quizScore = 0;
+    let quizAnswered = false;
+
+    function renderQuiz() {
+      quizAnswered = false;
+      const data = quizData[currentQuizIndex];
+      document.getElementById('quiz-q-num').innerText = 'CÂU HỎI ' + (currentQuizIndex + 1) + ' / ' + quizData.length;
+      document.getElementById('quiz-topic-tag').innerText = data.tag;
+      document.getElementById('quiz-q-text').innerText = data.q;
+      document.getElementById('btn-next-quiz').style.display = 'none';
+
+      const exp = document.getElementById('quiz-explain-box');
+      exp.style.display = 'none';
+
+      const letters = ['A', 'B', 'C', 'D'];
+      const container = document.getElementById('quiz-options-container');
+      container.innerHTML = data.options.map(function(opt, idx) {
+        return '<button class="card" onclick="selectQuizAnswer(' + idx + ')" id="quiz-opt-' + idx + '" style="text-align:left; cursor:pointer; padding:14px 18px; display:flex; align-items:center; gap:12px;">' +
+          '<span style="width:28px; height:28px; border-radius:50%; background:rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px; color:#FFF; flex-shrink:0;">' + letters[idx] + '</span>' +
+          '<span style="font-size:14px; color:#E2E8F0;">' + opt + '</span>' +
+        '</button>';
+      }).join('');
+    }
+
+    function selectQuizAnswer(idx) {
+      if (quizAnswered) return;
+      quizAnswered = true;
+      const data = quizData[currentQuizIndex];
+      const isCorrect = idx === data.answer;
+
+      for (let i = 0; i < data.options.length; i++) {
+        const btn = document.getElementById('quiz-opt-' + i);
+        btn.style.cursor = 'default';
+        if (i === data.answer) {
+          btn.style.borderColor = 'var(--emerald)';
+          btn.style.background = 'rgba(16,185,129,0.2)';
+        } else if (i === idx) {
+          btn.style.borderColor = 'var(--red)';
+          btn.style.background = 'rgba(239,68,68,0.2)';
+        }
+      }
+
+      const exp = document.getElementById('quiz-explain-box');
+      exp.style.display = 'block';
+
+      if (isCorrect) {
+        playSound('correct');
+        quizScore++;
+        document.getElementById('quiz-score-indicator').innerText = 'Điểm: ' + quizScore + ' / 5';
+        exp.style.background = 'rgba(16,185,129,0.15)';
+        exp.style.border = '1px solid var(--emerald)';
+        exp.style.color = '#34D399';
+        exp.innerHTML = '🎉 <strong>CHÍNH XÁC!</strong> ' + data.explain;
+      } else {
+        playSound('wrong');
+        exp.style.background = 'rgba(239,68,68,0.15)';
+        exp.style.border = '1px solid var(--red)';
+        exp.style.color = '#F87171';
+        exp.innerHTML = '⚠️ <strong>CHƯA ĐÚNG!</strong> Đáp án đúng là <strong>' + ['A', 'B', 'C', 'D'][data.answer] + '</strong>.<br/>' + data.explain;
+      }
+
+      document.getElementById('btn-next-quiz').style.display = 'inline-flex';
+      if (currentQuizIndex === quizData.length - 1) {
+        document.getElementById('btn-next-quiz').innerHTML = '<span>Xem kết quả chung cuộc 🏆</span>';
+      }
+    }
+
+    function nextQuizQuestion() {
+      playSound('click');
+      if (currentQuizIndex < quizData.length - 1) {
+        currentQuizIndex++;
+        renderQuiz();
+      } else {
+        triggerFireworks();
+        alert('Chúc mừng em đã hoàn thành Mini Quiz Bài 10 với số điểm: ' + quizScore + ' / 5 điểm!');
+        nextSlide();
+      }
+    }
+
+    renderQuiz();
+
+    /* ─── SLIDE 14: SƠ ĐỒ TƯ DUY (MINDMAP) ─── */
+    function focusMindmap(branch) {
+      playSound('click');
+      for (let i = 1; i <= 3; i++) {
+        document.getElementById('mm-branch-' + i).classList.remove('active-card');
+      }
+      document.getElementById('mm-branch-' + branch).classList.add('active-card');
+    }
+
+    /* ─── HIỆU ỨNG PHÁO HOA CANVAS ─── */
+    function triggerFireworks() {
+      const canvas = document.getElementById('confetti-canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const particles = [];
+      const colors = ['#38BDF8', '#F59E0B', '#10B981', '#8B5CF6', '#EF4444', '#FCD34D'];
+
+      for (let i = 0; i < 90; i++) {
+        particles.push({
+          x: canvas.width / 2,
+          y: canvas.height / 2,
+          vx: (Math.random() - 0.5) * 16,
+          vy: (Math.random() - 0.5) * 16 - 3,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          size: Math.random() * 6 + 3,
+          alpha: 1,
+          decay: Math.random() * 0.02 + 0.015
+        });
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let alive = false;
+        particles.forEach(function(p) {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.25; // Trọng lực
+          p.alpha -= p.decay;
+          if (p.alpha > 0) {
+            alive = true;
+            ctx.save();
+            ctx.globalAlpha = p.alpha;
+            ctx.fillStyle = p.color;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+          }
+        });
+        if (alive) {
+          requestAnimationFrame(animate);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+      animate();
+    }
+
+    // Resize canvas khi đổi kích thước màn hình
+    window.addEventListener('resize', function() {
+      const canvas = document.getElementById('confetti-canvas');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+  </script>
+</body>
+</html>

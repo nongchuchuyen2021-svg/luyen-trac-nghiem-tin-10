@@ -11,7 +11,7 @@ import TheoryViewer from "@/components/TheoryViewer";
 import GameHub from "@/components/GameHub";
 import ReviewViewer from "@/components/ReviewViewer";
 
-type Mode = "menu" | "mcq" | "tf" | "essay" | "theory" | "sgk" | "games" | "review";
+type Mode = "menu" | "mcq" | "tf" | "essay" | "theory" | "sgk" | "games" | "review" | "slides";
 
 export default function LessonClient({
   lessonId,
@@ -24,6 +24,7 @@ export default function LessonClient({
   sgkUrl,
   games,
   review,
+  slideUrl,
 }: {
   lessonId: string;
   lessonTitle: string;
@@ -35,17 +36,32 @@ export default function LessonClient({
   sgkUrl?: string | null;
   games?: LessonGame[];
   review?: LessonReview | null;
+  slideUrl?: string | null;
 }) {
   const [mode, setMode] = useState<Mode>("menu");
   const [bestMcq, setBestMcq] = useState<number | null>(null);
   const [bestTf, setBestTf] = useState<number | null>(null);
+  const [bestGame, setBestGame] = useState<number | null>(null);
 
   useEffect(() => {
     if (mode === "menu") {
       setBestMcq(getLessonProgress(lessonId)?.best ?? null);
       setBestTf(getLessonProgress(`${lessonId}:ds`)?.best ?? null);
+      if (games && games.length > 0) {
+        let maxGame: number | null = null;
+        for (const g of games) {
+          const score =
+            getLessonProgress(`${lessonId}:game:${g.id}`)?.best ??
+            getLessonProgress(`${lessonId}:arena:${g.id}`)?.best ??
+            null;
+          if (score !== null && (maxGame === null || score > maxGame)) {
+            maxGame = score;
+          }
+        }
+        setBestGame(maxGame);
+      }
     }
-  }, [mode, lessonId]);
+  }, [mode, lessonId, games]);
 
   if (mode === "sgk" && sgkUrl) {
     return (
@@ -59,6 +75,34 @@ export default function LessonClient({
         <iframe
           src={sgkUrl}
           title={`SGK · ${lessonTitle}`}
+          className="h-full w-full border-0"
+        />
+      </div>
+    );
+  }
+
+  if (mode === "slides" && slideUrl) {
+    return (
+      <div className="fixed inset-0 z-50 bg-[#0B131A]">
+        <div className="fixed left-3 top-3 z-10 flex gap-2">
+          <button
+            onClick={() => setMode("menu")}
+            className="rounded-full border border-white/20 bg-black/70 px-3.5 py-1.5 font-mono text-xs text-white backdrop-blur transition hover:border-white/40 hover:bg-black/90"
+          >
+            ← Quay lại bài học
+          </button>
+          <a
+            href={slideUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-full border border-teal-500/40 bg-teal-600/80 px-3.5 py-1.5 font-mono text-xs text-white backdrop-blur transition hover:bg-teal-500"
+          >
+            ↗ Mở toàn màn hình tab mới
+          </a>
+        </div>
+        <iframe
+          src={slideUrl}
+          title={`Trình chiếu · ${lessonTitle}`}
           className="h-full w-full border-0"
         />
       </div>
@@ -138,45 +182,79 @@ export default function LessonClient({
           },
         ]
       : []),
-    ...(games && games.length > 0
+    ...(slideUrl
       ? [
           {
-            key: "games" as Mode,
-            emoji: games.some((g) => g.kind === "network")
-              ? "🌐"
-              : games.some((g) => g.kind === "arena")
-                ? "⚔️"
-                : games.some((g) => g.kind === "search")
-                  ? "🔍"
-                  : games.some((g) => g.kind === "court")
-                    ? "⚖️"
-                    : "🎮",
-            name: games.some((g) => g.kind === "network")
-              ? "Kỹ sư Mạng & Đám mây"
-              : games.some((g) => g.kind === "arena")
-                ? "Đấu trường Game & Phòng vệ"
-                : games.some((g) => g.kind === "search")
-                  ? "Thợ săn Tìm kiếm & Game"
-                  : games.some((g) => g.kind === "court")
-                    ? "Tòa án Số & Bản quyền"
-                    : games.length === 1
-                      ? games[0].title
-                      : "Trung tâm Game",
-            desc: games.some((g) => g.kind === "network")
-              ? `${games.length} trò chơi · Có MÔ PHỎNG sơ đồ mạng, điều phối gói tin Switch/Router & Đám mây!`
-              : games.some((g) => g.kind === "arena")
-                ? `${games.length} trò chơi · Có ĐẤU TRƯỜNG diệt Boss hacker & phòng thủ Tường lửa!`
-                : games.some((g) => g.kind === "search")
-                  ? `${games.length} trò chơi · Lắp ráp toán tử Google & phân loại tài nguyên số`
-                  : games.some((g) => g.kind === "court")
-                    ? `${games.length} trò chơi · Thẩm phán tuyên án vụ án số & phân loại quyền tác giả`
-                    : games.length === 1
-                      ? `${(games[0] as any).items?.length ?? 10} thẻ · kéo hoặc chạm để chơi`
-                      : `${games.length} trò chơi ôn bài · kéo hoặc chạm để chơi`,
+            key: "slides" as Mode,
+            emoji: "📽️",
+            name: "Slide Trình chiếu",
+            desc:
+              lessonId === "bai-09"
+                ? "15 slide tương tác · mô phỏng an ninh mạng, diệt virus & đố vui"
+                : lessonId === "bai-10"
+                  ? "15 slide tương tác · toán tử Google, Google Translate AI & kho số igiaoduc.vn"
+                  : "Slide bài giảng điện tử tương tác · sơ đồ động & đố vui củng cố",
             best: null,
             enabled: true,
           },
         ]
+      : []),
+    ...(games && games.length > 0
+      ? (() => {
+          const hasNet = games.some((g) => g.kind === "network");
+          const hasAr = games.some((g) => g.kind === "arena");
+          const hasSrch = games.some((g) => g.kind === "search");
+          const hasCrt = games.some((g) => g.kind === "court");
+          const hasTl = games.some((g) => g.kind === "timeline");
+          const hasS3 = games.some((g) => g.kind === "sort3");
+          const hasS = games.some((g) => g.kind === "sort");
+
+          const emoji = hasNet ? "🌐" : hasAr ? "⚔️" : hasSrch ? "🔍" : hasCrt ? "⚖️" : hasTl ? "⏳" : hasS3 ? "🧩" : "🎮";
+          const name = hasNet
+            ? "Kỹ sư Mạng & Đám mây"
+            : hasAr
+              ? "Đấu trường An ninh mạng"
+              : hasSrch
+                ? "Thợ săn Tìm kiếm Google"
+                : hasCrt
+                  ? "Tòa án Công lý Số"
+                  : hasTl && hasS
+                    ? "Đấu trường Game (Phân loại & Lịch sử)"
+                    : hasTl
+                      ? "Dòng thời gian Lịch sử"
+                      : hasS3
+                        ? "Phân loại Đa chiều 3 nhóm"
+                        : games.length === 1
+                          ? games[0].title
+                          : "Đấu trường Mini Game";
+
+          const desc = hasNet
+            ? `${games.length} trò chơi · Mô phỏng sơ đồ mạng, điều phối gói tin Switch/Router & Đám mây`
+            : hasAr
+              ? `${games.length} trò chơi · Đấu trường diệt Boss hacker & phòng thủ Tường lửa 100 HP`
+              : hasSrch
+                ? `${games.length} trò chơi · Lắp ráp toán tử Google & phân loại tài nguyên số`
+                : hasCrt
+                  ? `${games.length} trò chơi · Thẩm phán xét xử 8 vụ án số & phân loại quyền tác giả`
+                  : hasTl && hasS
+                    ? `${games.length} trò chơi · Quẹt thẻ Arcade và Trục dòng thời gian lịch sử`
+                    : hasTl
+                      ? `${games.length} trò chơi · Sắp xếp các mốc phát triển theo đúng trục thời gian`
+                      : hasS3
+                        ? `${games.length} trò chơi · Thử thách phân biệt 3 mô hình dịch vụ`
+                        : `${games.length} trò chơi · Quẹt thẻ bài Arcade phân biệt đúng sai SGK`;
+
+          return [
+            {
+              key: "games" as Mode,
+              emoji,
+              name,
+              desc,
+              best: bestGame,
+              enabled: true,
+            },
+          ];
+        })()
       : []),
     ...(sgkUrl
       ? [

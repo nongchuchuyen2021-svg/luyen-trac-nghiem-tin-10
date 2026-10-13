@@ -263,6 +263,7 @@ export default function CyberArenaGame({
       sound.victory();
       setGameState("victory");
       saveAttempt(`${lessonId}:arena:${game.id}`, score);
+      saveAttempt(`${lessonId}:game:${game.id}`, score);
       return;
     }
 

@@ -389,6 +389,68 @@ class SoundSynthesizer {
       osc.stop(t + 0.18);
     });
   }
+
+  // 15. Quẹt thẻ bài (Swipe whoosh)
+  swipe() {
+    if (!this.enabled) return;
+    const ctx = this.getContext();
+    if (!ctx) return;
+    const now = ctx.currentTime;
+
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(400, now);
+    osc.frequency.exponentialRampToValueAtTime(180, now + 0.12);
+
+    gain.gain.setValueAtTime(0.12, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.14);
+  }
+
+  // 16. Đặt thẻ vào khay / mốc timeline
+  place() {
+    if (!this.enabled) return;
+    const ctx = this.getContext();
+    if (!ctx) return;
+    const now = ctx.currentTime;
+
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = "triangle";
+    osc.frequency.setValueAtTime(520, now);
+    osc.frequency.exponentialRampToValueAtTime(780, now + 0.08);
+
+    gain.gain.setValueAtTime(0.15, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.1);
+  }
+
+  // Chuẩn hoá tên gọi dễ dùng
+  correct() {
+    this.laser();
+  }
+
+  wrong() {
+    this.damage();
+  }
+
+  toggle(): boolean {
+    this.enabled = !this.enabled;
+    return this.enabled;
+  }
 }
 
 export const sound = new SoundSynthesizer();

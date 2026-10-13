@@ -286,11 +286,16 @@ export type LessonCounts = {
   tf: number;
   essay: number;
   theory: boolean;
+  hasSlide?: boolean;
   games?: number;
   hasArena?: boolean;
   hasSearch?: boolean;
   hasCourt?: boolean;
   hasNetwork?: boolean;
+  hasTimeline?: boolean;
+  hasSort?: boolean;
+  hasSort3?: boolean;
+  gameBadge?: string;
 };
 
 // ─── Lý thuyết tự học ────────────────────────────────────────────────────────
