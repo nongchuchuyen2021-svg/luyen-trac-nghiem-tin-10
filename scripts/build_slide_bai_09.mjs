@@ -162,6 +162,7 @@ const htmlContent = `<!DOCTYPE html>
       flex: 1; overflow-y: auto; overflow-x: hidden;
       display: flex; flex-direction: column; gap: 18px;
       padding-right: 6px;
+      padding-bottom: 54px;
     }
     .slide-body::-webkit-scrollbar { width: 6px; }
     .slide-body::-webkit-scrollbar-thumb { background: rgba(56, 225, 240, 0.25); border-radius: 4px; }
@@ -364,54 +365,54 @@ const htmlContent = `<!DOCTYPE html>
          ══════════════════════════════════════════════════════════════════════ -->
     <section class="slide active" id="slide-1">
       <div class="slide-header">
-        <span class="slide-badge">🏫 TRƯỜNG THPT PHỤC HÒA · CAO BẰNG</span>
+        <span class="slide-badge">🏫 TRƯỜNG THPT NA RÌ</span>
         <div style="font-size:13px; color:var(--ink-soft); font-family:var(--font-mono); display:flex; align-items:center; gap:8px;">
           <span>CHỦ ĐỀ 2: MẠNG MÁY TÍNH & INTERNET</span>
           <span>·</span>
           <span>SGK KẾT NỐI TRI THỨC</span>
         </div>
       </div>
-      <div class="slide-body" style="justify-content:center; align-items:center; text-align:center;">
+      <div class="slide-body" style="justify-content:center; align-items:center; text-align:center; padding-bottom:14px;">
         <div style="max-width:960px;">
-          <div style="display:inline-flex; align-items:center; gap:8px; padding:6px 18px; border-radius:999px; background:rgba(56,225,240,0.12); border:1px solid rgba(56,225,240,0.3); color:var(--cyan); font-weight:700; font-size:13px; margin-bottom:18px;">
+          <div style="display:inline-flex; align-items:center; gap:8px; padding:5px 16px; border-radius:999px; background:rgba(56,225,240,0.12); border:1px solid rgba(56,225,240,0.3); color:var(--cyan); font-weight:700; font-size:12px; margin-bottom:12px;">
             <span>🛡️ BÀI HỌC SỐ 09 · TIN HỌC LỚP 10</span>
           </div>
 
-          <h1 style="font-size:42px; font-weight:900; letter-spacing:-0.5px; margin-bottom:16px; background:linear-gradient(135deg, #FFFFFF 25%, #38E1F0 70%, #EF4444 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+          <h1 style="font-size:36px; font-weight:900; letter-spacing:-0.5px; margin-bottom:10px; background:linear-gradient(135deg, #FFFFFF 25%, #38E1F0 70%, #EF4444 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">
             AN TOÀN TRÊN KHÔNG GIAN MẠNG
           </h1>
 
-          <p style="font-size:17px; color:var(--ink-soft); line-height:1.6; max-width:820px; margin:0 auto 28px;">
+          <p style="font-size:15px; color:var(--ink-soft); line-height:1.5; max-width:800px; margin:0 auto 18px;">
             Nhận diện 5 nguy cơ tiềm ẩn · Phân biệt bản chất Virus, Sâu máy tính (Worm), Trojan · Thiết lập 4 lá chắn phòng vệ và làm chủ công cụ Windows Defender.
           </p>
 
           <!-- 3 Trụ cột bài học -->
-          <div class="grid-3" style="text-align:left; margin-bottom:32px;">
-            <div class="card" style="border-top:3px solid var(--red);">
-              <div style="font-size:28px; margin-bottom:8px;">⚠️</div>
-              <div style="font-weight:800; font-size:16px; color:#FFF; margin-bottom:4px;">1. Năm Nguy Cơ Tiềm Ẩn</div>
-              <div style="font-size:13px; color:var(--ink-soft); line-height:1.45;">Tin giả, lừa đảo tài chính, lộ lọt dữ liệu cá nhân, bắt nạt qua mạng và nghiện Internet.</div>
+          <div class="grid-3" style="text-align:left; margin-bottom:20px;">
+            <div class="card" style="border-top:3px solid var(--red); padding:14px 16px;">
+              <div style="font-size:24px; margin-bottom:6px;">⚠️</div>
+              <div style="font-weight:800; font-size:15px; color:#FFF; margin-bottom:4px;">1. Năm Nguy Cơ Tiềm Ẩn</div>
+              <div style="font-size:12.5px; color:var(--ink-soft); line-height:1.45;">Tin giả, lừa đảo tài chính, lộ lọt dữ liệu cá nhân, bắt nạt mạng và nghiện Internet.</div>
             </div>
 
-            <div class="card" style="border-top:3px solid var(--amber);">
-              <div style="font-size:28px; margin-bottom:8px;">🦠</div>
-              <div style="font-weight:800; font-size:16px; color:#FFF; margin-bottom:4px;">2. Tam Giác Mã Độc</div>
-              <div style="font-size:13px; color:var(--ink-soft); line-height:1.45;">Virus ký sinh tệp chủ, Sâu Worm tự lây qua mạng, Trojan nguỵ trang, Spyware & Ransomware.</div>
+            <div class="card" style="border-top:3px solid var(--amber); padding:14px 16px;">
+              <div style="font-size:24px; margin-bottom:6px;">🦠</div>
+              <div style="font-weight:800; font-size:15px; color:#FFF; margin-bottom:4px;">2. Tam Giác Mã Độc</div>
+              <div style="font-size:12.5px; color:var(--ink-soft); line-height:1.45;">Virus ký sinh tệp chủ, Sâu Worm tự lây qua mạng, Trojan nguỵ trang, Spyware & Ransomware.</div>
             </div>
 
-            <div class="card" style="border-top:3px solid var(--cyan);">
-              <div style="font-size:28px; margin-bottom:8px;">🛡️</div>
-              <div style="font-weight:800; font-size:16px; color:#FFF; margin-bottom:4px;">3. Bốn Lá Chắn Phòng Vệ</div>
-              <div style="font-size:13px; color:var(--ink-soft); line-height:1.45;">Nguyên tắc vàng, bảo mật 2FA và mô phỏng 4 chế độ quét diệt của Windows Defender.</div>
+            <div class="card" style="border-top:3px solid var(--cyan); padding:14px 16px;">
+              <div style="font-size:24px; margin-bottom:6px;">🛡️</div>
+              <div style="font-weight:800; font-size:15px; color:#FFF; margin-bottom:4px;">3. Bốn Lá Chắn Phòng Vệ</div>
+              <div style="font-size:12.5px; color:var(--ink-soft); line-height:1.45;">Nguyên tắc vàng, bảo mật 2FA và mô phỏng 4 chế độ quét diệt của Windows Defender.</div>
             </div>
           </div>
 
           <div style="display:flex; justify-content:center; gap:14px; align-items:center;">
-            <button onclick="goToSlide(2)" class="nav-btn" style="width:auto; padding:12px 30px; font-size:15px; background:var(--cyan); color:#060D17; font-weight:700; gap:8px;">
+            <button onclick="goToSlide(2)" class="nav-btn" style="width:auto; padding:10px 28px; font-size:14px; background:var(--cyan); color:#060D17; font-weight:700; gap:8px;">
               <span>Bắt đầu bài học</span>
               <span>→</span>
             </button>
-            <button onclick="openTOC()" class="nav-btn" style="width:auto; padding:12px 22px; font-size:14px; gap:8px;">
+            <button onclick="openTOC()" class="nav-btn" style="width:auto; padding:10px 22px; font-size:13.5px; gap:8px;">
               <span>📑 Mục lục bài học (15 slide)</span>
             </button>
           </div>
