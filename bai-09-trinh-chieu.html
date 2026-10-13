@@ -92,14 +92,14 @@
     /* ─── SLIDE FRAME ─── */
     .slide {
       position: absolute;
-      width: 95vw; max-width: 1380px;
-      height: 88vh; max-height: 870px;
+      width: calc(100vw - 140px); max-width: 1360px;
+      height: calc(100vh - 44px); max-height: 880px;
       background: var(--bg-card);
       border: 1px solid var(--border-card);
       border-radius: 24px;
       backdrop-filter: blur(28px);
       box-shadow: 0 38px 85px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-      padding: 26px 42px;
+      padding: 24px 38px;
       display: flex; flex-direction: column;
       opacity: 0; pointer-events: none;
       transform: translateX(70px) scale(0.96);
@@ -143,7 +143,7 @@
       flex: 1; overflow-y: auto; overflow-x: hidden;
       display: flex; flex-direction: column; gap: 18px;
       padding-right: 6px;
-      padding-bottom: 54px;
+      padding-bottom: 14px;
     }
     .slide-body::-webkit-scrollbar { width: 6px; }
     .slide-body::-webkit-scrollbar-thumb { background: rgba(56, 225, 240, 0.25); border-radius: 4px; }
@@ -171,50 +171,93 @@
     }
     .card-desc { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; }
 
-    /* ─── THANH ĐIỀU KHIỂN DƯỚI ĐÁY ─── */
-    .control-bar {
-      position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
-      background: rgba(11, 20, 34, 0.92);
-      border: 1px solid rgba(56, 225, 240, 0.28);
-      border-radius: 999px;
-      padding: 8px 22px;
-      display: flex; align-items: center; gap: 16px;
-      backdrop-filter: blur(20px);
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65);
-      z-index: 100;
+    /* ─── THANH TIẾN ĐỘ TRÊN ĐỈNH ─── */
+    .top-progress-bar {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 4px; background: rgba(255, 255, 255, 0.08);
+      z-index: 200; cursor: pointer;
     }
-    .nav-btn {
-      width: 40px; height: 40px; border-radius: 50%;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #FFF; font-size: 16px; cursor: pointer;
+    .top-progress-fill {
+      height: 100%; width: 6.66%;
+      background: linear-gradient(90deg, var(--cyan), #3B82F6, #10B981);
+      box-shadow: 0 0 12px var(--cyan);
+      transition: width 0.35s ease;
+    }
+
+    /* ─── 2 NÚT CHUYỂN SLIDE 2 BÊN SƯỜN MÀN HÌNH ─── */
+    .nav-side-btn {
+      position: fixed; top: 50%; transform: translateY(-50%);
+      width: 48px; height: 48px; border-radius: 50%;
+      background: rgba(11, 20, 34, 0.9);
+      border: 1px solid rgba(56, 225, 240, 0.35);
+      color: var(--cyan);
+      cursor: pointer;
       display: flex; align-items: center; justify-content: center;
-      transition: all 0.2s ease;
+      backdrop-filter: blur(18px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65), 0 0 15px rgba(56, 225, 240, 0.15);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 150;
+      user-select: none;
     }
-    .nav-btn:hover {
+    .nav-side-btn.prev { left: 14px; }
+    .nav-side-btn.next { right: 14px; }
+    .nav-side-btn:hover {
       background: var(--cyan); color: #060D17;
       border-color: var(--cyan);
-      transform: scale(1.08);
-      box-shadow: 0 0 16px var(--cyan-glow);
+      transform: translateY(-50%) scale(1.12);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8), 0 0 25px rgba(56, 225, 240, 0.6);
+    }
+    .nav-side-btn:active {
+      transform: translateY(-50%) scale(0.96);
+    }
+    .nav-side-btn:disabled, .nav-side-btn.disabled {
+      opacity: 0.2; pointer-events: none; filter: grayscale(1);
+    }
+
+    /* ─── CỤM TIỆN ÍCH HUD GÓC TRÊN BÊN PHẢI ─── */
+    .top-quick-hud {
+      position: fixed; top: 12px; right: 18px;
+      z-index: 160;
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(11, 20, 34, 0.9);
+      border: 1px solid rgba(56, 225, 240, 0.28);
+      border-radius: 999px;
+      padding: 5px 14px;
+      backdrop-filter: blur(18px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     }
     .slide-indicator {
       font-family: var(--font-mono); font-size: 13px; font-weight: 700;
-      color: var(--cyan); min-width: 65px; text-align: center;
+      color: var(--cyan); min-width: 55px; text-align: center;
     }
-    .progress-bar-wrap {
-      width: 180px; height: 6px; background: rgba(255, 255, 255, 0.12);
-      border-radius: 3px; overflow: hidden; cursor: pointer;
+    .hud-divider {
+      width: 1px; height: 16px; background: rgba(255, 255, 255, 0.15);
+      margin: 0 2px;
     }
-    .progress-bar-fill {
-      height: 100%; width: 6.66%; background: linear-gradient(90deg, var(--cyan), #3B82F6);
-      transition: width 0.3s ease;
-    }
-    .icon-action-btn {
+    .hud-btn {
       background: none; border: none; color: var(--ink-soft);
-      font-size: 18px; cursor: pointer; padding: 4px;
-      transition: color 0.2s, transform 0.2s;
+      font-size: 14px; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 8px; border-radius: 999px;
+      transition: all 0.2s;
     }
-    .icon-action-btn:hover { color: var(--cyan); transform: scale(1.15); }
+    .hud-btn span { font-size: 12px; font-weight: 600; font-family: var(--font-sans); }
+    .hud-btn:hover {
+      color: var(--cyan);
+      background: rgba(56, 225, 240, 0.12);
+    }
+
+    @media (max-width: 900px) {
+      .slide {
+        width: calc(100vw - 80px);
+        padding: 20px 22px;
+      }
+      .nav-side-btn { width: 38px; height: 38px; }
+      .nav-side-btn.prev { left: 4px; }
+      .nav-side-btn.next { right: 4px; }
+      .top-quick-hud { top: 8px; right: 8px; padding: 4px 10px; gap: 4px; }
+      .hud-btn span { display: none; }
+    }
 
     /* ─── MODAL MỤC LỤC & PHÍM TẮT ─── */
     .toc-modal {
@@ -1205,23 +1248,26 @@
 
   </div>
 
-  <!-- ─── THANH ĐIỀU KHIỂN DƯỚI ĐÁY ─── -->
-  <div class="control-bar">
-    <button class="nav-btn" onclick="prevSlide()" title="Slide trước (←)">←</button>
-    
+  <!-- ─── THANH TIẾN ĐỘ TRÊN ĐỈNH ─── -->
+  <div class="top-progress-bar" onclick="seekSlide(event)" title="Tiến độ bài học - Nhấp để tua nhanh slide">
+    <div class="top-progress-fill" id="slide-progress-fill"></div>
+  </div>
+
+  <!-- ─── 2 NÚT CHUYỂN SLIDE 2 BÊN SƯỜN MÀN HÌNH ─── -->
+  <button class="nav-side-btn prev" onclick="prevSlide()" id="btn-side-prev" title="Slide trước (← Phím mũi tên Trái)">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+  </button>
+  <button class="nav-side-btn next" onclick="nextSlide()" id="btn-side-next" title="Slide kế tiếp (→ Phím mũi tên Phải / Phím Cách)">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+  </button>
+
+  <!-- ─── CỤM TIỆN ÍCH HUD GÓC TRÊN BÊN PHẢI ─── -->
+  <div class="top-quick-hud">
     <div class="slide-indicator" id="slide-num-indicator">1 / 15</div>
-
-    <div class="progress-bar-wrap" onclick="seekSlide(event)" title="Chuyển nhanh slide">
-      <div class="progress-bar-fill" id="slide-progress-fill"></div>
-    </div>
-
-    <button class="nav-btn" onclick="nextSlide()" title="Slide tiếp (→)">→</button>
-
-    <div style="width:1px; height:20px; background:rgba(255,255,255,0.15);"></div>
-
-    <button class="icon-action-btn" onclick="openTOC()" title="Mục lục bài giảng (T)">📑</button>
-    <button class="icon-action-btn" onclick="toggleAudio()" id="btn-audio-toggle" title="Bật/Tắt âm thanh (M)">🔊</button>
-    <button class="icon-action-btn" onclick="toggleFullScreen()" title="Toàn màn hình (F)">⛶</button>
+    <div class="hud-divider"></div>
+    <button class="hud-btn" onclick="openTOC()" title="Mục lục bài giảng (Phím T)">📑 <span>Mục lục</span></button>
+    <button class="hud-btn" onclick="toggleAudio()" id="btn-audio-toggle" title="Bật/Tắt âm thanh (Phím M)">🔊</button>
+    <button class="hud-btn" onclick="toggleFullScreen()" title="Toàn màn hình (Phím F)">⛶</button>
   </div>
 
   <!-- ─── MODAL MỤC LỤC ─── -->
@@ -1343,6 +1389,17 @@
       document.getElementById('slide-num-indicator').innerText = currentSlide + ' / ' + totalSlides;
       const pct = (currentSlide / totalSlides) * 100;
       document.getElementById('slide-progress-fill').style.width = pct + '%';
+
+      const prevBtn = document.getElementById('btn-side-prev');
+      const nextBtn = document.getElementById('btn-side-next');
+      if (prevBtn) {
+        prevBtn.disabled = currentSlide === 1;
+        prevBtn.classList.toggle('disabled', currentSlide === 1);
+      }
+      if (nextBtn) {
+        nextBtn.disabled = currentSlide === totalSlides;
+        nextBtn.classList.toggle('disabled', currentSlide === totalSlides);
+      }
     }
 
     function goToSlide(n) {
@@ -1824,6 +1881,7 @@
 
     // Khởi tạo các bài thực hành
     window.addEventListener('DOMContentLoaded', () => {
+      updateSlideUI();
       renderSortLab();
       renderQuiz();
     });
