@@ -1,0 +1,2427 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bài 13: Bổ sung các đối tượng đồ hoạ — Tin học 10 · THPT Na Rì</title>
+  <style>
+    /* ─── RESET & HỆ THỐNG BIẾN MÀU SẮC CHUẨN TIN 10 / INKSCAPE STUDIO ─── */
+    :root {
+      --bg: #060914;
+      --bg-card: rgba(11, 18, 38, 0.94);
+      --border-card: rgba(6, 182, 212, 0.22);
+      --ink: #FFFFFF;
+      --ink-soft: #94A3B8;
+      --cyan: #06B6D4;
+      --cyan-light: #67E8F9;
+      --cyan-glow: rgba(6, 182, 212, 0.4);
+      --purple: #8B5CF6;
+      --purple-light: #C4B5FD;
+      --purple-glow: rgba(139, 92, 246, 0.38);
+      --pink: #EC4899;
+      --pink-light: #F472B6;
+      --pink-glow: rgba(236, 72, 153, 0.4);
+      --amber: #F59E0B;
+      --amber-light: #FCD34D;
+      --amber-glow: rgba(245, 158, 11, 0.38);
+      --emerald: #10B981;
+      --emerald-light: #6EE7B7;
+      --emerald-glow: rgba(16, 185, 129, 0.38);
+      --rose: #EF4444;
+      --rose-light: #FCA5A5;
+      --blue: #3B82F6;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 10px;
+      --font-main: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: 'Consolas', 'Fira Code', 'Courier New', monospace;
+      --transition-slide: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg);
+      color: var(--ink);
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+      user-select: none;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NỀN GRADIENT VECTOR & MESH CỰC ĐẸP ─── */
+    .bg-mesh {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: radial-gradient(circle at 18% 25%, rgba(6, 182, 212, 0.28) 0%, transparent 45%),
+                  radial-gradient(circle at 82% 75%, rgba(236, 72, 153, 0.22) 0%, transparent 45%),
+                  radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.18) 0%, transparent 60%),
+                  radial-gradient(circle at 75% 20%, rgba(245, 158, 11, 0.18) 0%, transparent 40%);
+      z-index: 0;
+      pointer-events: none;
+      animation: meshPulse 16s ease-in-out infinite alternate;
+    }
+
+    @keyframes meshPulse {
+      0% { transform: scale(1) translate(0, 0); opacity: 0.9; }
+      100% { transform: scale(1.08) translate(-15px, 12px); opacity: 1; }
+    }
+
+    /* Lưới toạ độ đồ hoạ & Vector Paths động */
+    .cyber-grid {
+      position: fixed; inset: 0;
+      background-image: 
+        linear-gradient(rgba(6, 182, 212, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none; z-index: 1;
+    }
+
+    /* Ký hiệu Đồ hoạ trôi lơ lửng */
+    .floating-symbols {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 1;
+      overflow: hidden;
+    }
+    .float-tag {
+      position: absolute;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 700;
+      color: rgba(103, 232, 249, 0.25);
+      border: 1px solid rgba(6, 182, 212, 0.2);
+      padding: 4px 12px; border-radius: 999px;
+      background: rgba(11, 18, 38, 0.45);
+      animation: floatUp 24s linear infinite;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(105vh) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.55; }
+      90%  { opacity: 0.55; }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* ─── CONTAINER TRÌNH CHIẾU ─── */
+    .deck-container {
+      position: relative; width: 100vw; height: 100vh;
+      display: flex; justify-content: center; align-items: center; z-index: 2;
+    }
+
+    /* ─── KHUNG MỖI SLIDE (CĂN VỪA VẶN 88VH KHÔNG TRÀN CHUẨN TIN 10) ─── */
+    .slide {
+      position: absolute;
+      width: 95vw; max-width: 1360px;
+      height: 88vh; max-height: 860px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-lg);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      box-shadow: 0 35px 80px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      padding: 22px 36px 26px 36px;
+      display: flex; flex-direction: column;
+      opacity: 0; pointer-events: none;
+      transform: translateX(70px) scale(0.96);
+      transition: var(--transition-slide);
+      overflow-y: auto;
+    }
+    .slide::-webkit-scrollbar { width: 6px; }
+    .slide::-webkit-scrollbar-thumb { background: rgba(6, 182, 212, 0.3); border-radius: 4px; }
+    .slide.active { opacity: 1; pointer-events: auto; transform: translateX(0) scale(1); z-index: 3; }
+    .slide.prev   { opacity: 0; pointer-events: none; transform: translateX(-70px) scale(0.96); }
+
+    /* ─── HEADER MỖI SLIDE ─── */
+    .slide-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 8px; flex-shrink: 0;
+    }
+    .slide-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 13px; border-radius: 20px;
+      font-size: 11.5px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+      background: rgba(6, 182, 212, 0.2); color: var(--cyan-light);
+      border: 1px solid rgba(6, 182, 212, 0.35); margin-bottom: 4px;
+    }
+    .slide-badge.purple  { background: rgba(139, 92, 246, 0.2);  color: var(--purple-light); border-color: rgba(139, 92, 246, 0.35); }
+    .slide-badge.pink    { background: rgba(236, 72, 153, 0.2);  color: var(--pink-light);   border-color: rgba(236, 72, 153, 0.35); }
+    .slide-badge.amber   { background: rgba(245, 158, 11, 0.22); color: var(--amber-light);  border-color: rgba(245, 158, 11, 0.35); }
+    .slide-badge.emerald { background: rgba(16, 185, 129, 0.22); color: var(--emerald-light);border-color: rgba(16, 185, 129, 0.35); }
+    .slide-badge.rose    { background: rgba(239, 68, 68, 0.22);  color: var(--rose-light);   border-color: rgba(239, 68, 68, 0.35); }
+
+    .slide-title {
+      font-size: 25px; font-weight: 800; letter-spacing: -0.4px; line-height: 1.25;
+      background: linear-gradient(135deg, #FFFFFF 30%, #CFFAFE 70%, #F472B6 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .slide-subtitle {
+      font-size: 13.5px; color: var(--ink-soft); margin-top: 2px;
+    }
+
+    /* ─── THANH ĐIỀU KHIỂN HIỆN TỪNG Ý (PROGRESSIVE REVEAL) ─── */
+    .reveal-toolbar {
+      display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+    }
+    .reveal-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: var(--ink); border-radius: 8px;
+      padding: 5px 12px; font-size: 12px; font-weight: 600; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .reveal-btn:hover {
+      background: rgba(6, 182, 212, 0.25);
+      border-color: var(--cyan);
+      transform: translateY(-1px);
+    }
+    .reveal-btn.primary {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.35), rgba(139, 92, 246, 0.35));
+      border-color: rgba(6, 182, 212, 0.5);
+      color: #FFFFFF;
+    }
+    .reveal-status {
+      font-size: 11.5px; color: var(--ink-soft); font-family: var(--font-mono);
+      padding: 4px 8px; background: rgba(0, 0, 0, 0.25); border-radius: 6px;
+    }
+
+    /* ─── PHẦN THÂN NỘI DUNG SLIDE ─── */
+    .slide-body {
+      flex: 1; display: flex; flex-direction: column; justify-content: center;
+      gap: 14px; position: relative; min-height: 0;
+    }
+
+    /* ─── KHỐI HIỆN TỪNG BƯỚC (.reveal-item) ─── */
+    .reveal-item {
+      opacity: 0.12; filter: blur(1.5px);
+      transform: translateY(10px);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+    .reveal-item.revealed {
+      opacity: 1; filter: blur(0);
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    /* ─── CÁC THÀNH PHẦN GIAO DIỆN CHUẨN ─── */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      transition: all 0.25s ease;
+      position: relative; overflow: hidden;
+    }
+    .glass-card:hover {
+      border-color: rgba(6, 182, 212, 0.4);
+      background: rgba(255, 255, 255, 0.06);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+    .glass-card.highlight {
+      border-color: rgba(6, 182, 212, 0.5);
+      background: linear-gradient(145deg, rgba(6, 182, 212, 0.12), rgba(139, 92, 246, 0.08));
+    }
+    .glass-card.purple-glow {
+      border-color: rgba(139, 92, 246, 0.45);
+      background: linear-gradient(145deg, rgba(139, 92, 246, 0.12), rgba(236, 72, 153, 0.08));
+    }
+    .glass-card.amber-glow {
+      border-color: rgba(245, 158, 11, 0.45);
+      background: linear-gradient(145deg, rgba(245, 158, 11, 0.12), rgba(236, 72, 153, 0.08));
+    }
+    .glass-card.emerald-glow {
+      border-color: rgba(16, 185, 129, 0.45);
+      background: linear-gradient(145deg, rgba(16, 185, 129, 0.12), rgba(6, 182, 212, 0.08));
+    }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+
+    /* ─── PHÍM TẮT KBD ĐỒ HOẠ XỊN ─── */
+    .kbd {
+      display: inline-block;
+      padding: 3px 8px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 800;
+      color: #FFFFFF;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+      border-radius: 6px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      vertical-align: middle;
+      margin: 0 2px;
+    }
+    .kbd.cyan { background: rgba(6, 182, 212, 0.25); border-color: var(--cyan); color: var(--cyan-light); }
+    .kbd.amber { background: rgba(245, 158, 11, 0.25); border-color: var(--amber); color: var(--amber-light); }
+    .kbd.purple { background: rgba(139, 92, 246, 0.25); border-color: var(--purple); color: var(--purple-light); }
+    .kbd.emerald { background: rgba(16, 185, 129, 0.25); border-color: var(--emerald); color: var(--emerald-light); }
+
+    /* ─── THANH ĐIỀU HƯỚNG CỐ ĐỊNH PHÍA ĐÁY (.deck-nav) ─── */
+    .deck-nav {
+      position: fixed; bottom: 14px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; align-items: center; gap: 12px;
+      padding: 8px 18px;
+      background: rgba(11, 18, 38, 0.88);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      border-radius: 999px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.65), 0 0 20px rgba(6, 182, 212, 0.2);
+      z-index: 100;
+    }
+    .nav-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #FFFFFF; width: 36px; height: 36px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 16px; transition: all 0.2s ease;
+    }
+    .nav-btn:hover {
+      background: var(--cyan); color: #060914;
+      border-color: var(--cyan); transform: scale(1.1);
+      box-shadow: 0 0 15px var(--cyan-glow);
+    }
+    .nav-counter {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 700;
+      color: var(--cyan-light); min-width: 60px; text-align: center;
+    }
+    .seek-container {
+      width: 220px; height: 8px; background: rgba(255, 255, 255, 0.12);
+      border-radius: 4px; overflow: hidden; cursor: pointer; position: relative;
+    }
+    .seek-bar {
+      height: 100%; width: 6.66%;
+      background: linear-gradient(90deg, var(--cyan), var(--pink));
+      border-radius: 4px; transition: width 0.3s ease;
+    }
+
+    /* ─── MODAL MỤC LỤC TỔNG (TOC) ─── */
+    .toc-modal {
+      position: fixed; inset: 0; background: rgba(6, 9, 20, 0.85);
+      backdrop-filter: blur(24px); z-index: 200;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: all 0.3s ease;
+    }
+    .toc-modal.open { opacity: 1; pointer-events: auto; }
+    .toc-box {
+      width: 90vw; max-width: 960px; max-height: 82vh;
+      background: rgba(11, 18, 38, 0.95);
+      border: 1px solid rgba(6, 182, 212, 0.4);
+      border-radius: var(--radius-lg); padding: 28px 34px;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), 0 0 30px rgba(6, 182, 212, 0.25);
+      display: flex; flex-direction: column; gap: 18px;
+    }
+    .toc-header {
+      display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 12px;
+    }
+    .toc-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+      overflow-y: auto; max-height: 60vh; padding-right: 6px;
+    }
+    .toc-item {
+      padding: 12px 14px; background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--radius-sm);
+      cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 10px;
+    }
+    .toc-item:hover, .toc-item.current {
+      background: rgba(6, 182, 212, 0.18);
+      border-color: var(--cyan); transform: translateX(3px);
+    }
+    .toc-item-num {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 800;
+      color: var(--cyan); min-width: 28px;
+    }
+    .toc-item-title { font-size: 13px; font-weight: 600; line-height: 1.3; }
+
+    /* ─── CANVAS CONFETTI PHÁO HOA TOÀN MÀN HÌNH ─── */
+    #confettiCanvas {
+      position: fixed; inset: 0; pointer-events: none; z-index: 999;
+    }
+
+    /* ═════════════════════════════════════════════════════════════
+       STYLING CHO CÁC PHẦN TỬ ĐẶC BIỆT CỦA BÀI 13
+    ═════════════════════════════════════════════════════════════ */
+
+    /* Slide 1: Bìa */
+    .hero-container {
+      display: flex; align-items: center; justify-content: space-between; gap: 30px; height: 100%;
+    }
+    .hero-left { flex: 1.1; display: flex; flex-direction: column; gap: 18px; }
+    .hero-right {
+      flex: 0.9; display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .studio-orb {
+      width: 320px; height: 320px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.4) 0%, rgba(236, 72, 153, 0.2) 60%, transparent 80%);
+      position: absolute; filter: blur(35px); z-index: 0;
+      animation: pulseOrb 6s ease-in-out infinite alternate;
+    }
+    @keyframes pulseOrb {
+      0% { transform: scale(0.9); opacity: 0.6; }
+      100% { transform: scale(1.15); opacity: 0.95; }
+    }
+    .hero-svg-preview {
+      position: relative; z-index: 1;
+      width: 340px; height: 340px;
+      background: rgba(11, 18, 38, 0.85);
+      border: 2px solid rgba(6, 182, 212, 0.45);
+      border-radius: 24px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      display: flex; align-items: center; justify-content: center;
+      backdrop-filter: blur(12px);
+    }
+
+    /* Slide 5: LAB 1 - Shape Generator Lab */
+    .lab-box {
+      display: grid; grid-template-columns: 280px 1fr; gap: 18px; height: 360px;
+    }
+    .lab-controls {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md); padding: 14px 16px;
+      display: flex; flex-direction: column; gap: 12px;
+      overflow-y: auto;
+    }
+    .lab-preview-area {
+      background: #070c1e;
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      border-radius: var(--radius-md);
+      position: relative; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Slide 7: LAB 2 - 3D Z-Order Simulator */
+    .zorder-lab-container {
+      display: grid; grid-template-columns: 1fr 340px; gap: 20px; height: 360px;
+    }
+    .layer-viewport {
+      background: #080d22;
+      border: 1px solid rgba(139, 92, 246, 0.35);
+      border-radius: var(--radius-md);
+      position: relative; display: flex; align-items: center; justify-content: center;
+      overflow: hidden; perspective: 900px;
+    }
+    .layer-stage {
+      width: 280px; height: 280px; position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .layer-stage.iso-3d {
+      transform: rotateX(55deg) rotateZ(-35deg) scale(0.9);
+    }
+    .layer-sheet {
+      position: absolute; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 15px; cursor: pointer;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      transition: all 0.4s ease;
+    }
+    .layer-sheet.selected {
+      outline: 3px solid #FFFFFF;
+      box-shadow: 0 0 25px var(--cyan);
+    }
+
+    /* Slide 11: LAB 3 - Align & Distribute Simulator */
+    .align-lab-container {
+      display: grid; grid-template-columns: 1fr 280px; gap: 18px; height: 350px;
+    }
+    .align-stage {
+      background: #070c1e;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: var(--radius-md);
+      position: relative; overflow: hidden;
+    }
+    .align-box-item {
+      position: absolute;
+      border-radius: 8px; font-family: var(--font-mono); font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      color: #FFFFFF; font-size: 13px;
+      transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+    }
+    .align-laser-line {
+      position: absolute; pointer-events: none;
+      background: rgba(16, 185, 129, 0.85); box-shadow: 0 0 10px var(--emerald);
+      opacity: 0; transition: opacity 0.3s ease;
+    }
+
+    /* Slide 13: Quiz Cards */
+    .quiz-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px; padding: 12px 16px;
+      cursor: pointer; transition: all 0.2s ease;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .quiz-card:hover {
+      background: rgba(6, 182, 212, 0.1);
+      border-color: var(--cyan);
+    }
+    .quiz-card.correct {
+      background: rgba(16, 185, 129, 0.22) !important;
+      border-color: var(--emerald) !important;
+      color: var(--emerald-light) !important;
+    }
+    .quiz-card.wrong {
+      background: rgba(239, 68, 68, 0.22) !important;
+      border-color: var(--rose) !important;
+      color: var(--rose-light) !important;
+    }
+    .quiz-opt-letter {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 13px; flex-shrink: 0;
+    }
+
+    /* Slide 15: Mindmap Nodes */
+    .mindmap-node {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px; cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .mindmap-node:hover, .mindmap-node.expanded {
+      background: rgba(6, 182, 212, 0.15);
+      border-color: var(--cyan);
+      box-shadow: 0 0 15px var(--cyan-glow);
+    }
+  </style>
+</head>
+<body>
+  <!-- Nền hiệu ứng Mesh & Lưới Cyberpunk Vector -->
+  <div class="bg-mesh"></div>
+  <div class="cyber-grid"></div>
+  
+  <div class="floating-symbols">
+    <div class="float-tag" style="left: 8%; animation-delay: 0s;">Rectangle (R)</div>
+    <div class="float-tag" style="left: 28%; animation-delay: 5s;">Ctrl+D (Duplicate)</div>
+    <div class="float-tag" style="left: 48%; animation-delay: 11s;">Z-Order (Page Up/Down)</div>
+    <div class="float-tag" style="left: 68%; animation-delay: 3s;">Group (Ctrl+G)</div>
+    <div class="float-tag" style="left: 88%; animation-delay: 8s;">Align (Shift+Ctrl+A)</div>
+  </div>
+
+  <canvas id="confettiCanvas"></canvas>
+
+  <!-- Container Trình Chiếu 15 Slide -->
+  <div class="deck-container">
+
+    <!-- ═════════════════════════════════════════════════════════════
+         SLIDE 1: TRANG BÌA BÀI HỌC (HERO COVER)
+    ═════════════════════════════════════════════════════════════ -->
+    <section class="slide active" id="slide-1">
+      <div class="hero-container">
+        <div class="hero-left">
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <span class="slide-badge">Tin học 10 · KNTT</span>
+            <span class="slide-badge purple">Chủ đề 4: Ứng dụng tin học</span>
+            <span class="slide-badge amber">THPT Na Rì</span>
+          </div>
+
+          <h1 style="font-size: 38px; font-weight: 900; line-height: 1.2; letter-spacing: -0.5px;">
+            Bài 13: Bổ Sung Các Đối Tượng Đồ Hoạ
+          </h1>
+
+          <p style="font-size: 15.5px; color: var(--ink-soft); line-height: 1.6;">
+            Chào mừng các bạn đến với studio thiết kế Inkscape! Hôm nay chúng ta sẽ làm chủ 
+            <strong>4 công cụ tạo hình nền tảng</strong>, giải mã bí mật của <strong>thứ tự xếp lớp (Z-order)</strong>, 
+            nhân bản siêu tốc với <strong>Ctrl+D</strong> và căn chỉnh thẳng tắp từng pixel bằng <strong>Align & Distribute</strong>.
+          </p>
+
+          <div class="grid-3" style="margin-top: 6px;">
+            <div class="glass-card highlight">
+              <div style="font-size: 22px; margin-bottom: 6px;">✏️</div>
+              <div style="font-size: 13.5px; font-weight: 700; color: #FFFFFF;">4 Công Cụ Nền Tảng</div>
+              <div style="font-size: 12px; color: var(--ink-soft); margin-top: 3px;">Rectangle, Ellipse, Star/Polygon, Bezier</div>
+            </div>
+            <div class="glass-card purple-glow">
+              <div style="font-size: 22px; margin-bottom: 6px;">🗂️</div>
+              <div style="font-size: 13.5px; font-weight: 700; color: #FFFFFF;">Z-Order & Ctrl+D</div>
+              <div style="font-size: 12px; color: var(--ink-soft); margin-top: 3px;">Quy luật lớp chồng, nhân đôi tại chỗ</div>
+            </div>
+            <div class="glass-card emerald-glow">
+              <div style="font-size: 22px; margin-bottom: 6px;">📐</div>
+              <div style="font-size: 13.5px; font-weight: 700; color: #FFFFFF;">Group & Align</div>
+              <div style="font-size: 12px; color: var(--ink-soft); margin-top: 3px;">Gộp nhóm đồng bộ, căn chỉnh pixel</div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px; align-items: center; margin-top: 8px;">
+            <button class="reveal-btn primary" onclick="nextSlide()" style="padding: 10px 22px; font-size: 14px;">
+              Bắt đầu bài giảng ▶
+            </button>
+            <button class="reveal-btn" onclick="goToSlide(5)" style="padding: 10px 18px; font-size: 13px;">
+              🛠️ Phòng Lab Tạo Hình
+            </button>
+            <button class="reveal-btn" onclick="goToSlide(7)" style="padding: 10px 18px; font-size: 13px;">
+              🗂️ Lab Xếp Tầng 3D
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="studio-orb"></div>
+          <div class="hero-svg-preview">
+            <svg width="300" height="300" viewBox="0 0 300 300">
+              <!-- Nền trời đêm (Rectangle) -->
+              <rect x="25" y="25" width="250" height="250" rx="18" fill="#0b1329" stroke="#06B6D4" stroke-width="2" />
+              <!-- Mặt trăng tròn (Ellipse + Ctrl) -->
+              <circle cx="150" cy="110" r="50" fill="#FCD34D" filter="drop-shadow(0 0 15px rgba(245, 158, 11, 0.6))" />
+              <!-- Bóng khuyết mặt trăng -->
+              <path d="M 175 75 A 50 50 0 0 1 175 145 A 42 42 0 0 0 175 75" fill="#0b1329" />
+              <!-- Ngôi sao vàng (Star/Polygon) -->
+              <polygon points="150,45 155,58 168,58 158,66 162,79 150,71 138,79 142,66 132,58 145,58" fill="#FFFFFF" />
+              <polygon points="80,80 83,88 92,88 85,93 88,102 80,97 72,102 75,93 68,88 77,88" fill="#FCD34D" />
+              <polygon points="220,95 223,103 232,103 225,108 228,117 220,112 212,117 215,108 208,103 217,103" fill="#F472B6" />
+              <!-- Đường cong sao chổi (Bezier) -->
+              <path d="M 50 200 Q 150 140 240 180" fill="none" stroke="#67E8F9" stroke-width="3" stroke-dasharray="6,4" />
+              <!-- Các khung thông tin bo góc được căn chỉnh (Align) -->
+              <rect x="55" y="220" width="55" height="35" rx="6" fill="#8B5CF6" opacity="0.85" />
+              <rect x="122" y="220" width="55" height="35" rx="6" fill="#EC4899" opacity="0.85" />
+              <rect x="189" y="220" width="55" height="35" rx="6" fill="#10B981" opacity="0.85" />
+              <!-- Chữ icon -->
+              <text x="82" y="242" fill="#fff" font-size="12" font-family="monospace" text-anchor="middle">R</text>
+              <text x="149" y="242" fill="#fff" font-size="12" font-family="monospace" text-anchor="middle">E</text>
+              <text x="216" y="242" fill="#fff" font-size="12" font-family="monospace" text-anchor="middle">B</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════════════════════════════════════════════════════════
+         SLIDE 2: BẢN ĐỒ NĂNG LỰC BÀI HỌC (GDPT 2018)
+    ═════════════════════════════════════════════════════════════ -->
+    <section class="slide" id="slide-2">
+      <div class="slide-header">
+        <div>
+          <span class="slide-badge purple">Mục tiêu bài học</span>
+          <h2 class="slide-title">Bản Đồ 4 Trụ Cột Năng Lực Cần Đạt</h2>
+          <div class="slide-subtitle">Trang bị tư duy thiết kế vector chuyên nghiệp theo chương trình GDPT 2018</div>
+        </div>
+        <div class="reveal-toolbar">
+          <span class="reveal-status" id="rev-stat-2">0/4 ý</span>
+          <button class="reveal-btn" onclick="revealNext(2)">Hiện tiếp (↓)</button>
+          <button class="reveal-btn primary" onclick="revealAll(2)">Hiện tất cả</button>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Trụ 1 -->
+          <div class="glass-card highlight reveal-item" onclick="revealThis(this)">
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <div style="font-size: 28px; background: rgba(6, 182, 212, 0.2); width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+              <div>
+                <h3 style="font-size: 16px; font-weight: 800; color: var(--cyan-light);">Thành Thạo 4 Công Cụ Tạo Hình Cơ Bản</h3>
+                <p style="font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; margin-top: 6px;">
+                  Sử dụng thành thạo phím tắt: <span class="kbd cyan">R</span> (Rectangle), <span class="kbd cyan">E</span> (Ellipse), 
+                  <span class="kbd cyan">*</span> (Star/Polygon) và <span class="kbd cyan">B</span> (Bezier). Khắc cốt ghi tâm quy tắc: 
+                  <strong>giữ phím Ctrl</strong> để khoá tỉ lệ 1:1 biến chữ nhật thành hình vuông, elip thành hình tròn tuyệt đối.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Trụ 2 -->
+          <div class="glass-card purple-glow reveal-item" onclick="revealThis(this)">
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <div style="font-size: 28px; background: rgba(139, 92, 246, 0.2); width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+              <div>
+                <h3 style="font-size: 16px; font-weight: 800; color: var(--purple-light);">Điều Khiển Thứ Tự Xếp Lớp (Z-Order)</h3>
+                <p style="font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; margin-top: 6px;">
+                  Hiểu rõ nguyên lý xếp chồng: hình vẽ sau mặc định nằm trên hình vẽ trước. 
+                  Linh hoạt thay đổi thứ tự lớp bằng 4 phím tắt: <span class="kbd purple">Page Up</span>, <span class="kbd purple">Page Down</span>, 
+                  <span class="kbd purple">Home</span> và <span class="kbd purple">End</span> mà không bao giờ phải xoá vẽ lại.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Trụ 3 -->
+          <div class="glass-card amber-glow reveal-item" onclick="revealThis(this)">
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <div style="font-size: 28px; background: rgba(245, 158, 11, 0.2); width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+              <div>
+                <h3 style="font-size: 16px; font-weight: 800; color: var(--amber-light);">Nhân Bản Siêu Tốc Bằng Ctrl+D</h3>
+                <p style="font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; margin-top: 6px;">
+                  Phân biệt sâu sắc giữa <strong>Duplicate (Ctrl+D)</strong> và sao chép truyền thống. Tạo bản sao trùng khít tại chỗ trong 0.1 giây, 
+                  tiết kiệm 80% thời gian khi thiết kế các hoạ tiết lặp lại (cánh hoa, bánh răng, bầu trời sao).
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Trụ 4 -->
+          <div class="glass-card emerald-glow reveal-item" onclick="revealThis(this)">
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <div style="font-size: 28px; background: rgba(16, 185, 129, 0.2); width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+              <div>
+                <h3 style="font-size: 16px; font-weight: 800; color: var(--emerald-light);">Nhóm Khối & Căn Chỉnh Pixel (Align)</h3>
+                <p style="font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; margin-top: 6px;">
+                  Quản lý phức hợp nhiều chi tiết bằng <strong>Group (Ctrl+G)</strong> / <strong>Ungroup (Ctrl+Shift+G)</strong>. 
+                  Sử dụng hộp thoại <strong>Align & Distribute (Shift+Ctrl+A)</strong> để căn thẳng hàng và chia đều khoảng cách chuẩn xác tuyệt đối.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════════════════════════════════════════════════════════
+         SLIDE 3: BỐN CÔNG CỤ VẼ HÌNH CƠ BẢN (MỤC 1)
+    ═════════════════════════════════════════════════════════════ -->
+    <section class="slide" id="slide-3">
+      <div class="slide-header">
+        <div>
+          <span class="slide-badge">Mục 1: Tạo hình nền tảng</span>
+          <h2 class="slide-title">Bốn Công Cụ Vẽ Hình Cơ Bản Trên Toolbox</h2>
+          <div class="slide-subtitle">Chỉ với 4 công cụ này, mọi biểu tượng, logo và tranh minh hoạ đều có thể được dựng nên</div>
+        </div>
+        <div class="reveal-toolbar">
+          <span class="reveal-status" id="rev-stat-3">0/4 ý</span>
+          <button class="reveal-btn" onclick="revealNext(3)">Hiện tiếp (↓)</button>
+          <button class="reveal-btn primary" onclick="revealAll(3)">Hiện tất cả</button>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-4">
+          <!-- Công cụ 1 -->
+          <div class="glass-card highlight reveal-item" onclick="revealThis(this)">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 32px;">▭</span>
+              <span class="kbd cyan">Phím R</span>
+            </div>
+            <h4 style="font-size: 15px; font-weight: 800; color: var(--cyan-light); margin-top: 10px;">Rectangle Tool</h4>
+            <p style="font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin-top: 6px;">
+              • Kéo chuột để vẽ hình chữ nhật tự do.<br>
+              • <strong>Giữ Ctrl</strong>: Khoá tỉ lệ 1:1 tạo <strong>Hình vuông</strong> chuẩn.<br>
+              • Có 2 chấm tròn ở góc để bo tròn viền (rx, ry).
+            </p>
+            <div style="margin-top: 10px; padding: 6px; background: rgba(0,0,0,0.3); border-radius: 8px; text-align: center;">
+              <svg width="80" height="45">
+                <rect x="5" y="5" width="70" height="35" rx="6" fill="rgba(6, 182, 212, 0.3)" stroke="#06B6D4" stroke-width="2" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Công cụ 2 -->
+          <div class="glass-card purple-glow reveal-item" onclick="revealThis(this)">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 32px;">◯</span>
+              <span class="kbd purple">Phím E</span>
+            </div>
+            <h4 style="font-size: 15px; font-weight: 800; color: var(--purple-light); margin-top: 10px;">Ellipse Tool</h4>
+            <p style="font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin-top: 6px;">
+              • Kéo chuột vẽ hình elip với độ dẹt tuỳ ý.<br>
+              • <strong>Giữ Ctrl</strong>: Khoá tỉ lệ 1:1 tạo <strong>Hình tròn</strong> tuyệt đối.<br>
+              • Có thể kéo tay nắm để cắt thành hình rẻ quạt / cung tròn.
+            </p>
+            <div style="margin-top: 10px; padding: 6px; background: rgba(0,0,0,0.3); border-radius: 8px; text-align: center;">
+              <svg width="80" height="45">
+                <ellipse cx="40" cy="22" rx="35" ry="18" fill="rgba(139, 92, 246, 0.3)" stroke="#8B5CF6" stroke-width="2" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Công cụ 3 -->
+          <div class="glass-card amber-glow reveal-item" onclick="revealThis(this)">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 32px;">★</span>
+              <span class="kbd amber">Phím *</span>
+            </div>
+            <h4 style="font-size: 15px; font-weight: 800; color: var(--amber-light); margin-top: 10px;">Stars & Polygons</h4>
+            <p style="font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin-top: 6px;">
+              • Vẽ đa giác đều (tam giác, lục giác...) hoặc ngôi sao.<br>
+              • Đổi số góc/cánh (Corners) từ 3 đến 100+ trên thanh Controls.<br>
+              • Tinh chỉnh độ nhọn cánh (Spoke ratio) và độ bo tròn (Rounded).
+            </p>
+            <div style="margin-top: 10px; padding: 6px; background: rgba(0,0,0,0.3); border-radius: 8px; text-align: center;">
+              <svg width="80" height="45">
+                <polygon points="40,3 47,16 61,17 50,26 53,40 40,33 27,40 30,26 19,17 33,16" fill="rgba(245, 158, 11, 0.3)" stroke="#F59E0B" stroke-width="1.8" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Công cụ 4 -->
+          <div class="glass-card emerald-glow reveal-item" onclick="revealThis(this)">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 32px;">✎</span>
+              <span class="kbd emerald">Phím B</span>
+            </div>
+            <h4 style="font-size: 15px; font-weight: 800; color: var(--emerald-light); margin-top: 10px;">Bézier Curves (Pen)</h4>
+            <p style="font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin-top: 6px;">
+              • Nháy chuột để đặt từng điểm neo (Anchor Points).<br>
+              • Vẽ đường gấp khúc hoặc kéo rê chuột để uốn cong tự do.<br>
+              • Nháy đúp chuột hoặc ấn <strong>Enter</strong> để kết thúc đường vẽ.
+            </p>
+            <div style="margin-top: 10px; padding: 6px; background: rgba(0,0,0,0.3); border-radius: 8px; text-align: center;">
+              <svg width="80" height="45">
+                <path d="M 10 35 Q 40 5 70 35" fill="none" stroke="#10B981" stroke-width="2.5" />
+                <circle cx="10" cy="35" r="3" fill="#fff" />
+                <circle cx="70" cy="35" r="3" fill="#fff" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card" style="padding: 10px 16px; background: rgba(6, 182, 212, 0.08); border-color: rgba(6, 182, 212, 0.25); display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 20px;">💡</span>
+          <span style="font-size: 13px; color: var(--cyan-light);">
+            <strong>Mẹo vàng ghi nhớ:</strong> Muốn quay về con trỏ chọn và biến đổi đối tượng nhanh nhất, hãy nhấn phím <span class="kbd cyan">S</span> hoặc <span class="kbd cyan">F1</span> (Select and transform objects).
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════════════════════════════════════════════════════════
+         SLIDE 4: BÍ MẬT PHÍM CTRL & THANH ĐIỀU KHIỂN THUỘC TÍNH
+    ═════════════════════════════════════════════════════════════ -->
+    <section class="slide" id="slide-4">
+      <div class="slide-header">
+        <div>
+          <span class="slide-badge amber">Kỹ thuật chuyên sâu</span>
+          <h2 class="slide-title">Bí Mật Phím Ctrl & Thuộc Tính Tinh Chỉnh</h2>
+          <div class="slide-subtitle">Sự khác biệt giữa người vẽ nghiệp dư và chuyên gia thiết kế nằm ở các tham số chuẩn xác</div>
+        </div>
+        <div class="reveal-toolbar">
+          <span class="reveal-status" id="rev-stat-4">0/3 ý</span>
+          <button class="reveal-btn" onclick="revealNext(4)">Hiện tiếp (↓)</button>
+          <button class="reveal-btn primary" onclick="revealAll(4)">Hiện tất cả</button>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-3">
+          <!-- Ý 1 -->
+          <div class="glass-card reveal-item" onclick="revealThis(this)">
+            <h4 style="font-size: 15px; font-weight: 800; color: var(--cyan-light); margin-bottom: 8px;">
+              🔲 Phím Ctrl — Khoá Tỉ Lệ 1:1
+            </h4>
+            <p style="font-size: 13.5px; color: var(--ink-soft); line-height: 1.6;">
+              Khi dùng chuột kéo vẽ bình thường, mắt người không thể căn chính xác chiều dài bằng chiều rộng. 
+              <br><br>
+              Khi nhấn và giữ phím <span class="kbd cyan">Ctrl</span> trong suốt quá trình kéo:
+              <br>• Hình chữ nhật $\to$ <strong>Hình vuông</strong> tuyệt đối.
+              <br>• Hình elip $\to$ <strong>Hình tròn</strong> hoàn hảo.
+              <br>• Xoay hình $\to$ Khoá theo từng bước góc <strong>15°</strong>.
+            </p>
+          </div>
+
+          <!-- Ý 2 -->
+          <div class="glass-card reveal-item" onclick="revealThis(this)">
+            <h4 style="font-size: 15px; font-weight: 800; color: var(--purple-light); margin-bottom: 8px;">
+              🔘 Bo Góc Hình Chữ Nhật (rx, ry)
+            </h4>
+            <p style="font-size: 13.5px; color: var(--ink-soft); line-height: 1.6;">
+              Trên hình chữ nhật Inkscape có 2 loại tay nắm:
+              <br>• <strong>Hai tay nắm hình vuông</strong> ở góc trên-trái và dưới-phải: đổi chiều rộng $W$ và chiều cao $H$.
+              <br>• <strong>Tay nắm hình tròn</strong> ở góc trên-phải: kéo trượt xuống dưới để bo tròn góc chữ nhật!
+              <br><br>
+              Hoặc nhập số trực tiếp trên ô <span class="kbd purple">Rx</span>, <span class="kbd purple">Ry</span> trên thanh Tool Controls.
+            </p>
+          </div>
+
+          <!-- Ý 3 -->
+          <div class="glass-card reveal-item" onclick="revealThis(this)">
+            <h4 style="font-size: 15px; font-weight: 800; color: var(--amber-light); margin-bottom: 8px;">
+              ⭐ Tinh Chỉnh Ngôi Sao & Đa Giác
+            </h4>
+            <p style="font-size: 13.5px; color: var(--ink-soft); line-height: 1.6;">
+              Khi chọn công cụ Star/Polygon, thanh thuộc tính xuất hiện các nút ma thuật:
+              <br>• <strong>Corners</strong>: số cánh/số đỉnh (VD: 3 là tam giác đều, 5 là sao vàng, 6 là lục giác tổ ong).
+              <br>• <strong>Spoke ratio</strong>: độ lõm sâu của cánh sao (0.382 là ngôi sao 5 cánh quốc kì Việt Nam).
+              <br>• <strong>Rounded</strong>: bo tròn tạo hình hoa cúc mềm mại.
+            </p>
+          </div>
+        </div>
+
+        <div class="glass-card" style="display: flex; align-items: center; justify-content: space-around; padding: 14px 20px; background: rgba(11, 18, 38, 0.7);">
+          <div style="text-align: center;">
+            <div style="font-size: 12px; color: var(--ink-soft); margin-bottom: 4px;">Kéo tự do (Méo tỉ lệ)</div>
+            <svg width="100" height="40"><rect x="10" y="5" width="80" height="30" fill="none" stroke="#EF4444" stroke-width="2" stroke-dasharray="4,2"/></svg>
+            <div style="font-size: 11px; color: var(--rose-light);">Chữ nhật dẹt / Elip méo</div>
+          </div>
+          <div style="font-size: 24px; color: var(--cyan);">➔ Giữ Ctrl ➔</div>
+          <div style="text-align: center;">
+            <div style="font-size: 12px; color: var(--ink-soft); margin-bottom: 4px;">Giữ Ctrl (Chuẩn 100%)</div>
+            <svg width="100" height="40"><rect x="35" y="5" width="30" height="30" fill="none" stroke="#10B981" stroke-width="2"/></svg>
+            <div style="font-size: 11px; color: var(--emerald-light);">Hình vuông / Hình tròn tuyệt đối</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════════════════════════════════════════════════════════
+         SLIDE 5: PHÒNG LAB 1 - VƯỜN THỰC NGHIỆM TẠO HÌNH CƠ BẢN
+    ═════════════════════════════════════════════════════════════ -->
+    <section class="slide" id="slide-5">
+      <div class="slide-header">
+        <div>
+          <span class="slide-badge emerald">Phòng thực hành ảo 1</span>
+          <h2 class="slide-title">Lab 1: Vườn Thực Nghiệm Tạo Hình Vector Inkscape</h2>
+          <div class="slide-subtitle">Trực tiếp chọn công cụ, kéo thanh trượt tinh chỉnh tham số và quan sát hình biến đổi tức thì</div>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="reveal-btn" onclick="resetLab1()">🔄 Khôi phục mặc định</button>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="lab-box">
+          <!-- Cột công cụ & Controls -->
+          <div class="lab-controls">
+            <div style="font-size: 12px; font-weight: 700; color: var(--cyan-light); text-transform: uppercase;">
+              1. Chọn công cụ vẽ:
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+              <button class="reveal-btn primary" id="btnToolRect" onclick="setLab1Shape('rect')">▭ Chữ nhật</button>
+              <button class="reveal-btn" id="btnToolSquare" onclick="setLab1Shape('square')">⏹ Vuông (Ctrl)</button>
+              <button class="reveal-btn" id="btnToolEllipse" onclick="setLab1Shape('ellipse')">⬭ Elip</button>
+              <button class="reveal-btn" id="btnToolCircle" onclick="setLab1Shape('circle')">⏺ Tròn (Ctrl)</button>
+              <button class="reveal-btn" id="btnToolStar" onclick="setLab1Shape('star')">★ Ngôi sao</button>
+              <button class="reveal-btn" id="btnToolPoly" onclick="setLab1Shape('polygon')">⬡ Đa giác</button>
+            </div>
+
+            <div style="font-size: 12px; font-weight: 700; color: var(--amber-light); text-transform: uppercase; margin-top: 6px;">
+              2. Tinh chỉnh tham số:
+            </div>
+
+            <!-- Slider bo góc (cho rect) -->
+            <div id="ctrlRadiusGroup">
+              <div style="display: flex; justify-content: space-between; font-size: 12px;">
+                <span>Bo góc (Radius):</span>
+                <span id="lblRadius" style="font-family: var(--font-mono); color: var(--cyan);">0px</span>
+              </div>
+              <input type="range" id="rngRadius" min="0" max="60" value="0" style="width: 100%; margin-top: 4px;" oninput="updateLab1()">
+            </div>
+
+            <!-- Slider số cánh (cho star/polygon) -->
+            <div id="ctrlCornersGroup" style="display: none;">
+              <div style="display: flex; justify-content: space-between; font-size: 12px;">
+                <span>Số cánh/đỉnh (Corners):</span>
+                <span id="lblCorners" style="font-family: var(--font-mono); color: var(--amber);">5</span>
+              </div>
+              <input type="range" id="rngCorners" min="3" max="12" value="5" style="width: 100%; margin-top: 4px;" oninput="updateLab1()">
+            </div>
+
+            <!-- Slider độ sâu cánh sao (Spoke ratio) -->
+            <div id="ctrlSpokeGroup" style="display: none;">
+              <div style="display: flex; justify-content: space-between; font-size: 12px;">
+                <span>Độ nhọn cánh (Spoke):</span>
+                <span id="lblSpoke" style="font-family: var(--font-mono); color: var(--pink);">0.38</span>
+              </div>
+              <input type="range" id="rngSpoke" min="15" max="85" value="38" style="width: 100%; margin-top: 4px;" oninput="updateLab1()">
+            </div>
+
+            <!-- Màu sắc -->
+            <div style="margin-top: 4px;">
+              <div style="font-size: 12px; color: var(--ink-soft); margin-bottom: 4px;">Màu tô (Fill):</div>
+              <div style="display: flex; gap: 6px;">
+                <span onclick="setLab1Color('#06B6D4')" style="width:20px;height:20px;border-radius:50%;background:#06B6D4;cursor:pointer;"></span>
+                <span onclick="setLab1Color('#8B5CF6')" style="width:20px;height:20px;border-radius:50%;background:#8B5CF6;cursor:pointer;"></span>
+                <span onclick="setLab1Color('#EC4899')" style="width:20px;height:20px;border-radius:50%;background:#EC4899;cursor:pointer;"></span>
+                <span onclick="setLab1Color('#F59E0B')" style="width:20px;height:20px;border-radius:50%;background:#F59E0B;cursor:pointer;"></span>
+                <span onclick="setLab1Color('#10B981')" style="width:20px;height:20px;border-radius:50%;background:#10B981;cursor:pointer;"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Vùng hiển thị SVG tương tác -->
+          <div class="lab-preview-area">
+            <svg id="lab1Svg" width="100%" height="100%" viewBox="0 0 500 320">
+              <!-- Lưới milimét nền -->
+              <defs>
+                <pattern id="labGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+                  <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#labGrid)" />
+
+              <!-- Đối tượng chính được vẽ -->
+              <g id="lab1TargetGroup" transform="translate(250, 160)">
+                <!-- Sẽ được vẽ bằng JavaScript -->
+              </g>
+
+              <!-- Thước đo toạ độ & kích thước -->
+              <text id="lab1InfoText" x="16" y="295" fill="var(--cyan-light)" font-size="12" font-family="monospace">
+                Đối tượng: Rectangle | W=200px, H=120px | Fill: #06B6D4
+              </text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════════════════════════════════════════════════════════
+         SLIDE 6: THỨ TỰ XẾP LỚP (Z-ORDER) TRONG ĐỒ HOẠ VECTOR (MỤC 2)
+    ═════════════════════════════════════════════════════════════ -->
+    <section class="slide" id="slide-6">
+      <div class="slide-header">
+        <div>
+          <span class="slide-badge purple">Mục 2: Thứ tự không gian</span>
+          <h2 class="slide-title">Thứ Tự Xếp Lớp (Z-Order) & Quy Tắc Lớp Chồng</h2>
+          <div class="slide-subtitle">Vì sao hình vừa vẽ lại "biến mất"? Giải mã hiện tượng che khuất trong không gian thiết kế</div>
+        </div>
+        <div class="reveal-toolbar">
+          <span class="reveal-status" id="rev-stat-6">0/3 ý</span>
+          <button class="reveal-btn" onclick="revealNext(6)">Hiện tiếp (↓)</button>
+          <button class="reveal-btn primary" onclick="revealAll(6)">Hiện tất cả</button>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Cột lý thuyết -->
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div class="glass-card highlight reveal-item" onclick="revealThis(this)">
+              <h4 style="font-size: 15px; font-weight: 800; color: var(--cyan-light);">
+                📜 Quy Tắc Xếp Chồng Mặc Định
+              </h4>
+              <p style="font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; margin-top: 6px;">
+                Trong đồ hoạ vector, các hình vẽ hoạt động như <strong>từng tờ giấy cắt dán</strong> xếp chồng lên mặt bàn:
+                <br>• <strong>Hình vẽ trước</strong>: nằm ở dưới cùng (đáy bàn).
+                <br>• <strong>Hình vẽ sau</strong>: mặc định nằm đè lên trên tất cả các hình trước đó.
+                <br>• Thứ tự hiển thị <strong>hoàn toàn không phụ thuộc</strong> vào kích thước to/nhỏ hay màu sắc đậm/nhạt.
+              </p>
+            </div>
+
+            <div class="glass-card purple-glow reveal-item" onclick="revealThis(this)">
+              <h4 style="font-size: 15px; font-weight: 800; color: var(--purple-light);">
+                ⌨️ 4 Phím Tắt Vàng Thay Đổi Tầng Lớp (Z-Order)
+              </h4>
+              <div style="font-size: 13px; color: #FFFFFF; line-height: 1.8; margin-top: 6px;">
+                • <span class="kbd purple">Page Up</span> (Raise): Nâng đối tượng lên <strong>1 tầng</strong>.<br>
+                • <span class="kbd purple">Page Down</span> (Lower): Hạ đối tượng xuống <strong>1 tầng</strong>.<br>
+                • <span class="kbd cyan">Home</span> (Raise to Top): Đưa đối tượng lên <strong>hẳn trên cùng</strong>.<br>
+                • <span class="kbd cyan">End</span> (Lower to Bottom): Đưa đối tượng xuống <strong>hẳn dưới cùng</strong>.
+              </div>
+            </div>
+          </div>
+
+          <!-- Cột tình huống thực tế -->
+          <div class="glass-card amber-glow reveal-item" onclick="revealThis(this)" style="display: flex; flex-direction: column; justify-content: center;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+              <span style="font-size: 24px;">🚨</span>
+              <h4 style="font-size: 15px; font-weight: 800; color: var(--amber-light);">Tình Huống Báo Động: "Nền Che Mất Logo!"</h4>
+            </div>
+            <p style="font-size: 13.5px; color: var(--ink-soft); line-height: 1.6;">
+              Bạn An thiết kế xong chiếc logo sao vàng rất đẹp. Sau đó An vẽ thêm một hình chữ nhật màu xanh đen to đùng để làm hình nền cho poster.
+              <br><br>
+              <strong style="color: var(--rose-light);">Hiện tượng:</strong> Chiếc logo biến mất tăm!
+              <br><br>
+              <strong style="color: var(--emerald-light);">Cách xử lí của dân Pro:</strong> Không cần xoá đi vẽ lại! 
+              Chỉ cần nhấp chọn hình nền, ấn phím <span class="kbd cyan">End</span> (Lower to Bottom). 
+              Hình nền tụt xuống đáy bàn ngay tức khắc, logo sao vàng lại toả sáng lung linh trên mặt poster!
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════════════════════════════════════════════════════════
+         SLIDE 7: PHÒNG LAB 2 - MÔ PHỎNG XẾP TẦNG 3D Z-ORDER
+    ═════════════════════════════════════════════════════════════ -->
+    <section class="slide" id="slide-7">
+      <div class="slide-header">
+        <div>
+          <span class="slide-badge purple">Phòng thực hành ảo 2</span>
+          <h2 class="slide-title">Lab 2: Trực Quan Hoá Không Gian 3D Của Z-Order</h2>
+          <div class="slide-subtitle">Chuyển sang góc nhìn 3D nghiêng để thấy rõ từng tầng giấy vector xếp lơ lửng trong không gian</div>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="reveal-btn primary" id="btnToggle3D" onclick="toggle3DView()">👁️ Chế độ xem 3D Isometric</button>
+          <button class="reveal-btn" onclick="resetLab2()">🔄 Đặt lại</button>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="zorder-lab-container">
+          <!-- Vùng mô phỏng các lớp (Layer Viewport) -->
+          <div class="layer-viewport">
+            <div class="layer-stage" id="layerStage">
+              <!-- Lớp 1: Nền xanh -->
+              <div class="layer-sheet" id="sheet-bg" onclick="selectLayer('bg')"
+                   style="width: 240px; height: 240px; background: #0f172a; border: 2px solid #38BDF8; color: #38BDF8; top: 20px; left: 20px; z-index: 1;">
+                <div style="text-align: center;">
+                  <div style="font-size: 26px;">🟦</div>
+                  <div>Lớp Nền (Background)</div>
+                  <div style="font-size: 11px; opacity: 0.7;">Z-Index: <span id="lblZ-bg">1</span></div>
+                </div>
+              </div>
+
+              <!-- Lớp 2: Khung hình chữ nhật tím -->
+              <div class="layer-sheet" id="sheet-mid" onclick="selectLayer('mid')"
+                   style="width: 170px; height: 170px; background: rgba(139, 92, 246, 0.85); border: 2px solid #C4B5FD; color: #FFFFFF; top: 55px; left: 55px; z-index: 2;">
+                <div style="text-align: center;">
+                  <div style="font-size: 26px;">🟪</div>
+                  <div>Khung Đồ Hoạ</div>
+                  <div style="font-size: 11px; opacity: 0.8;">Z-Index: <span id="lblZ-mid">2</span></div>
+                </div>
+              </div>
+
+              <!-- Lớp 3: Ngôi sao vàng trên cùng -->
+              <div class="layer-sheet selected" id="sheet-star" onclick="selectLayer('star')"
+                   style="width: 110px; height: 110px; background: rgba(245, 158, 11, 0.95); border: 2px solid #FDE047; color: #060914; top: 85px; left: 85px; z-index: 3;">
+                <div style="text-align: center;">
+                  <div style="font-size: 26px;">⭐</div>
+                  <div style="font-weight: 900;">Logo Sao</div>
+                  <div style="font-size: 11px;">Z-Index: <span id="lblZ-star">3</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div style="position: absolute; bottom: 12px; left: 16px; font-size: 12px; color: var(--cyan-light); font-family: var(--font-mono);">
+              💡 Đang chọn: <strong id="currentSelectedLayerText">⭐ Logo Sao</strong> (Dùng các nút bên phải để đổi tầng)
+            </div>
+          </div>
+
+          <!-- Bảng nút điều khiển Z-Order -->
+          <div class="glass-card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 18px;">
+            <div>
+              <h4 style="font-size: 14px; font-weight: 800; color: var(--cyan-light); margin-bottom: 12px; text-transform: uppercase;">
+                Điều Khiển Lớp Đang Chọn:
+              </h4>
+
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <button class="reveal-btn primary" onclick="moveLayerZ('top')" style="justify-content: flex-start; padding: 8px 12px;">
+                  <span class="kbd cyan">Home</span> <strong>Raise to Top</strong> (Lên đỉnh)
+                </button>
+                <button class="reveal-btn" onclick="moveLayerZ('up')" style="justify-content: flex-start; padding: 8px 12px;">
+                  <span class="kbd purple">Page Up</span> <strong>Raise</strong> (Nâng 1 tầng)
+                </button>
+                <button class="reveal-btn" onclick="moveLayerZ('down')" style="justify-content: flex-start; padding: 8px 12px;">
+                  <span class="kbd purple">Page Down</span> <strong>Lower</strong> (Hạ 1 tầng)
+                </button>
+                <button class="reveal-btn" onclick="moveLayerZ('bottom')" style="justify-content: flex-start; padding: 8px 12px;">
+                  <span class="kbd cyan">End</span> <strong>Lower to Bottom</strong> (Xuống đáy)
+                </button>
+              </div>
+            </div>
+
+            <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; font-size: 12px; color: var(--ink-soft); line-height: 1.5;">
+              <strong style="color: #fff;">Giải thích trực quan:</strong> Khi ấn nút "3D Isometric", các lớp sẽ tách rời theo trục Z (chiều sâu). 
+              Lớp nào có Z-index cao hơn sẽ nổi lên cao hơn và che các lớp bên dưới!
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════════════════════════════════════════════════════════
+         SLIDE 8: NHÂN ĐÔI ĐỐI TƯỢNG SIÊU TỐC (CTRL+D)
+    ═════════════════════════════════════════════════════════════ -->
+    <section class="slide" id="slide-8">
+      <div class="slide-header">
+        <div>
+          <span class="slide-badge amber">Kỹ năng thần tốc</span>
+          <h2 class="slide-title">Nhân Đôi Đối Tượng: Ctrl+D vs Ctrl+C/Ctrl+V</h2>
+          <div class="slide-subtitle">Vũ khí bí mật giúp tạo hàng trăm hoạ tiết đồng dạng chỉ trong vài giây</div>
+        </div>
+        <div class="reveal-toolbar">
+          <span class="reveal-status" id="rev-stat-8">0/3 ý</span>
+          <button class="reveal-btn" onclick="revealNext(8)">Hiện tiếp (↓)</button>
+          <button class="reveal-btn primary" onclick="revealAll(8)">Hiện tất cả</button>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- So sánh 1 -->
+          <div class="glass-card highlight reveal-item" onclick="revealThis(this)">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <h4 style="font-size: 16px; font-weight: 800; color: var(--cyan-light);">
+                ⚡ Duplicate: Phím Tắt Ctrl+D
+              </h4>
+              <span class="kbd cyan">Chuẩn Dân Pro</span>
+            </div>
+            <p style="font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; margin-top: 10px;">
+              • Tạo ra một bản sao <strong>chồng khít 100%</strong> ngay tại toạ độ của hình gốc.<br>
+              • Đối tượng mới tự động được chọn ngay lập tức.<br>
+              • Chỉ cần giữ chuột kéo nhẹ ra là có hình mới, hoặc ấn phím mũi tên để dịch chuyển.<br>
+              • <strong>Ứng dụng đỉnh cao:</strong> Tạo bóng đổ (Drop Shadow) bằng cách nhân đôi, đổi màu đen, tăng Opacity mờ rồi đẩy xuống dưới 1 lớp!
+            </p>
+          </div>
+
+          <!-- So sánh 2 -->
+          <div class="glass-card reveal-item" onclick="revealThis(this)">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <h4 style="font-size: 16px; font-weight: 800; color: var(--rose-light);">
+                📋 Copy/Paste: Ctrl+C & Ctrl+V
+              </h4>
+              <span class="kbd">Truyền Thống</span>
+            </div>
+            <p style="font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; margin-top: 10px;">
+              • <span class="kbd">Ctrl+C</span> chép hình vào bộ nhớ đệm Clipboard.<br>
+              • Khi nhấn <span class="kbd">Ctrl+V</span>, hình dán ra sẽ <strong>rơi vào vị trí con trỏ chuột</strong> hoặc giữa màn hình, làm lệch hoàn toàn toạ độ thiết kế.<br>
+              • Mất công dùng chuột kéo về căn chỉnh lại từ đầu, rất mất thời gian khi vẽ hoa văn đối xứng.
+            </p>
+          </div>
+        </div>
+
+        <!-- Ví dụ thực hành Ctrl+D mini -->
+        <div class="glass-card amber-glow reveal-item" onclick="revealThis(this)" style="padding: 14px 20px;">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <div style="font-size: 14px; font-weight: 800; color: var(--amber-light);">
+                🌟 Trải nghiệm: Rải 5 ngôi sao trên bầu trời bằng Ctrl+D
+              </div>
+              <div style="font-size: 13px; color: var(--ink-soft); margin-top: 2px;">
+                Nhấn nút "Nhân đôi (Ctrl+D)" bên cạnh để xem bản sao xuất hiện và di chuyển sang bên phải:
+              </div>
+            </div>
+            <button class="reveal-btn primary" onclick="demoDuplicateStar()">⭐ Bấm nhân đôi hình sao</button>
+          </div>
+
+          <div id="duplicateStage" style="display: flex; gap: 14px; margin-top: 10px; height: 45px; align-items: center; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 0 14px; overflow-x: auto;">
+            <span style="font-size: 24px;" id="starBase">⭐</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════════════════════════════════════════════════════════
+         SLIDE 9: NHÓM ĐỐI TƯỢNG (GROUP) & TÁCH NHÓM (UNGROUP) (MỤC 3)
+    ═════════════════════════════════════════════════════════════ -->
+    <section class="slide" id="slide-9">
+      <div class="slide-header">
+        <div>
+          <span class="slide-badge emerald">Mục 3: Quản lý phức hợp</span>
+          <h2 class="slide-title">Nhóm Đối Tượng (Group) & Tách Nhóm (Ungroup)</h2>
+          <div class="slide-subtitle">Biến hàng chục mảnh ghép rời rạc thành một khối thống nhất, không bao giờ lo thất lạc chi tiết</div>
+        </div>
+        <div class="reveal-toolbar">
+          <span class="reveal-status" id="rev-stat-9">0/3 ý</span>
+          <button class="reveal-btn" onclick="revealNext(9)">Hiện tiếp (↓)</button>
+          <button class="reveal-btn primary" onclick="revealAll(9)">Hiện tất cả</button>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Cột Group -->
+          <div class="glass-card highlight reveal-item" onclick="revealThis(this)">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <h4 style="font-size: 16px; font-weight: 800; color: var(--cyan-light);">
+                📦 Nhóm Lại: Ctrl+G (Group)
+              </h4>
+              <span class="kbd cyan">Object ➜ Group</span>
+            </div>
+            <p style="font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; margin-top: 10px;">
+              • <strong>Cách làm:</strong> Giữ phím <span class="kbd">Shift</span> nhấp chọn từng hình (hoặc kéo chuột bao trọn tất cả) $\to$ ấn <span class="kbd cyan">Ctrl+G</span>.<br>
+              • <strong>Lợi ích tối thượng:</strong> Di chuyển, xoay, phóng to, thu nhỏ cả cụm như <strong>MỘT ĐỐI TƯỢNG DUY NHẤT</strong>.<br>
+              • <em>Ví dụ:</em> Một bông hoa gồm 5 cánh + 1 nhuỵ vàng + 1 cuống lá. Nếu không nhóm, khi kéo chuột dời đi sẽ rơi mất cánh hoa!
+            </p>
+          </div>
+
+          <!-- Cột Ungroup -->
+          <div class="glass-card purple-glow reveal-item" onclick="revealThis(this)">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <h4 style="font-size: 16px; font-weight: 800; color: var(--purple-light);">
+                🔓 Tách Nhóm: Ctrl+Shift+G (Ungroup)
+              </h4>
+              <span class="kbd purple">Object ➜ Ungroup</span>
+            </div>
+            <p style="font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; margin-top: 10px;">
+              • Nhóm <strong>không hề khoá cứng</strong> hay làm mất thuộc tính của các hình con.<br>
+              • Khi cần đổi màu riêng cho 1 chiếc cánh hoa: chỉ cần chọn nhóm, ấn <span class="kbd purple">Ctrl+Shift+G</span> để bung tách.<br>
+              • Sửa màu xong, chọn lại tất cả rồi ấn <span class="kbd cyan">Ctrl+G</span> để đóng gói trở lại.
+            </p>
+          </div>
+        </div>
+
+        <!-- Trực quan hoá Group -->
+        <div class="glass-card reveal-item" onclick="revealThis(this)" style="display: flex; align-items: center; justify-content: space-around; padding: 12px 20px;">
+          <div style="text-align: center;">
+            <div style="font-size: 12px; color: var(--rose-light); margin-bottom: 4px;">Chưa Nhóm (Hình rời rạc)</div>
+            <div style="font-size: 26px;">🌸 🍃 🍂</div>
+            <div style="font-size: 11px; color: var(--ink-soft);">Kéo đi sẽ bị rơi rụng chi tiết</div>
+          </div>
+          <div style="font-size: 22px; color: var(--cyan);">➔ <span class="kbd cyan">Ctrl+G</span> ➔</div>
+          <div style="text-align: center;">
+            <div style="font-size: 12px; color: var(--emerald-light); margin-bottom: 4px;">Đã Nhóm Thành Khối (Group)</div>
+            <div style="font-size: 26px; border: 1.5px dashed var(--cyan); padding: 2px 14px; border-radius: 8px;">💐</div>
+            <div style="font-size: 11px; color: var(--ink-soft);">Di chuyển, co giãn đồng bộ 100%</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════════════════════════════════════════════════════════
+         SLIDE 10: CĂN CHỈNH ALIGN & DISTRIBUTE (MỤC 3)
+    ═════════════════════════════════════════════════════════════ -->
+    <section class="slide" id="slide-10">
+      <div class="slide-header">
+        <div>
+          <span class="slide-badge cyan">Chuẩn xác từng Pixel</span>
+          <h2 class="slide-title">Hộp Thoại Align & Distribute (Shift+Ctrl+A)</h2>
+          <div class="slide-subtitle">Đừng bao giờ kéo bằng mắt! Hãy để thuật toán căn lề và chia đều khoảng cách làm thay bạn</div>
+        </div>
+        <div class="reveal-toolbar">
+          <span class="reveal-status" id="rev-stat-10">0/3 ý</span>
+          <button class="reveal-btn" onclick="revealNext(10)">Hiện tiếp (↓)</button>
+          <button class="reveal-btn primary" onclick="revealAll(10)">Hiện tất cả</button>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-3">
+          <!-- Căn chỉnh Align -->
+          <div class="glass-card highlight reveal-item" onclick="revealThis(this)">
+            <h4 style="font-size: 15px; font-weight: 800; color: var(--cyan-light); margin-bottom: 8px;">
+              📏 1. Căn Lề (Align)
+            </h4>
+            <p style="font-size: 13px; color: var(--ink-soft); line-height: 1.6;">
+              Đưa các hình về cùng một toạ độ thẳng hàng:
+              <br>• <strong>Align Left</strong>: Căn thẳng theo mép trái.
+              <br>• <strong>Align Right</strong>: Căn thẳng theo mép phải.
+              <br>• <strong>Align Top</strong>: Căn thẳng mép trên (thẳng hàng ngang).
+              <br>• <strong>Center on Vertical Axis</strong>: Căn thẳng trục giữa dọc.
+              <br>• <strong>Center on Horizontal Axis</strong>: Căn thẳng trục giữa ngang.
+            </p>
+          </div>
+
+          <!-- Phân bố Distribute -->
+          <div class="glass-card purple-glow reveal-item" onclick="revealThis(this)">
+            <h4 style="font-size: 15px; font-weight: 800; color: var(--purple-light); margin-bottom: 8px;">
+              📐 2. Phân Bố Đều (Distribute)
+            </h4>
+            <p style="font-size: 13px; color: var(--ink-soft); line-height: 1.6;">
+              Chia đều khoảng cách giữa các đối tượng để bố cục hài hoà:
+              <br>• <strong>Make horizontal gaps equal</strong>: Các khe hở ngang giữa các hình bằng nhau răm rắp!
+              <br>• <strong>Make vertical gaps equal</strong>: Các khe hở dọc bằng nhau tuyệt đối.
+              <br><br>
+              Không một ai có thể dùng mắt kéo tay mà đạt độ chính xác pixel như hộp thoại này!
+            </p>
+          </div>
+
+          <!-- Mốc chuẩn Relative to -->
+          <div class="glass-card amber-glow reveal-item" onclick="revealThis(this)">
+            <h4 style="font-size: 15px; font-weight: 800; color: var(--amber-light); margin-bottom: 8px;">
+              🎯 3. Điểm Mốc (Relative to)
+            </h4>
+            <p style="font-size: 13px; color: var(--ink-soft); line-height: 1.6;">
+              Trước khi căn, em phải chọn đối tượng nào làm mốc chuẩn:
+              <br>• <strong>Selection Area</strong>: Căn theo khung của các hình đang chọn.
+              <br>• <strong>Page</strong>: Căn đối tượng ra đúng chính giữa trang giấy in!
+              <br>• <strong>First selected / Last selected</strong>: Lấy hình nhấp chuột đầu tiên / cuối cùng làm cọc đứng yên.
+            </p>
+          </div>
+        </div>
+
+        <div class="glass-card" style="padding: 10px 16px; background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.3); display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 20px;">⚡</span>
+          <span style="font-size: 13px; color: var(--emerald-light);">
+            <strong>Phím tắt mở nhanh bảng căn chỉnh:</strong> <span class="kbd emerald">Shift + Ctrl + A</span> (Nhớ: chữ <strong>A</strong> viết tắt của <strong>Align</strong>).
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════════════════════════════════════════════════════════
+         SLIDE 11: PHÒNG LAB 3 - BÀN THỬ NGHIỆM ALIGN & DISTRIBUTE
+    ═════════════════════════════════════════════════════════════ -->
+    <section class="slide" id="slide-11">
+      <div class="slide-header">
+        <div>
+          <span class="slide-badge emerald">Phòng thực hành ảo 3</span>
+          <h2 class="slide-title">Lab 3: Bàn Thử Nghiệm Căn Chỉnh Align & Distribute</h2>
+          <div class="slide-subtitle">Thử thách: 4 khối thông tin đang nằm lệch lạc. Hãy nhấn các nút căn chỉnh để đưa chúng vào hàng ngũ tăm tắp</div>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="reveal-btn" onclick="shuffleAlignBoxes()">🎲 Xáo trộn lộn xộn</button>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="align-lab-container">
+          <!-- Sân khấu căn chỉnh -->
+          <div class="align-stage" id="alignStage">
+            <!-- Tia laser gióng hàng ngang -->
+            <div class="align-laser-line" id="laserTop" style="top: 80px; left: 0; right: 0; height: 2px;"></div>
+            <!-- Tia laser gióng trục giữa -->
+            <div class="align-laser-line" id="laserCenter" style="top: 150px; left: 0; right: 0; height: 2px;"></div>
+
+            <!-- 4 Khối thông tin CLB Na Rì -->
+            <div class="align-box-item" id="abox-1" style="width: 85px; height: 85px; background: linear-gradient(135deg, #06B6D4, #3B82F6); top: 30px; left: 40px;">
+              CLB Tin 💻
+            </div>
+            <div class="align-box-item" id="abox-2" style="width: 85px; height: 85px; background: linear-gradient(135deg, #8B5CF6, #EC4899); top: 120px; left: 180px;">
+              CLB Nhạc 🎵
+            </div>
+            <div class="align-box-item" id="abox-3" style="width: 85px; height: 85px; background: linear-gradient(135deg, #F59E0B, #EF4444); top: 60px; left: 260px;">
+              CLB Hoạ 🎨
+            </div>
+            <div class="align-box-item" id="abox-4" style="width: 85px; height: 85px; background: linear-gradient(135deg, #10B981, #06B6D4); top: 180px; left: 420px;">
+              CLB Thể Thao ⚽
+            </div>
+          </div>
+
+          <!-- Bảng thao tác căn chỉnh -->
+          <div class="glass-card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 16px;">
+            <div>
+              <div style="font-size: 13px; font-weight: 800; color: var(--emerald-light); margin-bottom: 10px; text-transform: uppercase;">
+                Lệnh Căn Chỉnh Tự Động:
+              </div>
+
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <button class="reveal-btn primary" onclick="runAlignTop()" style="justify-content: flex-start;">
+                  ⬆️ <strong>Align Top Edges</strong> (Căn mép trên)
+                </button>
+                <button class="reveal-btn" onclick="runAlignCenterY()" style="justify-content: flex-start;">
+                  🎯 <strong>Center Horizontal</strong> (Căn giữa ngang)
+                </button>
+                <button class="reveal-btn primary" onclick="runDistributeH()" style="justify-content: flex-start;">
+                  ↔️ <strong>Distribute Horizontally</strong> (Chia đều khoảng cách)
+                </button>
+                <button class="reveal-btn" onclick="runPerfectLayout()" style="justify-content: flex-start; border-color: var(--emerald);">
+                  ✨ <strong>Căn hoàn hảo (Align + Distribute)</strong>
+                </button>
+              </div>
+            </div>
+
+            <div id="alignStatusMsg" style="background: rgba(0,0,0,0.3); padding: 8px 10px; border-radius: 6px; font-size: 12px; color: var(--ink-soft); line-height: 1.4;">
+              Trạng thái: <em>Các khối đang nằm lệch lạc. Hãy nhấn lệnh căn!</em>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════════════════════════════════════════════════════════
+         SLIDE 12: ĐỘ TRONG SUỐT (OPACITY) & MÀU SẮC NGHỆ THUẬT
+    ═════════════════════════════════════════════════════════════ -->
+    <section class="slide" id="slide-12">
+      <div class="slide-header">
+        <div>
+          <span class="slide-badge pink">Hiệu ứng thị giác</span>
+          <h2 class="slide-title">Độ Mờ Đục (Opacity) & Kỹ Thuật Lớp Kính Mờ</h2>
+          <div class="slide-subtitle">Biến những hình khối thô ráp thành tác phẩm nghệ thuật có chiều sâu và hiệu ứng ánh sáng</div>
+        </div>
+        <div class="reveal-toolbar">
+          <span class="reveal-status" id="rev-stat-12">0/3 ý</span>
+          <button class="reveal-btn" onclick="revealNext(12)">Hiện tiếp (↓)</button>
+          <button class="reveal-btn primary" onclick="revealAll(12)">Hiện tất cả</button>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-3">
+          <!-- Khái niệm Opacity -->
+          <div class="glass-card highlight reveal-item" onclick="revealThis(this)">
+            <h4 style="font-size: 15px; font-weight: 800; color: var(--cyan-light); margin-bottom: 8px;">
+              👁️ Khái Niệm Opacity (%)
+            </h4>
+            <p style="font-size: 13.5px; color: var(--ink-soft); line-height: 1.6;">
+              • <strong>Opacity 100%</strong>: Hình đặc quánh, hoàn toàn che khuất mọi thứ bên dưới nó.<br>
+              • <strong>Opacity 50%</strong>: Bán trong suốt, nhìn xuyên thấu các hình nằm ở lớp sau.<br>
+              • <strong>Opacity 0%</strong>: Hoàn toàn trong suốt (tàng hình).<br>
+              • Điều chỉnh thanh trượt Opacity trong bảng <span class="kbd cyan">Shift + Ctrl + F</span> (Fill and Stroke).
+            </p>
+          </div>
+
+          <!-- Ứng dụng Glassmorphism -->
+          <div class="glass-card purple-glow reveal-item" onclick="revealThis(this)">
+            <h4 style="font-size: 15px; font-weight: 800; color: var(--purple-light); margin-bottom: 8px;">
+              ✨ Ứng Dụng Thiết Kế Thực Tế
+            </h4>
+            <p style="font-size: 13.5px; color: var(--ink-soft); line-height: 1.6;">
+              • <strong>Thẻ kính mờ (Glassmorphism)</strong>: Đặt một hình chữ nhật bo góc Opacity 15% kèm viền phát sáng lên nền ảnh.<br>
+              • <strong>Vầng hào quang ánh sáng</strong>: Dùng hình tròn Opacity 30% kết hợp hiệu ứng nhoè viền (Blur).<br>
+              • <strong>Watermark bản quyền</strong>: Chữ chìm mờ 10% in lên tài liệu chống sao chép.
+            </p>
+          </div>
+
+          <!-- Nút hoàn tác Ctrl+Z -->
+          <div class="glass-card amber-glow reveal-item" onclick="revealThis(this)">
+            <h4 style="font-size: 15px; font-weight: 800; color: var(--amber-light); margin-bottom: 8px;">
+              🛡️ Phao Cứu Sinh: Phím Ctrl+Z
+            </h4>
+            <p style="font-size: 13.5px; color: var(--ink-soft); line-height: 1.6;">
+              • Trong quá trình vẽ, nếu lỡ tay di chuyển nhầm hình, lỡ xoá mất chi tiết, hoặc căn lề sai:<br>
+              • Đừng hoảng sợ! Hãy nhấn ngay <span class="kbd amber">Ctrl + Z</span> (Undo) để quay lui thao tác vừa làm.<br>
+              • Ngược lại, muốn làm lại thao tác vừa huỷ, nhấn <span class="kbd amber">Ctrl + Shift + Z</span> hoặc <span class="kbd amber">Ctrl + Y</span> (Redo).
+            </p>
+          </div>
+        </div>
+
+        <!-- Slider tương tác trực quan Opacity -->
+        <div class="glass-card" style="padding: 14px 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <div style="font-size: 13px; font-weight: 700; color: var(--pink-light);">
+              Thử nghiệm kéo chỉnh Opacity của lớp kính:
+            </div>
+            <div style="font-family: var(--font-mono); color: var(--pink-light); font-weight: 700;" id="lblOpacityVal">50%</div>
+          </div>
+          <input type="range" id="rngOpacityDemo" min="10" max="100" value="50" style="width: 100%;" oninput="updateOpacityDemo(this.value)">
+
+          <div style="margin-top: 12px; height: 60px; position: relative; border-radius: 8px; overflow: hidden; background: linear-gradient(90deg, #F59E0B, #EC4899, #8B5CF6); display: flex; align-items: center; justify-content: center;">
+            <div style="color: #fff; font-weight: 900; font-size: 16px; letter-spacing: 2px;">HOẠ TIẾT MÀU SẮC LỚP ĐÁY</div>
+            <!-- Lớp kính che phủ -->
+            <div id="glassOverlay" style="position: absolute; inset: 0; background: rgba(6, 9, 20, 0.5); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--cyan-light);">
+              TẤM KÍNH TRONG SUỐT (NHÌN XUYÊN THẤU QUA ĐƯỢC)
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════════════════════════════════════════════════════════
+         SLIDE 13: ĐẤU TRƯỜNG TRẮC NGHIỆM THỰC CHIẾN (5 CÂU HỎI ĐIỂM 10)
+    ═════════════════════════════════════════════════════════════ -->
+    <section class="slide" id="slide-13">
+      <div class="slide-header">
+        <div>
+          <span class="slide-badge rose">Đấu trường trắc nghiệm</span>
+          <h2 class="slide-title">Thử Thách Đấu Trường: Chinh Phục Điểm 10</h2>
+          <div class="slide-subtitle">Vận dụng toàn bộ kiến thức bài học để vượt qua 5 câu hỏi then chốt có âm thanh phản hồi</div>
+        </div>
+        <div style="display: flex; gap: 12px; align-items: center;">
+          <div style="font-family: var(--font-mono); font-size: 13px; color: var(--cyan-light);">
+            Điểm: <span id="quizScore" style="color: #fff; font-weight: 800;">0</span>/5
+          </div>
+          <div style="font-family: var(--font-mono); font-size: 13px; color: var(--amber-light);">
+            Streak: <span id="quizStreak" style="color: #fff; font-weight: 800;">0</span> 🔥
+          </div>
+          <button class="reveal-btn" onclick="resetQuiz()">Làm lại</button>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="glass-card" style="padding: 18px 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span class="slide-badge purple" id="quizProgressText">Câu hỏi 1 / 5</span>
+            <span style="font-size: 12px; color: var(--ink-soft);">Chọn 1 đáp án đúng nhất</span>
+          </div>
+
+          <h3 id="quizQuestion" style="font-size: 16.5px; font-weight: 700; color: #FFFFFF; line-height: 1.5; min-height: 48px;">
+            Đang tải câu hỏi...
+          </h3>
+
+          <div id="quizOptions" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px;">
+            <!-- Render bằng JavaScript -->
+          </div>
+
+          <div id="quizFeedback" style="display: none; margin-top: 14px; padding: 10px 14px; border-radius: 8px; font-size: 13px; line-height: 1.4;">
+            <!-- Lời giải thích -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════════════════════════════════════════════════════════
+         SLIDE 14: TOP 5 BẪY TRẮC NGHIỆM HỌC SINH HAY MẤT ĐIỂM
+    ═════════════════════════════════════════════════════════════ -->
+    <section class="slide" id="slide-14">
+      <div class="slide-header">
+        <div>
+          <span class="slide-badge rose">Cảnh báo phòng thi</span>
+          <h2 class="slide-title">Top 5 Bẫy Trắc Nghiệm Học Sinh Hay Mất Điểm Oan</h2>
+          <div class="slide-subtitle">Ghi nhớ những lỗi sai phổ biến để đạt điểm tối đa trong mọi bài kiểm tra</div>
+        </div>
+        <div class="reveal-toolbar">
+          <span class="reveal-status" id="rev-stat-14">0/5 bẫy</span>
+          <button class="reveal-btn" onclick="revealNext(14)">Hiện tiếp (↓)</button>
+          <button class="reveal-btn primary" onclick="revealAll(14)">Hiện tất cả</button>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Bẫy 1 -->
+          <div class="glass-card reveal-item" onclick="revealThis(this)" style="border-left: 4px solid var(--rose);">
+            <h4 style="font-size: 14.5px; font-weight: 800; color: var(--rose-light);">
+              ❌ Bẫy 1: Nghĩ rằng hình to hơn hay màu đậm hơn sẽ nằm trên
+            </h4>
+            <p style="font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin-top: 4px;">
+              👉 <strong>Sự thật:</strong> Thứ tự hiển thị chỉ phụ thuộc 100% vào <strong>Z-order</strong> (hình vẽ sau mặc định nằm trên hình vẽ trước), hoàn toàn không liên quan đến kích thước hay màu sắc.
+            </p>
+          </div>
+
+          <!-- Bẫy 2 -->
+          <div class="glass-card reveal-item" onclick="revealThis(this)" style="border-left: 4px solid var(--rose);">
+            <h4 style="font-size: 14.5px; font-weight: 800; color: var(--rose-light);">
+              ❌ Bẫy 2: Nhấn Ctrl+D rồi tưởng máy tính bị đơ vì "chưa thấy hình mới"
+            </h4>
+            <p style="font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin-top: 4px;">
+              👉 <strong>Sự thật:</strong> Ctrl+D nhân đôi <strong>chồng khít tuyệt đối</strong> lên hình cũ! Bản sao đã ở đó rồi, em chỉ việc dùng chuột kéo nó ra vị trí mới.
+            </p>
+          </div>
+
+          <!-- Bẫy 3 -->
+          <div class="glass-card reveal-item" onclick="revealThis(this)" style="border-left: 4px solid var(--rose);">
+            <h4 style="font-size: 14.5px; font-weight: 800; color: var(--rose-light);">
+              ❌ Bẫy 3: Nghĩ Group (Ctrl+G) là hàn chết vĩnh viễn không sửa được
+            </h4>
+            <p style="font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin-top: 4px;">
+              👉 <strong>Sự thật:</strong> Group chỉ gộp tạm thời để đồng bộ di chuyển. Bất cứ lúc nào em cũng có thể dùng <span class="kbd">Ctrl+Shift+G</span> (Ungroup) để bung tách sửa riêng từng cánh hoa.
+            </p>
+          </div>
+
+          <!-- Bẫy 4 -->
+          <div class="glass-card reveal-item" onclick="revealThis(this)" style="border-left: 4px solid var(--rose);">
+            <h4 style="font-size: 14.5px; font-weight: 800; color: var(--rose-light);">
+              ❌ Bẫy 4: Nhầm lẫn giữa phím Home / End và Page Up / Page Down
+            </h4>
+            <p style="font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin-top: 4px;">
+              👉 <strong>Sự thật:</strong> <span class="kbd">Home</span> đưa lên <strong>hẳn trên cùng</strong>; <span class="kbd">End</span> đưa xuống <strong>hẳn dưới cùng</strong>. Còn <span class="kbd">Page Up/Down</span> chỉ nhích lên/xuống <strong>từng nấc một</strong>!
+            </p>
+          </div>
+
+          <!-- Bẫy 5 -->
+          <div class="glass-card reveal-item" onclick="revealThis(this)" style="border-left: 4px solid var(--rose); grid-column: span 2;">
+            <h4 style="font-size: 14.5px; font-weight: 800; color: var(--rose-light);">
+              ❌ Bẫy 5: Nhầm chức năng giữa Align (căn lề) và Distribute (phân bố đều)
+            </h4>
+            <p style="font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin-top: 4px;">
+              👉 <strong>Sự thật:</strong> <strong>Align</strong> đưa các hình về chung 1 mép toạ độ (thẳng hàng); còn <strong>Distribute</strong> chia đều khoảng cách khe hở giữa các hình (cách đều nhau). Cần kết hợp cả 2 để có bố cục chuẩn!
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════════════════════════════════════════════════════════
+         SLIDE 15: SƠ ĐỒ TƯ DUY, TỔNG KẾT & PHÁO HOA ĂN MỪNG
+    ═════════════════════════════════════════════════════════════ -->
+    <section class="slide" id="slide-15">
+      <div class="slide-header">
+        <div>
+          <span class="slide-badge emerald">Chúc mừng hoàn thành</span>
+          <h2 class="slide-title">Tổng Kết Toàn Bộ Bài 13 & Bảng Phím Tắt Vàng</h2>
+          <div class="slide-subtitle">Em đã xuất sắc làm chủ toàn bộ kỹ năng tạo hình và căn chỉnh đối tượng trong Inkscape!</div>
+        </div>
+        <div>
+          <button class="reveal-btn primary" onclick="triggerCelebration()">🎉 Bắn Pháo Hoa Ăn Mừng!</button>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-3">
+          <!-- Bảng 1: Phím tắt công cụ -->
+          <div class="glass-card highlight">
+            <h4 style="font-size: 14px; font-weight: 800; color: var(--cyan-light); margin-bottom: 8px;">
+              ✏️ 4 Phím Tắt Công Cụ
+            </h4>
+            <div style="font-size: 13px; line-height: 1.8; color: #FFFFFF;">
+              • <span class="kbd cyan">R</span> : Rectangle (Chữ nhật)<br>
+              • <span class="kbd cyan">E</span> : Ellipse (Hình elip/tròn)<br>
+              • <span class="kbd cyan">*</span> : Stars & Polygons (Sao/Đa giác)<br>
+              • <span class="kbd cyan">B</span> : Bézier curves (Đường cong)<br>
+              • <span class="kbd cyan">S</span> : Selector (Con trỏ chọn)
+            </div>
+          </div>
+
+          <!-- Bảng 2: Phím tắt Z-Order & Nhân đôi -->
+          <div class="glass-card purple-glow">
+            <h4 style="font-size: 14px; font-weight: 800; color: var(--purple-light); margin-bottom: 8px;">
+              🗂️ Phím Tắt Z-Order & Sao Chép
+            </h4>
+            <div style="font-size: 13px; line-height: 1.8; color: #FFFFFF;">
+              • <span class="kbd purple">Ctrl + D</span> : Nhân đôi tại chỗ<br>
+              • <span class="kbd purple">Home</span> : Lên hẳn trên cùng<br>
+              • <span class="kbd purple">End</span> : Xuống hẳn dưới cùng<br>
+              • <span class="kbd purple">Page Up</span> : Nhích lên 1 tầng<br>
+              • <span class="kbd purple">Page Down</span> : Nhích xuống 1 tầng
+            </div>
+          </div>
+
+          <!-- Bảng 3: Nhóm & Căn chỉnh -->
+          <div class="glass-card emerald-glow">
+            <h4 style="font-size: 14px; font-weight: 800; color: var(--emerald-light); margin-bottom: 8px;">
+              📐 Nhóm & Căn Chỉnh Pixel
+            </h4>
+            <div style="font-size: 13px; line-height: 1.8; color: #FFFFFF;">
+              • <span class="kbd emerald">Ctrl + G</span> : Group (Gộp nhóm)<br>
+              • <span class="kbd emerald">Ctrl + Shift + G</span> : Ungroup (Tách)<br>
+              • <span class="kbd emerald">Shift + Ctrl + A</span> : Bảng Align<br>
+              • <span class="kbd emerald">Ctrl + Z</span> : Undo (Hoàn tác)<br>
+              • <span class="kbd emerald">Ctrl</span> : Khoá tỉ lệ 1:1 (Vuông/Tròn)
+            </div>
+          </div>
+        </div>
+
+        <!-- Nhiệm vụ thực hành về nhà -->
+        <div class="glass-card amber-glow" style="display: flex; align-items: center; justify-content: space-between; padding: 14px 22px;">
+          <div>
+            <div style="font-size: 14.5px; font-weight: 800; color: var(--amber-light);">
+              🏡 Nhiệm Vụ Về Nhà: Thiết Kế Huy Hiệu Đoàn / Logo CLB THPT Na Rì
+            </div>
+            <div style="font-size: 13px; color: var(--ink-soft); margin-top: 3px;">
+              Sử dụng tối thiểu 3 hình cơ bản (Hình tròn viền kép, ngôi sao vàng và dải lụa chữ nhật bo góc), ứng dụng Ctrl+D và căn chỉnh Align hoàn chỉnh!
+            </div>
+          </div>
+          <button class="reveal-btn primary" onclick="goToSlide(1)">↺ Xem lại từ đầu</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ─── THANH ĐIỀU HƯỚNG SƯỜN & PHÍA ĐÁY (.deck-nav) ─── -->
+  <div class="deck-nav">
+    <button class="nav-btn" onclick="prevSlide()" title="Slide trước (Phím ←)">◀</button>
+    
+    <div class="seek-container" onclick="handleSeek(event)">
+      <div class="seek-bar" id="seekBar"></div>
+    </div>
+
+    <div class="nav-counter" id="navCounter">01 / 15</div>
+
+    <button class="nav-btn" onclick="nextSlide()" title="Slide kế tiếp (Phím →)">▶</button>
+    <button class="nav-btn" onclick="toggleToc()" title="Mục lục 15 Slide (Phím T)">☰</button>
+    <button class="nav-btn" id="btnSound" onclick="toggleMute()" title="Bật/Tắt âm thanh (Phím M)">🔊</button>
+    <button class="nav-btn" id="btnFullscreen" onclick="toggleFullscreen()" title="Toàn màn hình (Phím F)">⛶</button>
+  </div>
+
+  <!-- ─── MODAL MỤC LỤC 15 SLIDE (TOC) ─── -->
+  <div class="toc-modal" id="tocModal" onclick="closeTocOnBackdrop(event)">
+    <div class="toc-box">
+      <div class="toc-header">
+        <h3 style="font-size: 18px; font-weight: 800; color: var(--cyan-light);">
+          📑 Mục Lục 15 Slide Bài Giảng — Bài 13: Bổ Sung Các Đối Tượng Đồ Hoạ
+        </h3>
+        <button class="nav-btn" onclick="toggleToc()" style="width:30px;height:30px;">✕</button>
+      </div>
+      <div class="toc-grid" id="tocGrid">
+        <!-- Render tự động bằng JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ═════════════════════════════════════════════════════════════
+       JAVASCRIPT: WEB AUDIO, CANVAS CONFETTI, 3 PHÒNG LAB & QUIZ
+  ═════════════════════════════════════════════════════════════ -->
+  <script>
+    /* ─── 1. BỘ TỔNG HỢP ÂM THANH WEB AUDIO API (0 KB) ─── */
+    let audioCtx = null;
+    let isMuted = false;
+
+    function getAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function playTone(freq, type = 'sine', duration = 0.12, vol = 0.15) {
+      if (isMuted) return;
+      try {
+        const ctx = getAudio();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        gain.gain.setValueAtTime(vol, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + duration);
+      } catch (e) {}
+    }
+
+    function playClick() { playTone(600, 'sine', 0.06, 0.1); }
+    function playSlideSound() { playTone(480, 'triangle', 0.12, 0.08); }
+    function playChime() {
+      playTone(523.25, 'triangle', 0.15, 0.15); // C5
+      setTimeout(() => playTone(659.25, 'triangle', 0.15, 0.15), 100); // E5
+      setTimeout(() => playTone(783.99, 'triangle', 0.25, 0.18), 200); // G5
+    }
+    function playBuzzer() {
+      playTone(220, 'sawtooth', 0.15, 0.16);
+      setTimeout(() => playTone(196, 'sawtooth', 0.25, 0.16), 120);
+    }
+
+    function toggleMute() {
+      isMuted = !isMuted;
+      document.getElementById('btnSound').textContent = isMuted ? '🔇' : '🔊';
+      playClick();
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+      playClick();
+    }
+
+    /* ─── 2. HỆ THỐNG ĐIỀU HƯỚNG 15 SLIDE ─── */
+    const TOTAL_SLIDES = 15;
+    let currentSlide = 1;
+
+    const slideTitles = [
+      "Trang bìa: Bổ sung đối tượng đồ hoạ",
+      "Bản đồ 4 năng lực cốt lõi",
+      "Bốn công cụ vẽ hình cơ bản (Toolbox)",
+      "Bí mật phím Ctrl & Thuộc tính tinh chỉnh",
+      "Lab 1: Vườn thực nghiệm tạo hình Vector",
+      "Thứ tự xếp lớp (Z-Order) & Quy tắc lớp chồng",
+      "Lab 2: Trực quan hoá 3D của Z-Order",
+      "Nhân đôi đối tượng thần tốc: Ctrl+D",
+      "Nhóm (Group) & Tách nhóm (Ungroup)",
+      "Hộp thoại căn chỉnh Align & Distribute",
+      "Lab 3: Bàn thử nghiệm Align & Distribute",
+      "Độ mờ đục (Opacity) & Hiệu ứng kính mờ",
+      "Đấu trường trắc nghiệm thực chiến (5 câu)",
+      "Top 5 bẫy trắc nghiệm hay mất điểm oan",
+      "Tổng kết toàn bài & Bảng phím tắt vàng"
+    ];
+
+    function updateSlideView() {
+      for (let i = 1; i <= TOTAL_SLIDES; i++) {
+        const el = document.getElementById(`slide-${i}`);
+        if (!el) continue;
+        el.classList.remove('active', 'prev');
+        if (i === currentSlide) {
+          el.classList.add('active');
+        } else if (i < currentSlide) {
+          el.classList.add('prev');
+        }
+      }
+
+      document.getElementById('navCounter').textContent = `${String(currentSlide).padStart(2, '0')} / ${TOTAL_SLIDES}`;
+      document.getElementById('seekBar').style.width = `${(currentSlide / TOTAL_SLIDES) * 100}%`;
+
+      updateTocHighlight();
+      updateRevealStatus(currentSlide);
+    }
+
+    function nextSlide() {
+      if (currentSlide < TOTAL_SLIDES) {
+        currentSlide++;
+        playSlideSound();
+        updateSlideView();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        currentSlide--;
+        playSlideSound();
+        updateSlideView();
+      }
+    }
+
+    function goToSlide(n) {
+      if (n >= 1 && n <= TOTAL_SLIDES) {
+        currentSlide = n;
+        playSlideSound();
+        updateSlideView();
+        closeToc();
+      }
+    }
+
+    function handleSeek(e) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const pct = Math.max(0, Math.min(1, clickX / rect.width));
+      const target = Math.max(1, Math.min(TOTAL_SLIDES, Math.ceil(pct * TOTAL_SLIDES)));
+      goToSlide(target);
+    }
+
+    /* ─── 3. PROGRESSIVE REVEAL (HIỆN TỪNG Ý) ─── */
+    function getSlideReveals(slideNum) {
+      const slideEl = document.getElementById(`slide-${slideNum}`);
+      if (!slideEl) return [];
+      return Array.from(slideEl.querySelectorAll('.reveal-item'));
+    }
+
+    function updateRevealStatus(slideNum) {
+      const items = getSlideReveals(slideNum);
+      const statEl = document.getElementById(`rev-stat-${slideNum}`);
+      if (!statEl) return;
+      const count = items.filter(el => el.classList.contains('revealed')).length;
+      statEl.textContent = `${count}/${items.length} ý`;
+    }
+
+    function revealNext(slideNum) {
+      const items = getSlideReveals(slideNum);
+      const next = items.find(el => !el.classList.contains('revealed'));
+      if (next) {
+        next.classList.add('revealed');
+        playTone(700, 'sine', 0.08, 0.1);
+        updateRevealStatus(slideNum);
+      }
+    }
+
+    function revealAll(slideNum) {
+      const items = getSlideReveals(slideNum);
+      items.forEach(el => el.classList.add('revealed'));
+      playTone(850, 'triangle', 0.15, 0.12);
+      updateRevealStatus(slideNum);
+    }
+
+    function revealThis(el) {
+      if (!el.classList.contains('revealed')) {
+        el.classList.add('revealed');
+        playTone(700, 'sine', 0.08, 0.1);
+        updateRevealStatus(currentSlide);
+      }
+    }
+
+    /* ─── 4. MỤC LỤC MODAL (TOC) ─── */
+    function initToc() {
+      const grid = document.getElementById('tocGrid');
+      grid.innerHTML = '';
+      slideTitles.forEach((title, idx) => {
+        const item = document.createElement('div');
+        item.className = 'toc-item' + (idx + 1 === currentSlide ? ' current' : '');
+        item.innerHTML = `
+          <div class="toc-item-num">${String(idx + 1).padStart(2, '0')}</div>
+          <div class="toc-item-title">${title}</div>
+        `;
+        item.onclick = () => goToSlide(idx + 1);
+        grid.appendChild(item);
+      });
+    }
+
+    function updateTocHighlight() {
+      document.querySelectorAll('.toc-item').forEach((item, idx) => {
+        item.classList.toggle('current', idx + 1 === currentSlide);
+      });
+    }
+
+    function toggleToc() {
+      const m = document.getElementById('tocModal');
+      m.classList.toggle('open');
+      playClick();
+    }
+    function closeToc() {
+      document.getElementById('tocModal').classList.remove('open');
+    }
+    function closeTocOnBackdrop(e) {
+      if (e.target.id === 'tocModal') closeToc();
+    }
+
+    /* ─── 5. PHÁO HOA CANVAS CELEBRATION ─── */
+    let confettiParticles = [];
+    let confettiAnimId = null;
+
+    function triggerCelebration() {
+      playChime();
+      const canvas = document.getElementById('confettiCanvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const colors = ['#06B6D4', '#8B5CF6', '#EC4899', '#F59E0B', '#10B981', '#FFFFFF'];
+      confettiParticles = [];
+      for (let i = 0; i < 140; i++) {
+        confettiParticles.push({
+          x: canvas.width / 2,
+          y: canvas.height * 0.45,
+          vx: (Math.random() - 0.5) * 18,
+          vy: (Math.random() - 0.8) * 16,
+          size: Math.random() * 8 + 4,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rotation: Math.random() * 360,
+          vRot: (Math.random() - 0.5) * 12,
+          alpha: 1
+        });
+      }
+
+      if (confettiAnimId) cancelAnimationFrame(confettiAnimId);
+
+      function loop() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let activeCount = 0;
+        confettiParticles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.35; // trọng lực
+          p.rotation += p.vRot;
+          p.alpha -= 0.008;
+
+          if (p.alpha > 0) {
+            activeCount++;
+            ctx.save();
+            ctx.globalAlpha = p.alpha;
+            ctx.translate(p.x, p.y);
+            ctx.rotate((p.rotation * Math.PI) / 180);
+            ctx.fillStyle = p.color;
+            ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+            ctx.restore();
+          }
+        });
+
+        if (activeCount > 0) {
+          confettiAnimId = requestAnimationFrame(loop);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+      loop();
+    }
+
+    /* ─── 6. LAB 1: SHAPE GENERATOR LOGIC ─── */
+    let lab1ShapeType = 'rect';
+    let lab1Color = '#06B6D4';
+
+    function setLab1Shape(type) {
+      lab1ShapeType = type;
+      document.querySelectorAll('#slide-5 .lab-controls button').forEach(b => b.classList.remove('primary'));
+      const btnMap = {
+        rect: 'btnToolRect', square: 'btnToolSquare',
+        ellipse: 'btnToolEllipse', circle: 'btnToolCircle',
+        star: 'btnToolStar', polygon: 'btnToolPoly'
+      };
+      if (btnMap[type]) document.getElementById(btnMap[type]).classList.add('primary');
+
+      // Ẩn hiện các slider tương ứng
+      document.getElementById('ctrlRadiusGroup').style.display = (type === 'rect' || type === 'square') ? 'block' : 'none';
+      document.getElementById('ctrlCornersGroup').style.display = (type === 'star' || type === 'polygon') ? 'block' : 'none';
+      document.getElementById('ctrlSpokeGroup').style.display = (type === 'star') ? 'block' : 'none';
+
+      playClick();
+      updateLab1();
+    }
+
+    function setLab1Color(color) {
+      lab1Color = color;
+      playTone(550, 'sine', 0.05);
+      updateLab1();
+    }
+
+    function updateLab1() {
+      const g = document.getElementById('lab1TargetGroup');
+      const radius = parseInt(document.getElementById('rngRadius').value, 10);
+      const corners = parseInt(document.getElementById('rngCorners').value, 10);
+      const spoke = parseInt(document.getElementById('rngSpoke').value, 10) / 100;
+
+      document.getElementById('lblRadius').textContent = radius + 'px';
+      document.getElementById('lblCorners').textContent = corners;
+      document.getElementById('lblSpoke').textContent = spoke.toFixed(2);
+
+      g.innerHTML = '';
+      let info = '';
+
+      if (lab1ShapeType === 'rect') {
+        const r = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        r.setAttribute('x', -120); r.setAttribute('y', -70);
+        r.setAttribute('width', 240); r.setAttribute('height', 140);
+        r.setAttribute('rx', radius); r.setAttribute('ry', radius);
+        r.setAttribute('fill', lab1Color);
+        r.setAttribute('stroke', '#FFFFFF'); r.setAttribute('stroke-width', 2);
+        g.appendChild(r);
+        info = `Chữ nhật (R): W=240, H=140, Bo góc=${radius}px`;
+      } else if (lab1ShapeType === 'square') {
+        const s = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        s.setAttribute('x', -80); s.setAttribute('y', -80);
+        s.setAttribute('width', 160); s.setAttribute('height', 160);
+        s.setAttribute('rx', radius); s.setAttribute('ry', radius);
+        s.setAttribute('fill', lab1Color);
+        s.setAttribute('stroke', '#FFFFFF'); s.setAttribute('stroke-width', 2);
+        g.appendChild(s);
+        info = `Hình vuông (Ctrl+R): Cạnh=160 (Tỉ lệ 1:1), Bo góc=${radius}px`;
+      } else if (lab1ShapeType === 'ellipse') {
+        const e = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+        e.setAttribute('cx', 0); e.setAttribute('cy', 0);
+        e.setAttribute('rx', 120); e.setAttribute('ry', 65);
+        e.setAttribute('fill', lab1Color);
+        e.setAttribute('stroke', '#FFFFFF'); e.setAttribute('stroke-width', 2);
+        g.appendChild(e);
+        info = `Hình Elip (E): Bán kính Rx=120, Ry=65`;
+      } else if (lab1ShapeType === 'circle') {
+        const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        c.setAttribute('cx', 0); c.setAttribute('cy', 0);
+        c.setAttribute('r', 80);
+        c.setAttribute('fill', lab1Color);
+        c.setAttribute('stroke', '#FFFFFF'); c.setAttribute('stroke-width', 2);
+        g.appendChild(c);
+        info = `Hình tròn tuyệt đối (Ctrl+E): Bán kính R=80`;
+      } else if (lab1ShapeType === 'star') {
+        const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+        const pts = [];
+        const rOuter = 85;
+        const rInner = 85 * spoke;
+        const step = Math.PI / corners;
+        for (let i = 0; i < 2 * corners; i++) {
+          const r = (i % 2 === 0) ? rOuter : rInner;
+          const a = i * step - Math.PI / 2;
+          pts.push(`${(r * Math.cos(a)).toFixed(1)},${(r * Math.sin(a)).toFixed(1)}`);
+        }
+        poly.setAttribute('points', pts.join(' '));
+        poly.setAttribute('fill', lab1Color);
+        poly.setAttribute('stroke', '#FFFFFF'); poly.setAttribute('stroke-width', 2);
+        g.appendChild(poly);
+        info = `Ngôi sao (*): Số cánh=${corners}, Độ nhọn Spoke=${spoke.toFixed(2)}`;
+      } else if (lab1ShapeType === 'polygon') {
+        const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+        const pts = [];
+        const rOuter = 80;
+        const step = (2 * Math.PI) / corners;
+        for (let i = 0; i < corners; i++) {
+          const a = i * step - Math.PI / 2;
+          pts.push(`${(rOuter * Math.cos(a)).toFixed(1)},${(rOuter * Math.sin(a)).toFixed(1)}`);
+        }
+        poly.setAttribute('points', pts.join(' '));
+        poly.setAttribute('fill', lab1Color);
+        poly.setAttribute('stroke', '#FFFFFF'); poly.setAttribute('stroke-width', 2);
+        g.appendChild(poly);
+        info = `Đa giác đều (*): Số đỉnh=${corners}`;
+      }
+
+      document.getElementById('lab1InfoText').textContent = info + ` | Màu: ${lab1Color}`;
+    }
+
+    function resetLab1() {
+      document.getElementById('rngRadius').value = 0;
+      document.getElementById('rngCorners').value = 5;
+      document.getElementById('rngSpoke').value = 38;
+      lab1Color = '#06B6D4';
+      setLab1Shape('rect');
+    }
+
+    /* ─── 7. LAB 2: 3D Z-ORDER SIMULATOR ─── */
+    let selectedLayerId = 'star';
+    let is3DIsometric = false;
+    let layerZMap = { bg: 1, mid: 2, star: 3 };
+
+    function selectLayer(id) {
+      selectedLayerId = id;
+      document.querySelectorAll('.layer-sheet').forEach(s => s.classList.remove('selected'));
+      const el = document.getElementById('sheet-' + id);
+      if (el) el.classList.add('selected');
+
+      const names = { bg: '🟦 Lớp Nền Xanh', mid: '🟪 Khung Đồ Hoạ Tím', star: '⭐ Logo Sao Vàng' };
+      document.getElementById('currentSelectedLayerText').textContent = names[id];
+      playClick();
+    }
+
+    function toggle3DView() {
+      is3DIsometric = !is3DIsometric;
+      const stage = document.getElementById('layerStage');
+      stage.classList.toggle('iso-3d', is3DIsometric);
+      document.getElementById('btnToggle3D').textContent = is3DIsometric ? '📐 Chế độ nhìn thẳng (2D Canvas)' : '👁️ Chế độ xem 3D Isometric';
+      playTone(is3DIsometric ? 580 : 420, 'triangle', 0.1);
+      applyLayer3DTransforms();
+    }
+
+    function applyLayer3DTransforms() {
+      ['bg', 'mid', 'star'].forEach(id => {
+        const el = document.getElementById('sheet-' + id);
+        const zVal = layerZMap[id];
+        el.style.zIndex = zVal;
+        document.getElementById('lblZ-' + id).textContent = zVal;
+
+        if (is3DIsometric) {
+          // Tách khoảng cách 3D theo Z-index
+          const translateZ = (zVal - 1) * 60; // 0px, 60px, 120px
+          el.style.transform = `translateZ(${translateZ}px)`;
+        } else {
+          el.style.transform = 'translateZ(0px)';
+        }
+      });
+    }
+
+    function moveLayerZ(direction) {
+      const curZ = layerZMap[selectedLayerId];
+      if (direction === 'top') {
+        const maxZ = Math.max(...Object.values(layerZMap));
+        layerZMap[selectedLayerId] = maxZ + 1;
+      } else if (direction === 'bottom') {
+        const minZ = Math.min(...Object.values(layerZMap));
+        layerZMap[selectedLayerId] = minZ - 1;
+      } else if (direction === 'up') {
+        layerZMap[selectedLayerId] = curZ + 1;
+      } else if (direction === 'down') {
+        layerZMap[selectedLayerId] = curZ - 1;
+      }
+
+      // Chuẩn hoá lại z-index về 1, 2, 3
+      normalizeZLayers();
+      applyLayer3DTransforms();
+      playTone(520, 'sine', 0.08);
+    }
+
+    function normalizeZLayers() {
+      const arr = Object.keys(layerZMap).map(k => ({ key: k, z: layerZMap[k] }));
+      arr.sort((a, b) => a.z - b.z);
+      arr.forEach((item, idx) => {
+        layerZMap[item.key] = idx + 1;
+      });
+    }
+
+    function resetLab2() {
+      layerZMap = { bg: 1, mid: 2, star: 3 };
+      applyLayer3DTransforms();
+      selectLayer('star');
+      playClick();
+    }
+
+    /* ─── 8. LAB 3: ALIGN & DISTRIBUTE LOGIC ─── */
+    function shuffleAlignBoxes() {
+      const boxes = [1, 2, 3, 4];
+      boxes.forEach(i => {
+        const el = document.getElementById('abox-' + i);
+        const randTop = Math.floor(Math.random() * 160) + 20;
+        const randLeft = Math.floor(Math.random() * 380) + 20;
+        el.style.top = randTop + 'px';
+        el.style.left = randLeft + 'px';
+      });
+      document.getElementById('laserTop').style.opacity = '0';
+      document.getElementById('laserCenter').style.opacity = '0';
+      document.getElementById('alignStatusMsg').innerHTML = 'Trạng thái: <em>Đã xáo trộn lộn xộn vị trí!</em>';
+      playTone(380, 'sawtooth', 0.1);
+    }
+
+    function runAlignTop() {
+      // Căn mép trên = 80px
+      for (let i = 1; i <= 4; i++) {
+        document.getElementById('abox-' + i).style.top = '80px';
+      }
+      document.getElementById('laserTop').style.opacity = '1';
+      document.getElementById('laserCenter').style.opacity = '0';
+      document.getElementById('alignStatusMsg').innerHTML = '✅ <strong>Align Top Edges:</strong> Tất cả mép trên đã thẳng tắp!';
+      playTone(660, 'sine', 0.12);
+    }
+
+    function runAlignCenterY() {
+      // Căn giữa trục ngang Y = 110px
+      for (let i = 1; i <= 4; i++) {
+        document.getElementById('abox-' + i).style.top = '107px';
+      }
+      document.getElementById('laserTop').style.opacity = '0';
+      document.getElementById('laserCenter').style.opacity = '1';
+      document.getElementById('alignStatusMsg').innerHTML = '✅ <strong>Center Horizontal:</strong> Tất cả tâm khối đã thẳng hàng ngang!';
+      playTone(660, 'sine', 0.12);
+    }
+
+    function runDistributeH() {
+      // Chia đều khoảng cách ngang
+      const startX = 35;
+      const gap = 120; // 85px box + 35px gap
+      for (let i = 1; i <= 4; i++) {
+        document.getElementById('abox-' + i).style.left = (startX + (i - 1) * gap) + 'px';
+      }
+      document.getElementById('alignStatusMsg').innerHTML = '✅ <strong>Distribute Horizontally:</strong> Khe hở giữa 4 khối bằng nhau răm rắp!';
+      playTone(740, 'triangle', 0.12);
+    }
+
+    function runPerfectLayout() {
+      runAlignTop();
+      setTimeout(runDistributeH, 150);
+      setTimeout(() => {
+        document.getElementById('alignStatusMsg').innerHTML = '🎉 <strong>Bố cục hoàn hảo:</strong> Đã căn thẳng mép trên & chia đều khoảng cách ngang!';
+        playChime();
+      }, 300);
+    }
+
+    /* ─── 9. DUPLICATE DEMO & OPACITY SLIDER ─── */
+    let dupCount = 1;
+    function demoDuplicateStar() {
+      if (dupCount >= 6) {
+        document.getElementById('duplicateStage').innerHTML = '<span style="font-size: 24px;" id="starBase">⭐</span>';
+        dupCount = 1;
+      }
+      dupCount++;
+      const star = document.createElement('span');
+      star.style.fontSize = '24px';
+      star.style.animation = 'floatUp 0.4s ease';
+      star.textContent = '⭐';
+      document.getElementById('duplicateStage').appendChild(star);
+      playTone(650 + dupCount * 60, 'sine', 0.08);
+    }
+
+    function updateOpacityDemo(val) {
+      document.getElementById('lblOpacityVal').textContent = val + '%';
+      document.getElementById('glassOverlay').style.background = `rgba(6, 9, 20, ${val / 100})`;
+    }
+
+    /* ─── 10. ĐẤU TRƯỜNG MINI QUIZ (5 CÂU HỎI ĐIỂM 10) ─── */
+    const quizData = [
+      {
+        q: "Muốn vẽ một hình vuông chuẩn xác (bốn cạnh bằng nhau tuyệt đối) trong Inkscape, em thao tác thế nào?",
+        opts: [
+          "Chọn Rectangle, kéo chuột mà không giữ phím nào",
+          "Chọn Rectangle, giữ phím Ctrl trong lúc kéo chuột",
+          "Chọn Star/Polygon rồi đặt Corners bằng 4",
+          "Chọn Bezier rồi nháy 4 điểm neo bất kì"
+        ],
+        ans: 1,
+        exp: "Chính xác! Giữ Ctrl khoá tỉ lệ 1:1, biến hình chữ nhật thành hình vuông chuẩn và elip thành hình tròn tuyệt đối."
+      },
+      {
+        q: "Khi nhiều hình vẽ chồng lên nhau trên trang thiết kế, hình nào sẽ hiển thị ở lớp trên cùng?",
+        opts: [
+          "Hình có kích thước diện tích lớn nhất",
+          "Hình có màu sắc đậm đà và nổi bật nhất",
+          "Hình được vẽ sau cùng trong thứ tự xếp lớp (Z-Order)",
+          "Hình được vẽ đầu tiên ngay khi mở trang vẽ"
+        ],
+        ans: 2,
+        exp: "Chuẩn xác! Quy tắc xếp lớp mặc định: hình vẽ sau nằm trên hình vẽ trước, hoàn toàn không phụ thuộc kích thước hay màu sắc."
+      },
+      {
+        q: "Phím tắt nào giúp đưa đối tượng đang chọn tụt xuống hẳn dưới đáy (lớp dưới cùng) chỉ trong một nốt nhạc?",
+        opts: [
+          "Phím Page Down",
+          "Phím End (Lower to Bottom)",
+          "Phím Home (Raise to Top)",
+          "Phím Delete"
+        ],
+        ans: 1,
+        exp: "Rất giỏi! Phím End đưa xuống hẳn đáy cùng (thường dùng khi vẽ hình nền bị che mất logo). Page Down chỉ nhích xuống 1 tầng."
+      },
+      {
+        q: "Thao tác phím tắt Ctrl+D trong Inkscape có chức năng gì?",
+        opts: [
+          "Nhân đôi (Duplicate) đối tượng đang chọn ngay tại chỗ",
+          "Xoá vĩnh viễn đối tượng khỏi trang thiết kế",
+          "Nhóm các đối tượng đang chọn thành một khối",
+          "Mở hộp thoại căn chỉnh Align & Distribute"
+        ],
+        ans: 0,
+        exp: "Chính xác! Ctrl+D nhân đôi tại chỗ trùng khít lên hình cũ. Nhóm là Ctrl+G, mở Align là Shift+Ctrl+A."
+      },
+      {
+        q: "Sau khi nhóm (Group) bông hoa gồm 5 cánh và 1 nhuỵ thành 1 khối, muốn sửa màu riêng cho 1 cánh hoa, em làm gì?",
+        opts: [
+          "Không thể sửa được vì nhóm đã bị khoá vĩnh viễn",
+          "Xoá toàn bộ bông hoa và vẽ lại từ đầu",
+          "Tách nhóm bằng Ungroup (Ctrl+Shift+G) rồi chọn riêng cánh hoa",
+          "Dùng phím Ctrl+D để nhân đôi cả bông hoa"
+        ],
+        ans: 2,
+        exp: "Xuất sắc! Group chỉ nhóm tạm thời để thao tác đồng bộ; dùng Ungroup (Ctrl+Shift+G) để bung tách và sửa riêng chi tiết bất cứ lúc nào."
+      }
+    ];
+
+    let currentQuizIdx = 0;
+    let quizScore = 0;
+    let quizStreak = 0;
+
+    function renderQuiz() {
+      const q = quizData[currentQuizIdx];
+      document.getElementById('quizProgressText').textContent = `Câu hỏi ${currentQuizIdx + 1} / ${quizData.length}`;
+      document.getElementById('quizQuestion').textContent = q.q;
+
+      const optsBox = document.getElementById('quizOptions');
+      optsBox.innerHTML = '';
+      const fb = document.getElementById('quizFeedback');
+      fb.style.display = 'none';
+
+      q.opts.forEach((opt, idx) => {
+        const card = document.createElement('div');
+        card.className = 'quiz-card';
+        card.innerHTML = `
+          <div class="quiz-opt-letter">${String.fromCharCode(65 + idx)}</div>
+          <div style="font-size: 13.5px; font-weight: 600; line-height: 1.4;">${opt}</div>
+        `;
+        card.onclick = () => checkQuiz(idx, card);
+        optsBox.appendChild(card);
+      });
+    }
+
+    function checkQuiz(chosenIdx, cardEl) {
+      const q = quizData[currentQuizIdx];
+      const allCards = document.querySelectorAll('.quiz-card');
+      allCards.forEach(c => c.style.pointerEvents = 'none');
+
+      const fb = document.getElementById('quizFeedback');
+      fb.style.display = 'block';
+
+      if (chosenIdx === q.ans) {
+        cardEl.classList.add('correct');
+        quizScore++;
+        quizStreak++;
+        fb.style.background = 'rgba(16, 185, 129, 0.2)';
+        fb.style.border = '1px solid var(--emerald)';
+        fb.style.color = 'var(--emerald-light)';
+        fb.innerHTML = '🎉 ' + q.exp;
+        playChime();
+      } else {
+        cardEl.classList.add('wrong');
+        quizStreak = 0;
+        allCards[q.ans].classList.add('correct');
+        fb.style.background = 'rgba(239, 68, 68, 0.2)';
+        fb.style.border = '1px solid var(--rose)';
+        fb.style.color = 'var(--rose-light)';
+        fb.innerHTML = '⚠️ ' + q.exp;
+        playBuzzer();
+      }
+
+      document.getElementById('quizScore').textContent = quizScore;
+      document.getElementById('quizStreak').textContent = quizStreak;
+
+      setTimeout(() => {
+        if (currentQuizIdx < quizData.length - 1) {
+          currentQuizIdx++;
+          renderQuiz();
+        } else {
+          showQuizFinished();
+        }
+      }, 2500);
+    }
+
+    function showQuizFinished() {
+      const optsBox = document.getElementById('quizOptions');
+      document.getElementById('quizQuestion').textContent = `KẾT QUẢ ĐẤU TRƯỜNG: ${quizScore} / ${quizData.length} ĐIỂM!`;
+      optsBox.innerHTML = `
+        <div class="glass-card" style="text-align: center; padding: 20px; grid-column: span 2;">
+          <div style="font-size: 38px; margin-bottom: 8px;">${quizScore >= 4 ? '🏆' : '📚'}</div>
+          <div style="font-size: 16px; font-weight: 800; color: #FFFFFF;">
+            ${quizScore >= 4 ? 'Xuất sắc! Em đã nắm trọn vẹn kỹ năng tạo hình và căn chỉnh Inkscape!' : 'Cố gắng lên! Hãy xem lại các slide lý thuyết để đạt trọn điểm 10 nhé!'}
+          </div>
+          <button class="reveal-btn primary" onclick="resetQuiz()" style="margin-top: 14px;">Làm lại Đấu trường</button>
+        </div>
+      `;
+      if (quizScore >= 4) triggerCelebration();
+    }
+
+    function resetQuiz() {
+      currentQuizIdx = 0;
+      quizScore = 0;
+      quizStreak = 0;
+      document.getElementById('quizScore').textContent = '0';
+      document.getElementById('quizStreak').textContent = '0';
+      renderQuiz();
+      playClick();
+    }
+
+    /* ─── 11. PHÍM TẮT BÀN PHÍM CHUẨN TRÌNH CHIẾU ─── */
+    window.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        prevSlide();
+      } else if (e.key === 'ArrowDown' || e.key === ' ') {
+        e.preventDefault();
+        revealNext(currentSlide);
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullscreen();
+      } else if (e.key === 'm' || e.key === 'M') {
+        toggleMute();
+      } else if (e.key === 't' || e.key === 'T') {
+        toggleToc();
+      }
+    });
+
+    /* ─── KHỞI TẠO TẤT CẢ KHI TẢI TRANG ─── */
+    window.addEventListener('DOMContentLoaded', () => {
+      initToc();
+      setLab1Shape('rect');
+      applyLayer3DTransforms();
+      renderQuiz();
+      updateSlideView();
+    });
+  </script>
+</body>
+</html>
