@@ -26,7 +26,9 @@ function layCauHinhServiceAccount() {
 
 function layCauHinhAppsScript() {
   const webAppUrl =
-    process.env.GOOGLE_SHEET_WEBAPP_URL || process.env.NEXT_PUBLIC_GOOGLE_SHEET_WEBAPP_URL;
+    process.env.GOOGLE_SHEET_WEBAPP_URL ||
+    process.env.NEXT_PUBLIC_GOOGLE_SHEET_WEBAPP_URL ||
+    "https://script.google.com/macros/s/AKfycbyOxvMOLQz-gR8pw9CyBP8hDm0KPZYrLlzLkcEs3FIJxTR_SyJcw2R3FQc4qki4If9m/exec";
   return webAppUrl?.trim() || null;
 }
 
