@@ -63,6 +63,48 @@ for (let i = 0; i < 1000; i++) {
 }
 assert.ok(signatures.size > 1, "Must vary selected questions, not just their order");
 
+// Đề thay thế không lặp câu của đề vừa hủy, vẫn đủ từng bài/mức độ.
+let previousExam = taoDeNgauNhienTx2();
+for (let i = 0; i < 100; i++) {
+  const previousIds = previousExam.map((q) => q.id);
+  const replacement = taoDeNgauNhienTx2(previousIds);
+  assert.equal(replacement.length, 15);
+  assert.ok(replacement.every((q) => !previousIds.includes(q.id)));
+  for (const lesson of TX2_LESSON_IDS) for (const level of TX2_DIFFICULTIES) {
+    assert.equal(replacement.filter((q) => QUESTION_BANK[lesson].includes(q) && q.difficulty === level).length, 1);
+  }
+  previousExam = replacement;
+}
+
+const { theoDoiTabTx2, soGiayTx2ConLai } = load("lib/tx2-visibility.ts");
+const listeners = new Set();
+const fakeDocument = {
+  hidden: false,
+  addEventListener(type, handler) { assert.equal(type, "visibilitychange"); listeners.add(handler); },
+  removeEventListener(type, handler) { assert.equal(type, "visibilitychange"); listeners.delete(handler); },
+};
+const seen = [];
+const stop = theoDoiTabTx2(fakeDocument, (hidden) => seen.push(hidden));
+const emit = () => [...listeners].forEach((handler) => handler());
+emit(); // Không đổi trạng thái thì không đổi đề.
+fakeDocument.hidden = true;
+emit();
+emit(); // Sự kiện lặp khi vẫn ẩn không được đổi đề lần thứ hai.
+fakeDocument.hidden = false;
+emit();
+assert.deepEqual(seen, [true, false]);
+stop(); // Sau khi nộp/rời trang, listener đã gỡ không còn tác động.
+fakeDocument.hidden = true;
+emit();
+assert.deepEqual(seen, [true, false]);
+assert.equal(listeners.size, 0);
+const deadline = 1000 + 960000;
+assert.equal(soGiayTx2ConLai(deadline, 1000), 960);
+assert.equal(soGiayTx2ConLai(deadline, 61000), 900);
+assert.equal(soGiayTx2ConLai(deadline, deadline - 1), 1);
+assert.equal(soGiayTx2ConLai(deadline, deadline), 0);
+assert.equal(soGiayTx2ConLai(deadline, deadline + 120000), 0);
+
 // Kiểm tra toàn bộ 24 cách đảo của từng câu: nội dung đúng không đổi.
 for (const q of bank) {
   const permutations = new Set();
@@ -100,4 +142,4 @@ try {
   QUESTION_BANK[lesson] = saved;
 }
 assert.equal(JSON.stringify(bank), original, "Selection/shuffling must not mutate bank");
-console.log("PASS: 58 classified questions; 1,000 exams; 24 option permutations per question; dependent-option guards; missing-level guards; 16-minute duration.");
+console.log("PASS: 1,000 balanced exams; 100 non-repeating replacement exams; visibility transitions and cleanup; wall-clock expiry; all 24 option permutations per question.");

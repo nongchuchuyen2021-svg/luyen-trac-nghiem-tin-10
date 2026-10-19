@@ -5,6 +5,7 @@ import Link from "next/link";
 import { DE_KIEM_TRA_TX2, taoDeNgauNhienTx2 } from "@/data/de-kiem-tra/thuong-xuyen-2";
 import type { Question } from "@/lib/types";
 import { tronPhuongAn } from "@/lib/tron-phuong-an";
+import { soGiayTx2ConLai, theoDoiTabTx2 } from "@/lib/tx2-visibility";
 import { getHocSinh, saveHocSinh, hopLe, chuanHoa } from "@/lib/hocsinh";
 import { playCorrect, playWrong, playCelebration, playClick } from "@/lib/sound";
 import Confetti from "@/components/Confetti";
@@ -37,9 +38,9 @@ function getLessonTag(q: Question): string {
   return "Tin học 10";
 }
 
-function tronDe(): CauDaTron[] {
+function tronDe(previousIds: readonly string[] = []): CauDaTron[] {
   // Mỗi bài: 1 nhận biết, 1 thông hiểu, 1 vận dụng; đảo thứ tự 15 câu.
-  const rawQuestions: Question[] = taoDeNgauNhienTx2();
+  const rawQuestions: Question[] = taoDeNgauNhienTx2(previousIds);
 
   // Chỉ đảo phương án khi không phụ thuộc nhãn hoặc vị trí.
   return rawQuestions.map((q) => {
@@ -73,8 +74,13 @@ export default function KiemTraTx2Client() {
   const [thoiGianBatDau, setThoiGianBatDau] = useState<number>(0);
   const [thoiGianHoanThanh, setThoiGianHoanThanh] = useState<string>("");
   const [daTuDongNopSheet, setDaTuDongNopSheet] = useState(false);
+  const [soLanDoiDe, setSoLanDoiDe] = useState(0);
+  const [tabDangAn, setTabDangAn] = useState(false);
 
   const cauHoiRef = useRef<HTMLDivElement>(null);
+  const deHienTaiRef = useRef<CauDaTron[]>([]);
+  const hetGioLucRef = useRef(0);
+  const daNopRef = useRef(false);
 
   // Tự động nạp thông tin học sinh từ localStorage
   useEffect(() => {
@@ -89,24 +95,37 @@ export default function KiemTraTx2Client() {
   useEffect(() => {
     if (giaiDoan !== "dang-lam") return;
     const timer = setInterval(() => {
-      setGiayConLai((g) => {
-        if (g <= 1) {
-          clearInterval(timer);
-          return 0;
-        }
-        return g - 1;
-      });
+      setGiayConLai(soGiayTx2ConLai(hetGioLucRef.current));
     }, 1000);
     return () => clearInterval(timer);
   }, [giaiDoan]);
 
+  // Chỉ đổi đề trong lúc làm; không tự nộp hay ghi điểm cho đề vừa hủy.
+  useEffect(() => {
+    if (giaiDoan !== "dang-lam") return;
+    return theoDoiTabTx2(document, (hidden) => {
+      if (daNopRef.current) return;
+      setTabDangAn(hidden);
+      const remaining = soGiayTx2ConLai(hetGioLucRef.current);
+      setGiayConLai(remaining);
+      if (!hidden || remaining === 0) return;
+      const boDe = tronDe(deHienTaiRef.current.map((q) => q.id));
+      deHienTaiRef.current = boDe;
+      setDe(boDe);
+      setDapAnDaChon(new Array(boDe.length).fill(null));
+      setCauHienTai(0);
+      setHoiXacNhanNop(false);
+      setSoLanDoiDe((n) => n + 1);
+    });
+  }, [giaiDoan]);
+
   // Hết giờ tự động nộp bài
   useEffect(() => {
-    if (giaiDoan === "dang-lam" && giayConLai === 0) {
+    if (giaiDoan === "dang-lam" && giayConLai === 0 && !tabDangAn) {
       nopBai();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [giayConLai, giaiDoan]);
+  }, [giayConLai, giaiDoan, tabDangAn]);
 
   // Cuộn mượt đến câu hỏi
   useEffect(() => {
@@ -126,11 +145,17 @@ export default function KiemTraTx2Client() {
 
     playClick();
     const boDe = tronDe();
+    const batDauLuc = Date.now();
+    deHienTaiRef.current = boDe;
+    hetGioLucRef.current = batDauLuc + DE_KIEM_TRA_TX2.thoiGianPhut * 60 * 1000;
+    daNopRef.current = false;
+    setSoLanDoiDe(0);
+    setTabDangAn(false);
     setDe(boDe);
     setDapAnDaChon(new Array(boDe.length).fill(null));
     setCauHienTai(0);
     setGiayConLai(DE_KIEM_TRA_TX2.thoiGianPhut * 60);
-    setThoiGianBatDau(Date.now());
+    setThoiGianBatDau(batDauLuc);
     setHoiXacNhanNop(false);
     setDaTuDongNopSheet(false);
     setGiaiDoan("dang-lam");
@@ -160,6 +185,8 @@ export default function KiemTraTx2Client() {
   }, [de, dapAnDaChon]);
 
   function nopBai() {
+    if (giaiDoan !== "dang-lam" || document.hidden || daNopRef.current) return;
+    daNopRef.current = true;
     playClick();
     const tgGiay = Math.max(1, Math.round((Date.now() - thoiGianBatDau) / 1000));
     setThoiGianHoanThanh(dinhDangGio(tgGiay));
@@ -353,6 +380,10 @@ export default function KiemTraTx2Client() {
             </div>
           </div>
 
+          <div className="mt-5 rounded-2xl border border-tomato/30 bg-tomato/5 p-4 text-sm text-ink">
+            <strong>Quy định chuyển tab:</strong> Khi đang làm bài, nếu chuyển sang tab khác hoặc thu nhỏ trình duyệt, hệ thống sẽ đổi đề và xóa toàn bộ câu trả lời đã chọn. Thời gian vẫn tính trong 16 phút ban đầu, không được cộng thêm. Đề đã hủy không được gửi lên bảng điểm.
+          </div>
+
           {/* Form nhập Họ tên và Lớp của học sinh */}
           <div className="mt-6 rounded-2xl border-2 border-grape/20 bg-grape/[0.03] p-5">
             <h3 className="font-display text-sm font-bold text-ink">
@@ -475,6 +506,13 @@ export default function KiemTraTx2Client() {
         </header>
 
         <main className="mx-auto max-w-4xl px-4 pt-6" ref={cauHoiRef}>
+          <div role={soLanDoiDe > 0 ? "alert" : "note"} className="mb-5 rounded-2xl border border-tomato/30 bg-tomato/5 p-4 text-sm text-ink">
+            {soLanDoiDe > 0 ? (
+              <><strong>Đã đổi đề {soLanDoiDe} lần do rời tab làm bài.</strong> Câu trả lời của đề trước đã bị xóa. Hãy làm đề mới trong thời gian còn lại; đồng hồ không bắt đầu lại.</>
+            ) : (
+              <>Chuyển tab hoặc thu nhỏ trình duyệt sẽ đổi đề và xóa các câu trả lời. Thời gian không được cộng thêm.</>
+            )}
+          </div>
           {/* HÀNG CÁC Ô ĐIỀU HƯỚNG 15 CÂU HỎI */}
           <div className="mb-6 rounded-2xl border border-ink/10 bg-white p-4 shadow-sm">
             <div className="mb-2 flex items-center justify-between text-xs">

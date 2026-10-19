@@ -14,7 +14,8 @@ export const TX2_LESSON_IDS = ["bai-01", "bai-02", "bai-07", "bai-08", "bai-09"]
 export const TX2_DIFFICULTIES: readonly QuestionDifficulty[] = ["nhan-biet", "thong-hieu", "van-dung"];
 
 /** Mỗi bài bốc 1 nhận biết + 1 thông hiểu + 1 vận dụng, rồi đảo 15 câu. */
-export function taoDeNgauNhienTx2(): Question[] {
+export function taoDeNgauNhienTx2(previousIds: readonly string[] = []): Question[] {
+  const previous = new Set(previousIds);
   const selected = TX2_LESSON_IDS.flatMap((lessonId) => {
     const bank = QUESTION_BANK[lessonId] ?? [];
     if (bank.some((q) => !q.difficulty || !TX2_DIFFICULTIES.includes(q.difficulty))) {
@@ -25,7 +26,10 @@ export function taoDeNgauNhienTx2(): Question[] {
       if (pool.length === 0) {
         throw new Error(`Ngân hàng ${lessonId} thiếu câu mức ${difficulty}.`);
       }
-      return pool[Math.floor(Math.random() * pool.length)];
+      // Tránh lặp câu của đề vừa hủy; vẫn giữ đúng nhóm mức độ.
+      const fresh = pool.filter((q) => !previous.has(q.id));
+      const candidates = fresh.length > 0 ? fresh : pool;
+      return candidates[Math.floor(Math.random() * candidates.length)];
     });
   });
   return shuffleArr(selected);

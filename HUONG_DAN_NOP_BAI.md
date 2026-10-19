@@ -57,4 +57,5 @@ Nếu thầy cô đã có Service Account từ dự án Tin 12, thầy cô có t
 1. Học sinh truy cập vào: `https://[ten-mien-vercel]/kiem-tra/thuong-xuyen-2` hoặc chọn banner trên Trang chủ.
 2. Học sinh nhập **Họ và tên** (vd: *Hoàng Minh Châu*) và **Lớp** (vd: *10A1*). Hệ thống sẽ tự động ghi nhớ cho các lần kiểm tra sau.
 3. Làm 15 câu trắc nghiệm trong 16 phút; mỗi Bài 1, 2, 7, 8, 9 bốc 1 câu nhận biết, 1 câu thông hiểu và 1 câu vận dụng.
+   - Khi chuyển tab hoặc thu nhỏ trình duyệt trong lúc làm, hệ thống hủy câu trả lời cũ và đổi đề, giữ nguyên mốc hết giờ. Đề bị hủy không gửi điểm lên Sheets.
 4. Sau khi bấm **Nộp bài**, hệ thống tự động chấm điểm và gửi ngay một dòng kết quả vào Google Sheet của thầy cô!
