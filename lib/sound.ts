@@ -455,3 +455,47 @@ class SoundSynthesizer {
 
 export const sound = new SoundSynthesizer();
 
+export function isSoundEnabled(): boolean {
+  return sound.enabled;
+}
+
+export function setSoundEnabled(v: boolean): void {
+  sound.enabled = v;
+}
+
+export function playClick(): void {
+  sound.click();
+}
+
+export function playCorrect(): void {
+  sound.laser();
+}
+
+export function playWrong(): void {
+  sound.damage();
+}
+
+export function playCelebration(): void {
+  sound.victory();
+}
+
+export function playWhistle(): void {
+  sound.victory();
+}
+
+export function playTick(): void {
+  sound.tick();
+}
+
+export function playClimb(): void {
+  sound.place();
+}
+
+export function playBuzzer(): void {
+  sound.damage();
+}
+
+export function playSummitVictory(): void {
+  sound.victory();
+}
+

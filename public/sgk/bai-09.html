@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bài 9: An toàn trên không gian mạng – Tin học 10 KNTT (SGK Điện tử)</title>
+  <meta name="description" content="Sách giáo khoa điện tử Tin học 10 Kết nối tri thức với cuộc sống – Bài 9: An toàn trên không gian mạng. Chủ đề 2: Mạng máy tính và Internet. THPT Na Rì.">
+  <style>
+    :root {
+      --bg: #070d14;
+      --bg2: #0b1523;
+      --panel: #0f1c2e;
+      --panel2: #14243b;
+      --border: rgba(56, 189, 248, 0.2);
+      --border-bright: rgba(56, 189, 248, 0.45);
+      --text: #e2e8f0;
+      --text-soft: #94a3b8;
+      --cyan: #38bdf8;
+      --cyan-bright: #00f0ff;
+      --emerald: #10b981;
+      --emerald-light: #34d399;
+      --amber: #f59e0b;
+      --coral: #f97316;
+      --rose: #f43f5e;
+      --purple: #a855f7;
+      --fs: 18px;
+      --font-main: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: 'Consolas', 'Fira Code', 'Courier New', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: radial-gradient(ellipse at 15% 10%, #0d223a 0%, #070d14 55%, #05080e 100%);
+      color: var(--text);
+      font-family: var(--font-main);
+      font-size: var(--fs);
+      line-height: 1.8;
+      min-height: 100vh;
+    }
+
+    /* ─── THANH TIẾN ĐỘ CUỘN ─── */
+    .top-progress {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      z-index: 1000;
+    }
+    .top-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--cyan), var(--emerald), var(--amber));
+      transition: width 0.1s ease-out;
+      box-shadow: 0 0 10px var(--cyan);
+    }
+
+    /* ─── BỐ CỤC 2 CỘT (SIDEBAR + MAIN) ─── */
+    .app {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      min-height: 100vh;
+    }
+
+    /* ─── SIDEBAR MỤC LỤC ─── */
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      background: rgba(7, 13, 20, 0.96);
+      border-right: 1px solid var(--border);
+      padding: 24px 18px;
+      backdrop-filter: blur(20px);
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .sidebar::-webkit-scrollbar { width: 5px; }
+    .sidebar::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.2); border-radius: 4px; }
+
+    .brand-box {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+    }
+    .school-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--cyan);
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+    }
+    .brand-title {
+      font-size: 19px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.3;
+    }
+    .brand-title span { color: var(--amber); }
+    .brand-sub {
+      color: var(--text-soft);
+      font-size: 12.5px;
+      margin-top: 4px;
+    }
+
+    .ctrl-box {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+    }
+    .ctrl-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-soft);
+      margin-bottom: 8px;
+    }
+    .ctrl-row {
+      display: flex;
+      gap: 6px;
+    }
+    .ctrl-btn {
+      flex: 1;
+      background: var(--panel2);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 6px 4px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .ctrl-btn:hover {
+      background: var(--border-bright);
+      color: #fff;
+      border-color: var(--cyan);
+    }
+
+    .toc-title {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-soft);
+      margin-top: 8px;
+      padding-left: 6px;
+    }
+    .toc-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .toc-item a {
+      display: block;
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 500;
+      padding: 8px 12px;
+      border-radius: 9px;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
+    }
+    .toc-item a:hover {
+      background: rgba(56, 189, 248, 0.08);
+      color: var(--cyan);
+      border-left-color: var(--cyan);
+    }
+    .toc-item a.active {
+      background: rgba(56, 189, 248, 0.14);
+      color: #fff;
+      border-left-color: var(--cyan);
+      font-weight: 700;
+    }
+
+    /* ─── MAIN CONTENT ─── */
+    .main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 32px 100px 32px;
+    }
+
+    /* ─── HERO HEADER ─── */
+    .hero {
+      background: linear-gradient(135deg, #0d223c 0%, #0b1a2f 50%, #151b2a 100%);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 40px 44px;
+      margin-bottom: 32px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '09';
+      position: absolute;
+      right: 25px;
+      top: 15px;
+      font-size: 140px;
+      font-weight: 900;
+      color: rgba(56, 189, 248, 0.04);
+      line-height: 1;
+      user-select: none;
+    }
+    .topic-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: var(--cyan);
+      font-size: 12.5px;
+      font-weight: 800;
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .hero h1 {
+      font-size: clamp(28px, 4.5vw, 40px);
+      font-weight: 900;
+      line-height: 1.25;
+      background: linear-gradient(135deg, #ffffff 30%, var(--cyan) 70%, var(--emerald-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+    .hero-meta {
+      color: var(--text-soft);
+      font-size: 14.5px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .hero-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ─── MỤC TIÊU BÀI HỌC ─── */
+    .goals-card {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(6, 78, 59, 0.25));
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 18px;
+      padding: 22px 26px;
+      margin-bottom: 30px;
+    }
+    .goals-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--emerald-light);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .goals-list {
+      padding-left: 22px;
+      color: #d1fae5;
+    }
+    .goals-list li {
+      margin-bottom: 6px;
+    }
+
+    /* ─── KHỞI ĐỘNG ─── */
+    .intro-card {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(15, 23, 42, 0.5));
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--cyan);
+      border-radius: 16px;
+      padding: 22px 26px;
+      margin-bottom: 32px;
+    }
+    .intro-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--cyan);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ─── SECTIONS ─── */
+    .section {
+      background: rgba(15, 28, 46, 0.7);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 32px 36px;
+      margin-bottom: 32px;
+      scroll-margin-top: 24px;
+      position: relative;
+      transition: border-color 0.3s;
+    }
+    .section:hover {
+      border-color: var(--border-bright);
+    }
+    .page-tag {
+      position: absolute;
+      right: 24px;
+      top: 24px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-soft);
+      background: var(--panel2);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-family: var(--font-mono);
+    }
+
+    h2 {
+      font-size: clamp(22px, 3vw, 27px);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    h2::before {
+      content: '';
+      display: inline-block;
+      width: 5px;
+      height: 26px;
+      background: linear-gradient(var(--cyan), var(--emerald));
+      border-radius: 3px;
+    }
+
+    h3 {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--cyan);
+      margin: 24px 0 12px;
+    }
+
+    p {
+      color: #cbd5e1;
+      margin-bottom: 14px;
+    }
+    p:last-child { margin-bottom: 0; }
+    strong { color: #fff; font-weight: 700; }
+    em { color: var(--cyan); font-style: normal; font-weight: 600; }
+
+    /* ─── HOẠT ĐỘNG KHÁM PHÁ (SGK) ─── */
+    .activity-box {
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 16px;
+      padding: 18px 22px;
+      margin: 20px 0;
+    }
+    .activity-header {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: var(--amber);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    /* ─── HỘP GHI NHỚ SGK (KHUNG CAM NÉT ĐỨT) ─── */
+    .summary-box {
+      background: linear-gradient(135deg, rgba(249, 115, 22, 0.12), rgba(245, 158, 11, 0.08));
+      border: 2px dashed rgba(249, 115, 22, 0.6);
+      border-radius: 18px;
+      padding: 22px 26px;
+      margin: 26px 0;
+      box-shadow: 0 0 20px rgba(249, 115, 22, 0.08);
+    }
+    .summary-box ul {
+      padding-left: 22px;
+      color: #fed7aa;
+    }
+    .summary-box li {
+      margin-bottom: 8px;
+    }
+
+    /* ─── HỘP CHÚ Ý / BIỆN PHÁP (KHUNG XANH LÁ NÉT ĐỨT) ─── */
+    .measure-box {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(6, 78, 59, 0.15));
+      border: 2px dashed rgba(16, 185, 129, 0.5);
+      border-radius: 18px;
+      padding: 20px 24px;
+      margin: 20px 0;
+    }
+    .measure-title {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: var(--emerald-light);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .measure-box ul {
+      padding-left: 22px;
+      color: #a7f3d0;
+    }
+    .measure-box li {
+      margin-bottom: 6px;
+    }
+
+    /* ─── GRID THẺ ─── */
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .card-item {
+      background: var(--panel2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px 20px;
+      transition: all 0.25s;
+    }
+    .card-item:hover {
+      transform: translateY(-3px);
+      border-color: var(--cyan);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+    .card-emoji {
+      font-size: 26px;
+      margin-bottom: 8px;
+    }
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .card-desc {
+      font-size: 13.5px;
+      color: var(--text-soft);
+      line-height: 1.6;
+    }
+
+    /* ─── BẢNG ĐỐI CHIẾU MÃ ĐỘC ─── */
+    .table-container {
+      overflow-x: auto;
+      margin: 24px 0;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--panel);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 14.5px;
+    }
+    th {
+      background: var(--panel2);
+      color: var(--cyan);
+      font-weight: 700;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      color: #cbd5e1;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(56, 189, 248, 0.04); }
+
+    /* ─── CÂU HỎI THẢO LUẬN SGK ─── */
+    .question-box {
+      background: rgba(139, 92, 246, 0.09);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin: 22px 0;
+    }
+    .question-header {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: #c4b5fd;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .q-item {
+      margin-bottom: 12px;
+    }
+    .q-item:last-child { margin-bottom: 0; }
+    .q-btn {
+      background: rgba(139, 92, 246, 0.2);
+      border: 1px solid rgba(139, 92, 246, 0.4);
+      color: #e9d5ff;
+      border-radius: 8px;
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 6px;
+      transition: all 0.2s;
+    }
+    .q-btn:hover { background: rgba(139, 92, 246, 0.4); color: #fff; }
+    .q-answer {
+      display: none;
+      background: rgba(0, 0, 0, 0.3);
+      border-left: 3px solid var(--purple);
+      padding: 10px 14px;
+      border-radius: 6px;
+      margin-top: 8px;
+      font-size: 13.5px;
+      color: #d8b4fe;
+    }
+    .q-answer.show { display: block; }
+
+    /* ─── PHÒNG THÍ NGHIỆM ẢO SIMULATOR WINDOWS DEFENDER ─── */
+    .sim-container {
+      background: #0d1522;
+      border: 1px solid var(--border-bright);
+      border-radius: 18px;
+      padding: 24px;
+      margin: 26px 0;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    .sim-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
+    .sim-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sim-badge {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--emerald-light);
+      border: 1px solid var(--emerald);
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .sim-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .action-btn {
+      background: var(--panel2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 9px 18px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .action-btn:hover {
+      background: var(--cyan);
+      color: #070d14;
+      border-color: var(--cyan);
+      transform: translateY(-2px);
+    }
+    .action-btn.active {
+      background: var(--cyan);
+      color: #070d14;
+    }
+    .sim-screen {
+      background: #090e17;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 16px 20px;
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+    }
+    .progress-bar-sim {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+    .progress-bar-sim-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--cyan), var(--emerald));
+      transition: width 0.2s;
+    }
+
+    /* ─── FOOTER ĐIỀU HƯỚNG ─── */
+    .sgk-footer {
+      margin-top: 60px;
+      padding-top: 30px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .footer-nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      color: var(--text);
+      text-decoration: none;
+      padding: 12px 22px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+    .footer-nav-btn:hover {
+      background: var(--border-bright);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .main { padding: 24px 18px 80px; }
+      .hero { padding: 26px 22px; }
+      .section { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Thanh tiến độ cuộn -->
+  <div class="top-progress">
+    <div class="top-progress-fill" id="progressFill"></div>
+  </div>
+
+  <div class="app">
+    <!-- SIDEBAR MỤC LỤC & ĐIỀU KHIỂN -->
+    <aside class="sidebar">
+      <div class="brand-box">
+        <span class="school-tag">🏫 THPT Na Rì · Tin học 10</span>
+        <h2 class="brand-title">SGK Điện Tử <span>KNTT</span></h2>
+        <p class="brand-sub">Chủ đề 2: Mạng máy tính và Internet</p>
+      </div>
+
+      <div class="ctrl-box">
+        <div class="ctrl-label">Cỡ chữ văn bản</div>
+        <div class="ctrl-row">
+          <button class="ctrl-btn" onclick="changeFontSize(-1)">A -</button>
+          <button class="ctrl-btn" onclick="resetFontSize()">Mặc định</button>
+          <button class="ctrl-btn" onclick="changeFontSize(1)">A +</button>
+        </div>
+      </div>
+
+      <div class="toc-title">Mục lục bài học</div>
+      <ul class="toc-list" id="tocList">
+        <li class="toc-item"><a href="#muc-tieu" class="active">🎯 Mục tiêu bài học</a></li>
+        <li class="toc-item"><a href="#khoi-dong">🚀 Khởi động</a></li>
+        <li class="toc-item"><a href="#muc-1">1. Nguy cơ trên không gian mạng</a></li>
+        <li class="toc-item"><a href="#muc-2">2. Phần mềm độc hại (Malware)</a></li>
+        <li class="toc-item"><a href="#muc-3">3. Thực hành: Windows Defender</a></li>
+        <li class="toc-item"><a href="#luyen-tap">✍️ Luyện tập SGK</a></li>
+        <li class="toc-item"><a href="#van-dung">💡 Vận dụng mở rộng</a></li>
+      </ul>
+    </aside>
+
+    <!-- NỘI DUNG CHÍNH -->
+    <main class="main">
+      
+      <!-- HERO BANNER -->
+      <header class="hero">
+        <div class="topic-badge">🌐 Chủ đề 2 · Mạng máy tính và Internet</div>
+        <h1>Bài 9. An toàn trên không gian mạng</h1>
+        <p style="color: #cbd5e1; font-size: 16px;">
+          Sách giáo khoa Tin học 10 — Bộ sách Kết nối tri thức với cuộc sống (Trang 44 – 49).
+        </p>
+        <div class="hero-meta">
+          <span>📖 Thời lượng đọc: ~10 phút</span>
+          <span>🛡️ An ninh mạng & Bảo vệ dữ liệu số</span>
+          <span>🏫 THPT Na Rì</span>
+        </div>
+      </header>
+
+      <!-- MỤC TIÊU BÀI HỌC -->
+      <section class="goals-card" id="muc-tieu">
+        <div class="goals-title">🎯 Sau bài này em sẽ:</div>
+        <ul class="goals-list">
+          <li><strong>Nêu được những nguy cơ và tác hại</strong> khi tham gia các hoạt động trên Internet một cách thiếu hiểu biết và bất cẩn. Trình bày được một số cách để phòng ngừa những tác hại đó.</li>
+          <li><strong>Nêu được một vài cách phòng vệ</strong> khi bị bắt nạt trên mạng. Biết cách <strong>bảo vệ dữ liệu cá nhân</strong>.</li>
+          <li><strong>Trình bày được sơ lược về các phần mềm xấu (mã độc)</strong>. Biết sử dụng một số công cụ để phòng chống phần mềm xấu.</li>
+        </ul>
+      </section>
+
+      <!-- KHỞI ĐỘNG -->
+      <section class="intro-card" id="khoi-dong">
+        <div class="intro-title">🚀 Khởi động (SGK Trang 44)</div>
+        <p>
+          Không gian mạng – (trong một số hoàn cảnh cụ thể được gọi vắn tắt là "mạng") chính là <strong>Internet</strong>, là một môi trường rất <strong>mở</strong>. Trên mạng mọi người có thể liên lạc, chia sẻ thông tin với nhau một cách dễ dàng nhưng chính điều đó lại bị những kẻ xấu lợi dụng khiến mạng cũng là nơi đầy rẫy những cạm bẫy.
+        </p>
+        <p style="margin-top: 10px; font-weight: 700; color: #fff;">
+          ❓ Câu hỏi đặt ra: Cần tự bảo vệ mình như thế nào khi tham gia không gian mạng?
+        </p>
+      </section>
+
+      <!-- MỤC 1: MỘT SỐ NGUY CƠ TRÊN MẠNG -->
+      <section class="section" id="muc-1">
+        <span class="page-tag">SGK Trang 44–45</span>
+        <h2>1. Một số nguy cơ trên mạng</h2>
+
+        <div class="activity-box">
+          <div class="activity-header">💡 Hoạt động 1: Nguy cơ trên mạng</div>
+          <p>Hãy thảo luận và cho ví dụ minh hoạ về những nguy cơ có thể gặp phải khi lên Internet để:</p>
+          <ul style="padding-left: 20px; color: #fde68a; margin-top: 6px;">
+            <li><strong>a) Kết bạn</strong> (nguy cơ gặp kẻ xấu, lừa tình, lừa tiền).</li>
+            <li><strong>b) Xem tin tức</strong> (nguy cơ đọc phải tin giả, tin kích động bạo lực).</li>
+            <li><strong>c) Tải các phần mềm</strong> (nguy cơ nhiễm virus, mã độc tống tiền).</li>
+          </ul>
+        </div>
+
+        <p>Khi tham gia không gian mạng, người dùng thường đối mặt với 5 nhóm nguy cơ nguy hiểm hàng đầu sau đây:</p>
+
+        <div class="grid-cards">
+          <div class="card-item">
+            <div class="card-emoji">📰</div>
+            <div class="card-title">Tin giả & tin phản văn hoá</div>
+            <div class="card-desc">
+              Ai cũng có thể đưa tin bài lên mạng kể cả các tin bài xấu. Có nhiều tin giả, tin bài phản cảm như những tình tiết man rợ trong một vụ án hoặc có nội dung dẫn đến các nhận thức lệch lạc.
+            </div>
+          </div>
+
+          <div class="card-item">
+            <div class="card-emoji">🎣</div>
+            <div class="card-title">Lừa đảo trên mạng</div>
+            <div class="card-desc">
+              Nhiều người lợi dụng mạng để lừa đảo. Một ví dụ là kẻ xấu lấy ảnh, tin tức trên trang Facebook của một người để lập trang giống hệt rồi kết bạn với những người bạn của nạn nhân nhằm mạo danh vay mượn tiền.
+            </div>
+          </div>
+
+          <div class="card-item">
+            <div class="card-emoji">🔓</div>
+            <div class="card-title">Lộ thông tin cá nhân</div>
+            <div class="card-desc">
+              Thông tin cá nhân bao gồm tên tuổi, số điện thoại, tài khoản email, tài khoản ngân hàng,... Khi lộ tài khoản ứng dụng ta có thể bị mạo danh; khi lộ tài khoản ngân hàng ta có thể bị mất tiền.
+            </div>
+          </div>
+
+          <div class="card-item">
+            <div class="card-emoji">⚠️</div>
+            <div class="card-title">Bắt nạt trên không gian mạng</div>
+            <div class="card-desc">
+              Mức thấp là xỉ vả, lăng nhục. Mức cao là đe dọa tung thông tin cá nhân, vu khống, tống tiền hoặc ép buộc làm điều xấu. Bắt nạt trên mạng xảy ra dai dẳng, người bắt nạt ẩn danh và gây áp lực rất nặng nề.
+            </div>
+          </div>
+
+          <div class="card-item">
+            <div class="card-emoji">🎮</div>
+            <div class="card-title">Nghiện mạng & game</div>
+            <div class="card-desc">
+              Dành quá nhiều thời gian cho mạng, đặc biệt là chơi game đến mức nghiện, ảnh hưởng nghiêm trọng tới sức khoẻ. Đã từng có những thanh niên chơi trò chơi điện tử liên tục nhiều ngày và đột quỵ ngay trên bàn máy tính.
+            </div>
+          </div>
+        </div>
+
+        <div class="measure-box">
+          <div class="measure-title">🛡️ Các biện pháp bảo vệ thông tin cá nhân (SGK trang 44)</div>
+          <ul>
+            <li>Không ghi chép thông tin cá nhân ở những nơi mà người khác có thể đọc.</li>
+            <li>Giữ cho máy tính không bị nhiễm các phần mềm gián điệp (Spyware).</li>
+            <li>Cẩn trọng khi truy cập mạng qua Wi-Fi công cộng vì hầu hết các trạm Wi-Fi công cộng không mã hoá thông tin khi truyền.</li>
+          </ul>
+        </div>
+
+        <div class="measure-box" style="border-color: rgba(56, 189, 248, 0.45); background: linear-gradient(135deg, rgba(56,189,248,0.08), rgba(15,23,42,0.3));">
+          <div class="measure-title" style="color: var(--cyan);">🛑 Một số biện pháp phòng chống hành vi bắt nạt (SGK trang 45)</div>
+          <ul style="color: #bae6fd;">
+            <li>Không nên kết bạn dễ dãi qua mạng.</li>
+            <li>Không trả lời thư từ hay tin nhắn, không tranh luận với kẻ bắt nạt trên diễn đàn.</li>
+            <li><strong>Hãy lưu giữ tất cả các bằng chứng</strong> (chụp ảnh màn hình tin nhắn, cuộc gọi đe dọa).</li>
+            <li>Hãy chia sẻ với <strong>bố mẹ hoặc thầy cô</strong>.</li>
+            <li>Khi sự việc nghiêm trọng hãy báo cho <strong>cơ quan công an kèm theo bằng chứng</strong>.</li>
+          </ul>
+        </div>
+
+        <!-- HỘP GHI NHỚ SGK -->
+        <div class="summary-box">
+          <div style="font-size: 15px; font-weight: 800; color: #fdba74; margin-bottom: 8px;">📌 GHI NHỚ (SGK Trang 45)</div>
+          <ul>
+            <li>Mạng là môi trường giao tiếp nhanh chóng, thuận tiện nhưng ẩn chứa nhiều nguy cơ gây mất an toàn thông tin.</li>
+            <li>Chỉ truy cập các trang web tin cậy, hãy cảnh giác với các thông tin giả, lừa đảo.</li>
+            <li>Hãy giữ bí mật thông tin cá nhân.</li>
+            <li>Chỉ nên kết bạn với những người quen biết trong mạng xã hội. Khi bị bắt nạt, hãy chia sẻ với người thân hoặc thầy cô.</li>
+            <li>Không nên sử dụng Internet quá nhiều.</li>
+          </ul>
+        </div>
+
+        <!-- CÂU HỎI CỦNG CỐ MỤC 1 -->
+        <div class="question-box">
+          <div class="question-header">❓ Câu hỏi củng cố (SGK Trang 45)</div>
+          <div class="q-item">
+            <p><strong>1.</strong> Em hãy đưa ra một số tình huống có thể làm lộ mật khẩu tài khoản.</p>
+            <button class="q-btn" onclick="toggleAnswer('ans1')">Xem gợi ý trả lời</button>
+            <div class="q-answer" id="ans1">
+              Gợi ý: Đặt mật khẩu quá đơn giản (ngày sinh, 123456); Đăng nhập trên máy tính lạ/quán net mà quên đăng xuất; Nhấp vào link lừa đảo (Phishing) giả mạo trang đăng nhập; Viết mật khẩu vào giấy dán trên màn hình; Để máy tính bị nhiễm phần mềm gián điệp Keylogger.
+            </div>
+          </div>
+          <div class="q-item" style="margin-top: 14px;">
+            <p><strong>2.</strong> Em có biết một hành vi lừa đảo nào trên mạng không? Nếu có, em hãy kể cách thức lừa đảo.</p>
+            <button class="q-btn" onclick="toggleAnswer('ans2')">Xem gợi ý trả lời</button>
+            <div class="q-answer" id="ans2">
+              Gợi ý: Lừa đảo mạo danh nick Facebook bạn bè/người thân mượn tiền gấp; Lừa trúng thưởng xe máy/điện thoại yêu cầu nộp phí cọc trước; Tuyển cộng tác viên làm việc online giật đơn hàng hoàn tiền ảo rồi chiếm đoạt vốn.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MỤC 2: PHẦN MỀM ĐỘC HẠI -->
+      <section class="section" id="muc-2">
+        <span class="page-tag">SGK Trang 45–47</span>
+        <h2>2. Phần mềm độc hại (Malware)</h2>
+
+        <div class="activity-box">
+          <div class="activity-header">💡 Hoạt động 2: Có những loại phần mềm độc hại nào?</div>
+          <p>Có một thời, virus máy tính là nỗi đe dọa thường xuyên với người dùng máy tính đến mức mỗi khi máy tính trục trặc, người ta đều cho là do virus.</p>
+          <p style="margin-top: 6px; font-weight: 700; color: #fff;">
+            Em hiểu gì về virus máy tính? Có phải tất cả phần mềm độc hại đều là virus?
+          </p>
+        </div>
+
+        <p>
+          Một đối tượng gây mất an toàn là <strong>phần mềm độc hại</strong> (<em>malicious software</em>, viết tắt là <strong>malware</strong>), những phần mềm được viết ra với ý đồ xấu, gây hại cho người dùng.
+        </p>
+
+        <h3>a) Tìm hiểu về virus, trojan, worm và cơ chế hoạt động</h3>
+        <p>
+          Những phần mềm độc hại có mục đích gây ảnh hưởng trên quy mô lớn thường có <strong>cơ chế lây nhiễm</strong>. Theo cơ chế lây nhiễm, có hai loại phần mềm độc hại là <strong>virus</strong> và <strong>worm</strong>. Còn một loại phần mềm độc hại khác là <strong>trojan</strong> chỉ nhằm chiếm đoạt thông tin hay chiếm quyền sử dụng máy tính sẽ ít chú trọng đến tính năng lây nhiễm.
+        </p>
+
+        <div class="grid-cards">
+          <div class="card-item" style="border-left: 4px solid var(--rose);">
+            <div class="card-emoji">🦠</div>
+            <div class="card-title" style="color: #fca5a5;">Virus máy tính</div>
+            <div class="card-desc">
+              Virus <strong>không phải là các phần mềm hoàn chỉnh</strong>, mà chỉ là các đoạn mã độc và <strong>phải gắn với một phần mềm khác</strong> mới phát tác và lây lan được. Khi chạy một phần mềm đã nhiễm virus, đoạn mã độc sẽ đưa vào bộ nhớ, chờ khi thi hành một phần mềm khác sẽ chèn vào để hoàn thành một chu kì lây lan.
+            </div>
+          </div>
+
+          <div class="card-item" style="border-left: 4px solid var(--amber);">
+            <div class="card-emoji">🐛</div>
+            <div class="card-title" style="color: #fde047;">Worm (Sâu máy tính)</div>
+            <div class="card-desc">
+              Khác với virus, worm <strong>là một phần mềm hoàn chỉnh</strong>. Để lây, worm lợi dụng những <strong>lỗ hổng bảo mật của hệ điều hành</strong> hoặc dẫn dụ, lừa người dùng chạy để cài đặt vào máy của nạn nhân (qua email, tin nhắn có tệp độc hại). Sâu có khả năng tự nhân bản và tự lan truyền qua mạng.
+            </div>
+          </div>
+
+          <div class="card-item" style="border-left: 4px solid var(--purple);">
+            <div class="card-emoji">🐴</div>
+            <div class="card-title" style="color: #d8b4fe;">Trojan (Phần mềm nội gián)</div>
+            <div class="card-desc">
+              Theo truyền thuyết <em>"Con ngựa thành Troa"</em> trong thần thoại Hy Lạp. Trojan nguỵ trang thành phần mềm hữu ích để lừa người dùng cài đặt. Tùy hành vi, Trojan gồm:
+              <ul style="padding-left: 18px; margin-top: 6px; font-size: 13px;">
+                <li><strong>Spyware</strong>: Phần mềm gián điệp ăn trộm thông tin.</li>
+                <li><strong>Keylogger</strong>: Ghi lại thao tác bàn phím, chuột để ăn cắp mật khẩu.</li>
+                <li><strong>Backdoor</strong>: Tạo tài khoản bí mật (cửa sau) cho hacker đột nhập.</li>
+                <li><strong>Rootkit</strong>: Chiếm quyền quản trị cao nhất, xóa dấu vết.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <h3>b) Tác hại của phần mềm độc hại</h3>
+        <p>
+          Hai đặc trưng chính của virus hay worm là <strong>lây lan</strong> và <strong>gây ra các tác động không mong muốn</strong>, còn trojan thì thực hiện các <strong>hoạt động nội gián</strong>.
+        </p>
+        <p>
+          Tác động không mong muốn có khi chỉ gây khó chịu, nhưng các virus hay worm "dữ" có thể làm hỏng các phần mềm khác trong máy, xoá dữ liệu hay làm tê liệt hệ thống máy tính.
+        </p>
+
+        <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 14px; padding: 18px 22px; margin: 18px 0;">
+          <div style="color: #fca5a5; font-weight: 800; font-size: 15px; margin-bottom: 8px;">🔥 Những đại dịch mã độc lịch sử gây chấn động thế giới:</div>
+          <ul style="padding-left: 20px; color: #fecaca; font-size: 14px;">
+            <li><strong>Sâu Melissa (1999)</strong>: Có cơ chế lừa để lây rất hiệu quả, từng gây thiệt hại <strong>hơn 1 tỉ đô la</strong>.</li>
+            <li><strong>Sâu Code Red (2001)</strong>: Lợi dụng khuyết tật bảo mật của Windows, chiếm quyền các máy chủ Windows, trong 10 ngày đã gây thiệt hại <strong>khoảng 2 tỉ đô la</strong>.</li>
+            <li><strong>Sâu WannaCry (2017)</strong>: Tống tiền bằng cách mã hoá toàn bộ thông tin trên đĩa cứng và đòi tiền chuộc mới cho phần mềm hoá giải.</li>
+            <li><strong>Tấn công từ chối dịch vụ (DOS - Denial of Service)</strong>: Tập hợp các máy tính bị nhiễm thành mạng máy tính ma (Botnet), cùng truy cập ồ ạt làm tê liệt máy chủ mục tiêu.</li>
+          </ul>
+        </div>
+
+        <h3>c) Phòng chống phần mềm độc hại</h3>
+        <p>
+          Để phòng ngừa phần mềm độc hại, điều quan trọng đầu tiên là <strong>cẩn trọng khi chép các tệp chương trình hay dữ liệu vào máy từ ổ cứng rời, thẻ nhớ hoặc tải về từ mạng</strong>. Rất nhiều phần mềm bẻ khoá (crack) cho lấy tự do trên mạng là các phần mềm bị gắn mã độc một cách cố ý.
+        </p>
+        <p>
+          Để tránh bị lừa, không mở các liên kết trong email hay tin nhắn mà không biết rõ có an toàn hay không. Luôn xác minh qua kênh độc lập trước khi tải xuống. Đừng để lộ mật khẩu các tài khoản. Ngoài ra, hãy sử dụng các phần mềm phòng chống phần mềm độc hại.
+        </p>
+
+        <!-- HỘP GHI NHỚ SGK -->
+        <div class="summary-box">
+          <div style="font-size: 15px; font-weight: 800; color: #fdba74; margin-bottom: 8px;">📌 GHI NHỚ (SGK Trang 47)</div>
+          <ul>
+            <li>Phần mềm độc hại là phần mềm viết ra với ý đồ xấu, gây ra các tác động không mong muốn.</li>
+            <li>Virus và worm là các phần mềm độc hại có khả năng lây nhiễm; Trojan là phần mềm nội gián để ăn cắp thông tin và chiếm đoạt quyền trên máy.</li>
+            <li>Để phòng ngừa phần mềm độc hại, không lấy từ trên mạng hoặc sao chép qua các thiết bị nhớ những phần mềm mà mình không biết rõ. Khi nhận được email hay tin nhắn có liên kết, nếu không rõ về nguồn gốc thì không nên mở.</li>
+            <li>Hãy sử dụng các phần mềm chống phần mềm độc hại để bảo vệ máy tính.</li>
+          </ul>
+        </div>
+
+        <!-- BẢNG ĐỐI CHIẾU SGK -->
+        <div style="margin-top: 24px;">
+          <h4 style="color: #fff; font-size: 16px; margin-bottom: 10px;">📊 Bảng tổng kết đối chiếu 3 loại phần mềm độc hại (SGK Trang 47):</h4>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Loại mã độc</th>
+                  <th>Tính hoàn chỉnh</th>
+                  <th>Cơ chế lây nhiễm</th>
+                  <th>Tác hại chính</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Virus</strong></td>
+                  <td>❌ Không hoàn chỉnh (chỉ là đoạn mã ký sinh)</td>
+                  <td>Gắn vào phần mềm chủ, phát tác khi chạy phần mềm đó</td>
+                  <td>Phá hỏng phần mềm, xóa dữ liệu, làm chậm máy tính</td>
+                </tr>
+                <tr>
+                  <td><strong>Worm (Sâu)</strong></td>
+                  <td>✅ Là phần mềm độc hại hoàn chỉnh</td>
+                  <td>Tự động lây lan qua mạng, khai thác lỗ hổng hệ điều hành</td>
+                  <td>Gây nghẽn mạng, tê liệt hệ thống, mã hóa tống tiền</td>
+                </tr>
+                <tr>
+                  <td><strong>Trojan</strong></td>
+                  <td>✅ Thường là phần mềm hoàn chỉnh nguỵ trang</td>
+                  <td>Không chú trọng tự lây lan; lừa người dùng tự cài đặt</td>
+                  <td>Nội gián, đánh cắp mật khẩu, mở cửa sau (Backdoor), chiếm quyền Admin</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- MỤC 3: THỰC HÀNH WINDOWS DEFENDER -->
+      <section class="section" id="muc-3">
+        <span class="page-tag">SGK Trang 47–49</span>
+        <h2>3. Thực hành: Dùng phần mềm phòng chống virus Windows Defender</h2>
+
+        <p>
+          Có hàng trăm phần mềm phòng chống virus như Kaspersky, AVG, Avast, McAfee, Norton Antivirus, Panda hay phần mềm của Việt Nam là <strong>BKAV</strong>. Thực tế, các phần mềm này không chỉ phát hiện và diệt virus mà còn phòng chống nhiều nguy cơ làm mất an toàn khác như kiểm tra các tệp tải về, cảnh báo truy cập các website có mã độc,... Chính vì thế, các phần mềm này còn được gọi là <strong>Firewall (bức tường lửa)</strong> với ý nghĩa ngăn chặn các nguy cơ từ ngoài.
+        </p>
+        <p>
+          Bài thực hành này giới thiệu sử dụng phần mềm <strong>Windows Security (Defender Antivirus)</strong> được tích hợp sẵn trong hệ điều hành Windows 10/11, tự động chạy ngầm để bảo vệ các máy tính dùng hệ điều hành Windows. Defender tự động cập nhật các mẫu virus mới mỗi khi hệ điều hành được cập nhật.
+        </p>
+
+        <h3 style="color: var(--emerald-light);">Quy trình 3 bước thiết lập và quét virus với Windows Defender:</h3>
+        
+        <div style="display: flex; flex-direction: column; gap: 14px; margin: 18px 0;">
+          <div style="background: var(--panel2); border-left: 4px solid var(--cyan); padding: 14px 18px; border-radius: 10px;">
+            <strong>Bước 1: Mở Windows Security</strong><br>
+            Từ nút <em>Start</em> chọn <em>Settings</em> &rarr; <em>Update & Security</em> &rarr; <em>Windows Security</em> (hoặc gõ chữ "Defender" vào ô tìm kiếm ở thanh tác vụ). Sau đó chọn <em>Virus & threat protection</em>.
+          </div>
+
+          <div style="background: var(--panel2); border-left: 4px solid var(--emerald); padding: 14px 18px; border-radius: 10px;">
+            <strong>Bước 2: Xem các tính năng bảo vệ</strong><br>
+            • <em>Current threats</em>: Thống kê nguy cơ tìm thấy trong thời gian gần nhất.<br>
+            • <em>Quick scan</em>: Nút quét nhanh các thư mục virus thường lây nhiễm.<br>
+            • <em>Scan options</em>: Xem các kiểu quét chi tiết.<br>
+            • <em>Threat history</em>: Lịch sử các mối đe dọa đã phát hiện và xử lý.
+          </div>
+
+          <div style="background: var(--panel2); border-left: 4px solid var(--amber); padding: 14px 18px; border-radius: 10px;">
+            <strong>Bước 3: Chọn kiểu quét virus (Scan options)</strong><br>
+            Có 4 kiểu quét chính:<br>
+            1. <strong>Quick scan (Quét nhanh)</strong>: Quét các thư mục có nguy cơ cao (nơi virus thường ẩn náu).<br>
+            2. <strong>Full scan (Quét hết)</strong>: Quét tất cả các ổ đĩa và chương trình đang chạy (mất nhiều thời gian).<br>
+            3. <strong>Custom scan (Quét theo yêu cầu)</strong>: Chỉ quét trên một thư mục hay ổ đĩa do người dùng chỉ định.<br>
+            4. <strong>Windows Defender Offline scan (Quét ngoại tuyến)</strong>: Khởi động lại máy để quét sâu những mã độc khó gỡ.<br>
+            Sau khi chọn, nhấn nút <em>Scan now</em> để tiến hành quét.
+          </div>
+
+          <div style="background: rgba(56, 189, 248, 0.08); border: 1px dashed var(--cyan); padding: 14px 18px; border-radius: 10px;">
+            <strong>💡 Mẹo quét nhanh trên tệp hoặc thư mục:</strong><br>
+            Nhấp chuột phải vào tệp hay thư mục muốn kiểm tra &rarr; chọn <em>"Scan with Microsoft Defender..."</em> để quét trực tiếp mà không cần mở giao diện Settings.
+          </div>
+        </div>
+
+        <!-- PHÒNG THÍ NGHIỆM ẢO TƯƠNG TÁC WINDOWS DEFENDER SIMULATOR -->
+        <div class="sim-container">
+          <div class="sim-header">
+            <div class="sim-title">
+              <span>🛡️ Phòng Thí Nghiệm Ảo: Giả Lập Windows Defender 2026</span>
+            </div>
+            <span class="sim-badge" id="simStatusBadge">Trạng thái: An toàn</span>
+          </div>
+          <p style="font-size: 13px; color: var(--text-soft); margin-bottom: 12px;">
+            Bấm chọn chế độ quét bên dưới để thực hành quy trình phát hiện và tiêu diệt mã độc trực tiếp ngay trên trang web:
+          </p>
+          <div class="sim-actions">
+            <button class="action-btn" onclick="runSimScan('quick')">⚡ 1. Quét nhanh (Quick scan)</button>
+            <button class="action-btn" onclick="runSimScan('full')">💿 2. Quét toàn bộ (Full scan)</button>
+            <button class="action-btn" onclick="runSimScan('custom')">📁 3. Quét thư mục tải về (Custom scan)</button>
+          </div>
+          <div class="sim-screen" id="simScreen">
+            <div id="simLog" style="color: #94a3b8;">
+              [Hệ thống] Windows Defender đang bảo vệ theo thời gian thực (Real-time protection: ON).<br>
+              Chưa có lệnh quét nào được thực thi. Hãy bấm chọn một chế độ quét phía trên.
+            </div>
+            <div class="progress-bar-sim" id="simProgressWrap" style="display: none;">
+              <div class="progress-bar-sim-fill" id="simProgress"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- LUYỆN TẬP SGK -->
+      <section class="section" id="luyen-tap">
+        <span class="page-tag">SGK Trang 49</span>
+        <h2>✍️ Luyện tập SGK</h2>
+        
+        <div class="question-box">
+          <div class="q-item">
+            <p><strong>1.</strong> Em hãy kể ra các nguy cơ mất an toàn khi tham gia các mạng xã hội.</p>
+            <button class="q-btn" onclick="toggleAnswer('lt1')">Xem gợi ý lời giải</button>
+            <div class="q-answer" id="lt1">
+              Gợi ý: Lộ lọt thông tin cá nhân (CCCD, địa chỉ nhà, số điện thoại); Bị kẻ xấu mạo danh lừa đảo tài chính; Bị tấn công bạo lực mạng, bắt nạt (cyberbullying), vu khống, bôi nhọ; Bị dẫn dụ vào các đường link chứa mã độc đánh cắp tài khoản; Nguy cơ nghiện mạng xã hội dẫn đến sa sút học tập và sức khỏe.
+            </div>
+          </div>
+
+          <div class="q-item" style="margin-top: 16px;">
+            <p><strong>2.</strong> Em hãy kể ra những trường hợp có thể bị nhiễm phần mềm độc hại và biện pháp phòng, chống tương ứng.</p>
+            <button class="q-btn" onclick="toggleAnswer('lt2')">Xem gợi ý lời giải</button>
+            <div class="q-answer" id="lt2">
+              Gợi ý:<br>
+              • <em>Trường hợp 1:</em> Cắm USB từ máy khác vào mà chưa quét virus. &rarr; Biện pháp: Bật quét tự động bằng Windows Defender trước khi mở tệp.<br>
+              • <em>Trường hợp 2:</em> Tải game hoặc phần mềm bẻ khoá (crack) lậu trên mạng. &rarr; Biện pháp: Chỉ tải phần mềm từ nguồn chính thức, nói không với tệp crack.<br>
+              • <em>Trường hợp 3:</em> Bấm vào link lạ trong tin nhắn trúng thưởng giả mạo. &rarr; Biện pháp: Không nhấp vào liên kết lạ, xác minh người gửi.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VẬN DỤNG SGK -->
+      <section class="section" id="van-dung">
+        <span class="page-tag">SGK Trang 49</span>
+        <h2>💡 Vận dụng mở rộng</h2>
+
+        <div class="question-box" style="background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.3);">
+          <div class="question-header" style="color: var(--emerald-light);">💡 Câu hỏi vận dụng thực tế</div>
+          <div class="q-item">
+            <p><strong>1.</strong> Em hãy tìm hiểu qua Internet các cách thức tấn công từ chối dịch vụ (DOS / DDOS).</p>
+            <button class="q-btn" style="background: rgba(16, 185, 129, 0.2); border-color: rgba(16, 185, 129, 0.4); color: #a7f3d0;" onclick="toggleAnswer('vd1')">Xem phân tích chuyên sâu</button>
+            <div class="q-answer" id="vd1" style="border-left-color: var(--emerald); color: #a7f3d0;">
+              Phân tích: Tấn công từ chối dịch vụ (DoS - Denial of Service) và từ chối dịch vụ phân tán (DDoS - Distributed DoS) là hình thức tin tặc điều khiển hàng chục ngàn máy tính bị nhiễm mã độc (mạng máy tính ma Botnet) cùng đồng loạt gửi các yêu cầu truy cập giả mạo tới một máy chủ trong cùng một thời điểm. Máy chủ bị quá tải tài nguyên mạng hoặc CPU/RAM dẫn đến tê liệt, sập hệ thống và người dùng bình thường không thể truy cập được dịch vụ.
+            </div>
+          </div>
+
+          <div class="q-item" style="margin-top: 16px;">
+            <p><strong>2.</strong> Em hãy tìm trên mạng thông tin về worm, kể một worm với tác hại của nó.</p>
+            <button class="q-btn" style="background: rgba(16, 185, 129, 0.2); border-color: rgba(16, 185, 129, 0.4); color: #a7f3d0;" onclick="toggleAnswer('vd2')">Xem câu chuyện thực tế</button>
+            <div class="q-answer" id="vd2" style="border-left-color: var(--emerald); color: #a7f3d0;">
+              Câu chuyện: Sâu <strong>WannaCry</strong> xuất hiện vào tháng 5/2017. Nó khai thác lỗ hổng bảo mật EternalBlue trong hệ điều hành Windows để tự động quét và lây nhiễm qua mạng LAN/Internet mà không cần người dùng nhấp chuột. Khi xâm nhập, WannaCry mã hoá toàn bộ tài liệu cá nhân của nạn nhân bằng thuật toán cực mạnh và đòi tiền chuộc 300 - 600 USD bằng Bitcoin để giải mã. Nó làm tê liệt hàng loạt bệnh viện tại Anh, khiến các ca phẫu thuật phải hoãn lại, cùng hơn 200.000 máy tính tại 150 quốc gia.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER ĐIỀU HƯỚNG TỚI CÁC TÍNH NĂNG KHÁC -->
+      <footer class="sgk-footer">
+        <div>
+          <span style="color: var(--text-soft); font-size: 13px;">Hoàn thành đọc lý thuyết SGK Bài 9</span>
+          <div style="font-weight: 800; font-size: 16px; color: #fff; margin-top: 4px;">Bước tiếp theo của em:</div>
+        </div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <a href="/luyen/bai-09" class="footer-nav-btn" style="border-color: var(--cyan); color: var(--cyan);">
+            🎯 Luyện Trắc Nghiệm Bài 9 &rarr;
+          </a>
+          <a href="/bai-09-trinh-chieu.html" target="_blank" class="footer-nav-btn" style="border-color: var(--amber); color: var(--amber);">
+            📽️ Xem Slide Bài Giảng &rarr;
+          </a>
+        </div>
+      </footer>
+
+    </main>
+  </div>
+
+  <script>
+    // ─── ĐIỀU KHIỂN CỠ CHỮ ───
+    let currentFs = 18;
+    function changeFontSize(delta) {
+      currentFs = Math.max(15, Math.min(24, currentFs + delta));
+      document.documentElement.style.setProperty('--fs', currentFs + 'px');
+    }
+    function resetFontSize() {
+      currentFs = 18;
+      document.documentElement.style.setProperty('--fs', '18px');
+    }
+
+    // ─── THANH TIẾN ĐỘ CUỘN & ACTIVE TOC ───
+    window.addEventListener('scroll', () => {
+      const winScroll = document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+      document.getElementById('progressFill').style.width = scrolled + '%';
+
+      // Highlight TOC active item
+      const sections = document.querySelectorAll('section');
+      const tocLinks = document.querySelectorAll('.toc-item a');
+      let currentId = '';
+      sections.forEach(sec => {
+        const top = sec.offsetTop - 100;
+        if (winScroll >= top) {
+          currentId = sec.getAttribute('id');
+        }
+      });
+      if (currentId) {
+        tocLinks.forEach(link => {
+          if (link.getAttribute('href') === '#' + currentId) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+      }
+    });
+
+    // ─── BẬT/TẮT GỢI Ý ĐÁP ÁN ───
+    function toggleAnswer(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.toggle('show');
+      }
+    }
+
+    // ─── PHÒNG THÍ NGHIỆM ẢO WINDOWS DEFENDER SIMULATOR ───
+    let simScanning = false;
+    function runSimScan(mode) {
+      if (simScanning) return;
+      simScanning = true;
+
+      const badge = document.getElementById('simStatusBadge');
+      const log = document.getElementById('simLog');
+      const progressWrap = document.getElementById('simProgressWrap');
+      const progressFill = document.getElementById('simProgress');
+
+      badge.style.color = '#38bdf8';
+      badge.style.borderColor = '#38bdf8';
+      badge.textContent = 'Đang quét an ninh...';
+
+      progressWrap.style.display = 'block';
+      progressFill.style.width = '0%';
+
+      let scanName = mode === 'quick' ? 'Quét nhanh (Quick scan)' : mode === 'full' ? 'Quét toàn bộ (Full scan)' : 'Quét thư mục tải về (Custom scan)';
+      log.innerHTML = `<span style="color: #38bdf8;">[Bắt đầu]</span> Đang khởi chạy ${scanName}...<br><span style="color: #94a3b8;">Đang phân tích các tiến trình và tệp tin thực thi...</span>`;
+
+      let percent = 0;
+      const interval = setInterval(() => {
+        percent += (mode === 'quick' ? 12 : mode === 'custom' ? 8 : 4);
+        if (percent > 100) percent = 100;
+        progressFill.style.width = percent + '%';
+
+        if (percent === 40 && mode !== 'custom') {
+          log.innerHTML += `<br><span style="color: #f59e0b;">[Phát hiện]</span> Tìm thấy tệp khả nghi: <code>Trojan.Win32.Generic.exe</code>`;
+        } else if (percent === 80) {
+          log.innerHTML += `<br><span style="color: #38bdf8;">[Hành động]</span> Đang cách ly mã độc vào khu vực an toàn (Threat Quarantined)...`;
+        }
+
+        if (percent >= 100) {
+          clearInterval(interval);
+          simScanning = false;
+          badge.style.color = '#34d399';
+          badge.style.borderColor = '#10b981';
+          badge.textContent = 'Trạng thái: Máy tính được bảo vệ an toàn ✅';
+          log.innerHTML += `<br><span style="color: #34d399; font-weight: bold;">[Hoàn tất]</span> Đã quét xong! Đã tiêu diệt 1 mã độc, bảo vệ 100% dữ liệu an toàn.`;
+        }
+      }, 150);
+    }
+  </script>
+</body>
+</html>

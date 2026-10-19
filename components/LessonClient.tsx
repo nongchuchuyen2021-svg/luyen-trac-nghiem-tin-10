@@ -66,12 +66,22 @@ export default function LessonClient({
   if (mode === "sgk" && sgkUrl) {
     return (
       <div className="fixed inset-0 z-50 bg-[#05070b]">
-        <button
-          onClick={() => setMode("menu")}
-          className="fixed left-3 top-3 z-10 rounded-full border border-white/20 bg-black/60 px-3 py-1.5 font-mono text-xs text-white backdrop-blur transition hover:border-white/40"
-        >
-          ← Quay lại
-        </button>
+        <div className="fixed left-3 top-3 z-10 flex gap-2">
+          <button
+            onClick={() => setMode("menu")}
+            className="rounded-full border border-white/20 bg-black/70 px-3.5 py-1.5 font-mono text-xs text-white backdrop-blur transition hover:border-white/40 hover:bg-black/90"
+          >
+            ← Quay lại bài học
+          </button>
+          <a
+            href={sgkUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-full border border-cyan-500/40 bg-cyan-600/80 px-3.5 py-1.5 font-mono text-xs text-white backdrop-blur transition hover:bg-cyan-500"
+          >
+            ↗ Mở toàn màn hình tab mới
+          </a>
+        </div>
         <iframe
           src={sgkUrl}
           title={`SGK · ${lessonTitle}`}
@@ -265,8 +275,11 @@ export default function LessonClient({
           {
             key: "sgk" as Mode,
             emoji: "📘",
-            name: "SGK",
-            desc: "Sách điện tử — xem nguyên bài trong sách giáo khoa",
+            name: "SGK Điện tử",
+            desc:
+              lessonId === "bai-09"
+                ? "SGK điện tử tương tác · mục lục dính, giả lập Windows Defender & ghi nhớ cốt lõi"
+                : "Sách điện tử — đọc nguyên văn SGK với mục lục và điều chỉnh cỡ chữ",
             best: null,
             enabled: true,
           },

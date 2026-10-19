@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { TFQuestion } from "@/lib/types";
 import { saveAttempt, getLessonProgress } from "@/lib/progress";
+import NopBai from "@/components/NopBai";
 import { scrollIntoViewIfNeeded } from "@/components/QuizClient";
 
 // Điểm mỗi câu theo quy chế thi tốt nghiệp: đúng 1 ý 0,1đ; 2 ý 0,25đ; 3 ý 0,5đ; 4 ý 1đ
@@ -96,6 +97,17 @@ export default function TrueFalseQuiz({
               ← Chọn phần khác
             </button>
           </div>
+
+          {/* NỘP KẾT QUẢ VÀO GOOGLE SHEET */}
+          <NopBai
+            baiId={`${lessonId}-ds`}
+            tenBai={`${lessonTitle} (Đúng/Sai)`}
+            dang="Đúng/Sai"
+            diem={percent}
+            soCauDung={Math.round(totalEarned * 10) / 10}
+            tongSoCau={maxScore}
+            diemChu={`${totalEarned.toFixed(2).replace(".", ",")}/${maxScore} điểm (${percent}%)`}
+          />
         </div>
       </div>
     );

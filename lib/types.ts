@@ -287,6 +287,7 @@ export type LessonCounts = {
   essay: number;
   theory: boolean;
   hasSlide?: boolean;
+  hasSgk?: boolean;
   games?: number;
   hasArena?: boolean;
   hasSearch?: boolean;

@@ -65,6 +65,99 @@ export default function HomeClient({ counts }: { counts: Record<string, LessonCo
           )}
         </header>
 
+        {/* BANNER NỔI BẬT: ĐỀ KIỂM TRA THƯỜNG XUYÊN 2 (BÀI 1, 2, 7, 8, 9) */}
+        <div className="mt-8">
+          <Link
+            href="/kiem-tra/thuong-xuyen-2"
+            className="group relative block overflow-hidden rounded-3xl border-2 border-grape/30 bg-gradient-to-r from-grape/10 via-purple-50/80 to-bubble/10 p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-grape hover:shadow-card-hover"
+          >
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-start gap-4">
+                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-grape to-bubble text-3xl text-white shadow-md">
+                  📝
+                </span>
+                <div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="rounded-full bg-grape/15 px-3 py-0.5 font-mono text-[11px] font-bold text-grape-deep">
+                      ĐỀ THI MỚI · ĐÁNH GIÁ THƯỜNG XUYÊN 2
+                    </span>
+                    <span className="rounded-full bg-mint/15 px-2.5 py-0.5 font-mono text-[11px] font-bold text-mint-deep">
+                      📊 LƯU GOOGLE SHEET
+                    </span>
+                  </div>
+                  <h3 className="mt-2 font-display text-lg font-bold text-ink group-hover:text-grape-deep sm:text-xl">
+                    Đề Kiểm Tra Thường Xuyên 2 (Bài 1, 2, 7, 8, 9)
+                  </h3>
+                  <p className="mt-1 text-xs text-ink-soft leading-relaxed sm:text-sm">
+                    15 câu trắc nghiệm chuẩn ma trận · 20 phút · Bấm giờ tự động, chấm điểm chuẩn xác và lưu ngay vào Google Sheet của thầy cô.
+                  </p>
+                </div>
+              </div>
+              <div className="flex shrink-0 items-center gap-2 rounded-2xl bg-gradient-to-r from-grape to-bubble px-5 py-3 font-display text-sm font-bold text-white shadow-md transition group-hover:scale-105">
+                <span>Vào làm bài ngay</span>
+                <span className="font-mono text-base">→</span>
+              </div>
+            </div>
+          </Link>
+        </div>
+
+        {/* 2 BANNER TÍNH NĂNG ĐỘT PHÁ SO VỚI TIN 12 */}
+        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {/* BANNER 1: PHÒNG KIỂM TRA ĐỊNH KỲ */}
+          <Link
+            href="/kiem-tra"
+            className="group flex flex-col justify-between rounded-2xl border-2 border-coral/30 bg-gradient-to-br from-coral/10 via-white to-amber-500/10 p-5 shadow-card transition hover:-translate-y-0.5 hover:border-coral hover:shadow-card-hover"
+          >
+            <div>
+              <div className="flex items-center justify-between">
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-coral/15 text-2xl">
+                  🎯
+                </span>
+                <span className="rounded-full bg-coral/15 px-2.5 py-0.5 font-mono text-[11px] font-bold text-coral">
+                  CHẾ ĐỘ THI THẬT
+                </span>
+              </div>
+              <h3 className="mt-3 font-display text-base font-bold text-ink group-hover:text-coral sm:text-lg">
+                Phòng Kiểm Tra Định Kỳ 10
+              </h3>
+              <p className="mt-1 text-xs text-ink-soft leading-relaxed">
+                Đánh giá 15 phút, 45 phút Giữa kì & Học kì. Bấm giờ thật, trộn đề 34 bài, chấm điểm tự động chuẩn GDPT 2018.
+              </p>
+            </div>
+            <div className="mt-4 flex items-center justify-between pt-2 border-t border-ink/5">
+              <span className="font-mono text-xs font-semibold text-coral">Vào phòng kiểm tra</span>
+              <span className="font-mono text-xs font-bold text-coral">→</span>
+            </div>
+          </Link>
+
+          {/* BANNER 2: ĐẤU TRƯỜNG TRỰC TUYẾN MÃ PIN */}
+          <Link
+            href="/dau-truong"
+            className="group flex flex-col justify-between rounded-2xl border-2 border-cyan-500/30 bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 p-5 text-white shadow-xl transition hover:-translate-y-0.5 hover:border-cyan-400 hover:shadow-cyan-500/20"
+          >
+            <div>
+              <div className="flex items-center justify-between">
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-cyan-500/20 text-2xl border border-cyan-400/30">
+                  🌐
+                </span>
+                <span className="rounded-full bg-cyan-400/20 border border-cyan-400/40 px-2.5 py-0.5 font-mono text-[10px] font-bold text-cyan-300">
+                  MÃ PIN PHÒNG
+                </span>
+              </div>
+              <h3 className="mt-3 font-display text-base font-bold text-white group-hover:text-cyan-300 sm:text-lg">
+                Đấu Trường Nhiều Máy Tính
+              </h3>
+              <p className="mt-1 text-xs text-slate-300 leading-relaxed">
+                Thầy cô làm Host trên máy chiếu · Các máy học sinh nhập mã PIN đấu Summit Battle thời gian thực.
+              </p>
+            </div>
+            <div className="mt-4 flex items-center justify-between pt-2 border-t border-white/10">
+              <span className="font-mono text-xs font-semibold text-cyan-300">Vào phòng đấu</span>
+              <span className="font-mono text-xs font-bold text-cyan-300">→</span>
+            </div>
+          </Link>
+        </div>
+
         <div className="mt-8 space-y-8">
           {CURRICULUM.map((topic) => {
             const hasAvailable = topic.lessons.some((l) => l.available);
@@ -94,6 +187,7 @@ export default function HomeClient({ counts }: { counts: Record<string, LessonCo
                       c && c.essay > 0 ? `${c.essay} tự luận` : "",
                       c && c.theory ? "📖 có lý thuyết" : "",
                       c && c.hasSlide ? "📽️ có slide" : "",
+                      c && c.hasSgk ? "📘 có SGK" : "",
                       c?.gameBadge || (c?.games && c.games > 0 ? `🎮 ${c.games} trò chơi` : ""),
                       p ? `đã làm ${p.attempts} lần` : "",
                     ]

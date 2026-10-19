@@ -5,6 +5,7 @@ import { getTF, getEssay } from "@/lib/extras";
 import { getTheory } from "@/lib/theory";
 import { getLessonGames } from "@/lib/games";
 import { getSlideUrl } from "@/lib/slides";
+import { getSgkUrl } from "@/data/sgkEbook";
 import type { LessonCounts } from "@/lib/types";
 
 function computeGameBadge(games: ReturnType<typeof getLessonGames>): string {
@@ -40,6 +41,7 @@ export default function HomePage() {
         essay: getEssay(lesson.id).length,
         theory: getTheory(lesson.id) !== null,
         hasSlide: getSlideUrl(lesson.id) !== null,
+        hasSgk: getSgkUrl(lesson.id) !== null,
         games: games.length,
         hasArena: games.some((g) => g.kind === "arena"),
         hasSearch: games.some((g) => g.kind === "search"),
