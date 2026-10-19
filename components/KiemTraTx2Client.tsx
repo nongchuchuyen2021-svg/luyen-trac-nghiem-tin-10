@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { DE_KIEM_TRA_TX2 } from "@/data/kiem-tra-tx2";
+import { DE_KIEM_TRA_TX2 } from "@/data/de-kiem-tra/thuong-xuyen-2";
 import type { Question } from "@/lib/types";
 import { getHocSinh, saveHocSinh, hopLe, chuanHoa } from "@/lib/hocsinh";
 import { playCorrect, playWrong, playCelebration, playClick } from "@/lib/sound";
