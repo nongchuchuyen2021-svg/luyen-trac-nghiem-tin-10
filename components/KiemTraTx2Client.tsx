@@ -45,14 +45,10 @@ function getLessonTag(q: Question): string {
   return "Tin học 10";
 }
 
-function tronDe(cheDo: "ngau-nhien" | "co-dinh" = "ngau-nhien"): CauDaTron[] {
-  // 1. Lấy danh sách 15 câu hỏi:
-  // - Nếu "ngau-nhien": bốc ngẫu nhiên 3 câu/bài từ 5 bài (tổng 58 câu) và xáo trộn vị trí 15 câu
-  // - Nếu "co-dinh": lấy 15 câu chuẩn ma trận và xáo trộn vị trí 15 câu
-  const rawQuestions: Question[] =
-    cheDo === "ngau-nhien"
-      ? taoDeNgauNhienTx2()
-      : shuffle([...DE_KIEM_TRA_TX2.questions]);
+function tronDe(): CauDaTron[] {
+  // 1. Bốc ngẫu nhiên 15 câu (3 câu/bài từ 5 bài: 1, 2, 7, 8, 9) từ ngân hàng 58 câu
+  // và xáo trộn ngẫu nhiên vị trí 15 câu hỏi
+  const rawQuestions: Question[] = taoDeNgauNhienTx2();
 
   // 2. Xáo trộn ngẫu nhiên 4 phương án A, B, C, D của từng câu hỏi
   return rawQuestions.map((q) => {
@@ -81,7 +77,6 @@ export default function KiemTraTx2Client() {
   const [hoTen, setHoTen] = useState("");
   const [lop, setLop] = useState("");
   const [de, setDe] = useState<CauDaTron[]>([]);
-  const [cheDoDe, setCheDoDe] = useState<"ngau-nhien" | "co-dinh">("ngau-nhien");
   const [cauHienTai, setCauHienTai] = useState(0);
   const [dapAnDaChon, setDapAnDaChon] = useState<(number | null)[]>([]);
   const [giayConLai, setGiayConLai] = useState(DE_KIEM_TRA_TX2.thoiGianPhut * 60);
@@ -141,7 +136,7 @@ export default function KiemTraTx2Client() {
     setLop(hs.lop);
 
     playClick();
-    const boDe = tronDe(cheDoDe);
+    const boDe = tronDe();
     setDe(boDe);
     setDapAnDaChon(new Array(boDe.length).fill(null));
     setCauHienTai(0);
@@ -206,7 +201,7 @@ export default function KiemTraTx2Client() {
           hoTen: hs.hoTen,
           lop: hs.lop,
           baiId: DE_KIEM_TRA_TX2.id,
-          tenBai: `${DE_KIEM_TRA_TX2.title} ${cheDoDe === "ngau-nhien" ? "(Bốc ngẫu nhiên)" : "(Đề chuẩn)"}`,
+          tenBai: `${DE_KIEM_TRA_TX2.title} (Bốc ngẫu nhiên)`,
           dang: "Thường xuyên",
           diem: diemSo,
           soCauDung: dung,
@@ -324,95 +319,48 @@ export default function KiemTraTx2Client() {
             </ul>
           </div>
 
-          {/* LỰA CHỌN CHẾ ĐỘ TẠO ĐỀ & ĐẢO NGẪU NHIÊN */}
-          <div className="mt-6 rounded-2xl border border-ink/10 bg-white p-4 shadow-sm">
-            <div className="flex items-center justify-between">
-              <h3 className="font-display text-xs font-bold uppercase tracking-wider text-ink-soft">
-                Cơ chế đảo đề & bốc câu hỏi:
-              </h3>
-              <span className="inline-flex items-center gap-1 rounded-full bg-mint/15 px-2.5 py-0.5 font-mono text-[11px] font-bold text-mint-deep">
-                🛡️ Chống gian lận phòng máy
+          {/* CƠ CHẾ BỐC ĐỀ NGẪU NHIÊN VÀ BẢO MẬT PHÒNG MÁY */}
+          <div className="mt-6 rounded-2xl border border-grape/25 bg-gradient-to-br from-grape/[0.04] via-white to-mint/[0.04] p-5 shadow-sm">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="flex items-center gap-2.5">
+                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-grape text-white text-base shadow-sm">
+                  🎲
+                </span>
+                <div>
+                  <h3 className="font-display text-sm font-bold text-ink">
+                    Chế độ: Bốc đề ngẫu nhiên từ 5 bài
+                  </h3>
+                  <p className="font-mono text-[11px] text-ink-soft">
+                    Bốc 3 câu/bài từ kho 58 câu · Đảo toàn diện đề thi
+                  </p>
+                </div>
+              </div>
+              <span className="inline-flex items-center gap-1 rounded-full bg-mint/15 px-3 py-1 font-mono text-xs font-bold text-mint-deep">
+                🛡️ Chống nhìn bài 100%
               </span>
             </div>
 
-            <div className="mt-3 grid gap-3 sm:grid-cols-2">
-              <button
-                type="button"
-                onClick={() => {
-                  playClick();
-                  setCheDoDe("ngau-nhien");
-                }}
-                className={`flex flex-col justify-between rounded-2xl border p-4 text-left transition ${
-                  cheDoDe === "ngau-nhien"
-                    ? "border-grape bg-grape/[0.04] shadow-sm ring-2 ring-grape/30"
-                    : "border-ink/10 bg-cream/40 hover:border-ink/25 hover:bg-cream"
-                }`}
-              >
-                <div>
-                  <div className="flex items-center justify-between">
-                    <span className="flex items-center gap-2 font-display text-sm font-bold text-ink">
-                      <span>🎲</span> Bốc ngẫu nhiên từ 5 bài
-                    </span>
-                    <span className="rounded-full bg-grape/10 px-2 py-0.5 font-mono text-[10px] font-bold text-grape">
-                      Khuyên dùng
-                    </span>
-                  </div>
-                  <p className="mt-2 text-xs text-ink-soft leading-relaxed">
-                    Hệ thống tự động bốc ngẫu nhiên <strong>3 câu/bài từ ngân hàng 58 câu</strong>. Mỗi học sinh ngồi cạnh nhau sẽ nhận được một đề hoàn toàn khác biệt.
-                  </p>
-                </div>
-                <div className="mt-3 flex items-center justify-between border-t border-ink/5 pt-2 text-[11px]">
-                  <span className="font-mono text-ink-soft">58 câu ngân hàng</span>
-                  <span className={`font-mono font-bold ${cheDoDe === "ngau-nhien" ? "text-grape" : "text-ink-soft/50"}`}>
-                    {cheDoDe === "ngau-nhien" ? "● Đang chọn" : "○ Chọn"}
-                  </span>
-                </div>
-              </button>
+            <p className="mt-3 text-xs text-ink-soft leading-relaxed">
+              Mỗi học sinh khi bấm làm bài sẽ được hệ thống <strong>tự động bốc ngẫu nhiên 15 câu</strong> (3 câu từ mỗi Bài 1, 2, 7, 8, 9), đồng thời <strong>đảo ngẫu nhiên thứ tự 15 câu</strong> và <strong>đảo ngẫu nhiên 4 phương án A, B, C, D</strong> của từng câu. Hai máy tính ngồi cạnh nhau trong phòng máy sẽ nhận đề hoàn toàn khác nhau.
+            </p>
 
-              <button
-                type="button"
-                onClick={() => {
-                  playClick();
-                  setCheDoDe("co-dinh");
-                }}
-                className={`flex flex-col justify-between rounded-2xl border p-4 text-left transition ${
-                  cheDoDe === "co-dinh"
-                    ? "border-grape bg-grape/[0.04] shadow-sm ring-2 ring-grape/30"
-                    : "border-ink/10 bg-cream/40 hover:border-ink/25 hover:bg-cream"
-                }`}
-              >
-                <div>
-                  <div className="flex items-center justify-between">
-                    <span className="flex items-center gap-2 font-display text-sm font-bold text-ink">
-                      <span>📄</span> Đề chuẩn cố định (15 câu)
-                    </span>
-                    <span className="rounded-full bg-cream px-2 py-0.5 font-mono text-[10px] font-medium text-ink-soft">
-                      Đề mẫu chung
-                    </span>
-                  </div>
-                  <p className="mt-2 text-xs text-ink-soft leading-relaxed">
-                    Cả lớp làm chung 15 câu hỏi chuẩn ma trận đã chọn lọc, nhưng <strong>đảo ngẫu nhiên thứ tự câu</strong> và <strong>đảo ngẫu nhiên 4 đáp án A, B, C, D</strong>.
-                  </p>
-                </div>
-                <div className="mt-3 flex items-center justify-between border-t border-ink/5 pt-2 text-[11px]">
-                  <span className="font-mono text-ink-soft">15 câu chuẩn</span>
-                  <span className={`font-mono font-bold ${cheDoDe === "co-dinh" ? "text-grape" : "text-ink-soft/50"}`}>
-                    {cheDoDe === "co-dinh" ? "● Đang chọn" : "○ Chọn"}
-                  </span>
-                </div>
-              </button>
-            </div>
-
-            <div className="mt-3.5 flex flex-wrap items-center gap-2 border-t border-ink/5 pt-3 font-mono text-[11px] text-ink-soft">
-              <span className="inline-flex items-center gap-1 rounded-lg bg-cream px-2.5 py-1 text-ink-soft">
-                🔀 Đảo thứ tự 15 câu
-              </span>
-              <span className="inline-flex items-center gap-1 rounded-lg bg-cream px-2.5 py-1 text-ink-soft">
-                🔄 Đảo 4 phương án A-B-C-D
-              </span>
-              <span className="inline-flex items-center gap-1 rounded-lg bg-cream px-2.5 py-1 text-ink-soft">
-                ⚡ Tự động nộp Google Sheets
-              </span>
+            <div className="mt-3.5 grid grid-cols-2 gap-2 border-t border-ink/5 pt-3 sm:grid-cols-4 font-mono text-[11px]">
+              <div className="rounded-xl bg-white/80 p-2 border border-ink/5 text-center">
+                <span className="text-grape font-bold">✓ Bốc ngẫu nhiên</span>
+                <p className="text-[10px] text-ink-soft">Kho 58 câu</p>
+              </div>
+              <div className="rounded-xl bg-white/80 p-2 border border-ink/5 text-center">
+                <span className="text-grape font-bold">✓ Đảo câu hỏi</span>
+                <p className="text-[10px] text-ink-soft">15 vị trí khác nhau</p>
+              </div>
+              <div className="rounded-xl bg-white/80 p-2 border border-ink/5 text-center">
+                <span className="text-grape font-bold">✓ Đảo đáp án</span>
+                <p className="text-[10px] text-ink-soft">A · B · C · D tráo đổi</p>
+              </div>
+              <div className="rounded-xl bg-white/80 p-2 border border-ink/5 text-center">
+                <span className="text-mint-deep font-bold">✓ Google Sheets</span>
+                <p className="text-[10px] text-ink-soft">Tự động lưu điểm</p>
+              </div>
             </div>
           </div>
 
@@ -794,7 +742,7 @@ export default function KiemTraTx2Client() {
         {/* THÀNH PHẦN NỘP BÀI GOOGLE SHEET */}
         <NopBai
           baiId={DE_KIEM_TRA_TX2.id}
-          tenBai={`${DE_KIEM_TRA_TX2.title} ${cheDoDe === "ngau-nhien" ? "(Bốc ngẫu nhiên)" : "(Đề chuẩn)"}`}
+          tenBai={`${DE_KIEM_TRA_TX2.title} (Bốc ngẫu nhiên)`}
           dang="Thường xuyên"
           diem={diem}
           soCauDung={soCauDung}
