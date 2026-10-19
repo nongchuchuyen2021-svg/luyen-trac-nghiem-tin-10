@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { DE_KIEM_TRA_TX2 } from "@/data/de-kiem-tra/thuong-xuyen-2";
+import { DE_KIEM_TRA_TX2, taoDeNgauNhienTx2 } from "@/data/de-kiem-tra/thuong-xuyen-2";
 import type { Question } from "@/lib/types";
 import { getHocSinh, saveHocSinh, hopLe, chuanHoa } from "@/lib/hocsinh";
 import { playCorrect, playWrong, playCelebration, playClick } from "@/lib/sound";
@@ -26,22 +26,42 @@ type CauDaTron = Question & {
   lessonTag: string;
 };
 
-function getLessonTag(index: number): string {
-  if (index < 3) return "Bài 1 · Thông tin & Xử lí";
-  if (index < 6) return "Bài 2 · Thiết bị thông minh";
-  if (index < 9) return "Bài 7 · Sử dụng thiết bị số";
-  if (index < 12) return "Bài 8 · Mạng máy tính";
-  return "Bài 9 · An toàn không gian mạng";
+function getLessonTag(q: Question): string {
+  if (q.id.startsWith("b1-") || ["tx2-01", "tx2-02", "tx2-03"].includes(q.id)) {
+    return "Bài 1 · Thông tin & Xử lí";
+  }
+  if (q.id.startsWith("b2-") || ["tx2-04", "tx2-05", "tx2-06"].includes(q.id)) {
+    return "Bài 2 · Thiết bị thông minh";
+  }
+  if (q.id.startsWith("b7-") || ["tx2-07", "tx2-08", "tx2-09"].includes(q.id)) {
+    return "Bài 7 · Sử dụng thiết bị số";
+  }
+  if (q.id.startsWith("b8-") || ["tx2-10", "tx2-11", "tx2-12"].includes(q.id)) {
+    return "Bài 8 · Mạng máy tính";
+  }
+  if (q.id.startsWith("b9-") || ["tx2-13", "tx2-14", "tx2-15"].includes(q.id)) {
+    return "Bài 9 · An toàn không gian mạng";
+  }
+  return "Tin học 10";
 }
 
-function tronDe(): CauDaTron[] {
-  return DE_KIEM_TRA_TX2.questions.map((q, idx) => {
+function tronDe(cheDo: "ngau-nhien" | "co-dinh" = "ngau-nhien"): CauDaTron[] {
+  // 1. Lấy danh sách 15 câu hỏi:
+  // - Nếu "ngau-nhien": bốc ngẫu nhiên 3 câu/bài từ 5 bài (tổng 58 câu) và xáo trộn vị trí 15 câu
+  // - Nếu "co-dinh": lấy 15 câu chuẩn ma trận và xáo trộn vị trí 15 câu
+  const rawQuestions: Question[] =
+    cheDo === "ngau-nhien"
+      ? taoDeNgauNhienTx2()
+      : shuffle([...DE_KIEM_TRA_TX2.questions]);
+
+  // 2. Xáo trộn ngẫu nhiên 4 phương án A, B, C, D của từng câu hỏi
+  return rawQuestions.map((q) => {
     const order = shuffle([0, 1, 2, 3]);
     return {
       ...q,
       shuffledOptions: order.map((i) => q.options[i]),
       correctIndex: order.indexOf(q.answer),
-      lessonTag: getLessonTag(idx),
+      lessonTag: getLessonTag(q),
     };
   });
 }
@@ -61,6 +81,7 @@ export default function KiemTraTx2Client() {
   const [hoTen, setHoTen] = useState("");
   const [lop, setLop] = useState("");
   const [de, setDe] = useState<CauDaTron[]>([]);
+  const [cheDoDe, setCheDoDe] = useState<"ngau-nhien" | "co-dinh">("ngau-nhien");
   const [cauHienTai, setCauHienTai] = useState(0);
   const [dapAnDaChon, setDapAnDaChon] = useState<(number | null)[]>([]);
   const [giayConLai, setGiayConLai] = useState(DE_KIEM_TRA_TX2.thoiGianPhut * 60);
@@ -120,7 +141,7 @@ export default function KiemTraTx2Client() {
     setLop(hs.lop);
 
     playClick();
-    const boDe = tronDe();
+    const boDe = tronDe(cheDoDe);
     setDe(boDe);
     setDapAnDaChon(new Array(boDe.length).fill(null));
     setCauHienTai(0);
@@ -185,7 +206,7 @@ export default function KiemTraTx2Client() {
           hoTen: hs.hoTen,
           lop: hs.lop,
           baiId: DE_KIEM_TRA_TX2.id,
-          tenBai: DE_KIEM_TRA_TX2.title,
+          tenBai: `${DE_KIEM_TRA_TX2.title} ${cheDoDe === "ngau-nhien" ? "(Bốc ngẫu nhiên)" : "(Đề chuẩn)"}`,
           dang: "Thường xuyên",
           diem: diemSo,
           soCauDung: dung,
@@ -301,6 +322,98 @@ export default function KiemTraTx2Client() {
                 </span>
               </li>
             </ul>
+          </div>
+
+          {/* LỰA CHỌN CHẾ ĐỘ TẠO ĐỀ & ĐẢO NGẪU NHIÊN */}
+          <div className="mt-6 rounded-2xl border border-ink/10 bg-white p-4 shadow-sm">
+            <div className="flex items-center justify-between">
+              <h3 className="font-display text-xs font-bold uppercase tracking-wider text-ink-soft">
+                Cơ chế đảo đề & bốc câu hỏi:
+              </h3>
+              <span className="inline-flex items-center gap-1 rounded-full bg-mint/15 px-2.5 py-0.5 font-mono text-[11px] font-bold text-mint-deep">
+                🛡️ Chống gian lận phòng máy
+              </span>
+            </div>
+
+            <div className="mt-3 grid gap-3 sm:grid-cols-2">
+              <button
+                type="button"
+                onClick={() => {
+                  playClick();
+                  setCheDoDe("ngau-nhien");
+                }}
+                className={`flex flex-col justify-between rounded-2xl border p-4 text-left transition ${
+                  cheDoDe === "ngau-nhien"
+                    ? "border-grape bg-grape/[0.04] shadow-sm ring-2 ring-grape/30"
+                    : "border-ink/10 bg-cream/40 hover:border-ink/25 hover:bg-cream"
+                }`}
+              >
+                <div>
+                  <div className="flex items-center justify-between">
+                    <span className="flex items-center gap-2 font-display text-sm font-bold text-ink">
+                      <span>🎲</span> Bốc ngẫu nhiên từ 5 bài
+                    </span>
+                    <span className="rounded-full bg-grape/10 px-2 py-0.5 font-mono text-[10px] font-bold text-grape">
+                      Khuyên dùng
+                    </span>
+                  </div>
+                  <p className="mt-2 text-xs text-ink-soft leading-relaxed">
+                    Hệ thống tự động bốc ngẫu nhiên <strong>3 câu/bài từ ngân hàng 58 câu</strong>. Mỗi học sinh ngồi cạnh nhau sẽ nhận được một đề hoàn toàn khác biệt.
+                  </p>
+                </div>
+                <div className="mt-3 flex items-center justify-between border-t border-ink/5 pt-2 text-[11px]">
+                  <span className="font-mono text-ink-soft">58 câu ngân hàng</span>
+                  <span className={`font-mono font-bold ${cheDoDe === "ngau-nhien" ? "text-grape" : "text-ink-soft/50"}`}>
+                    {cheDoDe === "ngau-nhien" ? "● Đang chọn" : "○ Chọn"}
+                  </span>
+                </div>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  playClick();
+                  setCheDoDe("co-dinh");
+                }}
+                className={`flex flex-col justify-between rounded-2xl border p-4 text-left transition ${
+                  cheDoDe === "co-dinh"
+                    ? "border-grape bg-grape/[0.04] shadow-sm ring-2 ring-grape/30"
+                    : "border-ink/10 bg-cream/40 hover:border-ink/25 hover:bg-cream"
+                }`}
+              >
+                <div>
+                  <div className="flex items-center justify-between">
+                    <span className="flex items-center gap-2 font-display text-sm font-bold text-ink">
+                      <span>📄</span> Đề chuẩn cố định (15 câu)
+                    </span>
+                    <span className="rounded-full bg-cream px-2 py-0.5 font-mono text-[10px] font-medium text-ink-soft">
+                      Đề mẫu chung
+                    </span>
+                  </div>
+                  <p className="mt-2 text-xs text-ink-soft leading-relaxed">
+                    Cả lớp làm chung 15 câu hỏi chuẩn ma trận đã chọn lọc, nhưng <strong>đảo ngẫu nhiên thứ tự câu</strong> và <strong>đảo ngẫu nhiên 4 đáp án A, B, C, D</strong>.
+                  </p>
+                </div>
+                <div className="mt-3 flex items-center justify-between border-t border-ink/5 pt-2 text-[11px]">
+                  <span className="font-mono text-ink-soft">15 câu chuẩn</span>
+                  <span className={`font-mono font-bold ${cheDoDe === "co-dinh" ? "text-grape" : "text-ink-soft/50"}`}>
+                    {cheDoDe === "co-dinh" ? "● Đang chọn" : "○ Chọn"}
+                  </span>
+                </div>
+              </button>
+            </div>
+
+            <div className="mt-3.5 flex flex-wrap items-center gap-2 border-t border-ink/5 pt-3 font-mono text-[11px] text-ink-soft">
+              <span className="inline-flex items-center gap-1 rounded-lg bg-cream px-2.5 py-1 text-ink-soft">
+                🔀 Đảo thứ tự 15 câu
+              </span>
+              <span className="inline-flex items-center gap-1 rounded-lg bg-cream px-2.5 py-1 text-ink-soft">
+                🔄 Đảo 4 phương án A-B-C-D
+              </span>
+              <span className="inline-flex items-center gap-1 rounded-lg bg-cream px-2.5 py-1 text-ink-soft">
+                ⚡ Tự động nộp Google Sheets
+              </span>
+            </div>
           </div>
 
           {/* Form nhập Họ tên và Lớp của học sinh */}
@@ -681,7 +794,7 @@ export default function KiemTraTx2Client() {
         {/* THÀNH PHẦN NỘP BÀI GOOGLE SHEET */}
         <NopBai
           baiId={DE_KIEM_TRA_TX2.id}
-          tenBai={DE_KIEM_TRA_TX2.title}
+          tenBai={`${DE_KIEM_TRA_TX2.title} ${cheDoDe === "ngau-nhien" ? "(Bốc ngẫu nhiên)" : "(Đề chuẩn)"}`}
           dang="Thường xuyên"
           diem={diem}
           soCauDung={soCauDung}

@@ -1,11 +1,33 @@
 import type { Question } from "@/lib/types";
+import { QUESTION_BANK } from "@/lib/questions";
 
-// ============================================================================
-// THƯ MỤC ĐỀ KIỂM TRA ĐỊNH KỲ — TIN HỌC 10
-// Trường THPT Na Rì — Tỉnh Thái Nguyên
-// Đề: KIỂM TRA THƯỜNG XUYÊN SỐ 2 (Bài 1, 2, 7, 8, 9)
-// Cấu trúc: 15 câu trắc nghiệm 4 phương án · 20 phút · Thang điểm 10,0
-// ============================================================================
+function shuffleArr<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/**
+ * Bốc ngẫu nhiên 15 câu trắc nghiệm từ ngân hàng 58 câu của 5 bài:
+ * - 3 câu từ Bài 1
+ * - 3 câu từ Bài 2
+ * - 3 câu từ Bài 7
+ * - 3 câu từ Bài 8
+ * - 3 câu từ Bài 9
+ * Sau đó xáo trộn ngẫu nhiên vị trí của 15 câu hỏi.
+ */
+export function taoDeNgauNhienTx2(): Question[] {
+  const b1 = shuffleArr(QUESTION_BANK["bai-01"] ?? []).slice(0, 3);
+  const b2 = shuffleArr(QUESTION_BANK["bai-02"] ?? []).slice(0, 3);
+  const b7 = shuffleArr(QUESTION_BANK["bai-07"] ?? []).slice(0, 3);
+  const b8 = shuffleArr(QUESTION_BANK["bai-08"] ?? []).slice(0, 3);
+  const b9 = shuffleArr(QUESTION_BANK["bai-09"] ?? []).slice(0, 3);
+
+  return shuffleArr([...b1, ...b2, ...b7, ...b8, ...b9]);
+}
 
 export interface DeKiemTraThuongXuyen {
   id: string;
