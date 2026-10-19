@@ -16,6 +16,7 @@ function load(file) {
     compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 },
   }).outputText;
   const localRequire = (id) => {
+    if (id.startsWith("node:")) return require(id);
     if (id.startsWith("@/")) return load(id.slice(2) + ".ts");
     if (id.startsWith(".")) return load(path.resolve(path.dirname(filename), id) + ".ts");
     throw new Error(`Unexpected dependency: ${id}`);
@@ -142,4 +143,48 @@ try {
   QUESTION_BANK[lesson] = saved;
 }
 assert.equal(JSON.stringify(bank), original, "Selection/shuffling must not mutate bank");
-console.log("PASS: 1,000 balanced exams; 100 non-repeating replacement exams; visibility transitions and cleanup; wall-clock expiry; all 24 option permutations per question.");
+const { dungMienNopBai } = load("lib/submission-origin.ts");
+for (const host of ["luyen-trac-nghiem-tin-10.vercel.app", "tin-10-thpt-nari.vercel.app", "truong.example", "preview-example.vercel.app"]) {
+  assert.equal(dungMienNopBai(new Request(`https://${host}/api/nop-bai`, {
+    headers: { origin: `https://${host}`, host },
+  }), {}), true, `Same-site submissions must work: ${host}`);
+}
+const apiUrl = "https://tin-10-thpt-nari.vercel.app/api/nop-bai";
+for (const origin of ["https://unrelated.example", "null", "not a URL", "https://tin-10-thpt-nari.vercel.app.attacker.example", "https://user:pass@tin-10-thpt-nari.vercel.app"]) {
+  assert.equal(dungMienNopBai(new Request(apiUrl, { headers: { origin } }), {}), false, origin);
+}
+assert.equal(dungMienNopBai(new Request(apiUrl), {}), true);
+assert.equal(dungMienNopBai(new Request(apiUrl, { headers: { origin: "https://custom.example" } }),
+  { MIEN_CHO_PHEP_THEM: " custom.example " }), true);
+assert.equal(dungMienNopBai(new Request("http://internal:3000/api/nop-bai", {
+  headers: { origin: "https://school.example", host: "school.example" },
+}), {}), true);
+
+async function testSheetResponses() {
+  const { themDongVaoSheet } = load("lib/google-sheets.ts");
+  const originalFetch = global.fetch;
+  const envKeys = ["GOOGLE_SERVICE_ACCOUNT_EMAIL", "GOOGLE_PRIVATE_KEY", "GOOGLE_SHEET_ID", "GOOGLE_SHEET_WEBAPP_URL"];
+  const originalEnv = envKeys.map((key) => process.env[key]);
+  try {
+    envKeys.forEach((key) => delete process.env[key]);
+    process.env.GOOGLE_SHEET_WEBAPP_URL = "https://example.invalid/mock";
+    global.fetch = async () => Response.json({ ok: true });
+    await themDongVaoSheet([]);
+    global.fetch = async () => Response.json({ ok: false, error: "Cannot write sheet" });
+    await assert.rejects(themDongVaoSheet([]), /Cannot write sheet/);
+    global.fetch = async () => new Response("Sign-in HTML", { status: 200 });
+    await assert.rejects(themDongVaoSheet([]), /chưa xác nhận/);
+    global.fetch = async () => new Response("upstream failed", { status: 500 });
+    await assert.rejects(themDongVaoSheet([]), /HTTP 500/);
+  } finally {
+    global.fetch = originalFetch;
+    envKeys.forEach((key, i) => {
+      if (originalEnv[i] === undefined) delete process.env[key];
+      else process.env[key] = originalEnv[i];
+    });
+  }
+}
+testSheetResponses().then(() => console.log("PASS: TX2 exam, tab and timer checks; same-site/custom-domain origin checks; cross-site rejection; Apps Script success, error and invalid-response checks.")).catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});

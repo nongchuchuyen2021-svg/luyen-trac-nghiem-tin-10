@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getHocSinh, saveHocSinh, hopLe, chuanHoa, MAX_HO_TEN, MAX_LOP } from "@/lib/hocsinh";
 
 type TrangThai = "nhap" | "sansang" | "danggui" | "xong" | "loi";
@@ -13,6 +13,7 @@ export default function NopBai({
   soCauDung,
   tongSoCau,
   diemChu,
+  autoSubmit = false,
 }: {
   baiId: string;
   tenBai: string;
@@ -21,12 +22,15 @@ export default function NopBai({
   soCauDung: number;
   tongSoCau: number;
   diemChu?: string;
+  autoSubmit?: boolean;
 }) {
   const [trangThai, setTrangThai] = useState<TrangThai>("nhap");
   const [hoTen, setHoTen] = useState("");
   const [lop, setLop] = useState("");
   const [loi, setLoi] = useState("");
   const [thoiGianNop, setThoiGianNop] = useState("");
+  const dangGuiRef = useRef(false);
+  const daTuDongGuiRef = useRef(false);
 
   useEffect(() => {
     const hs = getHocSinh();
@@ -39,8 +43,18 @@ export default function NopBai({
 
   const dayDu = hopLe({ hoTen, lop });
 
+  useEffect(() => {
+    if (autoSubmit && dayDu && !daTuDongGuiRef.current) {
+      daTuDongGuiRef.current = true;
+      void nop();
+    }
+    // Tự động một lần khi thông tin học sinh được nạp; lỗi thì cho thử lại thủ công.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoSubmit, dayDu]);
+
   async function nop() {
-    if (!dayDu) return;
+    if (!dayDu || dangGuiRef.current || trangThai === "xong") return;
+    dangGuiRef.current = true;
     const sach = chuanHoa({ hoTen, lop });
     setHoTen(sach.hoTen);
     setLop(sach.lop);
@@ -80,6 +94,8 @@ export default function NopBai({
     } catch {
       setLoi("Máy không kết nối được mạng, em kiểm tra kết nối rồi thử lại nhé!");
       setTrangThai("loi");
+    } finally {
+      dangGuiRef.current = false;
     }
   }
 

@@ -73,7 +73,6 @@ export default function KiemTraTx2Client() {
   const [hoiXacNhanNop, setHoiXacNhanNop] = useState(false);
   const [thoiGianBatDau, setThoiGianBatDau] = useState<number>(0);
   const [thoiGianHoanThanh, setThoiGianHoanThanh] = useState<string>("");
-  const [daTuDongNopSheet, setDaTuDongNopSheet] = useState(false);
   const [soLanDoiDe, setSoLanDoiDe] = useState(0);
   const [tabDangAn, setTabDangAn] = useState(false);
 
@@ -157,7 +156,6 @@ export default function KiemTraTx2Client() {
     setGiayConLai(DE_KIEM_TRA_TX2.thoiGianPhut * 60);
     setThoiGianBatDau(batDauLuc);
     setHoiXacNhanNop(false);
-    setDaTuDongNopSheet(false);
     setGiaiDoan("dang-lam");
   }
 
@@ -201,33 +199,6 @@ export default function KiemTraTx2Client() {
       playWrong();
     }
 
-    // Tự động gửi kết quả lên Google Sheet nếu có đủ thông tin
-    if (thongTinHopLe && !daTuDongNopSheet) {
-      tuDongGuiSheet(ketQua.soCauDung, ketQua.diem);
-    }
-  }
-
-  async function tuDongGuiSheet(dung: number, diemSo: number) {
-    const hs = chuanHoa({ hoTen, lop });
-    try {
-      await fetch("/api/nop-bai", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          hoTen: hs.hoTen,
-          lop: hs.lop,
-          baiId: DE_KIEM_TRA_TX2.id,
-          tenBai: `${DE_KIEM_TRA_TX2.title} (Bốc ngẫu nhiên)`,
-          dang: "Thường xuyên",
-          diem: diemSo,
-          soCauDung: dung,
-          tongSoCau: DE_KIEM_TRA_TX2.soCau,
-        }),
-      });
-      setDaTuDongNopSheet(true);
-    } catch {
-      // Bỏ qua lỗi tự động, học sinh vẫn có nút nộp bài thủ công
-    }
   }
 
   // =========================================================================
@@ -768,6 +739,7 @@ export default function KiemTraTx2Client() {
 
         {/* THÀNH PHẦN NỘP BÀI GOOGLE SHEET */}
         <NopBai
+          autoSubmit
           baiId={DE_KIEM_TRA_TX2.id}
           tenBai={`${DE_KIEM_TRA_TX2.title} (Bốc ngẫu nhiên)`}
           dang="Thường xuyên"

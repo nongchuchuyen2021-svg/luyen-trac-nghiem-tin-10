@@ -1,26 +1,9 @@
 import { NextResponse } from "next/server";
 import { themDongVaoSheet, daCauHinh } from "@/lib/google-sheets";
+import { dungMienNopBai } from "@/lib/submission-origin";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-
-function danhSachMien(): string[] {
-  const codinh = [
-    "luyen-trac-nghiem-tin-10.vercel.app",
-    "localhost:3000",
-    "127.0.0.1:3000",
-    "localhost:3001",
-    "127.0.0.1:3001",
-    "localhost:3002",
-    "127.0.0.1:3002",
-  ];
-  const cuaVercel = process.env.VERCEL_URL ? [process.env.VERCEL_URL] : [];
-  const themVao = (process.env.MIEN_CHO_PHEP_THEM ?? "")
-    .split(",")
-    .map((s) => s.trim())
-    .filter(Boolean);
-  return [...codinh, ...cuaVercel, ...themVao];
-}
 
 const DANG_HOP_LE = ["Trắc nghiệm", "Đúng/Sai", "Thi thử", "Kiểm tra", "Thường xuyên"] as const;
 
@@ -40,20 +23,6 @@ function quaGioiHan(ip: string): boolean {
   return cu.soLan > GIOI_HAN;
 }
 
-function dungMien(req: Request): boolean {
-  const origin = req.headers.get("origin");
-  if (!origin) {
-    // Cho phép nếu gọi cùng host trong môi trường production/preview
-    const host = req.headers.get("host");
-    return Boolean(host && danhSachMien().includes(host));
-  }
-  try {
-    return danhSachMien().includes(new URL(origin).host);
-  } catch {
-    return false;
-  }
-}
-
 function chuoi(v: unknown, max: number): string | null {
   if (typeof v !== "string") return null;
   const s = v.trim().replace(/\s+/g, " ");
@@ -67,7 +36,7 @@ function so(v: unknown, min: number, max: number): number | null {
 }
 
 export async function POST(req: Request) {
-  if (!dungMien(req)) {
+  if (!dungMienNopBai(req)) {
     return NextResponse.json({ ok: false, loi: "Yêu cầu không hợp lệ (Origin mismatch)" }, { status: 403 });
   }
 

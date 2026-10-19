@@ -135,6 +135,10 @@ export async function themDongVaoSheet(dong: (string | number)[], duLieuGoc?: Du
     if (!res.ok) {
       throw new Error(`Gửi Apps Script thất bại (HTTP ${res.status})`);
     }
+    const result = await res.json().catch(() => null) as { ok?: boolean; error?: string } | null;
+    if (result?.ok !== true) {
+      throw new Error(result?.error || "Apps Script chưa xác nhận đã lưu kết quả");
+    }
     return;
   }
 
