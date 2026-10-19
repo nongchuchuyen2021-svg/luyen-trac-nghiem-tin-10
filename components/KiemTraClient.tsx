@@ -209,7 +209,7 @@ export default function KiemTraClient() {
                   Đề Kiểm Tra Thường Xuyên 2 (Bài 1, 2, 7, 8, 9)
                 </h3>
                 <p className="mt-0.5 text-xs text-ink-soft">
-                  15 câu trắc nghiệm · 20 phút · Tự động chấm điểm và lưu kết quả vào Google Sheets
+                  15 câu theo mức độ · 16 phút · Tự động chấm điểm và lưu kết quả vào Google Sheets
                 </p>
               </div>
               <Link

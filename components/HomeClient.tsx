@@ -89,7 +89,7 @@ export default function HomeClient({ counts }: { counts: Record<string, LessonCo
                     Đề Kiểm Tra Thường Xuyên 2 (Bài 1, 2, 7, 8, 9)
                   </h3>
                   <p className="mt-1 text-xs text-ink-soft leading-relaxed sm:text-sm">
-                    15 câu trắc nghiệm chuẩn ma trận · 20 phút · Bấm giờ tự động, chấm điểm chuẩn xác và lưu ngay vào Google Sheet của thầy cô.
+                    15 câu theo mức độ nhận biết, thông hiểu, vận dụng · 16 phút · Bấm giờ tự động, chấm điểm và lưu kết quả vào Google Sheet của thầy cô.
                   </p>
                 </div>
               </div>

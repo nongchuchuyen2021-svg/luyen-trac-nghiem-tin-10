@@ -4,6 +4,7 @@ import type { Question } from "@/lib/types";
 const questions: Question[] = [
   {
     id: "b2-01",
+    difficulty: "nhan-biet",
     q: "Thiết bị thông minh là gì?",
     options: [
       "Thiết bị điện tử hoạt động tự chủ ở mức nhất định nhờ phần mềm điều khiển",
@@ -17,6 +18,7 @@ const questions: Question[] = [
   },
   {
     id: "b2-02",
+    difficulty: "thong-hieu",
     q: "Thiết bị nào sau đây là thiết bị thông minh?",
     options: [
       "Bóng đèn sợi đốt gắn công tắc cảm ứng bật tắt bằng cách chạm tay",
@@ -30,6 +32,7 @@ const questions: Question[] = [
   },
   {
     id: "b2-03",
+    difficulty: "nhan-biet",
     q: "Cuộc cách mạng công nghiệp lần thứ tư (4.0) gắn với đặc trưng nào?",
     options: [
       "Tự động hoá nhờ máy tính điện tử và các thiết bị điều khiển lập trình",
@@ -43,6 +46,7 @@ const questions: Question[] = [
   },
   {
     id: "b2-04",
+    difficulty: "nhan-biet",
     q: "IoT (Internet of Things) nghĩa là gì?",
     options: [
       "Mạng lưới thiết bị kết nối Internet để tự thu thập và trao đổi dữ liệu",
@@ -56,6 +60,7 @@ const questions: Question[] = [
   },
   {
     id: "b2-05",
+    difficulty: "thong-hieu",
     q: "Đóng góp nào của tin học KHÔNG đúng?",
     options: [
       "Tin học thay thế hoàn toàn con người trong mọi hoạt động của xã hội",
@@ -69,6 +74,7 @@ const questions: Question[] = [
   },
   {
     id: "b2-06",
+    difficulty: "thong-hieu",
     q: "Ứng dụng nào sau đây là thành tựu của trí tuệ nhân tạo (AI)?",
     options: [
       "Bảng tính tự cộng dãy số và vẽ biểu đồ theo công thức đã nhập sẵn",
@@ -82,6 +88,7 @@ const questions: Question[] = [
   },
   {
     id: "b2-07",
+    difficulty: "thong-hieu",
     q: "Học tập trực tuyến (e-learning) là ví dụ về đóng góp của tin học trong lĩnh vực nào?",
     options: [
       "Nông nghiệp — cảm biến đo độ ẩm đất và hệ thống tưới tiêu tự động",
@@ -95,6 +102,7 @@ const questions: Question[] = [
   },
   {
     id: "b2-08",
+    difficulty: "thong-hieu",
     q: "Đặc điểm nào giúp thiết bị thông minh ngày càng phổ biến?",
     options: [
       "Tiêu thụ rất ít điện nên có thể dùng liên tục nhiều tháng không sạc",
@@ -108,6 +116,7 @@ const questions: Question[] = [
   },
   {
     id: "b2-09",
+    difficulty: "thong-hieu",
     q: 'Thành tựu nào sau đây thuộc về "xã hội tri thức"?',
     options: [
       "Sản xuất chủ yếu dựa vào sức lao động cơ bắp của đông đảo công nhân",
@@ -121,7 +130,8 @@ const questions: Question[] = [
   },
   {
     id: "b2-10",
-    q: "Camera giám sát giao thông tự động phát hiện xe vượt đèn đỏ là ứng dụng kết hợp của những công nghệ nào?",
+    difficulty: "van-dung",
+    q: "Một ngã tư cần tự phát hiện xe vượt đèn đỏ, nhận dạng biển số từ hình ảnh và gửi kết quả về trung tâm. Nên chọn giải pháp kết hợp những công nghệ nào?",
     options: [
       "Thiết bị thông minh, nhận dạng hình ảnh bằng AI và kết nối truyền dữ liệu",
       "Máy quét mã vạch, bộ nhớ ngoài dung lượng lớn và máy in tốc độ cao",
@@ -134,6 +144,7 @@ const questions: Question[] = [
   },
   {
     id: "b2-11",
+    difficulty: "thong-hieu",
     q: "Khi sử dụng thiết bị thông minh, điều nào sau đây NÊN làm?",
     options: [
       "Cập nhật phần mềm thường xuyên và đặt mật khẩu khoá màn hình thiết bị",
@@ -147,16 +158,17 @@ const questions: Question[] = [
   },
   {
     id: "b2-12",
-    q: "Robot lau nhà tự tránh vật cản và tự về trạm sạc thể hiện đặc điểm nào của thiết bị thông minh?",
+    difficulty: "van-dung",
+    q: "Gia đình muốn robot lau nhà vẫn tự tránh vật cản và tự về trạm sạc khi mất kết nối Internet. Đặc tính nào cần ưu tiên khi chọn robot?",
     options: [
-      "Khả năng tự cảm nhận môi trường và tự ra quyết định, không cần điều khiển",
+      "Cảm biến và phần mềm xử lí ngay trên robot để tự điều hướng, tìm trạm sạc",
       "Khả năng kết nối Internet để người dùng theo dõi từ xa qua ứng dụng",
       "Khả năng thu nhỏ kích thước để chui vừa gầm giường và các khe hẹp",
       "Khả năng tiết kiệm điện năng nhờ tự tắt khi đã lau xong toàn bộ căn phòng",
     ],
     answer: 0,
     explain:
-      "Tự cảm nhận môi trường (cảm biến) và tự ra quyết định (phần mềm) không cần người điều khiển liên tục = tính tự chủ.",
+      "Để hoạt động khi mất Internet, robot cần cảm biến và phần mềm xử lí tại thiết bị. Chỉ có tính năng theo dõi từ xa, kích thước nhỏ hay tiết kiệm điện không đáp ứng yêu cầu tự điều hướng và về trạm sạc.",
   },
 ];
 

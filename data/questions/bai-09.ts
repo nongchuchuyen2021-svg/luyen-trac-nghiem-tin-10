@@ -4,6 +4,7 @@ import type { Question } from "@/lib/types";
 const questions: Question[] = [
   {
     id: "b9-01",
+    difficulty: "nhan-biet",
     q: "Phần mềm độc hại (malware) là gì?",
     options: [
       "Phần mềm được viết ra với ý đồ xấu, gây hại cho người dùng hoặc hệ thống",
@@ -17,6 +18,7 @@ const questions: Question[] = [
   },
   {
     id: "b9-02",
+    difficulty: "thong-hieu",
     q: "Điểm khác biệt chính giữa virus và worm (sâu máy tính) là gì?",
     options: [
       "Virus lây lan qua mạng Internet, còn worm chỉ lây qua USB và ổ cứng rời",
@@ -30,6 +32,7 @@ const questions: Question[] = [
   },
   {
     id: "b9-03",
+    difficulty: "nhan-biet",
     q: "Trojan (ngựa thành Troa) hoạt động theo cách nào?",
     options: [
       "Giả dạng phần mềm hữu ích để người dùng tự cài, rồi âm thầm gây hại",
@@ -43,6 +46,7 @@ const questions: Question[] = [
   },
   {
     id: "b9-04",
+    difficulty: "thong-hieu",
     q: "Dấu hiệu nào cho thấy một email là lừa đảo (phishing)?",
     options: [
       "Giả mạo tổ chức uy tín, tạo cảm giác gấp gáp và giục bấm link nhập mật khẩu",
@@ -56,6 +60,7 @@ const questions: Question[] = [
   },
   {
     id: "b9-05",
+    difficulty: "thong-hieu",
     q: "Cách đặt mật khẩu nào là AN TOÀN nhất?",
     options: [
       "Dùng tên thú cưng viết ngược lại rồi thêm số 123 vào phía sau cùng",
@@ -69,6 +74,7 @@ const questions: Question[] = [
   },
   {
     id: "b9-06",
+    difficulty: "nhan-biet",
     q: "Xác thực hai yếu tố (2FA) là gì?",
     options: [
       "Đăng nhập đồng thời trên hai thiết bị để hệ thống đối chiếu và xác minh",
@@ -82,6 +88,7 @@ const questions: Question[] = [
   },
   {
     id: "b9-07",
+    difficulty: "van-dung",
     q: "Khi nhận được email lạ có tệp đính kèm đuôi .exe, em nên làm gì?",
     options: [
       "Mở tệp trong chế độ ẩn danh của trình duyệt để tránh bị theo dõi",
@@ -95,6 +102,7 @@ const questions: Question[] = [
   },
   {
     id: "b9-08",
+    difficulty: "thong-hieu",
     q: "Nhóm biện pháp nào giúp phòng chống mã độc hiệu quả nhất?",
     options: [
       "Cài phần mềm diệt virus, cập nhật hệ điều hành, không dùng phần mềm bẻ khoá",
@@ -108,6 +116,7 @@ const questions: Question[] = [
   },
   {
     id: "b9-09",
+    difficulty: "thong-hieu",
     q: "Thông tin nào KHÔNG nên chia sẻ công khai trên mạng xã hội?",
     options: [
       "Lời chúc mừng sinh nhật bạn cùng lớp kèm ảnh chụp chung cả nhóm",
@@ -121,6 +130,7 @@ const questions: Question[] = [
   },
   {
     id: "b9-10",
+    difficulty: "nhan-biet",
     q: "Ransomware là loại mã độc có hành vi đặc trưng nào?",
     options: [
       "Chiếm dụng đường truyền mạng khiến tốc độ Internet giảm xuống rõ rệt",
@@ -134,6 +144,7 @@ const questions: Question[] = [
   },
   {
     id: "b9-11",
+    difficulty: "van-dung",
     q: "Phát hiện tài khoản mạng xã hội bị chiếm đoạt, việc cần làm NGAY là gì?",
     options: [
       "Đăng bài công khai lên trang cá nhân khác để tố cáo kẻ đã chiếm tài khoản",
@@ -147,6 +158,7 @@ const questions: Question[] = [
   },
   {
     id: "b9-12",
+    difficulty: "thong-hieu",
     q: "Vì sao KHÔNG nên dùng Wi-Fi công cộng để đăng nhập tài khoản ngân hàng?",
     options: [
       "Mạng công cộng có tốc độ chậm nên giao dịch dễ bị gián đoạn giữa chừng",

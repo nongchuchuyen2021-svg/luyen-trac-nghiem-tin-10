@@ -4,21 +4,13 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { DE_KIEM_TRA_TX2, taoDeNgauNhienTx2 } from "@/data/de-kiem-tra/thuong-xuyen-2";
 import type { Question } from "@/lib/types";
+import { tronPhuongAn } from "@/lib/tron-phuong-an";
 import { getHocSinh, saveHocSinh, hopLe, chuanHoa } from "@/lib/hocsinh";
 import { playCorrect, playWrong, playCelebration, playClick } from "@/lib/sound";
 import Confetti from "@/components/Confetti";
 import NopBai from "@/components/NopBai";
 
 const OPTION_LABELS = ["A", "B", "C", "D"];
-
-function shuffle<T>(arr: T[]): T[] {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
 
 type CauDaTron = Question & {
   shuffledOptions: string[];
@@ -46,17 +38,14 @@ function getLessonTag(q: Question): string {
 }
 
 function tronDe(): CauDaTron[] {
-  // 1. Bốc ngẫu nhiên 15 câu (3 câu/bài từ 5 bài: 1, 2, 7, 8, 9) từ ngân hàng 58 câu
-  // và xáo trộn ngẫu nhiên vị trí 15 câu hỏi
+  // Mỗi bài: 1 nhận biết, 1 thông hiểu, 1 vận dụng; đảo thứ tự 15 câu.
   const rawQuestions: Question[] = taoDeNgauNhienTx2();
 
-  // 2. Xáo trộn ngẫu nhiên 4 phương án A, B, C, D của từng câu hỏi
+  // Chỉ đảo phương án khi không phụ thuộc nhãn hoặc vị trí.
   return rawQuestions.map((q) => {
-    const order = shuffle([0, 1, 2, 3]);
     return {
       ...q,
-      shuffledOptions: order.map((i) => q.options[i]),
-      correctIndex: order.indexOf(q.answer),
+      ...tronPhuongAn(q),
       lessonTag: getLessonTag(q),
     };
   });
@@ -264,7 +253,7 @@ export default function KiemTraTx2Client() {
             <div className="rounded-2xl border border-ink/5 bg-cream p-3 text-center">
               <span className="font-mono text-xs text-ink-soft">Thời gian</span>
               <p className="mt-0.5 font-display text-xl font-bold text-ink">
-                20 <span className="text-xs font-normal text-ink-soft">phút</span>
+                {DE_KIEM_TRA_TX2.thoiGianPhut} <span className="text-xs font-normal text-ink-soft">phút</span>
               </p>
             </div>
             <div className="rounded-2xl border border-ink/5 bg-cream p-3 text-center">
@@ -331,17 +320,17 @@ export default function KiemTraTx2Client() {
                     Chế độ: Bốc đề ngẫu nhiên từ 5 bài
                   </h3>
                   <p className="font-mono text-[11px] text-ink-soft">
-                    Bốc 3 câu/bài từ kho 58 câu · Đảo toàn diện đề thi
+                    Mỗi bài: 1 nhận biết · 1 thông hiểu · 1 vận dụng
                   </p>
                 </div>
               </div>
               <span className="inline-flex items-center gap-1 rounded-full bg-mint/15 px-3 py-1 font-mono text-xs font-bold text-mint-deep">
-                🛡️ Chống nhìn bài 100%
+                🛡️ Hạn chế nhìn bài
               </span>
             </div>
 
             <p className="mt-3 text-xs text-ink-soft leading-relaxed">
-              Mỗi học sinh khi bấm làm bài sẽ được hệ thống <strong>tự động bốc ngẫu nhiên 15 câu</strong> (3 câu từ mỗi Bài 1, 2, 7, 8, 9), đồng thời <strong>đảo ngẫu nhiên thứ tự 15 câu</strong> và <strong>đảo ngẫu nhiên 4 phương án A, B, C, D</strong> của từng câu. Hai máy tính ngồi cạnh nhau trong phòng máy sẽ nhận đề hoàn toàn khác nhau.
+              Mỗi lần bắt đầu, hệ thống <strong>bốc ngẫu nhiên 15 câu từ ngân hàng 58 câu</strong>: mỗi Bài 1, 2, 7, 8, 9 có <strong>1 câu nhận biết, 1 câu thông hiểu và 1 câu vận dụng</strong>. Thứ tự câu hỏi và các phương án độc lập được đảo ngẫu nhiên; phương án tham chiếu nhãn hoặc vị trí được giữ nguyên để không đổi nghĩa. Các đề có thể trùng một số câu nhưng cùng cơ cấu mức độ.
             </p>
 
             <div className="mt-3.5 grid grid-cols-2 gap-2 border-t border-ink/5 pt-3 sm:grid-cols-4 font-mono text-[11px]">

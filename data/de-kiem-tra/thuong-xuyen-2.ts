@@ -1,4 +1,4 @@
-import type { Question } from "@/lib/types";
+import type { Question, QuestionDifficulty } from "@/lib/types";
 import { QUESTION_BANK } from "@/lib/questions";
 
 function shuffleArr<T>(arr: T[]): T[] {
@@ -10,23 +10,25 @@ function shuffleArr<T>(arr: T[]): T[] {
   return a;
 }
 
-/**
- * Bốc ngẫu nhiên 15 câu trắc nghiệm từ ngân hàng 58 câu của 5 bài:
- * - 3 câu từ Bài 1
- * - 3 câu từ Bài 2
- * - 3 câu từ Bài 7
- * - 3 câu từ Bài 8
- * - 3 câu từ Bài 9
- * Sau đó xáo trộn ngẫu nhiên vị trí của 15 câu hỏi.
- */
-export function taoDeNgauNhienTx2(): Question[] {
-  const b1 = shuffleArr(QUESTION_BANK["bai-01"] ?? []).slice(0, 3);
-  const b2 = shuffleArr(QUESTION_BANK["bai-02"] ?? []).slice(0, 3);
-  const b7 = shuffleArr(QUESTION_BANK["bai-07"] ?? []).slice(0, 3);
-  const b8 = shuffleArr(QUESTION_BANK["bai-08"] ?? []).slice(0, 3);
-  const b9 = shuffleArr(QUESTION_BANK["bai-09"] ?? []).slice(0, 3);
+export const TX2_LESSON_IDS = ["bai-01", "bai-02", "bai-07", "bai-08", "bai-09"] as const;
+export const TX2_DIFFICULTIES: readonly QuestionDifficulty[] = ["nhan-biet", "thong-hieu", "van-dung"];
 
-  return shuffleArr([...b1, ...b2, ...b7, ...b8, ...b9]);
+/** Mỗi bài bốc 1 nhận biết + 1 thông hiểu + 1 vận dụng, rồi đảo 15 câu. */
+export function taoDeNgauNhienTx2(): Question[] {
+  const selected = TX2_LESSON_IDS.flatMap((lessonId) => {
+    const bank = QUESTION_BANK[lessonId] ?? [];
+    if (bank.some((q) => !q.difficulty || !TX2_DIFFICULTIES.includes(q.difficulty))) {
+      throw new Error(`Ngân hàng ${lessonId} có câu chưa phân loại mức độ.`);
+    }
+    return TX2_DIFFICULTIES.map((difficulty) => {
+      const pool = bank.filter((q) => q.difficulty === difficulty);
+      if (pool.length === 0) {
+        throw new Error(`Ngân hàng ${lessonId} thiếu câu mức ${difficulty}.`);
+      }
+      return pool[Math.floor(Math.random() * pool.length)];
+    });
+  });
+  return shuffleArr(selected);
 }
 
 export interface DeKiemTraThuongXuyen {
@@ -45,7 +47,7 @@ export const DE_KIEM_TRA_TX2: DeKiemTraThuongXuyen = {
   title: "Đề Kiểm Tra Thường Xuyên 2 — Tin học 10",
   subtitle: "Đánh giá định kỳ thường xuyên số 2 (Phạm vi: Bài 1, 2, 7, 8, 9)",
   phamVi: "Bài 1 (Thông tin & xử lí) · Bài 2 (Thiết bị thông minh & xã hội) · Bài 7 (Sử dụng thiết bị số) · Bài 8 (Mạng máy tính) · Bài 9 (An toàn mạng)",
-  thoiGianPhut: 20,
+  thoiGianPhut: 16,
   soCau: 15,
   thangDiem: 10.0,
   questions: [

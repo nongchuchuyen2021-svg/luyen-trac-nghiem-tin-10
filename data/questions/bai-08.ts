@@ -4,6 +4,7 @@ import type { Question } from "@/lib/types";
 const questions: Question[] = [
   {
     id: "b8-01",
+    difficulty: "nhan-biet",
     q: "Mạng máy tính là gì?",
     options: [
       "Một máy tính cấu hình mạnh cho phép nhiều người cùng đăng nhập sử dụng",
@@ -17,6 +18,7 @@ const questions: Question[] = [
   },
   {
     id: "b8-02",
+    difficulty: "nhan-biet",
     q: "LAN là viết tắt của loại mạng nào?",
     options: [
       "Mạng riêng ảo — tạo đường truyền được mã hoá đi xuyên qua mạng công cộng",
@@ -29,6 +31,7 @@ const questions: Question[] = [
   },
   {
     id: "b8-03",
+    difficulty: "nhan-biet",
     q: "Internet là gì?",
     options: [
       "Hệ thống mạng nội bộ của các tập đoàn lớn được nối với nhau qua cáp quang",
@@ -42,6 +45,7 @@ const questions: Question[] = [
   },
   {
     id: "b8-04",
+    difficulty: "thong-hieu",
     q: "Thiết bị nào thường dùng để kết nối các thiết bị trong gia đình với Internet?",
     options: [
       "Bộ chuyển mạch — nối các máy trong cùng một mạng nội bộ bằng cáp mạng",
@@ -55,6 +59,7 @@ const questions: Question[] = [
   },
   {
     id: "b8-05",
+    difficulty: "thong-hieu",
     q: "Điện toán đám mây (cloud computing) cho phép người dùng làm gì?",
     options: [
       "Kết nối trực tiếp hai máy tính bằng cáp để chép dữ liệu qua lại nhanh hơn",
@@ -68,6 +73,7 @@ const questions: Question[] = [
   },
   {
     id: "b8-06",
+    difficulty: "thong-hieu",
     q: "Google Drive, OneDrive là ví dụ về dịch vụ đám mây loại nào?",
     options: [
       "Hạ tầng dịch vụ trực tuyến — cho thuê máy chủ ảo để tự cài hệ điều hành lên đó",
@@ -80,19 +86,21 @@ const questions: Question[] = [
   },
   {
     id: "b8-07",
-    q: "Ưu điểm nổi bật của việc lưu tệp trên đám mây so với lưu trên một máy tính là:",
+    difficulty: "van-dung",
+    q: "Nhóm học sinh cần cùng chỉnh sửa tài liệu trên nhiều máy có Internet và vẫn giữ được bài khi một máy hỏng. Cách lưu và chia sẻ nào đáp ứng tốt nhất?",
     options: [
-      "Được cấp dung lượng không giới hạn và hoàn toàn miễn phí trọn đời",
-      "Dùng được cả khi không có kết nối Internet vì tệp đã lưu sẵn trên máy",
-      "Tốc độ đọc ghi luôn nhanh hơn ổ cứng gắn trong máy tính cá nhân",
-      "Truy cập được từ nhiều thiết bị, dễ chia sẻ, ít lo mất khi hỏng máy",
+      "Lưu bản duy nhất trên máy nhóm trưởng và cho các bạn dùng chung mật khẩu máy",
+      "Lưu riêng trên từng máy rồi gửi nhiều bản qua tin nhắn mỗi khi có thay đổi",
+      "Chỉ lưu trên một USB, luân phiên cắm vào từng máy để các bạn chỉnh sửa",
+      "Lưu tài liệu trên đám mây và cấp quyền chỉnh sửa cho từng thành viên",
     ],
     answer: 3,
     explain:
-      "Dữ liệu trên đám mây gắn với tài khoản, truy cập mọi nơi và được nhà cung cấp sao lưu; nhược điểm là cần mạng và dung lượng miễn phí có hạn.",
+      "Tài liệu trên đám mây có thể được các thành viên có quyền cùng chỉnh sửa và truy cập từ nhiều máy. Máy cá nhân hỏng không làm mất bản lưu trên đám mây; không cần chia sẻ mật khẩu tài khoản.",
   },
   {
     id: "b8-08",
+    difficulty: "nhan-biet",
     q: "Mạng không dây Wi-Fi truyền dữ liệu bằng gì?",
     options: [
       "Sóng hồng ngoại truyền thẳng giữa hai thiết bị đặt gần nhau",
@@ -105,7 +113,8 @@ const questions: Question[] = [
   },
   {
     id: "b8-09",
-    q: "IoT trong nông nghiệp thông minh có thể làm gì?",
+    difficulty: "van-dung",
+    q: "Một vườn rau cần chỉ tự tưới khi đất khô và cho phép chủ vườn xem số liệu từ xa. Giải pháp IoT nào đáp ứng yêu cầu này?",
     options: [
       "Thay thế hoàn toàn công việc của người nông dân trên đồng ruộng",
       "Giúp cây trồng sinh trưởng nhanh hơn nhiều lần so với cách trồng thường",
@@ -118,6 +127,7 @@ const questions: Question[] = [
   },
   {
     id: "b8-10",
+    difficulty: "thong-hieu",
     q: "Phát biểu nào về WAN là ĐÚNG?",
     options: [
       "WAN chỉ hoạt động trong phạm vi một toà nhà hoặc một khuôn viên nhất định",
@@ -130,6 +140,7 @@ const questions: Question[] = [
   },
   {
     id: "b8-11",
+    difficulty: "thong-hieu",
     q: "Học trực tuyến qua Zoom/Google Meet trong đại dịch là minh chứng cho vai trò nào của mạng?",
     options: [
       "Giúp xã hội duy trì việc học tập và làm việc ngay cả khi phải giãn cách",
@@ -143,6 +154,7 @@ const questions: Question[] = [
   },
   {
     id: "b8-12",
+    difficulty: "nhan-biet",
     q: "Khi chọn gói cước Internet gia đình, thông số nào cho biết tốc độ đường truyền?",
     options: [
       "ms — độ trễ tính bằng mili giây khi gói tin đi tới máy chủ và quay về",

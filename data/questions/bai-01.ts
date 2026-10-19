@@ -4,6 +4,7 @@ import type { Question } from "@/lib/types";
 const questions: Question[] = [
   {
     id: "b1-01",
+    difficulty: "nhan-biet",
     q: "Thông tin là gì?",
     options: [
       "Tất cả những gì con người nhìn thấy và nghe được ở xung quanh",
@@ -17,6 +18,7 @@ const questions: Question[] = [
   },
   {
     id: "b1-02",
+    difficulty: "nhan-biet",
     q: "Dữ liệu là gì?",
     options: [
       "Thông tin đã được ghi lại, số hoá để máy tính có thể xử lí được",
@@ -30,6 +32,7 @@ const questions: Question[] = [
   },
   {
     id: "b1-03",
+    difficulty: "nhan-biet",
     q: "Quá trình xử lí thông tin gồm các bước cơ bản theo thứ tự nào?",
     options: [
       "Tiếp nhận → xử lí → lưu trữ, truyền → đưa ra kết quả",
@@ -43,6 +46,7 @@ const questions: Question[] = [
   },
   {
     id: "b1-04",
+    difficulty: "nhan-biet",
     q: "Đơn vị nhỏ nhất để biểu diễn thông tin trong máy tính là gì?",
     options: ["Kí tự", "KB", "Bit", "Byte"],
     answer: 2,
@@ -51,6 +55,7 @@ const questions: Question[] = [
   },
   {
     id: "b1-05",
+    difficulty: "nhan-biet",
     q: "1 byte bằng bao nhiêu bit?",
     options: ["16 bit", "1024 bit", "10 bit", "8 bit"],
     answer: 3,
@@ -58,14 +63,16 @@ const questions: Question[] = [
   },
   {
     id: "b1-06",
-    q: "1 KB (kilobyte) bằng bao nhiêu byte?",
-    options: ["8 byte", "1000 byte", "1024 byte", "512 byte"],
+    difficulty: "van-dung",
+    q: "Theo quy ước 1 KB = 1024 byte, một tệp văn bản có dung lượng 2 KB. Tệp đó chiếm bao nhiêu byte?",
+    options: ["16 byte", "2000 byte", "2048 byte", "1024 byte"],
     answer: 2,
     explain:
-      "Theo quy ước trong tin học, 1 KB = 2¹⁰ byte = 1024 byte (các đơn vị tiếp theo MB, GB, TB cũng nhân 1024).",
+      "Áp dụng quy ước đã cho: 2 KB = 2 × 1024 = 2048 byte.",
   },
   {
     id: "b1-07",
+    difficulty: "thong-hieu",
     q: "Sắp xếp các đơn vị đo dữ liệu theo thứ tự TĂNG dần:",
     options: [
       "B → KB → GB → MB → TB",
@@ -78,6 +85,7 @@ const questions: Question[] = [
   },
   {
     id: "b1-08",
+    difficulty: "thong-hieu",
     q: "Phát biểu nào ĐÚNG khi phân biệt thông tin và dữ liệu?",
     options: [
       "Thông tin là ý nghĩa, còn dữ liệu là hình thức ghi lại thông tin đó",
@@ -91,6 +99,7 @@ const questions: Question[] = [
   },
   {
     id: "b1-09",
+    difficulty: "thong-hieu",
     q: "Thiết bị nào sau đây thực hiện chức năng TIẾP NHẬN thông tin cho máy tính?",
     options: ["Màn hình", "Bàn phím", "Loa", "Máy in"],
     answer: 1,
@@ -99,6 +108,7 @@ const questions: Question[] = [
   },
   {
     id: "b1-10",
+    difficulty: "van-dung",
     q: "Một thẻ nhớ 64 GB chứa được khoảng bao nhiêu tệp ảnh, nếu mỗi ảnh trung bình 4 MB?",
     options: ["Khoảng 640 ảnh", "Khoảng 1 600 ảnh", "Khoảng 16 000 ảnh", "Khoảng 160 000 ảnh"],
     answer: 2,
@@ -106,6 +116,7 @@ const questions: Question[] = [
   },
   {
     id: "b1-11",
+    difficulty: "thong-hieu",
     q: "Xử lí thông tin trong máy tính thực chất là xử lí cái gì?",
     options: [
       "Tín hiệu tương tự (analog)",
@@ -119,6 +130,7 @@ const questions: Question[] = [
   },
   {
     id: "b1-12",
+    difficulty: "thong-hieu",
     q: "Hoạt động nào sau đây KHÔNG phải là xử lí thông tin?",
     options: [
       "Trọng tài quan sát trận đấu và đưa ra quyết định",

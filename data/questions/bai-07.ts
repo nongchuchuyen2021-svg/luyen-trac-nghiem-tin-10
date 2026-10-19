@@ -4,6 +4,7 @@ import type { Question } from "@/lib/types";
 const questions: Question[] = [
   {
     id: "b7-01",
+    difficulty: "nhan-biet",
     q: "Điện thoại thông minh về bản chất là gì?",
     options: [
       "Một thiết bị viễn thông để nghe gọi và nhắn tin",
@@ -17,6 +18,7 @@ const questions: Question[] = [
   },
   {
     id: "b7-02",
+    difficulty: "nhan-biet",
     q: "Hai hệ điều hành di động phổ biến nhất hiện nay là:",
     options: ["MS-DOS và Unix", "macOS và Ubuntu", "Android và iOS", "Windows và Linux"],
     answer: 2,
@@ -24,7 +26,8 @@ const questions: Question[] = [
   },
   {
     id: "b7-03",
-    q: "Muốn cài thêm ứng dụng trên điện thoại một cách an toàn, nên tải từ đâu?",
+    difficulty: "van-dung",
+    q: "Lan nhận được tin nhắn chứa liên kết tải bản bẻ khoá của ứng dụng học tập. Muốn cài ứng dụng đó an toàn hơn, Lan nên tìm và tải từ đâu?",
     options: [
       "Kho ứng dụng chính thức Google Play hoặc App Store",
       "Trang web chia sẻ bản cài đặt đã bẻ khoá",
@@ -37,6 +40,7 @@ const questions: Question[] = [
   },
   {
     id: "b7-04",
+    difficulty: "thong-hieu",
     q: "Để chuyển ảnh từ điện thoại sang máy tính, cách nào KHÔNG dùng được?",
     options: [
       "Cắm cáp USB và sao chép tệp",
@@ -49,6 +53,7 @@ const questions: Question[] = [
   },
   {
     id: "b7-05",
+    difficulty: "thong-hieu",
     q: "Độ phân giải camera 12 MP nghĩa là:",
     options: [
       "Ống kính phóng to được tối đa 12 lần",
@@ -61,6 +66,7 @@ const questions: Question[] = [
   },
   {
     id: "b7-06",
+    difficulty: "van-dung",
     q: "Khi pin điện thoại xuống thấp mà chưa sạc được, cách tiết kiệm pin hợp lí là:",
     options: [
       "Đóng hết ứng dụng nền vài phút một lần",
@@ -74,6 +80,7 @@ const questions: Question[] = [
   },
   {
     id: "b7-07",
+    difficulty: "nhan-biet",
     q: "Kết nối nào dùng để truyền tệp không dây giữa hai thiết bị ở khoảng cách gần?",
     options: ["Jack tai nghe 3.5mm", "Cáp HDMI", "Cổng VGA", "Bluetooth"],
     answer: 3,
@@ -81,6 +88,7 @@ const questions: Question[] = [
   },
   {
     id: "b7-08",
+    difficulty: "thong-hieu",
     q: "Vì sao nên đặt mã khoá màn hình (PIN, vân tay, khuôn mặt) cho điện thoại?",
     options: [
       "Bảo vệ dữ liệu cá nhân khi máy rơi vào tay người lạ",
@@ -94,6 +102,7 @@ const questions: Question[] = [
   },
   {
     id: "b7-09",
+    difficulty: "nhan-biet",
     q: "Thao tác 'sao lưu' (backup) dữ liệu điện thoại nghĩa là:",
     options: [
       "Nén ảnh và video lại cho nhẹ bộ nhớ máy",
@@ -107,6 +116,7 @@ const questions: Question[] = [
   },
   {
     id: "b7-10",
+    difficulty: "van-dung",
     q: "Khi kết nối điện thoại với Wi-Fi công cộng để dùng thiết bị số an toàn, nên:",
     options: [
       "Tắt mật khẩu máy cho tiện khi truy cập mạng",
