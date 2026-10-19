@@ -82,10 +82,11 @@ export interface DuLieuNopDong {
   diem: number;
   soCauDung: number;
   tongSoCau: number;
+  review?: unknown;
 }
 
 /** Ghi thêm một dòng vào cuối Google Sheet */
-export async function themDongVaoSheet(dong: (string | number)[], duLieuGoc?: DuLieuNopDong): Promise<void> {
+export async function themDongVaoSheet(dong: (string | number)[], duLieuGoc?: DuLieuNopDong): Promise<{reviewSaved:boolean}|void> {
   const sa = layCauHinhServiceAccount();
 
   // Ưu tiên 1: Ghi qua Service Account
@@ -135,11 +136,11 @@ export async function themDongVaoSheet(dong: (string | number)[], duLieuGoc?: Du
     if (!res.ok) {
       throw new Error(`Gửi Apps Script thất bại (HTTP ${res.status})`);
     }
-    const result = await res.json().catch(() => null) as { ok?: boolean; error?: string } | null;
+    const result = await res.json().catch(() => null) as { ok?: boolean; error?: string; reviewSaved?: boolean } | null;
     if (result?.ok !== true) {
       throw new Error(result?.error || "Apps Script chưa xác nhận đã lưu kết quả");
     }
-    return;
+    return {reviewSaved:result.reviewSaved===true};
   }
 
   throw new Error("Chưa cấu hình biến môi trường kết nối Google Sheets");
