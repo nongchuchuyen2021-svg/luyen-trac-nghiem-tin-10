@@ -24,10 +24,13 @@ export async function transaction<T>(work: (state: MidtermState) => T | Promise<
     const result = await work(state);
     state.audit = state.audit.slice(-2000);
     const changed = [...state.rooms.map(r => ({ key: "room:" + r.id, payload: JSON.stringify(r) })), ...state.attempts.map(a => ({ key: "attempt:" + a.id, payload: JSON.stringify(a) })), ...(state.security?[{key:'security:admin',payload:JSON.stringify(state.security)}]:[])].filter(d => docs.get(d.key) !== d.payload);
+    const attemptKeys = new Set(state.attempts.map(a => 'attempt:' + a.id));
+    const removed = [...docs.keys()].filter(key => key.startsWith('attempt:') && !attemptKeys.has(key));
     const audit = JSON.stringify(state.audit);
-    if (!changed.length && audit === meta.audit) return result;
+    if (!changed.length && !removed.length && audit === meta.audit) return result;
     const token = crypto.randomUUID();
     const batch = [db.prepare("UPDATE exam_meta SET revision = revision + 1, token = ?, audit = ? WHERE id = 'main' AND revision = ?").bind(token, audit, meta.revision), ...changed.map(d => db.prepare("INSERT INTO exam_documents (key, payload) SELECT ?, ? WHERE EXISTS (SELECT 1 FROM exam_meta WHERE id = 'main' AND token = ?) ON CONFLICT(key) DO UPDATE SET payload = excluded.payload").bind(d.key, d.payload, token))];
+    batch.push(...removed.map(key => db.prepare("DELETE FROM exam_documents WHERE key = ? AND EXISTS (SELECT 1 FROM exam_meta WHERE id = 'main' AND token = ?)").bind(key, token)));
     const written = await db.batch(batch);
     if (written[0].meta.changes === 1) return result;
     await new Promise(resolve => setTimeout(resolve, 10 + attempt * 10));

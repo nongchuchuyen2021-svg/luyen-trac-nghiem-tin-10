@@ -22,12 +22,12 @@ test('D1 room lifecycle, persisted answers, teacher-only start, score and export
  const teacher=(await call('login',{password:env.MIDTERM_ADMIN_PASSWORD})).cookie;assert.ok(teacher);
  const config={roomId:'10A1',opensAt:new Date(Date.now()-60000).toISOString(),closesAt:new Date(Date.now()+7200000).toISOString(),duration:45,code:'class-code',roster:['Học Sinh Thử','Nguyễn Văn An']};
  assert.equal((await call('configure',config,teacher)).status,200);
- assert.equal((await call('join',{roomId:'10A1',name:'Người không có trong lớp',code:config.code})).status,403);
+ assert.equal((await call('join',{roomId:'10A1',name:'A',code:config.code})).status,400);
  assert.equal((await call('join',{roomId:'10A1',name:'Học Sinh Thử',code:'wrong-code'})).status,403);
- const joined=await call('join',{roomId:'10A1',name:'  hoc   SINH thu  ',code:config.code});assert.equal(joined.status,200);assert.equal(joined.body.attempt.paper,null);assert.equal(joined.body.attempt.name,'Học Sinh Thử');assert.match(joined.body.attempt.studentId,/^HS[A-F0-9]{24}$/);
+ const joined=await call('join',{roomId:'10A1',name:'  hoc   SINH thu  ',code:config.code});assert.equal(joined.status,200);assert.equal(joined.body.attempt.paper,null);assert.equal(joined.body.attempt.name,'hoc SINH thu');assert.match(joined.body.attempt.studentId,/^HS[A-F0-9]{24}$/);
  assert.equal((await call('student-logout',{},joined.cookie)).status,409);
- const resaved=await call('configure',{...config,roster:[...config.roster].reverse()},teacher);assert.equal(resaved.status,200);assert.equal(resaved.body.rooms[0].roster.find(s=>s.name==='Học Sinh Thử').id,joined.body.attempt.studentId);
- assert.equal((await call('configure',{...config,roster:['Nguyễn Văn An','  nguyen van AN  ']},teacher)).status,400);
+ const resaved=await call('configure',{...config,roster:[...config.roster].reverse()},teacher);assert.equal(resaved.status,200);assert.equal(resaved.body.rooms[0].roster.find(s=>s.id===joined.body.attempt.studentId).name,'hoc SINH thu');
+ assert.equal((await call('configure',{...config,roster:undefined},teacher)).status,200);
  assert.equal((await call('start',{roomId:'10A1'},joined.cookie)).status,401);assert.equal((await call('start',{roomId:'10A1'},teacher)).status,200);
  const status=await call('status',{},joined.cookie,'GET');assert.equal(status.body.attempt.paper.mc.length,16);
  const answers=server.emptyAnswers();answers.mc[0]=1;answers.essays[0]='Bài kiểm tra lưu trực tuyến.';
@@ -55,6 +55,59 @@ test('D1 compare-and-swap keeps all concurrent writes, rejects invalid arrays an
  await server.transaction(s=>{const r=s.rooms.find(r=>r.id==='10A1');r.endsAt=Date.now()-1;r.status='running'});
  assert.equal(await server.transaction(s=>s.rooms.find(r=>r.id==='10A1').status),'closed');
 });
+test('Reset closed room deletes only its persisted attempts and permits a fresh exam',async()=>{
+ const teacher=(await call('login',{password:env.MIDTERM_ADMIN_PASSWORD})).cookie;
+ const config={roomId:'10A3',opensAt:new Date(Date.now()-60000).toISOString(),closesAt:new Date(Date.now()+7200000).toISOString(),duration:45,code:'other-class-code',roster:['Học Sinh Lớp Khác']};
+ assert.equal((await call('reopen',{roomId:'10A4',confirmReset:true},teacher)).status,200);
+ assert.equal((await call('configure',config,teacher)).status,200);
+ const other=await call('join',{roomId:'10A3',name:'Học Sinh Lớp Khác',code:config.code});assert.equal(other.status,200);
+ assert.equal((await call('start',{roomId:'10A3'},teacher)).status,200);
+ assert.equal((await call('reopen',{roomId:'10A3',confirmReset:true},teacher)).status,409);
+ const kept=await server.transaction(s=>JSON.stringify({room:s.rooms.find(r=>r.id==='10A3'),attempts:s.attempts.filter(a=>a.roomId==='10A3')}));
+ const targetBefore=await server.transaction(s=>s.attempts.filter(a=>a.roomId==='10A1').map(a=>a.id));assert.ok(targetBefore.length);
+ assert.equal((await call('reopen',{roomId:'10A1',confirmReset:true})).status,401);
+ assert.equal((await call('reopen',{roomId:'10A1'},teacher)).status,400);
+ const reset=await call('reopen',{roomId:'10A1',confirmReset:true},teacher);assert.equal(reset.status,200);
+ const room=reset.body.rooms.find(r=>r.id==='10A1');assert.equal(room.status,'draft');assert.equal(room.startedAt,null);assert.equal(room.endsAt,null);assert.equal(room.opensAt,'');assert.equal(room.closesAt,'');assert.equal(reset.body.attempts.some(a=>a.roomId==='10A1'),false);
+ const loaded=await call('admin',{},teacher,'GET');assert.equal(loaded.body.attempts.some(a=>a.roomId==='10A1'),false);
+ for(const id of targetBefore)assert.equal(sql.prepare('SELECT COUNT(*) AS n FROM exam_documents WHERE key = ?').get('attempt:'+id).n,0);
+ assert.equal(await server.transaction(s=>JSON.stringify({room:s.rooms.find(r=>r.id==='10A3'),attempts:s.attempts.filter(a=>a.roomId==='10A3')})),kept);
+ assert.equal((await call('reopen',{roomId:'10A1',confirmReset:true},teacher)).status,200);
+ const fresh={...config,roomId:'10A1',code:'fresh-class-code',roster:['Học Sinh Ca Mới']};assert.equal((await call('configure',fresh,teacher)).status,200);
+ const joined=await call('join',{roomId:'10A1',name:'Học Sinh Ca Mới',code:fresh.code});assert.equal(joined.status,200);assert.equal(joined.body.attempt.paper,null);assert.ok(!targetBefore.includes(joined.body.attempt.id));assert.equal((await call('start',{roomId:'10A1'},teacher)).status,200);
+});
+test('Students join without a preloaded roster; duplicate names and late entry remain protected',async()=>{
+ const teacher=(await call('login',{password:env.MIDTERM_ADMIN_PASSWORD})).cookie;
+ const config={roomId:'10A4',opensAt:new Date(Date.now()-60000).toISOString(),closesAt:new Date(Date.now()+7200000).toISOString(),duration:45,code:'open-class-code'};
+ const saved=await call('configure',config,teacher);assert.equal(saved.status,200);assert.deepEqual(saved.body.rooms[2].roster,[]);
+ assert.equal((await call('join',{roomId:'10A4',name:'Nguyễn Văn Mới',code:'wrong'})).status,403);
+ assert.equal(await server.transaction(s=>s.rooms[2].roster.length),0);
+ const a=await call('join',{roomId:'10A4',name:'  Nguyễn   Văn Mới  ',code:config.code});assert.equal(a.status,200);assert.equal(a.body.attempt.name,'Nguyễn Văn Mới');assert.equal(a.body.attempt.paper,null);
+ assert.equal((await call('join',{roomId:'10A4',name:'nguyen van moi',code:config.code})).status,409);
+ assert.equal((await call('join',{roomId:'10A4',name:'nguyen van moi',code:config.code},a.cookie)).status,200);
+ assert.equal(await server.transaction(s=>s.rooms[2].roster.length),1);
+ assert.equal((await call('configure',config,teacher)).status,200);
+ assert.equal((await call('start',{roomId:'10A4'},teacher)).status,200);
+ assert.equal((await call('join',{roomId:'10A4',name:'Học Sinh Đến Muộn',code:config.code})).status,403);
+ assert.equal(await server.transaction(s=>s.rooms[2].roster.length),1);
+ assert.equal((await call('close',{roomId:'10A4'},teacher)).status,200);
+ assert.equal((await call('reopen',{roomId:'10A4',confirmReset:true},teacher)).status,200);
+ assert.equal(await server.transaction(s=>s.rooms[2].roster.length),0);
+});
+
+test('Reset waiting and draft rooms clears old configuration durably',async()=>{
+ const teacher=(await call('login',{password:env.MIDTERM_ADMIN_PASSWORD})).cookie;
+ const config={roomId:'10A4',opensAt:new Date(Date.now()-60000).toISOString(),closesAt:new Date(Date.now()+7200000).toISOString(),duration:45,code:'waiting-reset-code'};
+ assert.equal((await call('configure',config,teacher)).status,200);
+ const a=await call('join',{roomId:'10A4',name:'Học Sinh Test',code:config.code});assert.equal(a.status,200);
+ assert.equal((await call('reopen',{roomId:'10A4'},teacher)).status,400);
+ assert.equal((await call('reopen',{roomId:'10A4',confirmReset:true},teacher)).status,200);
+ const state=await server.transaction(s=>({room:s.rooms[2],attempts:s.attempts.filter(a=>a.roomId==='10A4')}));
+ assert.equal(state.room.status,'draft');assert.equal(state.room.codeHash,'');assert.equal(state.room.opensAt,'');assert.equal(state.room.closesAt,'');assert.deepEqual(state.room.roster,[]);assert.deepEqual(state.attempts,[]);
+ assert.equal((await call('status',{},a.cookie,'GET')).status,401);
+ assert.equal((await call('reopen',{roomId:'10A4',confirmReset:true},teacher)).status,200);
+});
+
 test('Teacher changes password durably, revokes old admin sessions and preserves exam records',async()=>{
  const old=(await call('login',{password:env.MIDTERM_ADMIN_PASSWORD})).cookie,newPassword='new-unit-test-password-123';
  const before=await server.transaction(s=>JSON.stringify({rooms:s.rooms,attempts:s.attempts}));

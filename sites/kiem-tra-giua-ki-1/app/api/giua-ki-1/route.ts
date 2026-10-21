@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { authenticateStudent, audit, checkCode, configured, createPaper, ExamError, fail, findRoom, hashCode, issueStudentSession, newAttempt, readSession, resetSession, same, signSession, studentView, submit, transaction, validateAnswers } from "@/lib/midterm-server";
 import type { MidtermState } from "@/lib/midterm-types";
-import { passwordMatches, prepareRoster, studentByName } from '@/lib/midterm-server';
+import { passwordMatches, studentByName } from '@/lib/midterm-server';
 import { scoreObjective } from '@/lib/midterm-scoring';
 
 export const runtime = "nodejs";
@@ -122,7 +122,7 @@ export async function POST(req: NextRequest) {
         const opens = typeof b.opensAt === "string" ? Date.parse(b.opensAt) : NaN, closes = typeof b.closesAt === "string" ? Date.parse(b.closesAt) : NaN;
         if (!Number.isFinite(opens) || !Number.isFinite(closes) || closes <= opens || closes - opens > 86400000) fail("Khung giờ chưa hợp lệ (tối đa 24 giờ).");
         if (typeof b.duration !== "number" || !Number.isInteger(b.duration) || b.duration < 10 || b.duration > 180 || closes - opens < b.duration * 60000) fail("Thời lượng từ 10–180 phút và phải nằm trong khung giờ.");
-        const roster = prepareRoster(room,b.roster);
+        const roster = room.roster.filter(student => s.attempts.some(a => a.roomId === room.id && a.studentId === student.id));
         for (const a of s.attempts.filter(a => a.roomId === room.id)) if (!roster.some(v => v.id === a.studentId && v.name === a.name)) fail("Không được xóa/đổi danh tính học sinh đã vào phòng.");
         if (b.code !== "" && b.code !== undefined) { if (typeof b.code !== "string" || b.code.trim().length < 6 || b.code.length > 100) fail("Mã phòng cần ít nhất 6 ký tự."); room.codeHash = await hashCode(b.code.trim()); }
         if (!room.codeHash) fail("Thầy cần đặt mã phòng.");
@@ -137,6 +137,11 @@ export async function POST(req: NextRequest) {
       } else if (action === "close") {
         if (room.status !== "running") fail("Phòng chưa trong giờ làm bài.", 409);
         room.status = "closed"; room.endsAt = Date.now(); for (const a of s.attempts.filter(a => a.roomId === room.id)) submit(a);
+      } else if (action === "reopen") {
+        if (room.status === "running") fail("Phòng đang kiểm tra. Thầy kết thúc ca trước khi xóa dữ liệu.", 409);
+        if (b.confirmReset !== true) fail("Thầy cần xác nhận xóa bài làm cũ trước khi đặt lại phòng.");
+        room.status = "draft"; room.startedAt = null; room.endsAt = null; room.allowLate = false; room.roster = []; room.opensAt = ""; room.closesAt = ""; room.codeHash = "";
+        s.attempts = s.attempts.filter(a => a.roomId !== room.id);
       } else if (action === "extend") {
         if (room.status !== "running" || !room.endsAt || typeof b.minutes !== "number" || !Number.isInteger(b.minutes) || b.minutes < 1 || b.minutes > 30) fail("Chỉ gia hạn 1–30 phút khi đang kiểm tra.");
         room.endsAt += b.minutes * 60000; room.closesAt = new Date(Math.max(Date.parse(room.closesAt), room.endsAt)).toISOString();
@@ -152,7 +157,7 @@ export async function POST(req: NextRequest) {
         if (typeof b.feedback !== "string" || b.feedback.length > 2000) fail("Nhận xét tối đa 2.000 ký tự.");
         a.essayScores = b.scores.map(v => Math.round(v * 100) / 100); a.feedback = b.feedback;
       } else fail("Thao tác không hợp lệ.");
-      audit(s, room.id, String(action));
+      audit(s, room.id, action === "reopen" ? "Đặt lại ca kiểm tra mới: xóa bài cũ và mở khóa lịch, danh sách" : String(action));
       return json(adminView(s));
     });
   } catch (e) { return error(e); }

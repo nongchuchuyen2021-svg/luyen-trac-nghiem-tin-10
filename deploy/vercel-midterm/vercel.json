@@ -1,0 +1,13 @@
+{
+  "framework": null,
+  "buildCommand": "",
+  "installCommand": "",
+  "outputDirectory": ".",
+  "redirects": [
+    {
+      "source": "/:path*",
+      "destination": "https://tin10-nari-giua-ki-1.my-team-3380.chatgpt.site/:path*",
+      "permanent": false
+    }
+  ]
+}

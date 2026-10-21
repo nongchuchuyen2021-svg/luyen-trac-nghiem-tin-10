@@ -50,7 +50,7 @@ Tại thư mục gốc của dự án (`luyen-trac-nghiem-tin-10`), thầy có t
    - Đặt thời gian bắt đầu cho vào phòng và đóng khung giờ (giờ Việt Nam UTC+7).
    - Đặt thời lượng làm bài (mặc định 45 phút).
    - Nhập mã vào phòng (hoặc bấm *Tạo mã ngẫu nhiên*).
-   - Dán danh sách học sinh: mỗi dòng một họ và tên (ví dụ: `Nguyễn Văn An`).
+   - Không cần nhập trước danh sách. Học sinh tự nhập họ tên khi vào bằng mã phòng; tên tự xuất hiện trong bảng theo dõi.
    - Bấm **Lưu và mở phòng chờ**.
 
 ### 2. Quản lí ca thi (Theo dõi phòng)
@@ -62,6 +62,11 @@ Tại thư mục gốc của dự án (`luyen-trac-nghiem-tin-10`), thầy có t
   - *Mở lại phiên:* Nếu học sinh bị sự cố máy tính, mất kết nối cần đổi máy khác.
   - *Gia hạn thời gian:* Gia hạn thêm từng đợt 5 phút khi có sự cố chung.
   - *Kết thúc sớm:* Chủ động thu bài toàn bộ lớp.
+
+### Xóa dữ liệu cũ và đặt lại ca kiểm tra
+- Trong thẻ **1. Chuẩn bị phòng**, bấm **Xóa dữ liệu cũ & Đặt lại phòng**. Dùng được khi phòng đang chuẩn bị, phòng chờ hoặc đã kết thúc; nếu đang kiểm tra, cần kết thúc ca trước.
+- Hộp xác nhận cho phép tải bảng điểm CSV trước khi xóa. Bấm **Xóa bài cũ & Đặt lại phòng** để xóa bài làm và điểm cũ của riêng lớp đang chọn. Các lớp khác được giữ nguyên.
+- Phòng trở về **Chưa đặt lịch**, xóa lịch, mã phòng và danh sách ca cũ. Sửa thông tin rồi bấm **Lưu và mở phòng chờ** để chuẩn bị ca mới.
 
 ### 3. Chấm bài và Xuất kết quả
 - **Tự động chấm khách quan:** Ngay khi học sinh bấm nộp bài (hoặc khi hết giờ hệ thống tự chốt), phần trắc nghiệm nhiều lựa chọn (TNKQ) và trắc nghiệm đúng–sai được máy chủ tự chấm điểm ngay lập tức.

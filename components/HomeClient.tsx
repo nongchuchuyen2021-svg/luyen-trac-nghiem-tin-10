@@ -65,18 +65,32 @@ export default function HomeClient({ counts }: { counts: Record<string, LessonCo
           )}
         </header>
 
-        <a
-          href={process.env.NEXT_PUBLIC_MIDTERM_URL || "https://tin10-nari-giua-ki-1.my-team-3380.chatgpt.site/giua-ki-1"}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-8 flex items-center justify-between gap-4 rounded-2xl border border-indigo-200 bg-indigo-950 p-5 text-white shadow-card transition-all hover:bg-indigo-900 sm:p-6"
-        >
-          <div>
-            <p className="font-display text-lg font-bold">Kiểm tra giữa học kì I</p>
-            <p className="mt-1 text-sm text-indigo-100">Lớp 10A1 · 10A3 · 10A4 · Vào phòng kiểm tra trực tuyến Cloudflare D1</p>
+        <div className="mt-8 rounded-2xl border border-indigo-200 bg-indigo-950 p-5 text-white shadow-card sm:p-6">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="font-display text-lg font-bold">Kiểm tra giữa học kì I</p>
+              <p className="mt-1 text-sm text-indigo-100">Lớp 10A1 · 10A3 · 10A4 · Hệ thống trực tuyến Cloudflare D1</p>
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
+              <a
+                href={process.env.NEXT_PUBLIC_MIDTERM_TEACHER_URL || "https://tin10-nari-giua-ki-1.my-team-3380.chatgpt.site/giua-ki-1/giao-vien"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full border border-indigo-400/50 bg-indigo-900/80 px-4 py-2 text-xs font-semibold text-indigo-100 transition-all hover:bg-indigo-800"
+              >
+                🔐 Bàn điều khiển Giáo viên →
+              </a>
+              <a
+                href={process.env.NEXT_PUBLIC_MIDTERM_URL || "https://tin10-nari-giua-ki-1.my-team-3380.chatgpt.site/giua-ki-1"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-indigo-900 shadow transition-all hover:bg-slate-100"
+              >
+                Học sinh vào phòng →
+              </a>
+            </div>
           </div>
-          <span className="shrink-0 rounded-full bg-white px-4 py-2 text-sm font-semibold text-indigo-900">Vào phòng →</span>
-        </a>
+        </div>
         <Link href="/on-tap/bai-1-2-7-8-9-10-11" className="mt-4 flex items-center justify-between gap-4 rounded-2xl border-2 border-grape/30 bg-white p-5 shadow-card sm:p-6">
           <div><p className="font-display text-lg font-bold text-ink">📚 Đề cương ôn tập — Bài 1, 2, 7–11</p><p className="mt-1 text-sm text-ink-soft">60 TNKQ · 12 đúng–sai · 7 tự luận · Tự luyện và lưu kết quả</p></div>
           <span className="shrink-0 rounded-full bg-grape-deep px-4 py-2 text-sm font-semibold text-white">Ôn tập →</span>

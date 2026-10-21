@@ -64,9 +64,13 @@ export function prepareRoster(room: Room, input: unknown): Room['roster'] {
   return roster;
 }
 export function studentByName(room: Room, name: unknown) {
-  if(typeof name!=='string'||name.trim().length<3||name.length>80)fail('Em nhập đầy đủ họ và tên theo danh sách lớp.');
+  if(typeof name!=='string'||name.trim().length<3||name.length>80)fail('Em nhập đầy đủ họ và tên từ 3 đến 80 ký tự.');
   const matches=room.roster.filter(s=>nameKey(s.name)===nameKey(name as string));
-  if(!matches.length)fail('Họ tên chưa có trong danh sách lớp. Em kiểm tra lại họ tên và lớp; nếu vẫn chưa vào được hãy báo thầy.',403);
+  if(!matches.length){
+    if(room.roster.length>=100)fail('Phòng đã đủ 100 học sinh. Em liên hệ thầy.',403);
+    const student={id:'HS'+crypto.randomUUID().replace(/-/g,'').slice(0,24).toUpperCase(),name:(name as string).normalize('NFKC').trim().replace(/\s+/g,' ')};
+    room.roster.push(student);return student;
+  }
   if(matches.length>1)fail('Có học sinh trùng họ tên trong lớp. Em báo thầy để xác nhận danh sách.',409);
   return matches[0];
 }
