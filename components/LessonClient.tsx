@@ -279,7 +279,9 @@ export default function LessonClient({
             desc:
               lessonId === "bai-09"
                 ? "SGK điện tử tương tác · mục lục dính, giả lập Windows Defender & ghi nhớ cốt lõi"
-                : "Sách điện tử — đọc nguyên văn SGK với mục lục và điều chỉnh cỡ chữ",
+                : ["bai-10", "bai-11", "bai-12", "bai-13"].includes(lessonId)
+                  ? "Biên soạn theo SGK · minh hoạ, thực hành và tự kiểm tra"
+                  : "Sách điện tử — đọc nguyên văn SGK với mục lục và điều chỉnh cỡ chữ",
             best: null,
             enabled: true,
           },

@@ -1,5 +1,6 @@
 node_modules/
 .next/
+.next-midterm/
 out/
 *.tsbuildinfo
 .env*.local
@@ -8,4 +9,18 @@ data/sgk/
 *.pdf
 .claude/
 .vercel
+.midterm-data/
+.midterm-access.txt
+.git_repo/
+.codex-work/
+sites/**/node_modules/
+sites/**/.next/
+sites/**/dist/
+sites/**/.wrangler/
+sites/**/.sites-runtime/
+sites/**/outputs/
+sites/**/.dev.vars*
 
+
+.vercel
+.env*

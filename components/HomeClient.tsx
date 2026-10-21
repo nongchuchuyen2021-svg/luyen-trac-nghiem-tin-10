@@ -65,7 +65,19 @@ export default function HomeClient({ counts }: { counts: Record<string, LessonCo
           )}
         </header>
 
-        <Link href="/on-tap/bai-1-2-7-8-9-10-11" className="mt-8 flex items-center justify-between gap-4 rounded-2xl border-2 border-grape/30 bg-white p-5 shadow-card sm:p-6">
+        <a
+          href={process.env.NEXT_PUBLIC_MIDTERM_URL || "https://tin10-nari-giua-ki-1.my-team-3380.chatgpt.site/giua-ki-1"}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-8 flex items-center justify-between gap-4 rounded-2xl border border-indigo-200 bg-indigo-950 p-5 text-white shadow-card transition-all hover:bg-indigo-900 sm:p-6"
+        >
+          <div>
+            <p className="font-display text-lg font-bold">Kiểm tra giữa học kì I</p>
+            <p className="mt-1 text-sm text-indigo-100">Lớp 10A1 · 10A3 · 10A4 · Vào phòng kiểm tra trực tuyến Cloudflare D1</p>
+          </div>
+          <span className="shrink-0 rounded-full bg-white px-4 py-2 text-sm font-semibold text-indigo-900">Vào phòng →</span>
+        </a>
+        <Link href="/on-tap/bai-1-2-7-8-9-10-11" className="mt-4 flex items-center justify-between gap-4 rounded-2xl border-2 border-grape/30 bg-white p-5 shadow-card sm:p-6">
           <div><p className="font-display text-lg font-bold text-ink">📚 Đề cương ôn tập — Bài 1, 2, 7–11</p><p className="mt-1 text-sm text-ink-soft">60 TNKQ · 12 đúng–sai · 7 tự luận · Tự luyện và lưu kết quả</p></div>
           <span className="shrink-0 rounded-full bg-grape-deep px-4 py-2 text-sm font-semibold text-white">Ôn tập →</span>
         </Link>

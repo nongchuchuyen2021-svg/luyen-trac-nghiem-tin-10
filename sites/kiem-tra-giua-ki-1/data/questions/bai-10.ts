@@ -1,0 +1,123 @@
+import type { Question } from "@/lib/types";
+
+// Bài 10. Thực hành khai thác tài nguyên trên Internet
+const questions: Question[] = [
+  {
+    id: "b10-01",
+    q: "Công cụ nào dùng để tìm kiếm thông tin trên Internet?",
+    options: [
+      "Máy tìm kiếm như Google, Bing hoặc Cốc Cốc",
+      "Trình duyệt web như Chrome, Firefox, Edge",
+      "Phần mềm đọc tài liệu định dạng PDF",
+      "Trình quản lí tệp có sẵn của hệ điều hành",
+    ],
+    answer: 0,
+    explain: "Máy tìm kiếm lập chỉ mục hàng tỉ trang web và trả kết quả theo từ khoá.",
+  },
+  {
+    id: "b10-02",
+    q: 'Đặt từ khoá trong dấu ngoặc kép, ví dụ "an toàn thông tin", có tác dụng gì?',
+    options: [
+      "Chỉ tìm cụm từ đó trong tiêu đề của các trang web",
+      "Tìm các trang chứa ít nhất một từ trong cụm đó",
+      "Loại bỏ các trang có chứa cụm từ đó khỏi kết quả",
+      "Tìm chính xác nguyên cụm từ đó theo đúng thứ tự",
+    ],
+    answer: 3,
+    explain: "Ngoặc kép yêu cầu kết quả chứa nguyên cụm — lọc bớt kết quả rời rạc, không liên quan.",
+  },
+  {
+    id: "b10-03",
+    q: "Cú pháp site:moet.gov.vn kèm từ khoá có tác dụng gì?",
+    options: [
+      "Chỉ tìm kết quả nằm trong trang moet.gov.vn",
+      "Tìm các trang tương tự với moet.gov.vn",
+      "Loại bỏ trang moet.gov.vn ra khỏi kết quả",
+      "Tìm các trang có liên kết tới moet.gov.vn",
+    ],
+    answer: 0,
+    explain: "Toán tử site: giới hạn phạm vi tìm kiếm trong một website cụ thể.",
+  },
+  {
+    id: "b10-04",
+    q: "Dấu trừ trong truy vấn, ví dụ: python -rắn, có tác dụng gì?",
+    options: [
+      "Tìm cả hai từ",
+      "Chỉ tìm từ 'rắn'",
+      "Loại các kết quả chứa từ 'rắn'",
+      "Sắp xếp kết quả theo bảng chữ cái",
+    ],
+    answer: 2,
+    explain: "Dấu trừ loại trừ từ khoá không mong muốn — hữu ích khi từ có nhiều nghĩa.",
+  },
+  {
+    id: "b10-05",
+    q: "Muốn tìm tệp trình chiếu về chủ đề nào đó, có thể thêm cú pháp:",
+    options: ["extension:pptx", "format:pptx", "filetype:pptx", "filesize:pptx"],
+    answer: 2,
+    explain: "filetype: giới hạn theo định dạng tệp (pptx, pdf, docx, xlsx...).",
+  },
+  {
+    id: "b10-06",
+    q: "Tiêu chí nào KHÔNG giúp đánh giá độ tin cậy của thông tin trên mạng?",
+    options: [
+      "Nhiều nguồn độc lập cùng đưa tin giống nhau",
+      "Nguồn đăng là cơ quan, tổ chức uy tín",
+      "Có ghi tác giả và thời gian đăng rõ ràng",
+      "Trang web có nhiều quảng cáo bắt mắt",
+    ],
+    answer: 3,
+    explain:
+      "Giao diện hay quảng cáo không nói lên độ tin cậy; nguồn gốc, tác giả, thời gian và kiểm chứng chéo mới quan trọng.",
+  },
+  {
+    id: "b10-07",
+    q: "Tên miền .gov.vn thường thuộc về loại tổ chức nào?",
+    options: [
+      "Công ty tư nhân",
+      "Cá nhân tự do",
+      "Cơ quan nhà nước Việt Nam",
+      "Trường đại học nước ngoài",
+    ],
+    answer: 2,
+    explain: ".gov = government (chính phủ); .edu.vn là giáo dục, .com là thương mại.",
+  },
+  {
+    id: "b10-08",
+    q: "Khi tải tài liệu từ Internet để làm bài, việc nên làm là:",
+    options: [
+      "Xoá tên tác giả gốc để bài trông gọn gàng hơn",
+      "Chép nguyên văn rồi ghi tên mình vào phần tác giả",
+      "Đổi vài từ trong bài rồi coi như của mình viết",
+      "Ghi lại địa chỉ trang và tên tác giả để trích dẫn",
+    ],
+    answer: 3,
+    explain: "Dẫn nguồn là yêu cầu bắt buộc về liêm chính học thuật và tôn trọng bản quyền (Bài 11).",
+  },
+  {
+    id: "b10-09",
+    q: "Tìm kiếm bằng hình ảnh (Google Images/Lens) hữu ích khi nào?",
+    options: [
+      "Muốn biết vật hay địa danh trong ảnh là gì khi chưa rõ tên",
+      "Muốn tăng độ phân giải của bức ảnh trước khi đem đi in",
+      "Muốn tìm các bức ảnh khác cùng tác giả đã chụp bức ảnh đó",
+      "Muốn chuyển bức ảnh sang định dạng khác cho nhẹ hơn",
+    ],
+    answer: 0,
+    explain: "Tìm kiếm ngược bằng ảnh giúp nhận diện đối tượng, kiểm tra nguồn gốc ảnh (phát hiện ảnh giả).",
+  },
+  {
+    id: "b10-10",
+    q: "Dịch vụ nào cho phép lưu và chia sẻ tài liệu học tập trực tuyến cho nhóm bạn cùng dùng?",
+    options: [
+      "Máy tính bỏ túi",
+      "Trình chống phân mảnh ổ đĩa",
+      "Google Drive / OneDrive",
+      "Phần mềm Paint",
+    ],
+    answer: 2,
+    explain: "Lưu trữ đám mây cho phép chia sẻ theo link, phân quyền xem/sửa — tiện làm việc nhóm.",
+  },
+];
+
+export default questions;

@@ -1,0 +1,10 @@
+.midterm .mt-input { width:100%; border:1px solid #cbd5e1; border-radius:12px; padding:12px 14px; background:white; color:#0f172a; font-weight:400; }
+.midterm .mt-input:focus { outline:2px solid #4f46e5; outline-offset:2px; }
+.midterm .mt-primary,.midterm .mt-secondary,.midterm .mt-danger { display:inline-flex; justify-content:center; align-items:center; gap:8px; border-radius:12px; padding:12px 18px; font-weight:600; font-size:14px; line-height:20px; }
+.midterm .mt-primary { background:#4338ca; color:white; border:1px solid #4338ca; }
+.midterm .mt-secondary { background:white; color:#334155; border:1px solid #cbd5e1; }
+.midterm .mt-danger { background:#fff1f2; color:#be123c; border:1px solid #fecdd3; }
+.midterm button:disabled { cursor:not-allowed; opacity:.45; }
+.midterm input[type=radio],.midterm input[type=checkbox] { accent-color:#4338ca; width:18px; height:18px; }
+.midterm th,.midterm td { padding:12px; text-align:left; border-bottom:1px solid #e2e8f0; }
+.midterm th { font-size:12px; color:#475569; background:#f8fafc; }

@@ -1,0 +1,175 @@
+import type { Question } from "@/lib/types";
+
+// Bài 2. Vai trò của thiết bị thông minh và tin học đối với xã hội
+const questions: Question[] = [
+  {
+    id: "b2-01",
+    difficulty: "nhan-biet",
+    q: "Thiết bị thông minh là gì?",
+    options: [
+      "Thiết bị điện tử hoạt động tự chủ ở mức nhất định nhờ phần mềm điều khiển",
+      "Thiết bị điện tử đời mới có giá thành cao và nhiều tính năng tiện ích",
+      "Thiết bị điện tử có màn hình cảm ứng và giao diện đồ hoạ cho người dùng",
+      "Thiết bị điện tử chạy bằng điện lưới hoặc pin sạc và có tuổi thọ cao",
+    ],
+    answer: 0,
+    explain:
+      "Thiết bị thông minh là thiết bị điện tử hoạt động tự chủ (không cần người điều khiển liên tục) nhờ được cài phần mềm xử lí thông tin, thường có khả năng kết nối.",
+  },
+  {
+    id: "b2-02",
+    difficulty: "thong-hieu",
+    q: "Thiết bị nào sau đây là thiết bị thông minh?",
+    options: [
+      "Bóng đèn sợi đốt gắn công tắc cảm ứng bật tắt bằng cách chạm tay",
+      "Quạt bàn có hẹn giờ tắt bằng núm vặn cơ và ba mức tốc độ gió",
+      "Máy tính bỏ túi thực hiện được các phép tính lượng giác và luỹ thừa",
+      "Đồng hồ thông minh tự đo nhịp tim và đồng bộ số liệu sang điện thoại",
+    ],
+    answer: 3,
+    explain:
+      "Smartwatch có bộ xử lí, phần mềm, cảm biến và kết nối không dây — đủ đặc điểm của thiết bị thông minh.",
+  },
+  {
+    id: "b2-03",
+    difficulty: "nhan-biet",
+    q: "Cuộc cách mạng công nghiệp lần thứ tư (4.0) gắn với đặc trưng nào?",
+    options: [
+      "Tự động hoá nhờ máy tính điện tử và các thiết bị điều khiển lập trình",
+      "Điện khí hoá và sản xuất hàng loạt theo dây chuyền lắp ráp quy mô lớn",
+      "Cơ giới hoá sản xuất nhờ động cơ hơi nước thay cho sức người và gia súc",
+      "Kết nối vạn vật, trí tuệ nhân tạo, dữ liệu lớn và tự động hoá thông minh",
+    ],
+    answer: 3,
+    explain:
+      "CMCN 4.0 dựa trên IoT, AI, dữ liệu lớn, điện toán đám mây... trong đó thiết bị thông minh đóng vai trò chủ chốt.",
+  },
+  {
+    id: "b2-04",
+    difficulty: "nhan-biet",
+    q: "IoT (Internet of Things) nghĩa là gì?",
+    options: [
+      "Mạng lưới thiết bị kết nối Internet để tự thu thập và trao đổi dữ liệu",
+      "Mạng lưới máy chủ cỡ lớn cho phép thuê tài nguyên tính toán qua Internet",
+      "Hệ thống phần mềm bảo vệ các thiết bị khỏi mã độc lây lan qua Internet",
+      "Hệ thống các sàn giao dịch cho phép mua bán hàng hoá qua Internet",
+    ],
+    answer: 0,
+    explain:
+      "IoT — Internet vạn vật — là mạng lưới thiết bị (cảm biến, đồ gia dụng, xe cộ...) kết nối Internet, tự thu thập và trao đổi dữ liệu.",
+  },
+  {
+    id: "b2-05",
+    difficulty: "thong-hieu",
+    q: "Đóng góp nào của tin học KHÔNG đúng?",
+    options: [
+      "Tin học thay thế hoàn toàn con người trong mọi hoạt động của xã hội",
+      "Tin học giúp quản lí và điều hành xã hội nhanh chóng, hiệu quả hơn",
+      "Tin học thúc đẩy kinh tế số, thương mại điện tử và ngân hàng số",
+      "Tin học hỗ trợ nghiên cứu khoa học, giáo dục và chăm sóc sức khoẻ",
+    ],
+    answer: 0,
+    explain:
+      "Tin học là công cụ hỗ trợ đắc lực nhưng không thay thế hoàn toàn con người — con người vẫn quyết định mục tiêu và chịu trách nhiệm.",
+  },
+  {
+    id: "b2-06",
+    difficulty: "thong-hieu",
+    q: "Ứng dụng nào sau đây là thành tựu của trí tuệ nhân tạo (AI)?",
+    options: [
+      "Bảng tính tự cộng dãy số và vẽ biểu đồ theo công thức đã nhập sẵn",
+      "Thẻ nhớ tự nén dữ liệu lại để lưu được nhiều tệp hơn dung lượng thật",
+      "Máy in tự nhận diện khổ giấy trong khay rồi in tài liệu cho vừa trang",
+      "Trợ lí ảo nhận dạng giọng nói và trả lời câu hỏi của người dùng",
+    ],
+    answer: 3,
+    explain:
+      "Nhận dạng giọng nói, nhận dạng hình ảnh, dịch tự động... là các ứng dụng tiêu biểu của AI.",
+  },
+  {
+    id: "b2-07",
+    difficulty: "thong-hieu",
+    q: "Học tập trực tuyến (e-learning) là ví dụ về đóng góp của tin học trong lĩnh vực nào?",
+    options: [
+      "Nông nghiệp — cảm biến đo độ ẩm đất và hệ thống tưới tiêu tự động",
+      "Giao thông — dẫn đường vệ tinh, đèn tín hiệu và thu phí không dừng",
+      "Giáo dục — dạy học từ xa, kho học liệu số và lớp học ảo trên mạng",
+      "Y tế — bệnh án điện tử, hội chẩn từ xa và theo dõi sức khoẻ qua thiết bị",
+    ],
+    answer: 2,
+    explain:
+      "E-learning ứng dụng tin học vào giáo dục: học từ xa, kho học liệu số, lớp học ảo...",
+  },
+  {
+    id: "b2-08",
+    difficulty: "thong-hieu",
+    q: "Đặc điểm nào giúp thiết bị thông minh ngày càng phổ biến?",
+    options: [
+      "Tiêu thụ rất ít điện nên có thể dùng liên tục nhiều tháng không sạc",
+      "Nhỏ gọn, giá ngày càng hợp lí, kết nối không dây và nhiều tiện ích",
+      "Cấu tạo đơn giản nên bền và hầu như không cần bảo trì hay sửa chữa",
+      "Được cài sẵn mọi phần mềm nên người dùng không phải cập nhật gì thêm",
+    ],
+    answer: 1,
+    explain:
+      "Nhờ công nghệ vi xử lí phát triển, thiết bị thông minh nhỏ gọn, rẻ hơn, kết nối dễ dàng nên phổ biến rộng rãi.",
+  },
+  {
+    id: "b2-09",
+    difficulty: "thong-hieu",
+    q: 'Thành tựu nào sau đây thuộc về "xã hội tri thức"?',
+    options: [
+      "Sản xuất chủ yếu dựa vào sức lao động cơ bắp của đông đảo công nhân",
+      "Nền kinh tế phát triển chủ yếu nhờ khai thác tài nguyên thiên nhiên sẵn có",
+      "Tri thức và thông tin trở thành nguồn lực chính tạo ra của cải xã hội",
+      "Mọi giao dịch mua bán đều thực hiện trực tiếp bằng tiền mặt cho an toàn",
+    ],
+    answer: 2,
+    explain:
+      "Trong xã hội tri thức, tri thức (mà tin học là công cụ tạo ra, lưu trữ, phân phối) là nguồn lực quan trọng nhất.",
+  },
+  {
+    id: "b2-10",
+    difficulty: "van-dung",
+    q: "Một ngã tư cần tự phát hiện xe vượt đèn đỏ, nhận dạng biển số từ hình ảnh và gửi kết quả về trung tâm. Nên chọn giải pháp kết hợp những công nghệ nào?",
+    options: [
+      "Thiết bị thông minh, nhận dạng hình ảnh bằng AI và kết nối truyền dữ liệu",
+      "Máy quét mã vạch, bộ nhớ ngoài dung lượng lớn và máy in tốc độ cao",
+      "Cảm biến hồng ngoại, loa phát cảnh báo và bảng điện tử hiển thị nội dung",
+      "Màn hình cảm ứng, thiết bị nhập liệu và phần mềm bảng tính thống kê",
+    ],
+    answer: 0,
+    explain:
+      "Camera là thiết bị thông minh, dùng AI nhận dạng biển số/hành vi, truyền dữ liệu qua mạng về trung tâm xử lí.",
+  },
+  {
+    id: "b2-11",
+    difficulty: "thong-hieu",
+    q: "Khi sử dụng thiết bị thông minh, điều nào sau đây NÊN làm?",
+    options: [
+      "Cập nhật phần mềm thường xuyên và đặt mật khẩu khoá màn hình thiết bị",
+      "Bật chia sẻ vị trí công khai mọi lúc để bạn bè dễ tìm và liên lạc",
+      "Giữ máy luôn bật và không khởi động lại để ứng dụng phản hồi nhanh hơn",
+      "Cài thêm nhiều ứng dụng tăng tốc từ các trang tải phần mềm miễn phí",
+    ],
+    answer: 0,
+    explain:
+      "Cập nhật phần mềm vá lỗi bảo mật và đặt mật khẩu là thói quen sử dụng thiết bị thông minh an toàn.",
+  },
+  {
+    id: "b2-12",
+    difficulty: "van-dung",
+    q: "Gia đình muốn robot lau nhà vẫn tự tránh vật cản và tự về trạm sạc khi mất kết nối Internet. Đặc tính nào cần ưu tiên khi chọn robot?",
+    options: [
+      "Cảm biến và phần mềm xử lí ngay trên robot để tự điều hướng, tìm trạm sạc",
+      "Khả năng kết nối Internet để người dùng theo dõi từ xa qua ứng dụng",
+      "Khả năng thu nhỏ kích thước để chui vừa gầm giường và các khe hẹp",
+      "Khả năng tiết kiệm điện năng nhờ tự tắt khi đã lau xong toàn bộ căn phòng",
+    ],
+    answer: 0,
+    explain:
+      "Để hoạt động khi mất Internet, robot cần cảm biến và phần mềm xử lí tại thiết bị. Chỉ có tính năng theo dõi từ xa, kích thước nhỏ hay tiết kiệm điện không đáp ứng yêu cầu tự điều hướng và về trạm sạc.",
+  },
+];
+
+export default questions;
