@@ -222,9 +222,12 @@ export default function LessonClient({
           const hasTl = games.some((g) => g.kind === "timeline");
           const hasS3 = games.some((g) => g.kind === "sort3");
           const hasS = games.some((g) => g.kind === "sort");
+          const hasDes = games.some((g) => g.kind === "zoom" || g.kind === "studio" || g.kind === "brief");
 
-          const emoji = hasNet ? "🌐" : hasAr ? "⚔️" : hasSrch ? "🔍" : hasCrt ? "⚖️" : hasTl ? "⏳" : hasS3 ? "🧩" : "🎮";
-          const name = hasNet
+          const emoji = hasDes ? "🎨" : hasNet ? "🌐" : hasAr ? "⚔️" : hasSrch ? "🔍" : hasCrt ? "⚖️" : hasTl ? "⏳" : hasS3 ? "🧩" : "🎮";
+          const name = hasDes
+            ? "Studio Đồ hoạ: 6 trò chơi"
+            : hasNet
             ? "Kỹ sư Mạng & Đám mây"
             : hasAr
               ? "Đấu trường An ninh mạng"
@@ -242,7 +245,9 @@ export default function LessonClient({
                           ? games[0].title
                           : "Đấu trường Mini Game";
 
-          const desc = hasNet
+          const desc = hasDes
+          ? `${games.length} trò chơi · Soi pixel, vẽ như Inkscape, nhận đơn khách hàng & phân loại phần mềm`
+          : hasNet
             ? `${games.length} trò chơi · Mô phỏng sơ đồ mạng, điều phối gói tin Switch/Router & Đám mây`
             : hasAr
               ? `${games.length} trò chơi · Đấu trường diệt Boss hacker & phòng thủ Tường lửa 100 HP`

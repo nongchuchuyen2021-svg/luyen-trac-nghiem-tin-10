@@ -18,6 +18,7 @@ function computeGameBadge(games: ReturnType<typeof getLessonGames>): string {
   const hasSort = games.some((g) => g.kind === "sort");
   const hasSort3 = games.some((g) => g.kind === "sort3");
 
+  if (games.some((g) => g.kind === "zoom" || g.kind === "studio" || g.kind === "brief")) return `🎨 ${games.length} game Đồ hoạ: Soi Pixel, Họa sĩ Inkscape...`;
   if (hasNetwork) return `🌐 Kỹ sư Mạng & Cloud${games.length > 1 ? ` (+${games.length - 1} game)` : ""}`;
   if (hasArena) return `⚔️ Đấu trường An ninh mạng${games.length > 1 ? ` (+${games.length - 1} game)` : ""}`;
   if (hasSearch) return `🔍 Thợ săn Tìm kiếm${games.length > 1 ? ` (+${games.length - 1} game)` : ""}`;

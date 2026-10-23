@@ -269,7 +269,100 @@ export type NetworkGame = {
   missions: NetworkMission[];
 };
 
-export type LessonGame = SortGame | TimelineGame | Sort3Game | ArenaGame | SearchGame | CourtGame | NetworkGame;
+
+// =====================================================================
+// GAME ĐỒ HOẠ (BÀI 12): SOI PIXEL · HỌA SĨ INKSCAPE · KHÁCH HÀNG GIAO VIỆC
+// =====================================================================
+export type ZoomShapeId = "circle" | "star" | "heart" | "bolt" | "leaf" | "flag";
+
+// Một vòng "Soi pixel": phóng to ảnh bí ẩn rồi đoán là Bitmap hay Vector
+export type ZoomRound = {
+  id: string;
+  level: 1 | 2 | 3;
+  shape: ZoomShapeId;
+  color: string; // mã màu hex của hình
+  kind: "bitmap" | "vector"; // đáp án đúng
+  res?: number; // độ phân giải (số pixel mỗi cạnh) khi kind = bitmap
+  smooth?: boolean; // bitmap bị làm mịn (nhoè) thay vì lộ ô vuông
+  clue?: string; // gợi ý hiển thị, vd tên tệp "logo.svg"
+  explain: string;
+};
+
+export type ZoomGame = {
+  kind: "zoom";
+  id: string;
+  title: string;
+  emoji: string;
+  instructions: string;
+  rounds: ZoomRound[];
+};
+
+export type StudioShapeType = "rect" | "ellipse" | "star" | "text";
+
+// Yêu cầu của một đối tượng trong nhiệm vụ vẽ (fill/stroke là id màu trong bảng màu; "none" = không màu)
+export type StudioTarget = {
+  type: StudioShapeType;
+  fill?: string;
+  stroke?: string;
+  text?: string; // với type "text": phải chứa chuỗi này
+};
+
+export type StudioPreset = {
+  type: StudioShapeType;
+  x: number; // toạ độ trên canvas 400x300
+  y: number;
+  w: number;
+  h: number;
+  fill: string;
+  stroke: string;
+  text?: string;
+};
+
+export type StudioMission = {
+  id: string;
+  level: 1 | 2 | 3;
+  title: string;
+  brief: string;
+  hint: string;
+  targets: StudioTarget[];
+  preset?: StudioPreset[]; // có sẵn hình trên canvas (nhiệm vụ sửa lỗi)
+  textDefault?: string;
+  explain: string;
+};
+
+export type StudioGame = {
+  kind: "studio";
+  id: string;
+  title: string;
+  emoji: string;
+  instructions: string;
+  missions: StudioMission[];
+};
+
+export type BriefScenario = {
+  id: string;
+  level: 1 | 2 | 3;
+  emoji: string;
+  client: string;
+  request: string;
+  needs: string[];
+  type: "bitmap" | "vector";
+  software: "gimp" | "inkscape";
+  format: string;
+  formats: string[]; // 4 định dạng cho học sinh chọn
+  explain: string;
+};
+
+export type BriefGame = {
+  kind: "brief";
+  id: string;
+  title: string;
+  emoji: string;
+  instructions: string;
+  scenarios: BriefScenario[];
+};
+
+export type LessonGame = SortGame | TimelineGame | Sort3Game | ArenaGame | SearchGame | CourtGame | NetworkGame | ZoomGame | StudioGame | BriefGame;
 
 export type Topic = {
   id: string;

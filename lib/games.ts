@@ -7,6 +7,7 @@ import bai08 from "@/data/games/bai-08";
 import bai09 from "@/data/games/bai-09";
 import bai10 from "@/data/games/bai-10";
 import bai11 from "@/data/games/bai-11";
+import bai12 from "@/data/games/bai-12";
 
 export const GAME_BANK: Record<string, LessonGame[]> = {
   "bai-02": bai02,
@@ -15,6 +16,7 @@ export const GAME_BANK: Record<string, LessonGame[]> = {
   "bai-09": bai09,
   "bai-10": bai10,
   "bai-11": bai11,
+  "bai-12": bai12,
 };
 
 export function getLessonGames(lessonId: string): LessonGame[] {
