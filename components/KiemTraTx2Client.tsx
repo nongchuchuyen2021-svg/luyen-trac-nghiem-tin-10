@@ -476,7 +476,7 @@ export default function KiemTraTx2Client() {
           </div>
         </header>
 
-        <main className="mx-auto max-w-4xl px-2.5 pt-4 sm:px-4 sm:pt-6" ref={cauHoiRef}>
+        <main className="mx-auto max-w-4xl px-1.5 pt-3 sm:px-4 sm:pt-6" ref={cauHoiRef}>
           <div role={soLanDoiDe > 0 ? "alert" : "note"} className="mb-5 rounded-2xl border border-tomato/30 bg-tomato/5 p-4 text-sm text-ink">
             {soLanDoiDe > 0 ? (
               <><strong>Đã đổi đề {soLanDoiDe} lần do rời tab làm bài.</strong> Câu trả lời của đề trước đã bị xóa. Hãy làm đề mới trong thời gian còn lại; đồng hồ không bắt đầu lại.</>
@@ -527,36 +527,36 @@ export default function KiemTraTx2Client() {
           </div>
 
           {/* THẺ CÂU HỎI HIỆN TẠI */}
-          <div className="rounded-3xl border border-ink/10 bg-white p-3 shadow-card sm:p-8">
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-ink/5 pb-3">
-              <span className="rounded-full bg-grape/10 px-3 py-1 font-mono text-xs font-bold text-grape">
+          <div className="rounded-3xl border border-ink/10 bg-white p-2.5 shadow-card sm:p-8">
+            <div className="flex flex-wrap items-center justify-between gap-1.5 border-b border-ink/5 pb-2 sm:gap-2 sm:pb-3">
+              <span className="rounded-full bg-grape/10 px-2 py-0.5 font-mono text-[11px] font-bold text-grape sm:px-3 sm:py-1 sm:text-xs">
                 CÂU {cauHienTai + 1} / {de.length}
               </span>
-              <span className="rounded-full bg-cream px-3 py-1 font-mono text-[11px] font-medium text-ink-soft">
+              <span className="rounded-full bg-cream px-2 py-0.5 font-mono text-[10px] font-medium text-ink-soft sm:px-3 sm:py-1 sm:text-[11px]">
                 🏷️ {cau.lessonTag}
               </span>
             </div>
 
-            <h2 className="mt-3 font-display text-base font-bold text-ink leading-snug sm:mt-4 sm:text-xl">
+            <h2 className="mt-2.5 font-display text-[15px] font-bold text-ink leading-snug sm:mt-4 sm:text-xl">
               {cau.q}
             </h2>
 
             {/* DANH SÁCH 4 PHƯƠNG ÁN */}
-            <div className="mt-4 space-y-2 sm:mt-6 sm:space-y-3">
+            <div className="mt-3 space-y-1.5 sm:mt-6 sm:space-y-3">
               {cau.shuffledOptions.map((opt, optIdx) => {
                 const daChon = dapAnDaChon[cauHienTai] === optIdx;
                 return (
                   <button
                     key={optIdx}
                     onClick={() => chonDapAn(optIdx)}
-                    className={`flex w-full items-start gap-2.5 rounded-2xl border-2 p-2.5 text-left transition sm:gap-3.5 sm:p-4 ${
+                    className={`flex w-full items-start gap-2 rounded-xl border-2 p-2 text-left transition sm:gap-3.5 sm:rounded-2xl sm:p-4 ${
                       daChon
                         ? "border-grape bg-grape/5 shadow-sm"
                         : "border-ink/10 bg-white hover:border-ink/25 hover:bg-slate-50/50"
                     }`}
                   >
                     <span
-                      className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg font-mono text-xs font-bold transition sm:h-8 sm:w-8 sm:rounded-xl sm:text-sm ${
+                      className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-md font-mono text-[11px] font-bold transition sm:h-8 sm:w-8 sm:rounded-xl sm:text-sm ${
                         daChon
                           ? "bg-grape text-white"
                           : "border border-ink/15 bg-cream text-ink-soft"
@@ -565,7 +565,7 @@ export default function KiemTraTx2Client() {
                       {OPTION_LABELS[optIdx]}
                     </span>
                     <span
-                      className={`min-w-0 break-words pt-0.5 text-[15px] leading-snug sm:pt-1 sm:text-base sm:leading-relaxed ${
+                      className={`min-w-0 flex-1 break-words text-sm leading-snug sm:pt-1 sm:text-base sm:leading-relaxed ${
                         daChon ? "font-semibold text-ink" : "text-ink"
                       }`}
                     >
