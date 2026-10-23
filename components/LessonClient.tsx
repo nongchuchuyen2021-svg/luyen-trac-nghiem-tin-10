@@ -10,6 +10,7 @@ import EssayViewer from "@/components/EssayViewer";
 import TheoryViewer from "@/components/TheoryViewer";
 import GameHub from "@/components/GameHub";
 import ReviewViewer from "@/components/ReviewViewer";
+import LessonMenuStaged from "@/components/LessonMenuStaged";
 
 type Mode = "menu" | "mcq" | "tf" | "essay" | "theory" | "sgk" | "games" | "review" | "slides";
 
@@ -42,9 +43,15 @@ export default function LessonClient({
   const [bestMcq, setBestMcq] = useState<number | null>(null);
   const [bestTf, setBestTf] = useState<number | null>(null);
   const [bestGame, setBestGame] = useState<number | null>(null);
+  const [theoryRead, setTheoryRead] = useState(false);
 
   useEffect(() => {
     if (mode === "menu") {
+      try {
+        setTheoryRead(!!localStorage.getItem(`ltn10:theory:${lessonId}`));
+      } catch {
+        setTheoryRead(false);
+      }
       setBestMcq(getLessonProgress(lessonId)?.best ?? null);
       setBestTf(getLessonProgress(`${lessonId}:ds`)?.best ?? null);
       if (games && games.length > 0) {
@@ -226,7 +233,7 @@ export default function LessonClient({
 
           const emoji = hasDes ? "🎨" : hasNet ? "🌐" : hasAr ? "⚔️" : hasSrch ? "🔍" : hasCrt ? "⚖️" : hasTl ? "⏳" : hasS3 ? "🧩" : "🎮";
           const name = hasDes
-            ? "Studio Đồ hoạ: 6 trò chơi"
+            ? "Studio Đồ hoạ"
             : hasNet
             ? "Kỹ sư Mạng & Đám mây"
             : hasAr
@@ -329,6 +336,31 @@ export default function LessonClient({
         ]
       : []),
   ];
+
+  // Bài đã thiết kế lại menu theo 4 chặng Học → Luyện → Chơi → Ôn lại
+  if (lessonId === "bai-12") {
+    return (
+      <LessonMenuStaged
+        lessonTitle={lessonTitle}
+        topicName={topicName}
+        theoryRead={theoryRead}
+        onSelect={(key) => setMode(key)}
+        options={options
+          .filter((o) => o.enabled && o.key !== "menu")
+          .map((o) => ({ key: o.key as Exclude<Mode, "menu">, emoji: o.emoji, name: o.name, best: o.best }))}
+        short={{
+          theory: theory ? `~${theory.minutes} phút đọc, có hình minh hoạ` : undefined,
+          slides: "15 slide tương tác",
+          sgk: "Sách điện tử, thực hành và tự kiểm tra",
+          mcq: `${mcq.length} câu · chấm ngay từng câu`,
+          tf: `${tf.length} câu tình huống · 4 ý mỗi câu`,
+          essay: `${essay.length} câu · tự viết rồi đối chiếu`,
+          games: `${games?.length ?? 0} trò chơi tương tác`,
+          review: "Thẻ ghi nhớ và mẹo nhớ nhanh",
+        }}
+      />
+    );
+  }
 
   return (
     <main className="playground min-h-screen pb-16">

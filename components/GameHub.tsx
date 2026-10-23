@@ -25,6 +25,7 @@ export default function GameHub({
   onBack?: () => void;
 }) {
   const [active, setActive] = useState<LessonGame | null>(games.length === 1 ? games[0] : null);
+  const [showMore, setShowMore] = useState(false);
   const [bestByGame, setBestByGame] = useState<Record<string, number | null>>({});
 
   useEffect(() => {
@@ -113,7 +114,7 @@ export default function GameHub({
 
         {/* Danh sách thẻ game chuẩn hoá Dark/Neon */}
         <div className="mt-6 space-y-4">
-          {games.map((g) => {
+          {(games.length > 3 && !showMore ? games.slice(0, 3) : games).map((g) => {
             const best = bestByGame[g.id] ?? null;
 
             // 1. GAME MẠNG & CLOUD
@@ -421,6 +422,17 @@ export default function GameHub({
               </button>
             );
           })}
+          {games.length > 3 && !showMore && (
+            <button
+              onClick={() => {
+                sound.click();
+                setShowMore(true);
+              }}
+              className="w-full rounded-2xl border border-dashed border-slate-600 bg-slate-900/60 py-3 font-mono text-xs font-semibold text-slate-300 transition hover:border-cyan-400 hover:text-white active:scale-[0.99]"
+            >
+              ＋ Chơi thêm {games.length - 3} trò chơi nữa
+            </button>
+          )}
         </div>
       </div>
     </main>
